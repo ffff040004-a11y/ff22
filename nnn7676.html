@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>منصة فرص — حاسبة نقاط مفاضلة النقل الخارجي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green-900: #0f4f3c;
+    --green-800: #166848;
+    --green-700: #1e8a5a;
+    --green-600: #2ea36b;
+    --green-100: #d8efe3;
+    --green-50:  #ecf7f0;
+    --gold:     #c9a14a;
+    --gold-soft:#e8d8a8;
+    --cream:    #faf7f0;
+    --paper:    #ffffff;
+    --ink:      #0d1f17;
+    --ink-soft: #3a4a42;
+    --line:     #d9e2dc;
+    --warn:     #b3261e;
+    --shadow-soft: 0 1px 2px rgba(15,79,60,.04), 0 4px 16px rgba(15,79,60,.06);
+    --shadow-md:   0 4px 12px rgba(15,79,60,.08), 0 16px 40px rgba(15,79,60,.10);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: 'Cairo', sans-serif;
+    background: var(--cream);
+    background-image:
+      radial-gradient(circle at 12% 8%, rgba(46,163,107,.06), transparent 40%),
+      radial-gradient(circle at 88% 92%, rgba(201,161,74,.06), transparent 40%);
+    color: var(--ink);
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  /* ===== Top Banner ===== */
+  .banner {
+    background: linear-gradient(135deg, var(--green-900) 0%, var(--green-700) 100%);
+    color: white;
+    padding: 28px 40px 32px;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 4px solid var(--gold);
+  }
+  .banner::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(45deg, transparent 0 14px, rgba(255,255,255,.025) 14px 15px);
+    pointer-events: none;
+  }
+  .banner-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    position: relative;
+    z-index: 1;
+  }
+  .crest {
+    width: 64px; height: 64px;
+    background: var(--gold);
+    border-radius: 50%;
+    display: grid; place-items: center;
+    font-family: 'Amiri', serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--green-900);
+    box-shadow: 0 0 0 4px rgba(255,255,255,.15), inset 0 -3px 0 rgba(0,0,0,.1);
+    flex-shrink: 0;
+  }
+  .banner-text h1 {
+    margin: 0;
+    font-size: 26px;
+    font-weight: 900;
+    letter-spacing: -0.3px;
+  }
+  .banner-text p {
+    margin: 4px 0 0;
+    font-size: 14px;
+    opacity: 0.85;
+    font-weight: 400;
+  }
+  .banner-meta {
+    margin-right: auto;
+    text-align: left;
+    font-size: 13px;
+    opacity: 0.9;
+    border-right: 1px solid rgba(255,255,255,.2);
+    padding-right: 20px;
+  }
+  .banner-meta strong { display: block; font-size: 15px; margin-bottom: 2px; }
+
+  /* ===== Main Layout ===== */
+  .layout {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 32px 40px 60px;
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 32px;
+    align-items: start;
+  }
+
+  /* ===== Section Card ===== */
+  .card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    box-shadow: var(--shadow-soft);
+    margin-bottom: 24px;
+    overflow: hidden;
+  }
+  .card-head {
+    background: linear-gradient(180deg, var(--green-50), #fff);
+    padding: 18px 24px;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .card-head .num {
+    width: 34px; height: 34px;
+    background: var(--green-700);
+    color: white;
+    border-radius: 8px;
+    display: grid; place-items: center;
+    font-weight: 700;
+    font-size: 16px;
+    box-shadow: 0 2px 6px rgba(30,138,90,.3);
+  }
+  .card-head h2 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--green-900);
+  }
+  .card-head .max-badge {
+    margin-right: auto;
+    background: var(--gold-soft);
+    color: #5c4a1a;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .card-body { padding: 22px 24px; }
+
+  /* ===== Form Fields ===== */
+  .field {
+    display: grid;
+    grid-template-columns: 1fr 180px 110px;
+    align-items: center;
+    gap: 16px;
+    padding: 12px 0;
+    border-bottom: 1px dashed var(--line);
+  }
+  .field:last-child { border-bottom: none; }
+  .field-label {
+    font-weight: 600;
+    font-size: 14.5px;
+    color: var(--ink);
+  }
+  .field-label small {
+    display: block;
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--ink-soft);
+    margin-top: 2px;
+  }
+  .field input, .field select {
+    font-family: 'Cairo', sans-serif;
+    font-size: 14px;
+    padding: 9px 12px;
+    border: 1.5px solid var(--line);
+    border-radius: 8px;
+    background: var(--cream);
+    color: var(--ink);
+    width: 100%;
+    text-align: center;
+    transition: all 0.15s;
+  }
+  .field input:focus, .field select:focus {
+    outline: none;
+    border-color: var(--green-600);
+    background: white;
+    box-shadow: 0 0 0 3px rgba(46,163,107,.15);
+  }
+  .field input.error { border-color: var(--warn); background: #fff5f4; }
+
+  .points-cell {
+    text-align: center;
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--green-800);
+    background: var(--green-50);
+    padding: 8px 4px;
+    border-radius: 8px;
+    border: 1px solid var(--green-100);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ===== Sidebar (Result Panel) ===== */
+  .sidebar {
+    position: sticky;
+    top: 24px;
+  }
+  .result-card {
+    background: linear-gradient(160deg, var(--green-900) 0%, var(--green-800) 100%);
+    color: white;
+    border-radius: 16px;
+    padding: 28px;
+    box-shadow: var(--shadow-md);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,.08);
+  }
+  .result-card::before {
+    content: "";
+    position: absolute;
+    top: -40px; left: -40px;
+    width: 180px; height: 180px;
+    background: radial-gradient(circle, var(--gold) 0%, transparent 60%);
+    opacity: 0.15;
+  }
+  .result-label {
+    font-size: 13px;
+    opacity: 0.85;
+    text-align: center;
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+  }
+  .total-points {
+    font-size: 64px;
+    font-weight: 900;
+    text-align: center;
+    line-height: 1;
+    margin: 8px 0;
+    font-variant-numeric: tabular-nums;
+    color: var(--gold-soft);
+    text-shadow: 0 2px 10px rgba(0,0,0,.2);
+  }
+  .total-suffix {
+    text-align: center;
+    font-size: 14px;
+    opacity: 0.8;
+    margin-bottom: 18px;
+  }
+  .max-bar {
+    height: 8px;
+    background: rgba(255,255,255,.12);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 8px;
+  }
+  .max-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold), var(--gold-soft));
+    border-radius: 4px;
+    transition: width 0.4s cubic-bezier(.4,0,.2,1);
+    width: 0%;
+  }
+  .max-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    opacity: 0.8;
+  }
+
+  .breakdown {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 20px 22px;
+    margin-top: 20px;
+    box-shadow: var(--shadow-soft);
+  }
+  .breakdown h3 {
+    margin: 0 0 14px;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--green-900);
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--gold);
+    display: inline-block;
+  }
+  .breakdown-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 7px 0;
+    font-size: 13px;
+    border-bottom: 1px dotted var(--line);
+  }
+  .breakdown-row:last-of-type { border-bottom: none; }
+  .breakdown-row .name { color: var(--ink-soft); flex: 1; padding-left: 8px; }
+  .breakdown-row .val {
+    font-weight: 700;
+    color: var(--green-800);
+    font-variant-numeric: tabular-nums;
+    min-width: 60px;
+    text-align: left;
+  }
+  .breakdown-row .val.zero { color: #aab5b0; font-weight: 500; }
+
+  .actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  .btn {
+    flex: 1;
+    padding: 12px 16px;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .btn-primary {
+    background: var(--green-700);
+    color: white;
+    box-shadow: 0 2px 8px rgba(30,138,90,.3);
+  }
+  .btn-primary:hover { background: var(--green-800); transform: translateY(-1px); }
+  .btn-ghost {
+    background: white;
+    color: var(--ink-soft);
+    border: 1.5px solid var(--line);
+  }
+  .btn-ghost:hover { background: var(--cream); border-color: var(--green-600); color: var(--green-800); }
+
+  /* ===== Tiebreaker section ===== */
+  .tiebreaker {
+    background: linear-gradient(180deg, #fffcf0, #fff);
+    border: 1px solid var(--gold-soft);
+  }
+  .tiebreaker .card-head {
+    background: linear-gradient(180deg, #fff5d6, #fffcf0);
+    border-bottom-color: var(--gold-soft);
+  }
+  .tiebreaker .card-head .num { background: var(--gold); color: var(--green-900); box-shadow: 0 2px 6px rgba(201,161,74,.4); }
+  .tiebreaker .card-head h2 { color: #5c4a1a; }
+  .order-list {
+    counter-reset: orderc;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+  .order-list li {
+    counter-increment: orderc;
+    position: relative;
+    padding: 10px 44px 10px 12px;
+    margin-bottom: 6px;
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .order-list li::before {
+    content: counter(orderc);
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 26px; height: 26px;
+    background: var(--gold);
+    color: var(--green-900);
+    border-radius: 6px;
+    display: grid; place-items: center;
+    font-weight: 800;
+    font-size: 13px;
+    font-family: 'Amiri', serif;
+  }
+
+  /* ===== Helpers ===== */
+  .pill {
+    display: inline-block;
+    background: var(--green-50);
+    color: var(--green-800);
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 11.5px;
+    font-weight: 700;
+    margin-right: 4px;
+  }
+  .note {
+    background: #fff5e6;
+    border-right: 3px solid var(--gold);
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    color: #6b4f1a;
+    margin-top: 16px;
+  }
+  .footer {
+    text-align: center;
+    color: var(--ink-soft);
+    font-size: 12px;
+    padding: 24px;
+    border-top: 1px solid var(--line);
+    background: var(--paper);
+    margin-top: 40px;
+  }
+  .footer strong { color: var(--green-800); }
+
+  /* ===== Designer Credit ===== */
+  .designer-credit {
+    margin-top: 22px;
+    padding-top: 20px;
+    border-top: 1px dashed var(--gold-soft);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    font-size: 14px;
+  }
+  .designer-name {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--green-900);
+    font-weight: 600;
+    letter-spacing: 0.2px;
+  }
+  .designer-name strong {
+    color: var(--green-800);
+    font-weight: 800;
+    font-family: 'Amiri', serif;
+    font-size: 17px;
+  }
+  .designer-icon {
+    color: var(--gold);
+    font-size: 16px;
+    transform: translateY(-1px);
+  }
+  .designer-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: linear-gradient(135deg, #229ED9 0%, #1a7fb0 100%);
+    color: white !important;
+    padding: 8px 18px;
+    border-radius: 24px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 13.5px;
+    box-shadow: 0 2px 8px rgba(34, 158, 217, 0.3);
+    transition: all 0.2s ease;
+  }
+  .designer-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(34, 158, 217, 0.45);
+    background: linear-gradient(135deg, #2bafee 0%, #229ED9 100%);
+  }
+  .designer-link:active { transform: translateY(0); }
+
+  @media (max-width: 600px) {
+    .designer-credit { flex-direction: column; gap: 14px; }
+  }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 980px) {
+    .layout { grid-template-columns: 1fr; padding: 20px; }
+    .sidebar { position: static; }
+    .banner { padding: 22px 20px; }
+    .banner-inner { flex-wrap: wrap; }
+    .banner-meta { margin-right: 0; border-right: none; padding-right: 0; padding-top: 12px; border-top: 1px solid rgba(255,255,255,.15); width: 100%; text-align: right; }
+    .banner-text h1 { font-size: 21px; }
+    .field { grid-template-columns: 1fr; gap: 8px; }
+    .field-label { font-size: 14px; }
+    .points-cell { text-align: center; }
+    .total-points { font-size: 52px; }
+  }
+
+  /* print */
+  @media print {
+    body { background: white; }
+    .sidebar { position: static; }
+    .actions, .btn { display: none; }
+    .banner { background: var(--green-800) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .card, .result-card, .breakdown { box-shadow: none; break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<header class="banner">
+  <div class="banner-inner">
+    <div class="crest">ف</div>
+    <div class="banner-text">
+      <h1>منصة فُرَص — حاسبة نقاط مفاضلة النقل الخارجي</h1>
+      <p>نظام دقيق لاحتساب نقاط المفاضلة للمعلمين والمعلمات وفق لائحة الفرص الوظيفية</p>
+    </div>
+    <div class="banner-meta">
+      <strong>الفئة المستهدفة</strong>
+      المعلمون والمعلمات في المدارس
+    </div>
+  </div>
+</header>
+
+<main class="layout">
+
+  <!-- ====== Right column: Form ====== -->
+  <section>
+
+    <!-- بيانات المتقدم -->
+    <div class="card">
+      <div class="card-head">
+        <div class="num">١</div>
+        <h2>بيانات المتقدم</h2>
+      </div>
+      <div class="card-body">
+        <div class="field" style="grid-template-columns: 1fr 1fr; gap:18px; border-bottom:none;">
+          <div>
+            <div class="field-label" style="margin-bottom:6px;">الاسم رباعي</div>
+            <input type="text" id="applicantName" placeholder="اختياري" style="text-align:right;">
+          </div>
+          <div>
+            <div class="field-label" style="margin-bottom:6px;">رقم الهوية</div>
+            <input type="text" id="applicantId" placeholder="اختياري" maxlength="10" inputmode="numeric">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- نقاط المفاضلة -->
+    <div class="card">
+      <div class="card-head">
+        <div class="num">٢</div>
+        <h2>نقاط المفاضلة على الفرص</h2>
+        <span class="max-badge">الحد الأعلى ٢٠٠ نقطة</span>
+      </div>
+      <div class="card-body">
+
+        <!-- 1. اختبار التخصص -->
+        <div class="field">
+          <div class="field-label">
+            اختبار التخصص للرخصة المهنية التعليمية
+            <small>الدرجة الفعلية المعتمدة في رخصة مهنية سارية — الحد الأعلى ٣٥</small>
+          </div>
+          <input type="number" id="f_specExam" min="0" max="100" step="0.01" placeholder="درجة من ١٠٠">
+          <div class="points-cell" id="p_specExam">0</div>
+        </div>
+
+        <!-- 2. الاختبار التربوي العام -->
+        <div class="field">
+          <div class="field-label">
+            الاختبار التربوي العام للرخصة المهنية
+            <small>الدرجة الفعلية المعتمدة في رخصة مهنية سارية — الحد الأعلى ٢٥</small>
+          </div>
+          <input type="number" id="f_genExam" min="0" max="100" step="0.01" placeholder="درجة من ١٠٠">
+          <div class="points-cell" id="p_genExam">0</div>
+        </div>
+
+        <!-- 3. التطوير المهني -->
+        <div class="field">
+          <div class="field-label">
+            نقاط التطوير المهني
+            <small>وفق دليل احتساب نقاط التطوير خلال العام السابق للتقديم — الحد الأعلى ٢٥</small>
+          </div>
+          <input type="number" id="f_devel" min="0" max="25" step="0.01" placeholder="النقاط المكتسبة">
+          <div class="points-cell" id="p_devel">0</div>
+        </div>
+
+        <!-- 4. الأداء الوظيفي -->
+        <div class="field">
+          <div class="field-label">
+            متوسط الأداء الوظيفي
+            <small>متوسط تقييم الأداء للعامين الدراسيين السابقين — الحد الأعلى ٣٠</small>
+          </div>
+          <input type="number" id="f_perf" min="0" max="100" step="0.01" placeholder="المتوسط من ١٠٠">
+          <div class="points-cell" id="p_perf">0</div>
+        </div>
+
+        <!-- 5. أيام الغياب -->
+        <div class="field">
+          <div class="field-label">
+            أيام الغياب بدون عذر
+            <small>تُخصم نقطة عن كل يوم غياب خلال العام الذي يسبق التقديم — الحد الأعلى للخصم ١٤</small>
+          </div>
+          <input type="number" id="f_absent" min="0" max="50" step="1" placeholder="عدد الأيام" value="0">
+          <div class="points-cell" id="p_absent" style="background:#fef2f2;color:#b3261e;border-color:#fecaca;">0</div>
+        </div>
+
+        <!-- 6. الرتبة التعليمية -->
+        <div class="field">
+          <div class="field-label">
+            الرتبة الوظيفية التعليمية
+            <small>معلم/مساعد (٢) — ممارس (٤) — متقدم (٦) — خبير (٨)</small>
+          </div>
+          <select id="f_rank">
+            <option value="0">— اختر الرتبة —</option>
+            <option value="2">معلم / مساعد معلم (٢)</option>
+            <option value="4">ممارس (٤)</option>
+            <option value="6">متقدم (٦)</option>
+            <option value="8">خبير (٨)</option>
+          </select>
+          <div class="points-cell" id="p_rank">0</div>
+        </div>
+
+        <!-- 7. ساعات التطوع -->
+        <div class="field">
+          <div class="field-label">
+            ساعات التطوع
+            <small>نقطة لكل ساعة تطوع مسجلة خلال العام السابق — الحد الأعلى ٢٠</small>
+          </div>
+          <input type="number" id="f_volun" min="0" max="500" step="1" placeholder="عدد الساعات">
+          <div class="points-cell" id="p_volun">0</div>
+        </div>
+
+        <!-- 8. سنوات التقديم للنقل قبل 1443 -->
+        <div class="field">
+          <div class="field-label">
+            سنوات التقديم على النقل قبل ١٤٤٣هـ
+            <small>نقطة عن كل سنة تقديم سابق — الحد الأعلى ١٣</small>
+          </div>
+          <input type="number" id="f_prevApp" min="0" max="30" step="1" placeholder="عدد السنوات">
+          <div class="points-cell" id="p_prevApp">0</div>
+        </div>
+
+        <!-- 9. الخدمة الوظيفية -->
+        <div class="field">
+          <div class="field-label">
+            سنوات الخدمة الوظيفية
+            <small>نقطة عن كل سنة خدمة — الحد الأعلى ٢٥</small>
+          </div>
+          <input type="number" id="f_service" min="0" max="50" step="0.5" placeholder="عدد السنوات">
+          <div class="points-cell" id="p_service">0</div>
+        </div>
+
+        <!-- 10. التشكيلات الإشرافية -->
+        <div class="field">
+          <div class="field-label">
+            ضمن التشكيلات الإشرافية أو مدير مدرسة
+            <small>قرار تكليف فعّال في نظام فارس وقت التقديم — ٥ نقاط</small>
+          </div>
+          <select id="f_supervision">
+            <option value="0">لا</option>
+            <option value="5">نعم — لديّ قرار تكليف فعّال</option>
+          </select>
+          <div class="points-cell" id="p_supervision">0</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- معايير التساوي -->
+    <div class="card tiebreaker">
+      <div class="card-head">
+        <div class="num">٣</div>
+        <h2>معايير الترجيح عند التساوي</h2>
+      </div>
+      <div class="card-body">
+        <p style="margin:0 0 14px; font-size:13.5px; color:#6b4f1a;">
+          عند تساوي نقاط المتقدمين في الفقرتين الأولى والثانية وبحسب نوع الفرصة، يتم التفضيل بالأعلى وفق الترتيب التالي:
+        </p>
+        <ol class="order-list">
+          <li>اختبار التخصص للرخصة المهنية التعليمية</li>
+          <li>الاختبار التربوي العام للرخصة المهنية التعليمية</li>
+          <li>متوسط الأداء الوظيفي</li>
+          <li>الغياب بدون عذر (الأقل غياباً)</li>
+          <li>تاريخ المباشرة</li>
+        </ol>
+        <div class="note">
+          ملاحظة: هذه المعايير لا تُحتسب ضمن مجموع النقاط، وإنما تُستخدم فقط للترجيح بين المتقدمين المتساوين في النقاط الإجمالية.
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ====== Left column: Result Sidebar ====== -->
+  <aside class="sidebar">
+
+    <div class="result-card">
+      <div class="result-label">إجمالي نقاط المفاضلة</div>
+      <div class="total-points" id="totalPoints">0</div>
+      <div class="total-suffix">نقطة من أصل ٢٠٠</div>
+      <div class="max-bar"><div class="max-fill" id="maxFill"></div></div>
+      <div class="max-info">
+        <span id="percentLabel">٠٪</span>
+        <span>الحد الأعلى ٢٠٠</span>
+      </div>
+    </div>
+
+    <div class="breakdown">
+      <h3>تفصيل النقاط</h3>
+      <div class="breakdown-row"><span class="name">اختبار التخصص</span><span class="val" id="b_specExam">0 / 35</span></div>
+      <div class="breakdown-row"><span class="name">الاختبار التربوي</span><span class="val" id="b_genExam">0 / 25</span></div>
+      <div class="breakdown-row"><span class="name">التطوير المهني</span><span class="val" id="b_devel">0 / 25</span></div>
+      <div class="breakdown-row"><span class="name">الأداء الوظيفي</span><span class="val" id="b_perf">0 / 30</span></div>
+      <div class="breakdown-row"><span class="name">خصم الغياب</span><span class="val" id="b_absent" style="color:#b3261e;">0 / -14</span></div>
+      <div class="breakdown-row"><span class="name">الرتبة التعليمية</span><span class="val" id="b_rank">0 / 8</span></div>
+      <div class="breakdown-row"><span class="name">ساعات التطوع</span><span class="val" id="b_volun">0 / 20</span></div>
+      <div class="breakdown-row"><span class="name">التقديم قبل ١٤٤٣</span><span class="val" id="b_prevApp">0 / 13</span></div>
+      <div class="breakdown-row"><span class="name">الخدمة الوظيفية</span><span class="val" id="b_service">0 / 25</span></div>
+      <div class="breakdown-row"><span class="name">التشكيلات الإشرافية</span><span class="val" id="b_supervision">0 / 5</span></div>
+
+      <div class="actions">
+        <button class="btn btn-primary" onclick="window.print()">🖨️ طباعة النتيجة</button>
+        <button class="btn btn-ghost" onclick="resetAll()">↻ إعادة تعيين</button>
+      </div>
+    </div>
+
+  </aside>
+
+</main>
+
+<footer class="footer">
+  حُسبت النقاط وفق <strong>لائحة الفرص الوظيفية للنقل الخارجي</strong> — المعلمون والمعلمات في المدارس.<br>
+  يحفظ المتصفح آخر إدخال تلقائياً.
+
+  <div class="designer-credit">
+    <div class="designer-name">
+      <span class="designer-icon">✦</span>
+      تصميم <strong>د/ فواز</strong>
+    </div>
+    <a href="https://t.me/TAqhjT3MFVE1Yzk0" target="_blank" rel="noopener" class="designer-link">
+      تفضّل للمزيد هنا
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px;">
+        <path d="M22 2L11 13"></path>
+        <path d="M22 2l-7 20-4-9-9-4 20-7z"></path>
+      </svg>
+    </a>
+  </div>
+</footer>
+
+<script>
+  // ===== Calculation Engine =====
+  // كل دالة تأخذ القيمة المدخلة وترجع النقاط المحتسبة وفق القاعدة الرسمية
+
+  const HD = {  // الحدود العليا
+    specExam: 35, genExam: 25, devel: 25, perf: 30,
+    absent: 14, rank: 8, volun: 20, prevApp: 13, service: 25, supervision: 5
+  };
+
+  // اختبار التخصص: درجة الاختبار / 100 × الحد الأعلى
+  function calcSpecExam(score) {
+    score = parseFloat(score) || 0;
+    score = Math.max(0, Math.min(100, score));
+    return (score / 100) * HD.specExam;
+  }
+  // الاختبار التربوي العام: درجة / 100 × 25
+  function calcGenExam(score) {
+    score = parseFloat(score) || 0;
+    score = Math.max(0, Math.min(100, score));
+    return (score / 100) * HD.genExam;
+  }
+  // التطوير المهني: قيمة مباشرة (محدودة بـ 25)
+  function calcDevel(v) {
+    v = parseFloat(v) || 0;
+    return Math.max(0, Math.min(HD.devel, v));
+  }
+  // الأداء الوظيفي: المتوسط / 100 × 30
+  function calcPerf(avg) {
+    avg = parseFloat(avg) || 0;
+    avg = Math.max(0, Math.min(100, avg));
+    return (avg / 100) * HD.perf;
+  }
+  // الغياب: نقطة خصم لكل يوم، حتى -14
+  function calcAbsent(days) {
+    days = parseInt(days) || 0;
+    days = Math.max(0, days);
+    return -Math.min(HD.absent, days);
+  }
+  // الرتبة: قيمة مباشرة من القائمة
+  function calcRank(v) { return parseInt(v) || 0; }
+  // التطوع: نقطة لكل ساعة، حتى 20
+  function calcVolun(h) {
+    h = parseInt(h) || 0;
+    return Math.max(0, Math.min(HD.volun, h));
+  }
+  // التقديم قبل 1443: نقطة لكل سنة، حتى 13
+  function calcPrevApp(y) {
+    y = parseInt(y) || 0;
+    return Math.max(0, Math.min(HD.prevApp, y));
+  }
+  // الخدمة الوظيفية: نقطة لكل سنة، حتى 25
+  function calcService(y) {
+    y = parseFloat(y) || 0;
+    return Math.max(0, Math.min(HD.service, y));
+  }
+  // التشكيلات الإشرافية: 0 أو 5
+  function calcSupervision(v) { return parseInt(v) || 0; }
+
+  // أرقام عربية للعرض
+  function toArabicNum(n) {
+    const ar = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+    return String(n).replace(/[0-9]/g, d => ar[d]);
+  }
+  function fmt(n) {
+    if (n === 0) return '0';
+    return (Math.round(n * 100) / 100).toString();
+  }
+
+  // ===== Main Recalculate =====
+  function recalc() {
+    const v = {
+      specExam:   calcSpecExam(  document.getElementById('f_specExam').value ),
+      genExam:    calcGenExam(   document.getElementById('f_genExam').value ),
+      devel:      calcDevel(     document.getElementById('f_devel').value ),
+      perf:       calcPerf(      document.getElementById('f_perf').value ),
+      absent:     calcAbsent(    document.getElementById('f_absent').value ),
+      rank:       calcRank(      document.getElementById('f_rank').value ),
+      volun:      calcVolun(     document.getElementById('f_volun').value ),
+      prevApp:    calcPrevApp(   document.getElementById('f_prevApp').value ),
+      service:    calcService(   document.getElementById('f_service').value ),
+      supervision:calcSupervision(document.getElementById('f_supervision').value )
+    };
+
+    // عرض النقاط في كل حقل
+    document.getElementById('p_specExam').textContent    = fmt(v.specExam);
+    document.getElementById('p_genExam').textContent     = fmt(v.genExam);
+    document.getElementById('p_devel').textContent       = fmt(v.devel);
+    document.getElementById('p_perf').textContent        = fmt(v.perf);
+    document.getElementById('p_absent').textContent      = fmt(v.absent);
+    document.getElementById('p_rank').textContent        = fmt(v.rank);
+    document.getElementById('p_volun').textContent       = fmt(v.volun);
+    document.getElementById('p_prevApp').textContent     = fmt(v.prevApp);
+    document.getElementById('p_service').textContent     = fmt(v.service);
+    document.getElementById('p_supervision').textContent = fmt(v.supervision);
+
+    // تفصيل في اللوحة الجانبية
+    setBreakdown('b_specExam', v.specExam, HD.specExam);
+    setBreakdown('b_genExam',  v.genExam,  HD.genExam);
+    setBreakdown('b_devel',    v.devel,    HD.devel);
+    setBreakdown('b_perf',     v.perf,     HD.perf);
+    document.getElementById('b_absent').textContent = `${fmt(v.absent)} / -${HD.absent}`;
+    setBreakdown('b_rank',     v.rank,     HD.rank);
+    setBreakdown('b_volun',    v.volun,    HD.volun);
+    setBreakdown('b_prevApp',  v.prevApp,  HD.prevApp);
+    setBreakdown('b_service',  v.service,  HD.service);
+    setBreakdown('b_supervision', v.supervision, HD.supervision);
+
+    // المجموع
+    let total = v.specExam + v.genExam + v.devel + v.perf + v.absent +
+                v.rank + v.volun + v.prevApp + v.service + v.supervision;
+    total = Math.max(0, total);
+    const totalRounded = Math.round(total * 100) / 100;
+
+    document.getElementById('totalPoints').textContent = toArabicNum(totalRounded);
+    const pct = Math.min(100, (totalRounded / 200) * 100);
+    document.getElementById('maxFill').style.width = pct + '%';
+    document.getElementById('percentLabel').textContent = toArabicNum(pct.toFixed(1)) + '٪';
+
+    saveState();
+  }
+
+  function setBreakdown(id, val, max) {
+    const el = document.getElementById(id);
+    el.textContent = `${fmt(val)} / ${max}`;
+    el.classList.toggle('zero', val === 0);
+  }
+
+  // ===== Persistence (localStorage) =====
+  const FIELDS = ['applicantName','applicantId','f_specExam','f_genExam','f_devel','f_perf',
+                  'f_absent','f_rank','f_volun','f_prevApp','f_service','f_supervision'];
+
+  function saveState() {
+    const state = {};
+    FIELDS.forEach(id => { state[id] = document.getElementById(id).value; });
+    try { localStorage.setItem('foras_calc_v1', JSON.stringify(state)); } catch(e) {}
+  }
+  function loadState() {
+    try {
+      const raw = localStorage.getItem('foras_calc_v1');
+      if (!raw) return;
+      const s = JSON.parse(raw);
+      FIELDS.forEach(id => { if (s[id] !== undefined) document.getElementById(id).value = s[id]; });
+    } catch(e) {}
+  }
+  function resetAll() {
+    if (!confirm('سيتم مسح جميع البيانات. هل أنت متأكد؟')) return;
+    FIELDS.forEach(id => {
+      const el = document.getElementById(id);
+      if (el.tagName === 'SELECT') el.value = el.querySelector('option').value;
+      else el.value = (id === 'f_absent' ? '0' : '');
+    });
+    try { localStorage.removeItem('foras_calc_v1'); } catch(e) {}
+    recalc();
+  }
+
+  // ===== Wire up =====
+  document.addEventListener('DOMContentLoaded', () => {
+    loadState();
+    FIELDS.forEach(id => {
+      const el = document.getElementById(id);
+      el.addEventListener('input', recalc);
+      el.addEventListener('change', recalc);
+    });
+    recalc();
+  });
+</script>
+</body>
+</html>
