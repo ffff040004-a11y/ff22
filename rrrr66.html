@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>منصة رقمية | كشف متابعة الطالب وتصدير إلى نظام نور</title>
+<style>
+  :root{
+    --navy:#0f1d3d; --navy2:#17284f; --gold:#caa75b; --bg:#f4f7fb; --card:#ffffff;
+    --line:#dbe4f0; --text:#1d2740; --muted:#6b7280; --ok:#0f766e; --danger:#b91c1c;
+    --radius:18px; --shadow:0 16px 38px rgba(15,29,61,.10);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:linear-gradient(135deg,#f7f9fd,#edf3fb);font-family:system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;color:var(--text)}
+  .app{max-width:1440px;margin:auto;padding:18px}
+  .hero{background:linear-gradient(135deg,var(--navy),#20376d);color:white;border-radius:28px;padding:20px 22px;box-shadow:var(--shadow);display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;overflow:hidden;position:relative}
+  .hero:before{content:"";position:absolute;inset:-120px auto auto -80px;width:260px;height:260px;border-radius:50%;background:rgba(202,167,91,.18)}
+  .hero h1{margin:0 0 6px;font-size:clamp(22px,3vw,36px);letter-spacing:-.5px}
+  .hero p{margin:0;color:#dce6fa;font-size:15px;line-height:1.8}.badge{display:inline-flex;gap:8px;align-items:center;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);padding:10px 14px;border-radius:999px;white-space:nowrap}.badge b{color:#ffe9a8}
+  .toolbar{margin:16px 0;display:grid;grid-template-columns:repeat(6,minmax(120px,1fr));gap:10px}.btn,.fileLabel{border:0;border-radius:14px;padding:12px 13px;background:var(--navy);color:white;font-weight:800;cursor:pointer;box-shadow:0 8px 18px rgba(15,29,61,.12);text-align:center;font-size:14px}.btn:hover,.fileLabel:hover{filter:brightness(1.08)}.btn.secondary{background:white;color:var(--navy);border:1px solid var(--line)}.btn.gold{background:var(--gold);color:#18213b}.btn.green{background:var(--ok)}.btn.red{background:var(--danger)} input[type=file]{display:none}
+  .grid{display:grid;grid-template-columns:330px 1fr;gap:14px}.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px}.panel h2{margin:0 0 12px;font-size:18px;color:var(--navy)}.field{display:grid;gap:6px;margin:9px 0}.field label{font-weight:800;color:#31405e;font-size:13px}.field input,.field select{width:100%;border:1px solid var(--line);border-radius:12px;padding:10px 11px;font-size:14px;background:#fff}.hint{font-size:12px;color:var(--muted);line-height:1.7}.smallBtns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.tab{border:1px solid var(--line);background:white;color:var(--navy);font-weight:900;border-radius:999px;padding:10px 15px;cursor:pointer}.tab.active{background:var(--navy);color:white;border-color:var(--navy)}.section{display:none}.section.active{display:block}.tableWrap{overflow:auto;border:1px solid var(--line);border-radius:18px;background:white;max-height:70vh}.tableWrap::-webkit-scrollbar{height:12px;width:12px}.tableWrap::-webkit-scrollbar-thumb{background:#b9c7dd;border-radius:999px}
+  table{border-collapse:separate;border-spacing:0;width:100%;min-width:1120px;direction:rtl}th,td{border-left:1px solid var(--line);border-bottom:1px solid var(--line);padding:8px;text-align:center;vertical-align:middle}th{background:var(--navy);color:white;font-size:14px;position:sticky;top:0;z-index:3}th:first-child{border-top-right-radius:16px}th:last-child{border-top-left-radius:16px}tbody tr:nth-child(even){background:#f8fbff}td input{width:100%;min-width:66px;border:1px solid transparent;background:transparent;border-radius:10px;padding:8px;text-align:center;font-size:15px;color:#111827;font-weight:700}td input:focus{outline:2px solid rgba(202,167,91,.45);background:white;border-color:var(--gold)}.nameInput{min-width:260px;text-align:right!important}.maxBox{display:grid;gap:3px;justify-items:center}.maxBox span{font-size:12px;color:#dfe7f7}.maxBox input{width:62px;border-radius:9px;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.12);color:white;text-align:center;padding:4px;font-weight:900}.total{font-weight:900;color:#064e3b;background:#ecfdf5!important}.bad{background:#fef2f2!important;color:#991b1b!important}.summaryCards{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:0 0 12px}.card{border:1px solid var(--line);border-radius:16px;padding:12px;background:linear-gradient(180deg,#fff,#f8fbff)}.card b{font-size:24px;color:var(--navy)}.card span{display:block;color:var(--muted);font-size:13px;margin-top:4px}.footerBrand{text-align:center;color:#667085;margin:16px 0 0;font-weight:800;font-size:13px}.footerBrand a{color:var(--navy);text-decoration:none}.toast{position:fixed;bottom:18px;right:18px;background:#111827;color:#fff;padding:12px 16px;border-radius:14px;box-shadow:var(--shadow);opacity:0;transform:translateY(12px);pointer-events:none;transition:.25s;z-index:99}.toast.show{opacity:1;transform:translateY(0)}
+  @media(max-width:980px){.hero{grid-template-columns:1fr}.toolbar{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}.summaryCards{grid-template-columns:repeat(2,1fr)}.app{padding:10px}.tableWrap{max-height:none}.btn,.fileLabel{font-size:13px;padding:11px 9px}}
+  @media print{
+    @page{size:A4 portrait;margin:8mm}html,body{width:210mm;min-height:297mm;background:white!important;overflow:hidden}.app{padding:0;max-width:none}.noPrint,.toolbar,.tabs,.footerBrand,.toast{display:none!important}.hero{box-shadow:none;border-radius:0;padding:8mm 7mm;background:white!important;color:#111!important;border-bottom:2px solid #111}.hero p,.badge{display:none}.grid{display:block}.panel{box-shadow:none;border:0;padding:0}.panel.settings{display:none}.section{display:none!important}.section.printMe{display:block!important}.tableWrap{border:0;overflow:hidden;max-height:none;border-radius:0}table{min-width:0;width:100%;font-size:9px;page-break-inside:avoid}th,td{padding:3px 2px}th{position:static;background:#111d3c!important;color:white!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}td input{border:0;padding:2px;font-size:9px}.nameInput{min-width:0!important}.maxBox input{color:white!important;border:0}.summaryCards{display:none}button{display:none!important}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="hero">
+    <div>
+      <h1 contenteditable="true">منصة رقمية | كشف متابعة الطالب</h1>
+      <p contenteditable="true">كشف شخصي للمعلم مع درجات قابلة للتعديل، وترحيل تلقائي إلى كشف التجميع، ثم تصدير ملف متوافق مع نظام نور.</p>
+    </div>
+    <div class="badge">المجموع المعتمد: <b id="grandMaxBadge">100</b></div>
+  </header>
+
+  <div class="toolbar noPrint">
+    <label class="fileLabel" for="importStudents">استيراد ملف Excel للأسماء</label><input id="importStudents" type="file" accept=".xlsx,.xls,.csv,.txt" />
+    <button class="btn" id="addRowBtn">إضافة طالب</button>
+    <button class="btn secondary" id="saveBtn">حفظ محلي</button>
+    <button class="btn gold" id="toSummaryBtn">ترحيل إلى كشف التجميع</button>
+    <button class="btn green" id="exportNoorBtn">تصدير إلى نظام نور</button>
+    <button class="btn red" id="clearBtn">تفريغ البيانات</button>
+  </div>
+
+  <main class="grid">
+    <aside class="panel settings noPrint">
+      <h2>الإعدادات العامة</h2>
+      <div class="field"><label>اسم المدرسة</label><input id="schoolName" value="اسم المدرسة" /></div>
+      <div class="field"><label>المادة</label><input id="subjectName" value="المادة" /></div>
+      <div class="field"><label>الصف / الشعبة</label><input id="className" value="الصف / الشعبة" /></div>
+      <div class="field"><label>اسم المعلم/ـة</label><input id="teacherName" value="اسم المعلم/ـة" /></div>
+      <div class="field"><label>الفصل الدراسي</label><input id="termName" value="الفصل الدراسي" /></div>
+      <div class="hint">التصدير إلى نور يتم من الكشف النهائي بعد الترحيل. الاستيراد هنا للأسماء والبيانات الأساسية فقط، وليس من نظام نور.</div>
+      <div class="smallBtns"><button class="btn secondary" onclick="printCurrent('teacher')">طباعة كشف المعلم</button><button class="btn secondary" onclick="printCurrent('summary')">طباعة كشف التجميع</button></div>
+      <hr style="border:0;border-top:1px solid var(--line);margin:14px 0">
+      <h2>توزيع الدرجات</h2>
+      <div id="maxEditor"></div>
+    </aside>
+
+    <section class="panel">
+      <div class="tabs noPrint">
+        <button class="tab active" data-tab="teacher">كشف المعلم الشخصي</button>
+        <button class="tab" data-tab="summary">كشف التجميع النهائي</button>
+        <button class="tab" data-tab="guide">طريقة العمل</button>
+      </div>
+
+      <div class="summaryCards noPrint">
+        <div class="card"><b id="countStudents">0</b><span>عدد الطلاب</span></div>
+        <div class="card"><b id="avgTotal">0</b><span>متوسط الدرجات</span></div>
+        <div class="card"><b id="fullMark">100</b><span>الدرجة النهائية</span></div>
+        <div class="card"><b id="readyRows">0</b><span>جاهز للتصدير</span></div>
+      </div>
+
+      <div id="teacher" class="section active printMe">
+        <div class="tableWrap">
+          <table id="teacherTable">
+            <thead><tr id="teacherHead"></tr></thead>
+            <tbody id="teacherBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div id="summary" class="section">
+        <div class="tableWrap">
+          <table id="summaryTable">
+            <thead><tr><th>م</th><th>اسم الطالب / الطالبة</th><th>رقم الجلوس</th><th>اختبارات قصيرة<br>20</th><th>أدوات تقويم متنوعة<br>40</th><th>اختبار نهاية الفصل<br>40</th><th>المجموع<br>100</th></tr></thead>
+            <tbody id="summaryBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div id="guide" class="section noPrint">
+        <div style="line-height:2;font-size:16px">
+          <h2>المسار المعتمد داخل المنصة</h2>
+          <p><b>1)</b> استورد ملف الأسماء أو كشف الدرجات بصيغة Excel XLSX / XLS أو CSVl محفوظ كـ CSV، أو أضف الطلاب يدويًا.</p>
+          <p><b>2)</b> عدّل درجات رأس الجدول حسب التوزيع المطلوب، فالرقم 10 وكل الأرقام أصبحت قابلة للتعديل.</p>
+          <p><b>3)</b> بعد تعبئة كشف المعلم اضغط: <b>ترحيل إلى كشف التجميع</b>.</p>
+          <p><b>4)</b> اضغط: <b>تصدير إلى نظام نور</b> للحصول على ملف Excel بصيغة XLS قابل للفتح في Excel والرفع/المطابقة حسب قالب نور.</p>
+          <p class="hint">ملاحظة مهمة: عند وجود قالب نور رسمي محدد من المدرسة، افتحه وقارن أسماء الأعمدة، لأن نور حساس جدًا لترتيب الأعمدة وتسميتها.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="footerBrand noPrint">تصميم د/فواز | تفضل للمزيد هنا <a href="https://t.me/TAqhjT3MFVE1Yzk0" target="_blank">https://t.me/TAqhjT3MFVE1Yzk0</a></div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script>
+const columns = [
+  {key:'serial', label:'م', max:null, readonly:true},
+  {key:'studentName', label:'اسم الطالب / الطالبة', max:null, type:'text'},
+  {key:'seatNumber', label:'رقم الجلوس', max:null, type:'text'},
+  {key:'attendance', label:'الحضور', max:0},
+  {key:'participation', label:'المشاركة والتفاعل', max:10},
+  {key:'homework', label:'الواجبات', max:10},
+  {key:'performance', label:'المهام الأدائية', max:10},
+  {key:'activities', label:'الأنشطة الصفية', max:10},
+  {key:'midterm', label:'الاختبار الفتري', max:20},
+  {key:'finalExam', label:'الاختبار النهائي', max:40},
+  {key:'total', label:'المجموع', max:100, readonly:true}
+];
+let rows = [];
+let summaryRows = [];
+const $ = id => document.getElementById(id);
+function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200)}
+function n(v){const x=Number(String(v ?? '').replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[٫,]/g,'.'));return isFinite(x)?x:0}
+function maxSum(){return columns.filter(c=>c.max!==null && c.key!=='total').reduce((s,c)=>s+n(c.max),0)}
+function teacherMarkMax(key){const c=columns.find(x=>x.key===key);return c? n(c.max):0}
+function renderHead(){
+  const head=$('teacherHead');head.innerHTML='';
+  columns.forEach(c=>{const th=document.createElement('th');
+    if(c.max!==null){th.innerHTML=`<div class="maxBox"><b>${c.label}</b><input type="number" min="0" step="1" value="${c.max}" data-maxkey="${c.key}"></div>`}
+    else th.textContent=c.label;
+    head.appendChild(th);
+  });
+  head.querySelectorAll('input[data-maxkey]').forEach(inp=>inp.addEventListener('input',e=>{const col=columns.find(c=>c.key===e.target.dataset.maxkey);col.max=n(e.target.value);const totalCol=columns.find(c=>c.key==='total');totalCol.max=maxSum();calculateAll();renderMaxEditor();updateStats();save(false)}));
+  $('grandMaxBadge').textContent=maxSum();$('fullMark').textContent=maxSum();
+}
+function renderMaxEditor(){
+  const box=$('maxEditor');box.innerHTML='';
+  columns.filter(c=>c.max!==null && c.key!=='total').forEach(c=>{const d=document.createElement('div');d.className='field';d.innerHTML=`<label>${c.label}</label><input type="number" min="0" step="1" value="${c.max}" data-editor-max="${c.key}">`;box.appendChild(d)});
+  box.querySelectorAll('input').forEach(inp=>inp.addEventListener('input',e=>{const col=columns.find(c=>c.key===e.target.dataset.editorMax);col.max=n(e.target.value);renderHead();calculateAll();renderBody();save(false)}));
+}
+function blankRow(i){return {serial:i,studentName:'اسم الطالب / الطالبة',seatNumber:'',attendance:0,participation:0,homework:0,performance:0,activities:0,midterm:0,finalExam:0,total:0}}
+function ensureRows(){if(!rows.length){for(let i=1;i<=10;i++)rows.push(blankRow(i));}}
+function renderBody(){
+  const body=$('teacherBody');body.innerHTML='';
+  rows.forEach((r,idx)=>{r.serial=idx+1;const tr=document.createElement('tr');
+    columns.forEach(c=>{const td=document.createElement('td');
+      if(c.key==='total'){td.className='total';td.textContent=n(r.total).toFixed(0)}
+      else if(c.key==='serial'){td.textContent=idx+1}
+      else {const type=c.type==='text'?'text':'number'; const cls=c.key==='studentName'?'nameInput':''; const maxAttr=c.max!==null?`max="${c.max}" min="0" step="0.5"`:''; td.innerHTML=`<input class="${cls}" type="${type}" ${maxAttr} value="${r[c.key] ?? ''}" data-row="${idx}" data-key="${c.key}">`;}
+      tr.appendChild(td);
+    });
+    body.appendChild(tr);
+  });
+  body.querySelectorAll('input').forEach(inp=>inp.addEventListener('input',e=>{const row=rows[e.target.dataset.row];const key=e.target.dataset.key;row[key]=e.target.type==='number'?n(e.target.value):e.target.value;checkLimit(e.target,key);calculateRow(row);renderTotalsOnly();updateStats();save(false)}));
+}
+function checkLimit(input,key){const mx=teacherMarkMax(key);if(mx && n(input.value)>mx){input.classList.add('bad')}else input.classList.remove('bad')}
+function calculateRow(r){r.total=['attendance','participation','homework','performance','activities','midterm','finalExam'].reduce((s,k)=>s+n(r[k]),0)}
+function calculateAll(){rows.forEach(calculateRow);renderTotalsOnly();}
+function renderTotalsOnly(){[...$('teacherBody').rows].forEach((tr,i)=>{const totalCell=tr.cells[columns.findIndex(c=>c.key==='total')];if(totalCell)totalCell.textContent=n(rows[i].total).toFixed(0);});}
+function buildSummary(){
+  summaryRows = rows.map((r,i)=>{
+    const shortTests=n(r.midterm);
+    const varied=n(r.participation)+n(r.homework)+n(r.performance)+n(r.activities);
+    const finalExam=n(r.finalExam);
+    return {serial:i+1,studentName:r.studentName,seatNumber:r.seatNumber,shortTests, variedAssessment:varied, finalExam, total:shortTests+varied+finalExam};
+  });
+  renderSummary();save(false);toast('تم ترحيل الدرجات إلى كشف التجميع');
+}
+function renderSummary(){const body=$('summaryBody');body.innerHTML='';summaryRows.forEach(r=>{const tr=document.createElement('tr');tr.innerHTML=`<td>${r.serial}</td><td>${escapeHtml(r.studentName)}</td><td>${escapeHtml(r.seatNumber)}</td><td>${r.shortTests}</td><td>${r.variedAssessment}</td><td>${r.finalExam}</td><td class="total">${r.total}</td>`;body.appendChild(tr)});updateStats();}
+function escapeHtml(v){return String(v??'').replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]))}
+function updateStats(){$('countStudents').textContent=rows.length;$('avgTotal').textContent=rows.length?Math.round(rows.reduce((s,r)=>s+n(r.total),0)/rows.length):0;$('readyRows').textContent=summaryRows.length;$('grandMaxBadge').textContent=maxSum();$('fullMark').textContent=maxSum();}
+function save(show=true){const settings={schoolName:$('schoolName').value,subjectName:$('subjectName').value,className:$('className').value,teacherName:$('teacherName').value,termName:$('termName').value};localStorage.setItem('studentFollowupNoor',JSON.stringify({rows,summaryRows,columnsMax:columns.map(c=>({key:c.key,max:c.max})),settings}));if(show)toast('تم الحفظ محليًا');}
+function load(){const raw=localStorage.getItem('studentFollowupNoor');if(!raw)return false;try{const d=JSON.parse(raw);rows=d.rows||[];summaryRows=d.summaryRows||[];(d.columnsMax||[]).forEach(m=>{const c=columns.find(x=>x.key===m.key);if(c)c.max=m.max});if(d.settings)Object.entries(d.settings).forEach(([k,v])=>{if($(k))$(k).value=v});return true}catch(e){return false}}
+function parseCSV(text){
+  const lines=[];let row=[],cell='',q=false;
+  for(let i=0;i<text.length;i++){const ch=text[i],nx=text[i+1];if(ch==='"'&&q&&nx==='"'){cell+='"';i++}else if(ch==='"'){q=!q}else if((ch===','||ch===';'||ch==='\t')&&!q){row.push(cell.trim());cell=''}else if((ch==='\n'||ch==='\r')&&!q){if(cell||row.length){row.push(cell.trim());lines.push(row)}row=[];cell='';if(ch==='\r'&&nx==='\n')i++}else cell+=ch} if(cell||row.length){row.push(cell.trim());lines.push(row)} return lines.filter(r=>r.some(x=>x));
+}
+function normHeader(v){return String(v??'').replace(/[\n\r\t]/g,' ').replace(/[()٠-٩0-9]/g,'').replace(/\s+/g,' ').trim().toLowerCase()}
+function findHeaderRow(data){return data.findIndex(r=>r.some(c=>/اسم\s*الطالب|اسم الطالب|الطالب|الطالبة/i.test(String(c??''))) && r.some(c=>/جلوس|اختبارات|الحضور|المجموع/i.test(String(c??''))));}
+function findCol(headers, patterns){return headers.findIndex(h=>patterns.some(p=>p.test(normHeader(h))));}
+function rowHasData(r){return r && r.some(x=>String(x??'').trim()!=='');}
+function importStructuredRows(data){
+  if(!data.length){toast('لم يتم العثور على بيانات داخل الملف');return;}
+  let hIndex=findHeaderRow(data); if(hIndex<0)hIndex=0;
+  const headers=(data[hIndex]||[]).map(x=>String(x??'').trim());
+  const idx={
+    serial:findCol(headers,[/^م$/, /^مسلسل$/]),
+    name:findCol(headers,[/اسم.*طالب/, /اسم.*طالبة/, /^اسم الطالب$/, /^اسم الطالبة$/, /student.*name/]),
+    seat:findCol(headers,[/رقم.*جلوس/, /جلوس/, /seat/]),
+    attendance:findCol(headers,[/الحضور/]),
+    participation:findCol(headers,[/المشاركة/, /التفاعل/]),
+    homework:findCol(headers,[/الواجبات/]),
+    performance:findCol(headers,[/المهام.*الأدائية/, /المهام الادائية/, /أدائية/]),
+    activities:findCol(headers,[/الأنشطة.*الصفية/, /الانشطة.*الصفية/, /الصفية/]),
+    midterm:findCol(headers,[/الاختبار.*الفتري/, /اختبار.*فتري/]),
+    shortTests:findCol(headers,[/اختبارات.*قصيرة/, /اختبار.*قصير/]),
+    variedAssessment:findCol(headers,[/أدوات.*تقييم/, /ادوات.*تقييم/, /أدوات.*تقويم/, /ادوات.*تقويم/]),
+    finalExam:findCol(headers,[/اختبار.*نهاية.*الفصل/, /الاختبار.*النهائي/, /نهاية.*الفصل/, /النهائي/]),
+    total:findCol(headers,[/المجموع/])
+  };
+  if(idx.name<0){ idx.name = headers.length>1 ? 1 : 0; }
+  const body=data.slice(hIndex+1).filter(rowHasData);
+  const isDetailed = idx.attendance>-1 || idx.participation>-1 || idx.homework>-1 || idx.performance>-1 || idx.activities>-1 || idx.midterm>-1;
+  const isSummary = idx.shortTests>-1 || idx.variedAssessment>-1;
+  const importedRows=[];
+  const importedSummary=[];
+  body.forEach((r,i)=>{
+    const name=String(r[idx.name]??'').trim();
+    if(!name || /اسم\s*الطالب|اسم الطالب|الطالبة/i.test(name))return;
+    const seat=idx.seat>-1?String(r[idx.seat]??'').trim():'';
+    if(isDetailed){
+      const br=blankRow(importedRows.length+1);
+      br.studentName=name; br.seatNumber=seat;
+      br.attendance=idx.attendance>-1?n(r[idx.attendance]):0;
+      br.participation=idx.participation>-1?n(r[idx.participation]):0;
+      br.homework=idx.homework>-1?n(r[idx.homework]):0;
+      br.performance=idx.performance>-1?n(r[idx.performance]):0;
+      br.activities=idx.activities>-1?n(r[idx.activities]):0;
+      br.midterm=idx.midterm>-1?n(r[idx.midterm]):(idx.shortTests>-1?n(r[idx.shortTests]):0);
+      br.finalExam=idx.finalExam>-1?n(r[idx.finalExam]):0;
+      calculateRow(br); importedRows.push(br);
+    }else{
+      const br=blankRow(importedRows.length+1); br.studentName=name; br.seatNumber=seat; importedRows.push(br);
+    }
+    if(isSummary){
+      const st=idx.shortTests>-1?n(r[idx.shortTests]):(idx.midterm>-1?n(r[idx.midterm]):0);
+      const va=idx.variedAssessment>-1?n(r[idx.variedAssessment]):0;
+      const fe=idx.finalExam>-1?n(r[idx.finalExam]):0;
+      importedSummary.push({serial:importedSummary.length+1,studentName:name,seatNumber:seat,shortTests:st,variedAssessment:va,finalExam:fe,total:st+va+fe});
+    }
+  });
+  if(!importedRows.length){toast('لم يتم العثور على أسماء طلاب في الملف');return;}
+  rows=importedRows; summaryRows=importedSummary.length?importedSummary:[];
+  if(!summaryRows.length && isDetailed)buildSummary();
+  renderBody(); renderSummary(); updateStats(); save(false);
+  toast(isDetailed?'تم استيراد كشف الدرجات التفصيلي بنجاح':'تم استيراد سجل الدرجات بنجاح');
+}
+function importStudentsFile(file){
+  const ext=(file.name.split('.').pop()||'').toLowerCase();
+  if(['xlsx','xls'].includes(ext)){
+    if(typeof XLSX==='undefined'){toast('تشغيل استيراد Excel يحتاج اتصالًا بالإنترنت لتحميل مكتبة القراءة');return;}
+    const reader=new FileReader();
+    reader.onload=e=>{try{const wb=XLSX.read(e.target.result,{type:'array'});const ws=wb.Sheets[wb.SheetNames[0]];const data=XLSX.utils.sheet_to_json(ws,{header:1,defval:''});importStructuredRows(data);}catch(err){console.error(err);toast('تعذر قراءة ملف Excel، تأكد من أنه غير محمي');}};
+    reader.readAsArrayBuffer(file); return;
+  }
+  const reader=new FileReader();reader.onload=e=>{let text=e.target.result;const data=parseCSV(text);importStructuredRows(data)};reader.readAsText(file,'UTF-8')
+}
+function exportExcel(filename, headers, data){
+  const meta=`<meta charset="utf-8">`; const style=`<style>table{border-collapse:collapse;direction:rtl;font-family:Tahoma}td,th{border:1px solid #999;padding:6px;text-align:center}th{background:#0f1d3d;color:white}</style>`;
+  const rowsHtml=data.map(r=>`<tr>${headers.map(h=>`<td>${escapeHtml(r[h])}</td>`).join('')}</tr>`).join('');
+  const html=`${meta}${style}<table><thead><tr>${headers.map(h=>`<th>${escapeHtml(h)}</th>`).join('')}</tr></thead><tbody>${rowsHtml}</tbody></table>`;
+  const blob=new Blob(['\ufeff',html],{type:'application/vnd.ms-excel;charset=utf-8;'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=filename;a.click();URL.revokeObjectURL(url);
+}
+function exportToNoor(){
+  if(!summaryRows.length)buildSummary();
+  const dataRows=summaryRows.map((r,i)=>[i+1,r.studentName,r.seatNumber,n(r.shortTests),n(r.variedAssessment),n(r.finalExam),{f:`SUM(D${i+4}:F${i+4})`}]);
+  if(typeof XLSX!=='undefined'){
+    const aoa=[['سجل درجات الطلاب (حسب التوزيع المعتمد)'],[],['م','اسم الطالب','رقم الجلوس','اختبارات قصيرة\n(20)','أدوات تقييم\n(40)','اختبار نهاية الفصل\n(40)','المجموع\n(100)'],...dataRows];
+    const ws=XLSX.utils.aoa_to_sheet(aoa);
+    ws['!merges']=[{s:{r:0,c:0},e:{r:0,c:6}}];
+    ws['!cols']=[{wch:8},{wch:32},{wch:14},{wch:18},{wch:18},{wch:22},{wch:16}];
+    ws['!rows']=[{hpt:24},{hpt:8},{hpt:34}];
+    ws['!freeze']={xSplit:0,ySplit:3};
+    const wb=XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb,ws,'سجل الدرجات');
+    XLSX.writeFile(wb,'سجل_الدرجات_جاهز_للتصدير_إلى_نظام_نور.xlsx');
+    toast('تم تصدير سجل الدرجات بصيغة Excel المطابقة للقالب المرفق');
+    return;
+  }
+  const headers=['م','اسم الطالب','رقم الجلوس','اختبارات قصيرة\n(20)','أدوات تقييم\n(40)','اختبار نهاية الفصل\n(40)','المجموع\n(100)'];
+  const data=summaryRows.map((r,i)=>({'م':i+1,'اسم الطالب':r.studentName,'رقم الجلوس':r.seatNumber,'اختبارات قصيرة\n(20)':r.shortTests,'أدوات تقييم\n(40)':r.variedAssessment,'اختبار نهاية الفصل\n(40)':r.finalExam,'المجموع\n(100)':r.total}));
+  exportExcel('سجل_الدرجات_جاهز_للتصدير_إلى_نظام_نور.xls',headers,data);toast('تم التصدير بصيغة XLS بديلة لأن مكتبة Excel لم تُحمّل');
+}
+function printCurrent(id){document.querySelectorAll('.section').forEach(s=>s.classList.remove('printMe'));$(id).classList.add('printMe');window.print();}
+document.querySelectorAll('.tab').forEach(tab=>tab.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));tab.classList.add('active');document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));$(tab.dataset.tab).classList.add('active')}));
+$('addRowBtn').onclick=()=>{rows.push(blankRow(rows.length+1));renderBody();updateStats();save(false)};$('saveBtn').onclick=()=>save(true);$('toSummaryBtn').onclick=buildSummary;$('exportNoorBtn').onclick=exportToNoor;$('clearBtn').onclick=()=>{if(confirm('سيتم تفريغ بيانات الطلاب والدرجات فقط، هل أنت متأكد؟')){rows=[];summaryRows=[];ensureRows();renderBody();renderSummary();save(false);toast('تم تفريغ البيانات')}};$('importStudents').addEventListener('change',e=>{if(e.target.files[0])importStudentsFile(e.target.files[0])});['schoolName','subjectName','className','teacherName','termName'].forEach(id=>$(id).addEventListener('input',()=>save(false)));
+load();ensureRows();renderHead();renderMaxEditor();calculateAll();renderBody();renderSummary();updateStats();
+</script>
+</body>
+</html>
