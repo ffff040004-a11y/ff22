@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>برنامج فرص | حاسبة مفاضلات النقل الخارجي</title>
+<title>منصة حساب نقاط مفاضلة النقل الخارجي</title>
 <style>
   :root{
     --green:#079957;
@@ -124,7 +124,7 @@
   }
   .small-actions{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
   .small-actions button{padding:7px 10px;border-radius:10px;font-size:12px}
-  .footer-brand{text-align:center;color:#6b7d82;font-size:13px;margin:18px 0 4px}
+  .footer-brand{text-align:center;color:#6b7d82;font-size:13px;margin:18px 0 4px}.footer-brand a{color:#047a45;font-weight:900;text-decoration:underline;text-underline-offset:3px}
   .print-title{display:none}
   .tiebox{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
   .tieitem{background:#f7fbf9;border:1px solid var(--line);border-radius:14px;padding:10px;text-align:center;font-weight:800;font-size:13px}
@@ -163,28 +163,19 @@
 <body>
 <div class="app">
   <header class="hero">
-    <h1>برنامج فرص | حاسبة مفاضلات النقل الخارجي</h1>
-    <p>منصة رقمية لحساب نقاط المفاضلة، ترتيب المتقدمين، وتطبيق آلية كسر التعادل حسب العناصر الواردة في الورقة المرفقة.</p>
-    <div class="badge-row">
-      <span class="badge">حساب فوري</span>
-      <span class="badge">مقارنة متقدمين</span>
-      <span class="badge">كسر تعادل تلقائي</span>
-      <span class="badge">حفظ محلي وطباعة A4</span>
-    </div>
+    <h1>منصة حساب نقاط مفاضلة النقل الخارجي</h1>
   </header>
 
   <div class="toolbar">
-    <button onclick="calculate()">🧮 احسب النقاط</button>
-    <button class="gold" onclick="saveCandidate()">➕ إضافة/تحديث متقدم</button>
-    <button class="ghost" onclick="printReport()">🖨️ طباعة التقرير</button>
-    <button class="ghost" onclick="exportJSON()">⬇️ تصدير البيانات</button>
-    <label class="file-btn ghost">⬆️ استيراد JSON<input type="file" accept=".json" onchange="importJSON(event)"></label>
-    <button class="danger" onclick="clearAll()">🗑️ تفريغ البيانات</button>
+    <button onclick="calculate()">احسب النقاط</button>
+    <button class="gold" onclick="saveCandidate()">إضافة/تحديث متقدم</button>
+    <button class="ghost" onclick="printReport()">طباعة التقرير</button>
+    <button class="danger" onclick="clearAll()">تفريغ البيانات</button>
   </div>
 
   <div class="grid">
     <aside class="card input-card">
-      <h2>📝 بيانات المتقدم</h2>
+      <h2>بيانات المتقدم</h2>
       <p class="mini">أدخل القيم كما هي في مصادرها الرسمية. المنصة تحسب وتقصّ السقف الأعلى تلقائيًا.</p>
       <div class="form-grid">
         <div class="field full">
@@ -264,9 +255,9 @@
       </div>
 
       <section id="calc" class="section active print-main">
-        <h2 class="print-title">تقرير مفاضلة النقل الخارجي - برنامج فرص</h2>
+        <h2 class="print-title">تقرير مفاضلة النقل الخارجي</h2>
         <div class="card">
-          <h2>📊 النتيجة الإجمالية</h2>
+          <h2>النتيجة الإجمالية</h2>
           <div class="kpis">
             <div class="kpi"><span>إجمالي النقاط</span><strong id="totalKpi">0</strong><div class="progress"><div id="totalBar" class="bar"></div></div></div>
             <div class="kpi"><span>النسبة من 200</span><strong id="percentKpi">0%</strong><div class="progress"><div id="percentBar" class="bar"></div></div></div>
@@ -282,7 +273,7 @@
         </div>
 
         <div class="card">
-          <h2>⚖️ ترتيب كسر التعادل</h2>
+          <h2>ترتيب كسر التعادل</h2>
           <div class="tiebox">
             <div class="tieitem">1- اختبار التخصص</div>
             <div class="tieitem">2- الاختبار التربوي العام</div>
@@ -295,7 +286,7 @@
 
       <section id="compare" class="section">
         <div class="card">
-          <h2>🏆 ترتيب المتقدمين</h2>
+          <h2>ترتيب المتقدمين</h2>
           <p class="mini">عند تساوي الإجمالي، يتم التفضيل آليًا حسب ترتيب عناصر المفاضلة الوارد في الورقة.</p>
           <div id="candidateList" class="candidate-list"></div>
         </div>
@@ -303,7 +294,7 @@
 
       <section id="rules" class="section">
         <div class="card">
-          <h2>📌 عناصر المفاضلة وسقوفها</h2>
+          <h2>عناصر المفاضلة وسقوفها</h2>
           <div class="table-wrap">
             <table>
               <thead><tr><th>العنصر</th><th>الحد الأعلى</th><th>طريقة الاحتساب داخل المنصة</th></tr></thead>
@@ -327,7 +318,7 @@
     </main>
   </div>
 
-  <div class="footer-brand">تصميم د/فواز | تفضل للمزيد هنا https://t.me/TAqhjT3MFVE1Yzk0</div>
+  <div class="footer-brand">تصميم د/فواز | تفضل للمزيد هنا <a href="https://t.me/TAqhjT3MFVE1Yzk0" target="_blank" rel="noopener" style="color:inherit;font-weight:900;text-decoration:underline;">https://t.me/TAqhjT3MFVE1Yzk0</a></div>
 </div>
 
 <script>
