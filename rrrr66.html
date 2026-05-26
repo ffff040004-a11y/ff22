@@ -23,7 +23,7 @@
   table{border-collapse:separate;border-spacing:0;width:100%;min-width:1120px;direction:rtl}th,td{border-left:1px solid var(--line);border-bottom:1px solid var(--line);padding:8px;text-align:center;vertical-align:middle}th{background:var(--navy);color:white;font-size:14px;position:sticky;top:0;z-index:3}th:first-child{border-top-right-radius:16px}th:last-child{border-top-left-radius:16px}tbody tr:nth-child(even){background:#f8fbff}td input{width:100%;min-width:66px;border:1px solid transparent;background:transparent;border-radius:10px;padding:8px;text-align:center;font-size:15px;color:#111827;font-weight:700}td input:focus{outline:2px solid rgba(202,167,91,.45);background:white;border-color:var(--gold)}.nameInput{min-width:260px;text-align:right!important}.maxBox{display:grid;gap:3px;justify-items:center}.maxBox span{font-size:12px;color:#dfe7f7}.maxBox input{width:62px;border-radius:9px;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.12);color:white;text-align:center;padding:4px;font-weight:900}.total{font-weight:900;color:#064e3b;background:#ecfdf5!important}.bad{background:#fef2f2!important;color:#991b1b!important}.summaryCards{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:0 0 12px}.card{border:1px solid var(--line);border-radius:16px;padding:12px;background:linear-gradient(180deg,#fff,#f8fbff)}.card b{font-size:24px;color:var(--navy)}.card span{display:block;color:var(--muted);font-size:13px;margin-top:4px}.footerBrand{text-align:center;color:#667085;margin:16px 0 0;font-weight:800;font-size:13px}.footerBrand a{color:var(--navy);text-decoration:none}.toast{position:fixed;bottom:18px;right:18px;background:#111827;color:#fff;padding:12px 16px;border-radius:14px;box-shadow:var(--shadow);opacity:0;transform:translateY(12px);pointer-events:none;transition:.25s;z-index:99}.toast.show{opacity:1;transform:translateY(0)}
   @media(max-width:980px){.hero{grid-template-columns:1fr}.toolbar{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}.summaryCards{grid-template-columns:repeat(2,1fr)}.app{padding:10px}.tableWrap{max-height:none}.btn,.fileLabel{font-size:13px;padding:11px 9px}}
   @media print{
-    @page{size:A4 portrait;margin:8mm}html,body{width:210mm;min-height:297mm;background:white!important;overflow:hidden}.app{padding:0;max-width:none}.noPrint,.toolbar,.tabs,.footerBrand,.toast{display:none!important}.hero{box-shadow:none;border-radius:0;padding:8mm 7mm;background:white!important;color:#111!important;border-bottom:2px solid #111}.hero p,.badge{display:none}.grid{display:block}.panel{box-shadow:none;border:0;padding:0}.panel.settings{display:none}.section{display:none!important}.section.printMe{display:block!important}.tableWrap{border:0;overflow:hidden;max-height:none;border-radius:0}table{min-width:0;width:100%;font-size:9px;page-break-inside:avoid}th,td{padding:3px 2px}th{position:static;background:#111d3c!important;color:white!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}td input{border:0;padding:2px;font-size:9px}.nameInput{min-width:0!important}.maxBox input{color:white!important;border:0}.summaryCards{display:none}button{display:none!important}
+    @page{size:A4 portrait;margin:8mm}html,body{width:210mm;min-height:297mm;background:white!important;overflow:hidden}.app{padding:0;max-width:none}.noPrint,.toolbar,.tabs,.footerBrand,.toast{display:none!important}.hero{box-shadow:none;border-radius:0;padding:8mm 7mm;background:white!important;color:#111!important;border-bottom:2px solid #111}.hero p,.badge{display:none}.grid{display:block}.panel{box-shadow:none;border:0;padding:0}.panel.settings{display:none}.section{display:none!important}.section.printMe{display:block!important}.tableWrap{border:0;overflow:hidden;max-height:none;border-radius:0}table{min-width:0;width:100%;font-size:8.2px;page-break-inside:auto;table-layout:fixed}th,td{padding:2.4px 1.5px;line-height:1.25;overflow:hidden;text-overflow:clip}th{position:static;background:#111d3c!important;color:white!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}td input{border:0;padding:1px;font-size:8.2px;background:transparent!important;color:#111!important;font-weight:700}.nameInput{min-width:0!important;text-align:right!important}.maxBox input{color:white!important;border:0}.summaryCards{display:none}button{display:none!important}
   }
 </style>
 </head>
@@ -87,7 +87,7 @@
       <div id="summary" class="section">
         <div class="tableWrap">
           <table id="summaryTable">
-            <thead><tr><th>م</th><th>اسم الطالب / الطالبة</th><th>رقم الجلوس</th><th>اختبارات قصيرة<br>20</th><th>أدوات تقويم متنوعة<br>40</th><th>اختبار نهاية الفصل<br>40</th><th>المجموع<br>100</th></tr></thead>
+            <thead><tr id="summaryHead"></tr></thead>
             <tbody id="summaryBody"></tbody>
           </table>
         </div>
@@ -131,6 +131,7 @@ const $ = id => document.getElementById(id);
 function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200)}
 function n(v){const x=Number(String(v ?? '').replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[٫,]/g,'.'));return isFinite(x)?x:0}
 function maxSum(){return columns.filter(c=>c.max!==null && c.key!=='total').reduce((s,c)=>s+n(c.max),0)}
+function variedMax(){return ['attendance','participation','homework','performance','activities'].reduce((s,k)=>s+teacherMarkMax(k),0)}
 function teacherMarkMax(key){const c=columns.find(x=>x.key===key);return c? n(c.max):0}
 function renderHead(){
   const head=$('teacherHead');head.innerHTML='';
@@ -140,7 +141,7 @@ function renderHead(){
     head.appendChild(th);
   });
   head.querySelectorAll('input[data-maxkey]').forEach(inp=>inp.addEventListener('input',e=>{const col=columns.find(c=>c.key===e.target.dataset.maxkey);col.max=n(e.target.value);const totalCol=columns.find(c=>c.key==='total');totalCol.max=maxSum();calculateAll();renderMaxEditor();updateStats();save(false)}));
-  $('grandMaxBadge').textContent=maxSum();$('fullMark').textContent=maxSum();
+  $('grandMaxBadge').textContent=maxSum();$('fullMark').textContent=maxSum();renderSummaryHead();
 }
 function renderMaxEditor(){
   const box=$('maxEditor');box.innerHTML='';
@@ -169,13 +170,18 @@ function renderTotalsOnly(){[...$('teacherBody').rows].forEach((tr,i)=>{const to
 function buildSummary(){
   summaryRows = rows.map((r,i)=>{
     const shortTests=n(r.midterm);
-    const varied=n(r.participation)+n(r.homework)+n(r.performance)+n(r.activities);
+    const varied=n(r.attendance)+n(r.participation)+n(r.homework)+n(r.performance)+n(r.activities);
     const finalExam=n(r.finalExam);
     return {serial:i+1,studentName:r.studentName,seatNumber:r.seatNumber,shortTests, variedAssessment:varied, finalExam, total:shortTests+varied+finalExam};
   });
   renderSummary();save(false);toast('تم ترحيل الدرجات إلى كشف التجميع');
 }
-function renderSummary(){const body=$('summaryBody');body.innerHTML='';summaryRows.forEach(r=>{const tr=document.createElement('tr');tr.innerHTML=`<td>${r.serial}</td><td>${escapeHtml(r.studentName)}</td><td>${escapeHtml(r.seatNumber)}</td><td>${r.shortTests}</td><td>${r.variedAssessment}</td><td>${r.finalExam}</td><td class="total">${r.total}</td>`;body.appendChild(tr)});updateStats();}
+function renderSummaryHead(){
+  const h=$('summaryHead'); if(!h)return;
+  const headers=['م','اسم الطالب / الطالبة','رقم الجلوس',`اختبارات قصيرة<br>${teacherMarkMax('midterm')}`,`أدوات تقويم متنوعة<br>${variedMax()}`,`اختبار نهاية الفصل<br>${teacherMarkMax('finalExam')}`,`المجموع<br>${teacherMarkMax('midterm')+variedMax()+teacherMarkMax('finalExam')}`];
+  h.innerHTML=headers.map(x=>`<th>${x}</th>`).join('');
+}
+function renderSummary(){renderSummaryHead();const body=$('summaryBody');body.innerHTML='';summaryRows.forEach(r=>{const tr=document.createElement('tr');tr.innerHTML=`<td>${r.serial}</td><td>${escapeHtml(r.studentName)}</td><td>${escapeHtml(r.seatNumber)}</td><td>${r.shortTests}</td><td>${r.variedAssessment}</td><td>${r.finalExam}</td><td class="total">${r.total}</td>`;body.appendChild(tr)});updateStats();}
 function escapeHtml(v){return String(v??'').replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]))}
 function updateStats(){$('countStudents').textContent=rows.length;$('avgTotal').textContent=rows.length?Math.round(rows.reduce((s,r)=>s+n(r.total),0)/rows.length):0;$('readyRows').textContent=summaryRows.length;$('grandMaxBadge').textContent=maxSum();$('fullMark').textContent=maxSum();}
 function save(show=true){const settings={schoolName:$('schoolName').value,subjectName:$('subjectName').value,className:$('className').value,teacherName:$('teacherName').value,termName:$('termName').value};localStorage.setItem('studentFollowupNoor',JSON.stringify({rows,summaryRows,columnsMax:columns.map(c=>({key:c.key,max:c.max})),settings}));if(show)toast('تم الحفظ محليًا');}
@@ -187,6 +193,19 @@ function parseCSV(text){
 function normHeader(v){return String(v??'').replace(/[\n\r\t]/g,' ').replace(/[()٠-٩0-9]/g,'').replace(/\s+/g,' ').trim().toLowerCase()}
 function findHeaderRow(data){return data.findIndex(r=>r.some(c=>/اسم\s*الطالب|اسم الطالب|الطالب|الطالبة/i.test(String(c??''))) && r.some(c=>/جلوس|اختبارات|الحضور|المجموع/i.test(String(c??''))));}
 function findCol(headers, patterns){return headers.findIndex(h=>patterns.some(p=>p.test(normHeader(h))));}
+function extractMaxFromHeader(v){
+  const txt=String(v??'').replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d));
+  const m=txt.match(/[\(（]\s*(\d+(?:[.,]\d+)?)\s*[\)）]/);
+  return m?n(m[1]):null;
+}
+function applyImportedMaxima(headers, idx){
+  const map={attendance:'attendance',participation:'participation',homework:'homework',performance:'performance',activities:'activities',midterm:'midterm',finalExam:'finalExam'};
+  Object.entries(map).forEach(([key,colKey])=>{
+    const i=idx[key];
+    if(i>-1){const mx=extractMaxFromHeader(headers[i]); if(mx!==null){const c=columns.find(x=>x.key===colKey); if(c)c.max=mx;}}
+  });
+  const totalCol=columns.find(c=>c.key==='total'); if(totalCol)totalCol.max=maxSum();
+}
 function rowHasData(r){return r && r.some(x=>String(x??'').trim()!=='');}
 function importStructuredRows(data){
   if(!data.length){toast('لم يتم العثور على بيانات داخل الملف');return;}
@@ -208,6 +227,8 @@ function importStructuredRows(data){
     total:findCol(headers,[/المجموع/])
   };
   if(idx.name<0){ idx.name = headers.length>1 ? 1 : 0; }
+  applyImportedMaxima(headers, idx);
+  renderHead(); renderMaxEditor(); renderSummaryHead();
   const body=data.slice(hIndex+1).filter(rowHasData);
   const isDetailed = idx.attendance>-1 || idx.participation>-1 || idx.homework>-1 || idx.performance>-1 || idx.activities>-1 || idx.midterm>-1;
   const isSummary = idx.shortTests>-1 || idx.variedAssessment>-1;
@@ -264,7 +285,7 @@ function exportToNoor(){
   if(!summaryRows.length)buildSummary();
   const dataRows=summaryRows.map((r,i)=>[i+1,r.studentName,r.seatNumber,n(r.shortTests),n(r.variedAssessment),n(r.finalExam),{f:`SUM(D${i+4}:F${i+4})`}]);
   if(typeof XLSX!=='undefined'){
-    const aoa=[['سجل درجات الطلاب (حسب التوزيع المعتمد)'],[],['م','اسم الطالب','رقم الجلوس','اختبارات قصيرة\n(20)','أدوات تقييم\n(40)','اختبار نهاية الفصل\n(40)','المجموع\n(100)'],...dataRows];
+    const aoa=[['سجل درجات الطلاب (حسب التوزيع المعتمد)'],[],['م','اسم الطالب','رقم الجلوس',`اختبارات قصيرة\n(${teacherMarkMax('midterm')})`,`أدوات تقييم\n(${variedMax()})`,`اختبار نهاية الفصل\n(${teacherMarkMax('finalExam')})`,`المجموع\n(${teacherMarkMax('midterm')+variedMax()+teacherMarkMax('finalExam')})`],...dataRows];
     const ws=XLSX.utils.aoa_to_sheet(aoa);
     ws['!merges']=[{s:{r:0,c:0},e:{r:0,c:6}}];
     ws['!cols']=[{wch:8},{wch:32},{wch:14},{wch:18},{wch:18},{wch:22},{wch:16}];
@@ -276,11 +297,18 @@ function exportToNoor(){
     toast('تم تصدير سجل الدرجات بصيغة Excel المطابقة للقالب المرفق');
     return;
   }
-  const headers=['م','اسم الطالب','رقم الجلوس','اختبارات قصيرة\n(20)','أدوات تقييم\n(40)','اختبار نهاية الفصل\n(40)','المجموع\n(100)'];
-  const data=summaryRows.map((r,i)=>({'م':i+1,'اسم الطالب':r.studentName,'رقم الجلوس':r.seatNumber,'اختبارات قصيرة\n(20)':r.shortTests,'أدوات تقييم\n(40)':r.variedAssessment,'اختبار نهاية الفصل\n(40)':r.finalExam,'المجموع\n(100)':r.total}));
+  const headers=['م','اسم الطالب','رقم الجلوس',`اختبارات قصيرة\n(${teacherMarkMax('midterm')})`,`أدوات تقييم\n(${variedMax()})`,`اختبار نهاية الفصل\n(${teacherMarkMax('finalExam')})`,`المجموع\n(${teacherMarkMax('midterm')+variedMax()+teacherMarkMax('finalExam')})`];
+  const data=summaryRows.map((r,i)=>({[headers[0]]:i+1,[headers[1]]:r.studentName,[headers[2]]:r.seatNumber,[headers[3]]:r.shortTests,[headers[4]]:r.variedAssessment,[headers[5]]:r.finalExam,[headers[6]]:r.total}));
   exportExcel('سجل_الدرجات_جاهز_للتصدير_إلى_نظام_نور.xls',headers,data);toast('تم التصدير بصيغة XLS بديلة لأن مكتبة Excel لم تُحمّل');
 }
-function printCurrent(id){document.querySelectorAll('.section').forEach(s=>s.classList.remove('printMe'));$(id).classList.add('printMe');window.print();}
+function printCurrent(id){
+  calculateAll();
+  if(id==='summary' && !summaryRows.length) buildSummary();
+  renderBody(); renderSummary();
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('printMe'));
+  $(id).classList.add('printMe');
+  window.print();
+}
 document.querySelectorAll('.tab').forEach(tab=>tab.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));tab.classList.add('active');document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));$(tab.dataset.tab).classList.add('active')}));
 $('addRowBtn').onclick=()=>{rows.push(blankRow(rows.length+1));renderBody();updateStats();save(false)};$('saveBtn').onclick=()=>save(true);$('toSummaryBtn').onclick=buildSummary;$('exportNoorBtn').onclick=exportToNoor;$('clearBtn').onclick=()=>{if(confirm('سيتم تفريغ بيانات الطلاب والدرجات فقط، هل أنت متأكد؟')){rows=[];summaryRows=[];ensureRows();renderBody();renderSummary();save(false);toast('تم تفريغ البيانات')}};$('importStudents').addEventListener('change',e=>{if(e.target.files[0])importStudentsFile(e.target.files[0])});['schoolName','subjectName','className','teacherName','termName'].forEach(id=>$(id).addEventListener('input',()=>save(false)));
 load();ensureRows();renderHead();renderMaxEditor();calculateAll();renderBody();renderSummary();updateStats();
