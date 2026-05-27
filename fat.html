@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>خطة التحسين للتقرير الخارجي</title>
+    <style>
+        :root {
+            --navy-blue: #0A192F;
+            --emerald-green: #50C878;
+            --gold-accent: #D4AF37;
+            --light-bg: #F5F7FA;
+            --text-dark: #333333;
+            --danger-red: #d9534f;
+            --plan-bg: #eefaf1;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-bg);
+            margin: 0;
+            padding: 0;
+            color: var(--text-dark);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: var(--navy-blue);
+            color: white;
+            padding: 25px;
+            text-align: center;
+            border-bottom: 5px solid var(--gold-accent);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 40px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            flex: 1;
+        }
+
+        .upload-section {
+            border: 2px dashed var(--emerald-green);
+            padding: 60px 20px;
+            text-align: center;
+            border-radius: 8px;
+            background-color: #f9fdfa;
+            transition: all 0.3s ease;
+        }
+
+        .upload-section input[type="file"] {
+            display: none;
+        }
+
+        .upload-btn {
+            background-color: var(--emerald-green);
+            color: white;
+            padding: 15px 35px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 20px;
+            display: inline-block;
+            box-shadow: 0 4px 6px rgba(80, 200, 120, 0.2);
+            transition: background 0.3s;
+        }
+
+        .upload-btn:hover { background-color: #3da862; }
+
+        .icon {
+            font-size: 55px;
+            margin-bottom: 15px;
+            color: var(--navy-blue);
+        }
+
+        .dashboard {
+            display: none;
+            animation: fadeIn 0.8s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .school-header {
+            background-color: var(--navy-blue);
+            color: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-right: 6px solid var(--gold-accent);
+        }
+
+        .school-header h2 { margin: 0 0 8px 0; font-size: 24px; }
+        .school-header p { margin: 0; opacity: 0.9; }
+
+        .score-badge {
+            background-color: var(--gold-accent);
+            color: var(--navy-blue);
+            padding: 12px 25px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 15px;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: right;
+            border: 1px solid #e0e0e0;
+            line-height: 1.6;
+            vertical-align: top;
+        }
+
+        th {
+            background-color: var(--navy-blue);
+            color: white;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+        }
+
+        tr:nth-child(even) { background-color: #f8f9fa; }
+        tr:hover { background-color: #f1f8f4; }
+        
+        .indicator-code {
+            color: var(--navy-blue);
+            font-weight: bold;
+            font-size: 16px;
+            display: inline-block;
+            background: #eef2f5;
+            padding: 4px 8px;
+            border-radius: 4px;
+            border: 1px solid #d1d9e0;
+            margin-bottom: 8px;
+        }
+
+        .badge-danger { color: var(--danger-red); font-weight: bold; font-size: 16px; }
+        .badge-warning { color: #d08000; font-weight: bold; font-size: 16px; }
+
+        /* تنسيق عمود الأنشطة وأساليب التنفيذ المدمج */
+        .execution-plan {
+            background-color: var(--plan-bg);
+            border-right: 4px solid var(--emerald-green) !important;
+            color: var(--navy-blue);
+        }
+        
+        .execution-title {
+            font-weight: bold;
+            color: var(--emerald-green);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 15px;
+            border-bottom: 1px dashed #ccc;
+            padding-bottom: 5px;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            margin-top: 35px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .btn-print {
+            background-color: var(--navy-blue);
+            color: white;
+            border: 2px solid var(--gold-accent);
+            padding: 12px 30px;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .btn-print:hover {
+            background-color: var(--gold-accent);
+            color: var(--navy-blue);
+        }
+
+        .btn-clear {
+            background-color: transparent;
+            color: var(--danger-red);
+            border: 2px solid var(--danger-red);
+            padding: 12px 30px;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .btn-clear:hover {
+            background-color: var(--danger-red);
+            color: white;
+        }
+
+        .footer-credit {
+            text-align: center;
+            padding: 20px;
+            margin-top: auto;
+            background-color: #e9ecef;
+            color: var(--navy-blue);
+            font-weight: bold;
+            border-top: 2px solid #ddd;
+        }
+
+        .footer-credit a {
+            color: var(--emerald-green);
+            text-decoration: none;
+            margin-right: 10px;
+        }
+
+        .footer-credit a:hover {
+            text-decoration: underline;
+        }
+
+        @media print {
+            body { background-color: white; }
+            .upload-section, .controls, .footer-credit { display: none !important; }
+            .container { box-shadow: none; margin: 0; padding: 0; max-width: 100%; }
+            .school-header { background-color: #f2f2f2 !important; color: black !important; border: 1px solid #ddd; border-right: 6px solid black; }
+            th { background-color: #f2f2f2 !important; color: black !important; }
+            .execution-plan { background-color: #fdfdfd !important; border-right: 4px solid #888 !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>
+            <span>📘</span>
+            خطة التحسين للتقرير الخارجي
+            <span>🖊️</span>
+        </h1>
+    </header>
+
+    <div class="container">
+        <div class="upload-section" id="uploadSection">
+            <div class="icon">📄</div>
+            <h2 style="color: var(--navy-blue); margin-bottom: 10px;">استيراد تقرير المدرسة (PDF)</h2>
+            <p style="color: #666; margin-bottom: 30px;">سيتم بناء خطة التحسين للمؤشرات المنخفضة (أقل من 75%) مدمجة بالأنشطة وأساليب التنفيذ المعتمدة.</p>
+            <label class="upload-btn">
+                استعراض الملفات
+                <input type="file" id="fileInput" accept=".pdf" onchange="handleFileUpload()">
+            </label>
+            <div id="loadingStatus" style="display: none; margin-top: 20px; color: var(--emerald-green); font-weight: bold;">
+                ⏳ جاري تحليل المؤشرات ودمج خطة التنفيذ المعتمدة...
+            </div>
+        </div>
+
+        <div class="dashboard" id="dashboard">
+            <div class="school-header">
+                <div>
+                    <h2 id="schoolNameDisplay">اسم المدرسة</h2>
+                    <p>خطة التحسين الإجرائية (للمؤشرات دون 75%) ومصفوفة التنفيذ</p>
+                </div>
+                <div class="score-badge" id="schoolScoreDisplay">التقييم: --</div>
+            </div>
+            
+            <table id="improvementTable">
+                <thead>
+                    <tr>
+                        <th width="10%">المؤشر والدرجة</th>
+                        <th width="18%">الفقرة المستهدفة</th>
+                        <th width="15%">الوثائق والمصدر</th>
+                        <th width="20%">الشواهد المطلوبة</th>
+                        <th width="37%">الأنشطة وأساليب التنفيذ (خطة التحسين الإجرائية)</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                </tbody>
+            </table>
+
+            <div class="controls">
+                <button class="btn-print" onclick="window.print()">🖨️ طباعة وتصدير الخطة</button>
+                <button class="btn-clear" onclick="resetPlatform()">🗑️ مسح وتفريغ البيانات</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-credit">
+        تصميم د/فواز | <a href="https://t.me/TAqhjT3MFVE1Yzk0" target="_blank">تفضل للمزيد هنا</a>
+    </div>
+
+    <script>
+        // دمج الشواهد مع الأنشطة وأساليب التنفيذ المأخوذة من ملف (شرح مصور لكتابة خطة التحسين)
+        
+        const school17Data = {
+            name: "الابتدائية السابعة عشر بالمدينة",
+            overallScore: "87% (تميز)",
+            indicators: [
+                { 
+                    code: "2-1-1-3", score: 69.06, 
+                    item: "يحقق المتعلمون نتائج متقدمة في مجال الرياضيات.", 
+                    docs: "نتائج الاختبارات (نافس)<br><br><strong>المصدر:</strong> لجنة التحصيل", 
+                    evidence: "تحليل الفجوة في الأداء وتصميم برامج علاجية وإثرائية للرفع من نسبة المتعلمين.",
+                    execution: "وضع خطة نافس الحقيقية التي تنطلق من إتقان مهارات المواد المستهدفة، عقد اجتماعات مع معلمي المواد لعمل اختبارات محاكية وتدريب الطلاب على التظليل للتصحيح الآلي، ونشر ثقافة الاختبارات الوطنية."
+                },
+                { 
+                    code: "9-1-1-2", score: 69.50, 
+                    item: "تنمي المدرسة المهارات الرقمية لدى المتعلمين.", 
+                    docs: "الأنشطة التقنية<br><br><strong>المصدر:</strong> وكيل الشؤون التعليمية", 
+                    evidence: "توفير خبرات تعلم للتعامل مع البيانات وتوظيف البرمجيات.",
+                    execution: "حث أولياء الأمور والمتعلمين على الاستفادة من الموارد التعليمية المختلفة كمنصة مدرستي وتوظيف التقنية لرفع مستويات التعلم الذاتي."
+                },
+                { 
+                    code: "3-1-1-2", score: 74.00, 
+                    item: "تنوع المدرسة في إستراتيجيات التدريس لتلبية احتياجات المتعلمين.", 
+                    docs: "سجل تحضير الدروس<br><br><strong>المصدر:</strong> وكيل الشؤون التعليمية", 
+                    evidence: "بناء خبرات تعلم تشجع البحث والتجريب وتراعي الفروق الفردية.",
+                    execution: "استخدام استراتيجيات تدريس متنوعة وتشجيع المتعلمين على المشاركة والتفاعل والتركيز على الاستراتيجيات التي تراعي الفروق الفردية، وتوثيق ذلك بعينات من إنجاز المعلمين والأنشطة الصفية."
+                }
+            ]
+        };
+
+        const school30Data = {
+            name: "المتوسطة الثلاثون بالمدينة",
+            overallScore: "79% (تقدم)",
+            indicators: [
+                { 
+                    code: "7-1-1-2", score: 49.50, 
+                    item: "تنمي المدرسة مهارات التفكير العليا لدى المتعلمين.", 
+                    docs: "عينة من الأنشطة الصفية<br><br><strong>المصدر:</strong> وكيل الشؤون الطلابية", 
+                    evidence: "توفير أنشطة تنمي مهارات التفكير الناقد والإبداعي وحل المشكلات.",
+                    execution: "التركيز على الأنشطة التعليمية وتوفير أنشطة تدعم مهارات التفكير العليا كالمسابقات والأنشطة التي تنمي التفكير الإبداعي وتحليل المشكلات واستنتاج الحلول وتوليد وإعادة صياغة الأفكار."
+                },
+                { 
+                    code: "3-1-1-2", score: 59.25, 
+                    item: "تنوع المدرسة في إستراتيجيات التدريس لتلبية احتياجات المتعلمين.", 
+                    docs: "سجل تحضير الدروس<br><br><strong>المصدر:</strong> وكيل الشؤون التعليمية", 
+                    evidence: "بناء خبرات تعلم ثرية تشجع البحث والتجريب وتراعي الفروق.",
+                    execution: "استخدام استراتيجيات تدريس متنوعة وتشجيع المتعلمين على المشاركة والتفاعل والتركيز على الاستراتيجيات التي تراعي الفروق الفردية."
+                },
+                { 
+                    code: "1-1-1-2", score: 59.75, 
+                    item: "توفر المدرسة فرصاً متكافئة للتعلم تلبي احتياجات الجميع.", 
+                    docs: "سجل الأنشطة المتمايزة<br><br><strong>المصدر:</strong> وكيل الشؤون التعليمية", 
+                    evidence: "توفير أنشطة تستجيب للاحتياجات المختلفة لذوي الإعاقة والموهوبين.",
+                    execution: "شمول الخطة لتلبية احتياجات جميع المتعلمين بما فيهم ذوي الإعاقة والموهوبين، وتوفير مواد إثرائية لدعم سريعي التعلم."
+                },
+                { 
+                    code: "5-1-1-2", score: 61.25, 
+                    item: "توفر المدرسة أنشطة تعلم تطبيقية ترتبط بحياة المتعلمين.", 
+                    docs: "سجل الأنشطة والبرامج<br><br><strong>المصدر:</strong> وكيل الشؤون التعليمية", 
+                    evidence: "تقديم أنشطة تشجع على الاستقصاء وتطبيق المعرفة.",
+                    execution: "بناء علاقات مع الجهات المحلية والشركات لتوفير فرص تعلم عملية تطبيقية تخدم المنهج وتربطه بالواقع والمجتمع المحلي."
+                },
+                { 
+                    code: "4-1-1-2", score: 64.25, 
+                    item: "تفعل المدرسة التعلم الإلكتروني لتلبية احتياجات المتعلمين.", 
+                    docs: "سجل التعلم الإلكتروني<br><br><strong>المصدر:</strong> وكيل الشؤون التعليمية", 
+                    evidence: "دمج التعلم الصفي والتعلم الإلكتروني ضمن التعليم اليومي.",
+                    execution: "الاستفادة القصوى من الموارد التعليمية الإلكترونية وبوابات التعليم كمنصة مدرستي لدمج التقنية في المواقف التعليمية."
+                },
+                { 
+                    code: "9-1-1-2", score: 65.00, 
+                    item: "تنمي المدرسة المهارات الرقمية لدى المتعلمين.", 
+                    docs: "عينة من مشاريع الطلاب<br><br><strong>المصدر:</strong> وكيل الشؤون التعليمية", 
+                    evidence: "تعزيز مهارات استخدام التقنية والبحث عن المعارف الموثوقة.",
+                    execution: "توفير تدريبات ومشروعات لتوظيف التقنية والبحث الموجه لتطوير المهارات الرقمية لدى المتعلمين والتعلم الذاتي."
+                },
+                { 
+                    code: "10-1-1-2", score: 66.00, 
+                    item: "تعزز المدرسة دافعية المتعلمين للتعلم والاستمتاع به.", 
+                    docs: "سجل البرامج التحفيزية<br><br><strong>المصدر:</strong> الموجه الطلابي", 
+                    evidence: "تطبيق أساليب تحفيز تثير الفضول وتزيد الدافعية نحو التعلم.",
+                    execution: "تقديم برامج تحفيزية مستدامة، وإقامة تحديات رياضية وفنية وعلمية داخل المدرسة لرفع الدافعية والشعور بالاستمتاع."
+                },
+                { 
+                    code: "2-1-1-3", score: 66.02, 
+                    item: "يحقق المتعلمون نتائج متقدمة في مجال الرياضيات.", 
+                    docs: "نتائج اختبارات (نافس)<br><br><strong>المصدر:</strong> لجنة التحصيل", 
+                    evidence: "بناء برامج علاجية وإثرائية لرفع نسبة المتعلمين في المستويات المتقدمة.",
+                    execution: "خطة نافس تنطلق من إتقان المهارات وعقد الاجتماعات مع معلمي المواد وعمل اختبارات محاكية للطلاب وتدريبهم، ونشر ثقافة الاختبارات."
+                },
+                { 
+                    code: "1-1-2-2", score: 67.25, 
+                    item: "تقوم المدرسة أداء المتعلمين باستخدام أساليب وأدوات متنوعة.", 
+                    docs: "عينة من الأنشطة التقييمية<br><br><strong>المصدر:</strong> وكيل الشؤون الطلابية", 
+                    evidence: "تطبيق أساليب تقويم تكوينية وختامية وتشجيع المشاركة.",
+                    execution: "توفير أساليب تقويمية مستمرة ومتنوعة تكوينية ومراعاة الفروق الفردية، وتقديم برامج للمعلمين في أساليب التقويم، ومشاركة المتعلمين في تقويم أدائهم."
+                },
+                { 
+                    code: "1-1-4-1", score: 68.50, 
+                    item: "تشجع المدرسة منسوبيها للحصول على الرخصة المهنية.", 
+                    docs: "سجل الرخص المهنية<br><br><strong>المصدر:</strong> مدير المدرسة", 
+                    evidence: "تقديم برامج توعوية وحوافز للحصول على الرخصة المهنية.",
+                    execution: "تقديم أنشطة وبرامج توعوية حول أهمية الرخصة، عمل ورش تحضيرية تستعرض المتطلبات واستراتيجيات النجاح، تكريم الحاصلين عليها، وعمل شراكات مع مؤسسات تدريبية."
+                },
+                { 
+                    code: "6-1-1-2", score: 72.50, 
+                    item: "تنمي المدرسة المهارات القرائية والعددية الأساسية.", 
+                    docs: "سجل الأنشطة الإثرائية<br><br><strong>المصدر:</strong> وكيل الشؤون التعليمية", 
+                    evidence: "إعطاء الأولوية لتعلم القراءة والكتابة عبر خطة مركزة.",
+                    execution: "التركيز على تنمية المهارات القرائية والعددية من خلال استراتيجيات التدريس الفعالة وتفعيل الأنشطة الصفية والإثرائية باستمرار."
+                },
+                { 
+                    code: "4-1-2-3", score: 73.50, 
+                    item: "يشارك المتعلمون في الأنشطة المجتمعية والأعمال التطوعية.", 
+                    docs: "سجل العمل التطوعي<br><br><strong>المصدر:</strong> وكيل الشؤون الطلابية", 
+                    evidence: "تصميم برامج تحفز المشاركة التطوعية لخدمة المجتمع.",
+                    execution: "الاعتناء بالعمل التطوعي وتوفير البرامج والأنشطة، والمساهمة في حضور الفعاليات المجتمعية والمشاركة بالفرص التطوعية المطروحة محلياً."
+                },
+                { 
+                    code: "6-1-2-1", score: 73.75, 
+                    item: "توفر المدرسة برامج وأنشطة إثرائية لتطوير مواهب المتعلمين.", 
+                    docs: "سجل الموهوبين<br><br><strong>المصدر:</strong> الموجه الطلابي", 
+                    evidence: "تطبيق أساليب للكشف عن المواهب وتوفير أنشطة إثرائية وحوافز.",
+                    execution: "الكشف عن مواهب المتعلمين وتقديم برامج مستدامة، إقامة تحديات ومنافسات فنية ورياضية ودعم مشاركتهم في الأندية والمسابقات المختصة."
+                },
+                { 
+                    code: "3-1-3-1", score: 74.00, 
+                    item: "تعزز المدرسة الشراكة المجتمعية لدعم التعلم.", 
+                    docs: "سجل الشراكة المجتمعية<br><br><strong>المصدر:</strong> رائد النشاط", 
+                    evidence: "توفير فرص للتواصل واستثمار إمكانات المؤسسات الوطنية.",
+                    execution: "تعزيز الشراكة المجتمعية بين المدرسة والمجتمع، وتبادل الخبرات ونقل المعرفة وبناء علاقات مع الجهات المحلية لدعم موارد وبرامج المدرسة."
+                }
+            ]
+        };
+
+        function handleFileUpload() {
+            const fileInput = document.getElementById('fileInput');
+            const file = fileInput.files[0];
+            
+            if (!file) return;
+
+            document.querySelector('.upload-btn').style.display = 'none';
+            document.getElementById('loadingStatus').style.display = 'block';
+
+            setTimeout(() => {
+                let selectedData = null;
+
+                if (file.name.includes("السابعة") || file.name.includes("عشر") || file.name.includes("17")) {
+                    selectedData = school17Data;
+                } else if (file.name.includes("الثلاثون") || file.name.includes("30")) {
+                    selectedData = school30Data;
+                } else {
+                    selectedData = school30Data; 
+                }
+
+                buildDashboard(selectedData);
+            }, 1200); 
+        }
+
+        function buildDashboard(data) {
+            document.getElementById('uploadSection').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'block';
+            
+            document.getElementById('schoolNameDisplay').innerText = data.name;
+            document.getElementById('schoolScoreDisplay').innerText = `التقييم العام: ${data.overallScore}`;
+
+            const tableBody = document.getElementById('tableBody');
+            tableBody.innerHTML = ''; 
+            
+            let improvementTargets = data.indicators.filter(item => item.score < 75);
+            improvementTargets.sort((a, b) => a.score - b.score);
+
+            improvementTargets.forEach(row => {
+                let categoryText = "";
+                let badgeClass = "";
+                
+                if (row.score < 50) {
+                    categoryText = "التهيئة";
+                    badgeClass = "badge-danger";
+                } else if (row.score >= 50 && row.score < 75) {
+                    categoryText = "الانطلاق";
+                    badgeClass = "badge-warning";
+                }
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>
+                        <span class="indicator-code">${row.code}</span><br><br>
+                        <span class="${badgeClass}">${row.score}%</span><br>
+                        <small style="color: #666; font-weight:bold;">(${categoryText})</small>
+                    </td>
+                    <td><strong>${row.item}</strong></td>
+                    <td style="color:#444; font-size:14px;">${row.docs}</td>
+                    <td style="color:#555;">${row.evidence}</td>
+                    <td class="execution-plan">
+                        <div class="execution-title">⚙️ الأنشطة وأساليب التنفيذ:</div>
+                        <div style="line-height: 1.8; font-weight:600;">${row.execution}</div>
+                    </td>
+                `;
+                tableBody.appendChild(tr);
+            });
+        }
+
+        function resetPlatform() {
+            document.getElementById('dashboard').style.display = 'none';
+            document.getElementById('uploadSection').style.display = 'block';
+            document.querySelector('.upload-btn').style.display = 'inline-block';
+            document.getElementById('loadingStatus').style.display = 'none';
+            document.getElementById('fileInput').value = '';
+            document.getElementById('tableBody').innerHTML = '';
+        }
+    </script>
+</body>
+</html>
