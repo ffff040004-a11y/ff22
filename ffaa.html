@@ -166,7 +166,6 @@
         .badge-danger { color: var(--danger-red); font-weight: bold; font-size: 16px; }
         .badge-warning { color: #d08000; font-weight: bold; font-size: 16px; }
 
-        /* تنسيق عمود الأنشطة وأساليب التنفيذ المدمج */
         .execution-plan {
             background-color: var(--plan-bg);
             border-right: 4px solid var(--emerald-green) !important;
@@ -316,8 +315,6 @@
     </div>
 
     <script>
-        // دمج الشواهد مع الأنشطة وأساليب التنفيذ المأخوذة من ملف (شرح مصور لكتابة خطة التحسين)
-        
         const school17Data = {
             name: "الابتدائية السابعة عشر بالمدينة",
             overallScore: "87% (تميز)",
@@ -468,7 +465,12 @@
                 } else if (file.name.includes("الثلاثون") || file.name.includes("30")) {
                     selectedData = school30Data;
                 } else {
-                    selectedData = school30Data; 
+                    // إذا كان التقرير لمدرسة جديدة، نعرض كافة المؤشرات كقالب شامل ونأخذ اسم الملف
+                    selectedData = {
+                        name: file.name.replace('.pdf', '').replace(/_/g, ' '),
+                        overallScore: "بحاجة لمراجعة (نموذج إجرائي شامل)",
+                        indicators: school30Data.indicators 
+                    };
                 }
 
                 buildDashboard(selectedData);
