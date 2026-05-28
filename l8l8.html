@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>اختبر نفسك بالرخصة المهنية التربويه</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #c9a227;
+    --gold-light: #e8c84a;
+    --gold-dark: #8b6f1a;
+    --navy: #0a1628;
+    --navy-mid: #122040;
+    --navy-light: #1a3060;
+    --blue: #1e4d8c;
+    --blue-light: #2d6bc4;
+    --white: #f8f5ee;
+    --cream: #fdf6e3;
+    --success: #2ecc71;
+    --danger: #e74c3c;
+    --text-light: #d4c9a8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Tajawal', sans-serif;
+    background: var(--navy);
+    color: var(--white);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* Animated background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse at 20% 50%, rgba(30,77,140,0.3) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 20%, rgba(201,162,39,0.15) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 80%, rgba(10,22,40,0.8) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .stars {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: var(--gold-light);
+    border-radius: 50%;
+    animation: twinkle var(--d, 3s) ease-in-out infinite;
+    animation-delay: var(--delay, 0s);
+    opacity: var(--op, 0.5);
+  }
+
+  @keyframes twinkle {
+    0%, 100% { opacity: var(--op, 0.5); transform: scale(1); }
+    50% { opacity: 0.1; transform: scale(0.5); }
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    padding: 30px 0 20px;
+    animation: slideDown 0.8s ease;
+  }
+
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .header-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--gold-dark), var(--gold), var(--gold-light));
+    color: var(--navy);
+    font-size: 11px;
+    font-weight: 800;
+    padding: 5px 18px;
+    border-radius: 20px;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+
+  .header h1 {
+    font-family: 'Amiri', serif;
+    font-size: clamp(22px, 5vw, 38px);
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--gold-light), var(--white), var(--gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.4;
+    margin-bottom: 8px;
+  }
+
+  .header p {
+    color: var(--text-light);
+    font-size: 14px;
+  }
+
+  .gold-line {
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 12px auto;
+    border-radius: 2px;
+  }
+
+  /* Settings Panel */
+  #settings-panel {
+    animation: fadeIn 0.6s ease 0.3s both;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .settings-card {
+    background: linear-gradient(135deg, rgba(18,32,64,0.9), rgba(26,48,96,0.7));
+    border: 1px solid rgba(201,162,39,0.3);
+    border-radius: 20px;
+    padding: 30px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4), inset 0 1px 0 rgba(201,162,39,0.2);
+  }
+
+  .settings-title {
+    font-family: 'Amiri', serif;
+    font-size: 20px;
+    color: var(--gold-light);
+    text-align: center;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .settings-title::before, .settings-title::after {
+    content: '❖';
+    color: var(--gold);
+    font-size: 14px;
+  }
+
+  .setting-group {
+    margin-bottom: 20px;
+  }
+
+  .setting-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-light);
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .radio-group {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .radio-option {
+    flex: 1;
+    min-width: 80px;
+  }
+
+  .radio-option input { display: none; }
+
+  .radio-option label {
+    display: block;
+    text-align: center;
+    padding: 10px 15px;
+    border: 1px solid rgba(201,162,39,0.3);
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.25s ease;
+    background: rgba(10,22,40,0.5);
+    color: var(--text-light);
+  }
+
+  .radio-option input:checked + label {
+    background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+    border-color: var(--gold);
+    color: var(--navy);
+    box-shadow: 0 4px 15px rgba(201,162,39,0.4);
+    transform: translateY(-1px);
+  }
+
+  .radio-option label:hover {
+    border-color: var(--gold);
+    color: var(--gold-light);
+    background: rgba(201,162,39,0.1);
+  }
+
+  .start-btn {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, var(--gold-dark), var(--gold), var(--gold-light));
+    border: none;
+    border-radius: 14px;
+    color: var(--navy);
+    font-family: 'Tajawal', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+    position: relative;
+    overflow: hidden;
+    letter-spacing: 0.5px;
+  }
+
+  .start-btn::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.5s ease;
+  }
+
+  .start-btn:hover::before { left: 100%; }
+  .start-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(201,162,39,0.5);
+  }
+
+  /* Quiz Panel */
+  #quiz-panel { display: none; }
+
+  .progress-area {
+    margin-bottom: 20px;
+    animation: fadeIn 0.4s ease;
+  }
+
+  .progress-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+
+  .q-counter {
+    font-size: 13px;
+    color: var(--gold-light);
+    font-weight: 700;
+  }
+
+  .score-badge {
+    background: rgba(201,162,39,0.15);
+    border: 1px solid rgba(201,162,39,0.4);
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--gold-light);
+  }
+
+  .progress-bar {
+    height: 6px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold-dark), var(--gold-light));
+    border-radius: 10px;
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Question Card */
+  .question-card {
+    background: linear-gradient(135deg, rgba(18,32,64,0.95), rgba(26,48,96,0.8));
+    border: 1px solid rgba(201,162,39,0.25);
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 18px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 15px 50px rgba(0,0,0,0.3), inset 0 1px 0 rgba(201,162,39,0.15);
+    animation: cardIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .question-card::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 120px; height: 120px;
+    background: radial-gradient(circle, rgba(201,162,39,0.08) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  @keyframes cardIn {
+    from { opacity: 0; transform: scale(0.95) translateY(10px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+  .q-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px; height: 36px;
+    background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+    border-radius: 50%;
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--navy);
+    margin-bottom: 14px;
+    box-shadow: 0 4px 12px rgba(201,162,39,0.3);
+  }
+
+  .question-text {
+    font-size: clamp(16px, 3vw, 20px);
+    font-weight: 700;
+    line-height: 1.7;
+    color: var(--white);
+    position: relative;
+  }
+
+  /* Options */
+  .options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+
+  @media (max-width: 500px) {
+    .options-grid { grid-template-columns: 1fr; }
+  }
+
+  .option-btn {
+    position: relative;
+    padding: 14px 18px;
+    background: rgba(10,22,40,0.7);
+    border: 1.5px solid rgba(201,162,39,0.2);
+    border-radius: 14px;
+    color: var(--text-light);
+    font-family: 'Tajawal', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    text-align: right;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    overflow: hidden;
+    line-height: 1.5;
+  }
+
+  .option-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent, rgba(201,162,39,0.05));
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+
+  .option-btn:hover:not(:disabled) {
+    border-color: var(--gold);
+    color: var(--white);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  }
+
+  .option-btn:hover:not(:disabled)::before { opacity: 1; }
+
+  .option-btn.correct {
+    background: rgba(46,204,113,0.15);
+    border-color: var(--success);
+    color: #a8ffc4;
+    animation: correctPulse 0.4s ease;
+  }
+
+  .option-btn.wrong {
+    background: rgba(231,76,60,0.15);
+    border-color: var(--danger);
+    color: #ffb3b3;
+    animation: wrongShake 0.4s ease;
+  }
+
+  .option-btn.reveal {
+    background: rgba(46,204,113,0.1);
+    border-color: rgba(46,204,113,0.5);
+    color: #a8ffc4;
+  }
+
+  @keyframes correctPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+  }
+
+  @keyframes wrongShake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    75% { transform: translateX(6px); }
+  }
+
+  /* Feedback popup */
+  .feedback-overlay {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .feedback-overlay.show {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .feedback-box {
+    background: linear-gradient(135deg, var(--navy-mid), var(--navy-light));
+    border-radius: 24px;
+    padding: 35px 45px;
+    text-align: center;
+    max-width: 320px;
+    width: 90%;
+    transform: scale(0.7) translateY(20px);
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+  }
+
+  .feedback-overlay.show .feedback-box {
+    transform: scale(1) translateY(0);
+  }
+
+  .feedback-box.correct-box {
+    border: 2px solid var(--success);
+  }
+
+  .feedback-box.wrong-box {
+    border: 2px solid var(--danger);
+  }
+
+  .feedback-emoji {
+    font-size: 52px;
+    display: block;
+    margin-bottom: 12px;
+    animation: bounce 0.6s ease;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    30% { transform: translateY(-15px); }
+    60% { transform: translateY(-7px); }
+  }
+
+  .feedback-title {
+    font-family: 'Amiri', serif;
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .feedback-box.correct-box .feedback-title { color: var(--success); }
+  .feedback-box.wrong-box .feedback-title { color: var(--danger); }
+
+  .feedback-subtitle {
+    font-size: 15px;
+    color: var(--text-light);
+    margin-bottom: 6px;
+  }
+
+  .correct-answer-show {
+    font-size: 14px;
+    color: #a8ffc4;
+    background: rgba(46,204,113,0.1);
+    border: 1px solid rgba(46,204,113,0.3);
+    border-radius: 8px;
+    padding: 8px 14px;
+    margin-top: 10px;
+    direction: rtl;
+  }
+
+  /* Particles */
+  .particle-container {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 99;
+  }
+
+  .particle {
+    position: absolute;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    animation: particleFly 1.5s ease-out forwards;
+  }
+
+  @keyframes particleFly {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(-200px) rotate(360deg); opacity: 0; }
+  }
+
+  /* Next button */
+  .next-btn {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, var(--blue), var(--blue-light));
+    border: 1px solid rgba(201,162,39,0.3);
+    border-radius: 14px;
+    color: var(--white);
+    font-family: 'Tajawal', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    display: none;
+    margin-top: 5px;
+  }
+
+  .next-btn:hover {
+    background: linear-gradient(135deg, var(--blue-light), var(--blue));
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(30,77,140,0.4);
+  }
+
+  /* Results Panel */
+  #results-panel { display: none; }
+
+  .results-card {
+    background: linear-gradient(135deg, rgba(18,32,64,0.95), rgba(26,48,96,0.8));
+    border: 1px solid rgba(201,162,39,0.3);
+    border-radius: 24px;
+    padding: 40px 30px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    animation: cardIn 0.6s ease;
+  }
+
+  .trophy {
+    font-size: 72px;
+    display: block;
+    margin-bottom: 15px;
+    animation: spin3d 2s ease infinite alternate;
+  }
+
+  @keyframes spin3d {
+    from { transform: rotateY(0deg) scale(1); }
+    to { transform: rotateY(20deg) scale(1.05); }
+  }
+
+  .results-title {
+    font-family: 'Amiri', serif;
+    font-size: 32px;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--gold-light), var(--white));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 20px;
+  }
+
+  .score-circle {
+    width: 140px; height: 140px;
+    border-radius: 50%;
+    background: conic-gradient(var(--gold) var(--pct, 0%), rgba(255,255,255,0.1) 0%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 25px;
+    position: relative;
+    box-shadow: 0 0 30px rgba(201,162,39,0.3);
+  }
+
+  .score-circle-inner {
+    width: 110px; height: 110px;
+    background: var(--navy);
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .score-num {
+    font-size: 30px;
+    font-weight: 900;
+    color: var(--gold-light);
+    line-height: 1;
+  }
+
+  .score-total {
+    font-size: 13px;
+    color: var(--text-light);
+  }
+
+  .stats-row {
+    display: flex;
+    gap: 12px;
+    margin: 20px 0;
+    justify-content: center;
+  }
+
+  .stat-box {
+    flex: 1;
+    max-width: 140px;
+    padding: 14px 10px;
+    border-radius: 14px;
+    text-align: center;
+  }
+
+  .stat-box.correct-stat {
+    background: rgba(46,204,113,0.1);
+    border: 1px solid rgba(46,204,113,0.3);
+  }
+
+  .stat-box.wrong-stat {
+    background: rgba(231,76,60,0.1);
+    border: 1px solid rgba(231,76,60,0.3);
+  }
+
+  .stat-num {
+    font-size: 28px;
+    font-weight: 900;
+    display: block;
+  }
+
+  .stat-box.correct-stat .stat-num { color: var(--success); }
+  .stat-box.wrong-stat .stat-num { color: var(--danger); }
+
+  .stat-label {
+    font-size: 13px;
+    color: var(--text-light);
+  }
+
+  .result-msg {
+    font-family: 'Amiri', serif;
+    font-size: 20px;
+    color: var(--gold-light);
+    margin-bottom: 25px;
+    line-height: 1.6;
+  }
+
+  .replay-btn {
+    padding: 15px 40px;
+    background: linear-gradient(135deg, var(--gold-dark), var(--gold), var(--gold-light));
+    border: none;
+    border-radius: 14px;
+    color: var(--navy);
+    font-family: 'Tajawal', sans-serif;
+    font-size: 17px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-left: 10px;
+  }
+
+  .replay-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(201,162,39,0.5);
+  }
+
+  .home-btn {
+    padding: 15px 40px;
+    background: transparent;
+    border: 2px solid rgba(201,162,39,0.4);
+    border-radius: 14px;
+    color: var(--gold-light);
+    font-family: 'Tajawal', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .home-btn:hover {
+    background: rgba(201,162,39,0.1);
+    border-color: var(--gold);
+    transform: translateY(-2px);
+  }
+
+  /* Footer credit */
+  .footer-credit {
+    text-align: center;
+    padding: 20px 10px;
+    margin-top: 10px;
+    border-top: 1px solid rgba(201,162,39,0.15);
+  }
+
+  .footer-credit p {
+    color: var(--text-light);
+    font-size: 13px;
+    line-height: 2;
+  }
+
+  .footer-credit a {
+    color: var(--gold-light);
+    text-decoration: none;
+    font-weight: 700;
+    transition: color 0.2s;
+  }
+
+  .footer-credit a:hover { color: var(--gold); }
+
+  /* Confetti */
+  @keyframes confettiFall {
+    0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+  }
+
+  .confetti-piece {
+    position: fixed;
+    width: 10px; height: 10px;
+    animation: confettiFall linear forwards;
+    z-index: 200;
+    pointer-events: none;
+  }
+</style>
+</head>
+<body>
+
+<div class="stars" id="stars"></div>
+
+<div class="feedback-overlay" id="feedbackOverlay">
+  <div class="feedback-box" id="feedbackBox">
+    <span class="feedback-emoji" id="feedbackEmoji">🎉</span>
+    <div class="feedback-title" id="feedbackTitle">ياسلام برافو عليك</div>
+    <div class="feedback-subtitle" id="feedbackSubtitle">إجابة صحيحة رائعة</div>
+    <div class="correct-answer-show" id="correctAnswerShow" style="display:none"></div>
+  </div>
+</div>
+
+<div class="particle-container" id="particleContainer"></div>
+
+<div class="container">
+  <div class="header">
+    <div class="header-badge">اختبار تفاعلي</div>
+    <h1>اختبر نفسك<br>بالرخصة المهنية التربويه</h1>
+    <div class="gold-line"></div>
+    <p style="color: var(--text-light); font-size: 14px;">لغة عربية — أسئلة تربوية ولغوية من ملزمة كفايات عربي</p>
+  </div>
+
+  <div id="settings-panel">
+    <div class="settings-card">
+      <div class="settings-title">ضبط الاختبار</div>
+
+      <div class="setting-group">
+        <span class="setting-label">🎯 عدد الأسئلة</span>
+        <div class="radio-group">
+          <div class="radio-option">
+            <input type="radio" name="qcount" id="q5" value="5">
+            <label for="q5">٥ أسئلة</label>
+          </div>
+          <div class="radio-option">
+            <input type="radio" name="qcount" id="q10" value="10" checked>
+            <label for="q10">١٠ أسئلة</label>
+          </div>
+          <div class="radio-option">
+            <input type="radio" name="qcount" id="qall" value="all">
+            <label for="qall">الكل</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="setting-group">
+        <span class="setting-label">📚 نوع الأسئلة</span>
+        <div class="radio-group">
+          <div class="radio-option">
+            <input type="radio" name="qtype" id="qmix" value="mix" checked>
+            <label for="qmix">مختلطة</label>
+          </div>
+          <div class="radio-option">
+            <input type="radio" name="qtype" id="qgrammar" value="grammar">
+            <label for="qgrammar">نحو وإملاء</label>
+          </div>
+          <div class="radio-option">
+            <input type="radio" name="qtype" id="qlit" value="lit">
+            <label for="qlit">أدب وبلاغة</label>
+          </div>
+          <div class="radio-option">
+            <input type="radio" name="qtype" id="qped" value="ped">
+            <label for="qped">تربوي ولغويات</label>
+          </div>
+        </div>
+      </div>
+
+      <button class="start-btn" onclick="startQuiz()">🚀 ابدأ الاختبار الآن</button>
+
+      <div class="footer-credit">
+        <p>الشكر موصول لمن افادنا بها</p>
+        <p>تصميم د/فواز &nbsp;|&nbsp; <a href="https://t.me/TAqhjT3MFVE1Yzk0" target="_blank">تفضل للمزيد هنا 📲</a></p>
+      </div>
+    </div>
+  </div>
+
+  <div id="quiz-panel">
+    <div class="progress-area">
+      <div class="progress-info">
+        <span class="q-counter" id="qCounter">السؤال ١ من ١٠</span>
+        <span class="score-badge" id="scoreBadge">النتيجة: ٠</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill" style="width:0%"></div>
+      </div>
+    </div>
+
+    <div class="question-card" id="questionCard">
+      <div class="q-number" id="qNum">١</div>
+      <div class="question-text" id="questionText">نص السؤال هنا</div>
+    </div>
+
+    <div class="options-grid" id="optionsGrid"></div>
+    <button class="next-btn" id="nextBtn" onclick="nextQuestion()">السؤال التالي ◀</button>
+  </div>
+
+  <div id="results-panel">
+    <div class="results-card">
+      <span class="trophy" id="trophyEmoji">🏆</span>
+      <div class="results-title" id="resultsTitle">أداء رائع!</div>
+      <div class="score-circle" id="scoreCircle">
+        <div class="score-circle-inner">
+          <span class="score-num" id="scoreNum">0</span>
+          <span class="score-total" id="scoreTotal">من 10</span>
+        </div>
+      </div>
+      <div class="stats-row">
+        <div class="stat-box correct-stat">
+          <span class="stat-num" id="correctCount">0</span>
+          <span class="stat-label">✅ صحيح</span>
+        </div>
+        <div class="stat-box wrong-stat">
+          <span class="stat-num" id="wrongCount">0</span>
+          <span class="stat-label">❌ خطأ</span>
+        </div>
+      </div>
+      <p class="result-msg" id="resultMsg">أحسنت! استمر في المذاكرة.</p>
+      <button class="replay-btn" onclick="replayQuiz()">🔁 حاول مجدداً</button>
+      <button class="home-btn" onclick="goHome()">🏠 الرئيسية</button>
+    </div>
+
+    <div class="footer-credit">
+      <p>الشكر موصول لمن افادنا بها</p>
+      <p>تصميم د/فواز &nbsp;|&nbsp; <a href="https://t.me/TAqhjT3MFVE1Yzk0" target="_blank">تفضل للمزيد هنا 📲</a></p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// Generate stars
+(function() {
+  const container = document.getElementById('stars');
+  for (let i = 0; i < 60; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    s.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*100}%;--d:${2+Math.random()*4}s;--delay:${Math.random()*4}s;--op:${0.2+Math.random()*0.6};width:${1+Math.random()*3}px;height:${1+Math.random()*3}px`;
+    container.appendChild(s);
+  }
+})();
+
+// ==================== QUESTION BANK ====================
+// الأسئلة مأخوذة من ملزمة أسئلة كفايات عربي (بدون أي ذكر لأسماء شخصية)
+const allQuestions = [
+  // نحو وإملاء
+  {q:"من حروف الجر:", opts:["واو المعية","واو القسم","لام الأمر","لا الناهية"], ans:1, type:"grammar"},
+  {q:"قال تعالى : { وأن تصوموا خير لكم } (أن):", opts:["ناسخة","ناصبة","مصدرية","شرطية"], ans:2, type:"grammar"},
+  {q:"جمع كلمة (قاضي) جمع مذكر سالم هو:", opts:["قاضون","قاضيون","قضاة","قواضي"], ans:0, type:"grammar"},
+  {q:"أسلوب (يالله للمسلمين) يعتبر أسلوب:", opts:["نداء","استغاثة","ندبة","تعجب"], ans:1, type:"grammar"},
+  {q:"يجوز تقديم المفعول به في جملة:", opts:["أكرم زيد أباه","حج المسلمون البيت","زار أخي صديقي","ضرب موسى عيسى"], ans:1, type:"grammar"},
+  {q:"الجملة الصحيحة إملائياً من بين الجمل التالية:", opts:["اقرأ القرآن","إقرأ القرآن","اقرء القرآن","إقرء القرآن"], ans:0, type:"grammar"},
+  {q:"في أي الأمثلة أدناه تُعرب الجملة التي تحتها خط نعتاً؟ (أبوه كريم)", opts:["هذا رجل أبوه كريم","الرجل أبوه كريم","الرجل يكرم أباه","محمد أبوه كريم"], ans:0, type:"grammar"},
+  
+  // تربوي ولغويات
+  {q:"من أهم نظريات الاكتساب اللغوي الحديثة:", opts:["نظرية المحاكاة","نظرية الاصطلاح","النظرية التوقيفية","النظرية السلوكية"], ans:3, type:"ped"},
+  {q:"تكرار حرف واحد مرات عدة دون مسوغ لذلك، هذا العيب النطقي يسمى:", opts:["الفأفأة","الإبدال","السرعة","الخمخمة"], ans:0, type:"ped"},
+
+  // أدب وبلاغة
+  {q:"يوصل بين جملتي النفي والدعاء في مثل قول القائل: (لا وعافاك الله):", opts:["لاختلاف الجملتين خبرا وإنشاء","لأن الفصل يوهم خلاف المراد","لاتفاق الجملتين خبرا وإنشاء","لعدم التناسب بين الجملتين"], ans:1, type:"lit"},
+  {q:"الجناس هو تشابه الكلمتين في:", opts:["المعنى لا اللفظ","اللفظ لا المعنى","الوزن والمعنى","المعنى لا الوزن"], ans:1, type:"lit"},
+  {q:"من شعراء الزهد والحكمة في العصر العباسي:", opts:["أبو تمام","البحتري","ابن الرومي","أبو العتاهية"], ans:3, type:"lit"}
+];
+
+let questions = [];
+let currentIdx = 0;
+let score = 0;
+let wrongScore = 0;
+let answered = false;
+
+function toArabicNum(n) {
+  return n.toString().replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d]);
+}
+
+function shuffle(arr) {
+  for (let i = arr.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]] = [arr[j],arr[i]];
+  }
+  return arr;
+}
+
+function startQuiz() {
+  const qcount = document.querySelector('input[name="qcount"]:checked').value;
+  const qtype = document.querySelector('input[name="qtype"]:checked').value;
+
+  let pool = allQuestions;
+  if (qtype !== 'mix') pool = allQuestions.filter(q => q.type === qtype);
+  if (pool.length === 0) pool = allQuestions; // fallback if category is empty
+
+  pool = shuffle([...pool]);
+  const count = qcount === 'all' ? pool.length : Math.min(parseInt(qcount), pool.length);
+  questions = pool.slice(0, count);
+
+  currentIdx = 0;
+  score = 0;
+  wrongScore = 0;
+
+  document.getElementById('settings-panel').style.display = 'none';
+  document.getElementById('quiz-panel').style.display = 'block';
+  document.getElementById('results-panel').style.display = 'none';
+
+  loadQuestion();
+}
+
+function loadQuestion() {
+  if (currentIdx >= questions.length) { showResults(); return; }
+  answered = false;
+
+  const q = questions[currentIdx];
+  const total = questions.length;
+  const num = currentIdx + 1;
+
+  document.getElementById('qCounter').textContent = `السؤال ${toArabicNum(num)} من ${toArabicNum(total)}`;
+  document.getElementById('scoreBadge').textContent = `النتيجة: ${toArabicNum(score)}`;
+  document.getElementById('progressFill').style.width = `${((num-1)/total)*100}%`;
+  document.getElementById('qNum').textContent = toArabicNum(num);
+  document.getElementById('questionText').innerHTML = q.q;
+  document.getElementById('nextBtn').style.display = 'none';
+
+  // Rebuild question card animation
+  const card = document.getElementById('questionCard');
+  card.style.animation = 'none';
+  requestAnimationFrame(() => { card.style.animation = ''; card.style.animation = 'cardIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)'; });
+
+  // Shuffle options with correct answer tracking
+  const opts = q.opts.map((o, i) => ({text: o, isCorrect: i === q.ans}));
+  shuffle(opts);
+
+  const grid = document.getElementById('optionsGrid');
+  grid.innerHTML = '';
+  opts.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.innerHTML = opt.text;
+    btn.dataset.correct = opt.isCorrect;
+    btn.onclick = () => selectAnswer(btn, opt.isCorrect, opt.text, opts);
+    grid.appendChild(btn);
+  });
+}
+
+function selectAnswer(btn, isCorrect, selectedText, opts) {
+  if (answered) return;
+  answered = true;
+
+  const allBtns = document.querySelectorAll('.option-btn');
+  allBtns.forEach(b => b.disabled = true);
+
+  // Find correct answer text
+  const correctText = opts.find(o => o.isCorrect).text;
+
+  if (isCorrect) {
+    btn.classList.add('correct');
+    score++;
+    showFeedback(true, correctText);
+    spawnParticles(true);
+  } else {
+    btn.classList.add('wrong');
+    wrongScore++;
+    // Reveal correct
+    allBtns.forEach(b => {
+      if (b.dataset.correct === 'true') b.classList.add('reveal');
+    });
+    showFeedback(false, correctText);
+  }
+
+  document.getElementById('scoreBadge').textContent = `النتيجة: ${toArabicNum(score)}`;
+
+  setTimeout(() => {
+    hideFeedback();
+    document.getElementById('nextBtn').style.display = 'block';
+    document.getElementById('nextBtn').textContent = currentIdx < questions.length - 1 ? 'السؤال التالي ◀' : '🏆 عرض النتيجة';
+  }, 1800);
+}
+
+function showFeedback(correct, correctAnswer) {
+  const overlay = document.getElementById('feedbackOverlay');
+  const box = document.getElementById('feedbackBox');
+  const emoji = document.getElementById('feedbackEmoji');
+  const title = document.getElementById('feedbackTitle');
+  const sub = document.getElementById('feedbackSubtitle');
+  const ans = document.getElementById('correctAnswerShow');
+
+  if (correct) {
+    box.className = 'feedback-box correct-box';
+    const emojis = ['🎉','✨','🌟','💫','🏅','👏'];
+    emoji.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+    title.textContent = 'ياسلام برافو عليك';
+    sub.textContent = 'إجابة صحيحة ورائعة!';
+    ans.style.display = 'none';
+  } else {
+    box.className = 'feedback-box wrong-box';
+    emoji.textContent = '💪';
+    title.textContent = 'حظ اوفر';
+    sub.textContent = 'الإجابة الصحيحة هي:';
+    ans.innerHTML = correctAnswer;
+    ans.style.display = 'block';
+  }
+
+  overlay.classList.add('show');
+}
+
+function hideFeedback() {
+  document.getElementById('feedbackOverlay').classList.remove('show');
+}
+
+function spawnParticles(correct) {
+  const container = document.getElementById('particleContainer');
+  const colors = correct
+    ? ['#c9a227','#e8c84a','#2ecc71','#f1c40f','#ffffff']
+    : ['#e74c3c','#c0392b','#ff7675'];
+
+  for (let i = 0; i < 20; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.cssText = `
+      left:${30+Math.random()*40}%;
+      top:${40+Math.random()*20}%;
+      background:${colors[Math.floor(Math.random()*colors.length)]};
+      animation-duration:${0.8+Math.random()*0.8}s;
+      animation-delay:${Math.random()*0.3}s;
+      width:${4+Math.random()*8}px;
+      height:${4+Math.random()*8}px;
+      border-radius:${Math.random()>0.5?'50%':'2px'};
+    `;
+    container.appendChild(p);
+    setTimeout(() => p.remove(), 2000);
+  }
+}
+
+function nextQuestion() {
+  currentIdx++;
+  loadQuestion();
+}
+
+function showResults() {
+  document.getElementById('quiz-panel').style.display = 'none';
+  document.getElementById('results-panel').style.display = 'block';
+
+  const total = questions.length;
+  const pct = Math.round((score/total)*100);
+
+  document.getElementById('scoreNum').textContent = toArabicNum(score);
+  document.getElementById('scoreTotal').textContent = `من ${toArabicNum(total)}`;
+  document.getElementById('correctCount').textContent = toArabicNum(score);
+  document.getElementById('wrongCount').textContent = toArabicNum(wrongScore);
+
+  document.getElementById('scoreCircle').style.setProperty('--pct', `${pct}%`);
+
+  let trophy, title, msg;
+  if (pct >= 90) { trophy='🏆'; title='امتياز تام!'; msg='ياسلام برافو عليك! مستوى مذهل 🎖️'; }
+  else if (pct >= 75) { trophy='🥇'; title='أداء ممتاز!'; msg='أحسنت! تمتلك معرفة واسعة، واصل التميز 💪'; }
+  else if (pct >= 60) { trophy='🥈'; title='جيد جداً'; msg='نتيجة جيدة، بقليل من المراجعة ستصل للقمة 📚'; }
+  else if (pct >= 50) { trophy='🥉'; title='لا بأس!'; msg='تحتاج إلى مزيد من المذاكرة، المثابرة مفتاح النجاح 🔑'; }
+  else { trophy='💡'; title='تحتاج مراجعة'; msg='لا تيأس! راجع المادة وأعد الاختبار، ستنجح بإذن الله 🌟'; }
+
+  document.getElementById('trophyEmoji').textContent = trophy;
+  document.getElementById('resultsTitle').textContent = title;
+  document.getElementById('resultMsg').textContent = msg;
+
+  if (pct >= 75) launchConfetti();
+}
+
+function launchConfetti() {
+  const colors = ['#c9a227','#e8c84a','#2ecc71','#3498db','#e74c3c','#9b59b6','#ffffff'];
+  for (let i = 0; i < 80; i++) {
+    setTimeout(() => {
+      const c = document.createElement('div');
+      c.className = 'confetti-piece';
+      c.style.cssText = `
+        left:${Math.random()*100}%;
+        top:-10px;
+        background:${colors[Math.floor(Math.random()*colors.length)]};
+        width:${6+Math.random()*10}px;
+        height:${6+Math.random()*10}px;
+        border-radius:${Math.random()>0.5?'50%':'0'};
+        animation-duration:${2+Math.random()*2}s;
+        animation-name:confettiFall;
+      `;
+      document.body.appendChild(c);
+      setTimeout(() => c.remove(), 4000);
+    }, i*30);
+  }
+}
+
+function replayQuiz() {
+  startQuiz();
+}
+
+function goHome() {
+  document.getElementById('results-panel').style.display = 'none';
+  document.getElementById('settings-panel').style.display = 'block';
+}
+
+// Hide overlay on click
+document.getElementById('feedbackOverlay').addEventListener('click', hideFeedback);
+</script>
+</body>
+</html>
