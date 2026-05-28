@@ -1,0 +1,3630 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>منصة التقويم الذاتي المدرسي | الدليل الاسترشادي التفاعلي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Amiri:wght@400;700&family=Reem+Kufi:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+  if (typeof pdfjsLib !== 'undefined') {
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  }
+</script>
+<style>
+  :root {
+    --primary: #1a4d7c;
+    --primary-dark: #0f3056;
+    --primary-light: #2d6fa3;
+    --accent: #c8a13b;
+    --accent-dark: #a8821e;
+    --accent-light: #e6c674;
+    --bg: #f5f1e8;
+    --bg-paper: #fbf8f1;
+    --bg-card: #ffffff;
+    --ink: #1a1f2e;
+    --ink-soft: #4a5468;
+    --ink-muted: #7a8195;
+    --border: #d8d3c4;
+    --border-light: #e8e3d4;
+    --excellence: #2d7d4e;
+    --excellence-bg: #e6f3ea;
+    --progress: #2563eb;
+    --progress-bg: #dbeafe;
+    --launch: #ea8a1f;
+    --launch-bg: #fef3e2;
+    --preparation: #c93838;
+    --preparation-bg: #fde8e8;
+    --shadow-sm: 0 1px 2px rgba(15, 48, 86, 0.08);
+    --shadow: 0 2px 8px rgba(15, 48, 86, 0.08), 0 1px 3px rgba(15, 48, 86, 0.06);
+    --shadow-md: 0 8px 24px rgba(15, 48, 86, 0.10), 0 2px 6px rgba(15, 48, 86, 0.06);
+    --shadow-lg: 0 16px 48px rgba(15, 48, 86, 0.14);
+    --radius: 10px;
+    --radius-lg: 16px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Tajawal', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.7;
+    min-height: 100vh;
+    background-image:
+      radial-gradient(at 15% 10%, rgba(200, 161, 59, 0.07) 0%, transparent 50%),
+      radial-gradient(at 85% 80%, rgba(26, 77, 124, 0.06) 0%, transparent 50%);
+    background-attachment: fixed;
+  }
+
+  /* زخرفة عربية في الخلفية */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='none' stroke='%231a4d7c' stroke-opacity='0.025' stroke-width='1'%3E%3Cpath d='M40 0L0 40L40 80L80 40Z'/%3E%3Cpath d='M40 20L20 40L40 60L60 40Z'/%3E%3C/g%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ===== HEADER ===== */
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 50%, var(--primary-light) 100%);
+    color: white;
+    box-shadow: var(--shadow-md);
+    border-bottom: 3px solid var(--accent);
+  }
+
+  .topbar-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 16px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .brand-logo {
+    width: 52px;
+    height: 52px;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    box-shadow: 0 4px 12px rgba(200, 161, 59, 0.4);
+    position: relative;
+  }
+
+  .brand-logo::after {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 9px;
+  }
+
+  .brand-text h1 {
+    font-family: 'Reem Kufi', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    margin-bottom: 2px;
+  }
+
+  .brand-text p {
+    font-size: 12.5px;
+    opacity: 0.85;
+    font-weight: 400;
+  }
+
+  .nav-tabs {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .nav-btn {
+    background: rgba(255, 255, 255, 0.08);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 9px 16px;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 13.5px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .nav-btn:hover {
+    background: rgba(255, 255, 255, 0.16);
+    transform: translateY(-1px);
+  }
+
+  .nav-btn.active {
+    background: var(--accent);
+    border-color: var(--accent-dark);
+    color: var(--primary-dark);
+    font-weight: 700;
+    box-shadow: 0 2px 8px rgba(200, 161, 59, 0.4);
+  }
+
+  /* ===== MAIN ===== */
+  main {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 32px 28px 80px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .page { display: none; animation: slide-in 0.45s cubic-bezier(.2,.8,.3,1); }
+  .page.active { display: block; }
+
+  @keyframes slide-in {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    background: linear-gradient(135deg, var(--bg-paper) 0%, #fff 100%);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 44px;
+    margin-bottom: 32px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 280px; height: 280px;
+    background: radial-gradient(circle, rgba(200, 161, 59, 0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -50px; left: -50px;
+    width: 320px; height: 320px;
+    background: radial-gradient(circle, rgba(26, 77, 124, 0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(200, 161, 59, 0.15);
+    color: var(--accent-dark);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+
+  .hero h2 {
+    font-family: 'Reem Kufi', sans-serif;
+    font-size: 36px;
+    color: var(--primary-dark);
+    margin-bottom: 14px;
+    line-height: 1.3;
+    font-weight: 700;
+  }
+
+  .hero h2 .accent {
+    background: linear-gradient(135deg, var(--accent-dark) 0%, var(--accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero p {
+    font-size: 16px;
+    color: var(--ink-soft);
+    max-width: 740px;
+    margin-bottom: 28px;
+    line-height: 1.85;
+  }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 14px;
+  }
+
+  .stat {
+    background: white;
+    padding: 18px 20px;
+    border-radius: 12px;
+    border: 1px solid var(--border-light);
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .stat::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 4px; height: 100%;
+    background: var(--stat-color, var(--primary));
+  }
+
+  .stat:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .stat-num {
+    font-family: 'Reem Kufi', sans-serif;
+    font-size: 34px;
+    font-weight: 700;
+    color: var(--stat-color, var(--primary));
+    line-height: 1;
+    display: block;
+  }
+
+  .stat-label {
+    font-size: 13px;
+    color: var(--ink-muted);
+    margin-top: 6px;
+    font-weight: 500;
+  }
+
+  /* ===== SECTIONS ===== */
+  .section {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    margin-bottom: 28px;
+    box-shadow: var(--shadow);
+  }
+
+  .section-title {
+    font-family: 'Reem Kufi', sans-serif;
+    font-size: 24px;
+    color: var(--primary-dark);
+    margin-bottom: 8px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-title::before {
+    content: '';
+    width: 5px;
+    height: 28px;
+    background: linear-gradient(180deg, var(--accent) 0%, var(--primary) 100%);
+    border-radius: 3px;
+  }
+
+  .section-subtitle {
+    color: var(--ink-muted);
+    font-size: 14.5px;
+    margin-bottom: 24px;
+  }
+
+  /* ===== PERFORMANCE LEVELS ===== */
+  .levels-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 14px;
+  }
+
+  .level {
+    padding: 22px;
+    border-radius: 12px;
+    border: 2px solid;
+    background: var(--lvl-bg);
+    border-color: var(--lvl-color);
+    position: relative;
+    transition: transform 0.25s, box-shadow 0.25s;
+  }
+
+  .level:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+
+  .level-icon-box {
+    width: 48px; height: 48px;
+    background: var(--lvl-color);
+    color: white;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin-bottom: 12px;
+  }
+
+  .level-name {
+    font-family: 'Reem Kufi', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--lvl-color);
+    margin-bottom: 4px;
+  }
+
+  .level-range {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--ink-soft);
+    margin-bottom: 10px;
+    padding: 4px 10px;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 14px;
+    display: inline-block;
+  }
+
+  .level-desc {
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+
+  .level-desc strong { color: var(--lvl-color); }
+
+  /* ===== DOMAINS GRID ===== */
+  .domains {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 18px;
+  }
+
+  .domain {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 26px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(.2,.8,.3,1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .domain::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0; left: 0;
+    height: 5px;
+    background: var(--d-color);
+  }
+
+  .domain::after {
+    content: '';
+    position: absolute;
+    bottom: -30px; left: -30px;
+    width: 120px; height: 120px;
+    background: var(--d-color);
+    opacity: 0.05;
+    border-radius: 50%;
+    transition: transform 0.4s;
+  }
+
+  .domain:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--d-color);
+  }
+
+  .domain:hover::after { transform: scale(2); }
+
+  .domain-icon {
+    font-size: 42px;
+    margin-bottom: 14px;
+    display: block;
+    position: relative;
+    z-index: 1;
+  }
+
+  .domain h3 {
+    font-family: 'Reem Kufi', sans-serif;
+    font-size: 20px;
+    color: var(--primary-dark);
+    margin-bottom: 14px;
+    font-weight: 700;
+    position: relative;
+    z-index: 1;
+  }
+
+  .domain-meta {
+    display: flex;
+    gap: 14px;
+    font-size: 12.5px;
+    color: var(--ink-muted);
+    padding-top: 14px;
+    border-top: 1px dashed var(--border);
+    position: relative;
+    z-index: 1;
+  }
+
+  .domain-meta span {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  /* ===== BREADCRUMB ===== */
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 22px;
+    font-size: 14px;
+    color: var(--ink-muted);
+    flex-wrap: wrap;
+    background: white;
+    padding: 10px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--border-light);
+  }
+
+  .breadcrumb a {
+    color: var(--primary);
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: color 0.2s;
+  }
+
+  .breadcrumb a:hover { color: var(--accent-dark); }
+  .breadcrumb-sep { color: var(--ink-muted); font-weight: 700; }
+  .breadcrumb-current { color: var(--ink); font-weight: 600; }
+
+  /* ===== DOMAIN HEADER ===== */
+  .domain-header {
+    background: linear-gradient(135deg, var(--d-color, var(--primary)) 0%, var(--primary-dark) 100%);
+    color: white;
+    padding: 36px;
+    border-radius: var(--radius-lg);
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+  }
+
+  .domain-header::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -10%;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .domain-header-content { position: relative; z-index: 1; }
+
+  .domain-header-icon {
+    font-size: 64px;
+    margin-bottom: 12px;
+  }
+
+  .domain-header h2 {
+    font-family: 'Reem Kufi', sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .domain-header p {
+    opacity: 0.9;
+    font-size: 15px;
+  }
+
+  /* ===== STANDARD ===== */
+  .standard {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 18px;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .standard-head {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    color: white;
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+  }
+
+  .standard-head h3 {
+    font-family: 'Reem Kufi', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .standard-head h3::before { content: '📐'; font-size: 20px; }
+
+  .standard-badge {
+    background: rgba(255, 255, 255, 0.18);
+    padding: 5px 13px;
+    border-radius: 16px;
+    font-size: 12px;
+    font-weight: 600;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  /* ===== INDICATOR ===== */
+  .indicator {
+    border-bottom: 1px solid var(--border-light);
+    padding: 22px 24px;
+    background: linear-gradient(180deg, #fafaf5 0%, white 100%);
+  }
+
+  .indicator:last-child { border-bottom: none; }
+
+  .indicator-head {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px dashed var(--border);
+  }
+
+  .indicator-tag {
+    background: var(--accent);
+    color: var(--primary-dark);
+    font-weight: 700;
+    font-size: 11.5px;
+    padding: 5px 12px;
+    border-radius: 14px;
+    white-space: nowrap;
+    font-family: 'Reem Kufi', sans-serif;
+    flex-shrink: 0;
+  }
+
+  .indicator-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--primary-dark);
+    line-height: 1.6;
+  }
+
+  /* ===== PARAGRAPH CARD ===== */
+  .para {
+    background: white;
+    border: 1px solid var(--border-light);
+    border-right: 4px solid var(--primary-light);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 14px;
+    transition: all 0.2s;
+  }
+
+  .para:hover {
+    border-right-color: var(--accent);
+    box-shadow: var(--shadow);
+    transform: translateX(-3px);
+  }
+
+  .para-head {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .para-num {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    color: white;
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+    flex-shrink: 0;
+    font-family: 'Reem Kufi', sans-serif;
+    box-shadow: 0 2px 6px rgba(26, 77, 124, 0.25);
+  }
+
+  .para-text {
+    flex: 1;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.7;
+  }
+
+  .para-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 14px 0;
+  }
+
+  @media (max-width: 768px) {
+    .para-grid { grid-template-columns: 1fr; }
+  }
+
+  .meta-block {
+    background: var(--bg-paper);
+    padding: 14px;
+    border-radius: 8px;
+    border: 1px solid var(--border-light);
+  }
+
+  .meta-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .meta-label::before {
+    content: '';
+    width: 3px;
+    height: 14px;
+    background: var(--accent);
+    border-radius: 2px;
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .chip {
+    background: white;
+    padding: 5px 11px;
+    border-radius: 14px;
+    font-size: 12.5px;
+    color: var(--ink);
+    border: 1px solid var(--border);
+    font-weight: 500;
+  }
+
+  .chip.source {
+    background: linear-gradient(135deg, #fef9eb 0%, #fdf3d5 100%);
+    border-color: var(--accent);
+    color: var(--accent-dark);
+    font-weight: 600;
+  }
+
+  /* ===== EVIDENCE ===== */
+  .ev-toggle {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 9px 18px;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .ev-toggle:hover {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow);
+  }
+
+  .ev-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 6px;
+    margin-top: 14px;
+  }
+
+  @media (min-width: 900px) {
+    .ev-list { grid-template-columns: 1fr 1fr; }
+  }
+
+  .ev-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    padding: 9px 13px;
+    background: var(--excellence-bg);
+    border-radius: 7px;
+    border: 1px solid rgba(45, 125, 78, 0.15);
+    font-size: 13px;
+    color: var(--ink);
+    line-height: 1.5;
+  }
+
+  .ev-check {
+    color: var(--excellence);
+    font-weight: 700;
+    font-size: 14px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .ev-list.hidden { display: none; }
+
+  /* ===== UPLOAD / ANALYSIS ===== */
+  .upload-area {
+    border: 3px dashed var(--border);
+    border-radius: 14px;
+    padding: 56px 24px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    background: var(--bg-paper);
+  }
+
+  .upload-area:hover, .upload-area.dragover {
+    border-color: var(--accent);
+    background: #fef9eb;
+    transform: scale(1.005);
+  }
+
+  .upload-icon {
+    font-size: 64px;
+    margin-bottom: 14px;
+    display: block;
+  }
+
+  .upload-text {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--primary-dark);
+    margin-bottom: 6px;
+  }
+
+  .upload-hint {
+    font-size: 13.5px;
+    color: var(--ink-muted);
+  }
+
+  #pdfFile { display: none; }
+
+  /* ===== BUTTONS ===== */
+  .btn {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    color: white;
+    border: none;
+    padding: 11px 24px;
+    border-radius: 9px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .btn-accent {
+    background: linear-gradient(135deg, var(--accent-dark) 0%, var(--accent) 100%);
+    color: white;
+  }
+
+  .btn-success {
+    background: linear-gradient(135deg, var(--excellence) 0%, #3d9963 100%);
+  }
+
+  .btn-outline {
+    background: white;
+    color: var(--primary);
+    border: 1.5px solid var(--primary);
+    box-shadow: none;
+  }
+
+  .btn-outline:hover {
+    background: var(--primary);
+    color: white;
+  }
+
+  .btn-danger {
+    background: white;
+    color: var(--preparation);
+    border: 1.5px solid var(--preparation);
+    box-shadow: none;
+  }
+
+  .btn-danger:hover {
+    background: var(--preparation);
+    color: white;
+  }
+
+  /* ===== ALERTS ===== */
+  .alert {
+    padding: 14px 18px;
+    border-radius: 10px;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 14px;
+    border: 1px solid;
+    line-height: 1.6;
+  }
+
+  .alert-info { background: var(--progress-bg); border-color: #93c5fd; color: #1e40af; }
+  .alert-success { background: var(--excellence-bg); border-color: #86efac; color: #166534; }
+  .alert-warn { background: var(--launch-bg); border-color: #fcd34d; color: #92400e; }
+
+  /* ===== TABS ===== */
+  .tabs {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 22px;
+    background: var(--bg-paper);
+    padding: 6px;
+    border-radius: 12px;
+    border: 1px solid var(--border-light);
+  }
+
+  .tab {
+    flex: 1;
+    background: transparent;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink-muted);
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .tab.active {
+    background: white;
+    color: var(--primary);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .tab:hover:not(.active) {
+    background: rgba(255, 255, 255, 0.5);
+  }
+
+  /* ===== MANUAL INPUTS ===== */
+  .manual-group {
+    background: var(--bg-paper);
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid var(--border-light);
+    margin-bottom: 16px;
+  }
+
+  .manual-group h4 {
+    font-family: 'Reem Kufi', sans-serif;
+    font-size: 17px;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .manual-row {
+    display: grid;
+    grid-template-columns: 1fr 110px;
+    gap: 12px;
+    align-items: center;
+    padding: 10px 14px;
+    background: white;
+    border-radius: 8px;
+    border: 1px solid var(--border-light);
+    margin-bottom: 8px;
+    font-size: 13.5px;
+  }
+
+  .manual-row input {
+    padding: 8px 12px;
+    border: 1.5px solid var(--border);
+    border-radius: 7px;
+    font-family: inherit;
+    font-size: 14px;
+    text-align: center;
+    font-weight: 700;
+    color: var(--primary-dark);
+    background: var(--bg-paper);
+  }
+
+  .manual-row input:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(200, 161, 59, 0.15);
+  }
+
+  /* ===== RESULTS ===== */
+  .results-summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+
+  .result-card {
+    background: white;
+    padding: 22px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s;
+  }
+
+  .result-card:hover { transform: translateY(-2px); }
+
+  .result-card.l-excellence { border-top: 4px solid var(--excellence); }
+  .result-card.l-progress { border-top: 4px solid var(--progress); }
+  .result-card.l-launch { border-top: 4px solid var(--launch); }
+  .result-card.l-preparation { border-top: 4px solid var(--preparation); }
+
+  .result-icon { font-size: 30px; margin-bottom: 6px; }
+
+  .result-num {
+    font-family: 'Reem Kufi', sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--primary-dark);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .result-label {
+    font-size: 13px;
+    color: var(--ink-muted);
+    font-weight: 500;
+  }
+
+  /* ===== DOMAIN RESULTS ===== */
+  .d-result {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 18px;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .d-result-head {
+    padding: 18px 22px;
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .d-result-head h3 {
+    font-family: 'Reem Kufi', sans-serif;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .score-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 6px 14px;
+    border-radius: 18px;
+    font-weight: 700;
+  }
+
+  .pill {
+    padding: 4px 12px;
+    border-radius: 14px;
+    font-size: 12px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .pill.excellence { background: var(--excellence-bg); color: var(--excellence); }
+  .pill.progress { background: var(--progress-bg); color: var(--progress); }
+  .pill.launch { background: var(--launch-bg); color: var(--launch); }
+  .pill.preparation { background: var(--preparation-bg); color: var(--preparation); }
+
+  .s-result {
+    padding: 14px 22px;
+    border-bottom: 1px solid var(--border-light);
+    display: grid;
+    grid-template-columns: 1fr 200px auto;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .s-result:last-child { border-bottom: none; }
+
+  @media (max-width: 768px) {
+    .s-result { grid-template-columns: 1fr; gap: 8px; }
+  }
+
+  .s-name {
+    font-weight: 600;
+    color: var(--ink);
+    font-size: 14px;
+  }
+
+  .progress-bar {
+    height: 8px;
+    background: var(--bg-paper);
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--border-light);
+  }
+
+  .progress-fill {
+    height: 100%;
+    border-radius: 8px;
+    transition: width 0.8s cubic-bezier(.2,.8,.3,1);
+  }
+
+  .progress-fill.excellence { background: linear-gradient(90deg, #3d9963, var(--excellence)); }
+  .progress-fill.progress { background: linear-gradient(90deg, #60a5fa, var(--progress)); }
+  .progress-fill.launch { background: linear-gradient(90deg, var(--accent-light), var(--launch)); }
+  .progress-fill.preparation { background: linear-gradient(90deg, #f87171, var(--preparation)); }
+
+  /* ===== IMPROVEMENT PLAN ===== */
+  .plan {
+    background: white;
+    border: 2px solid;
+    border-radius: 14px;
+    padding: 28px;
+    margin-bottom: 20px;
+    position: relative;
+    box-shadow: var(--shadow);
+  }
+
+  .plan.urgent {
+    border-color: var(--preparation);
+    background: linear-gradient(135deg, white 0%, #fff5f5 100%);
+  }
+
+  .plan.improvement {
+    border-color: var(--launch);
+    background: linear-gradient(135deg, white 0%, #fffbf0 100%);
+  }
+
+  .plan-badge {
+    position: absolute;
+    top: -13px;
+    right: 24px;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    color: white;
+    box-shadow: var(--shadow);
+  }
+
+  .plan-badge.urgent { background: var(--preparation); }
+  .plan-badge.improvement { background: var(--launch); }
+
+  .plan h3 {
+    font-family: 'Reem Kufi', sans-serif;
+    font-size: 22px;
+    color: var(--primary-dark);
+    margin: 10px 0 12px;
+    font-weight: 700;
+  }
+
+  .plan-meta {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    font-size: 13.5px;
+    margin-bottom: 22px;
+    padding-bottom: 18px;
+    border-bottom: 1px dashed var(--border);
+  }
+
+  .plan-meta span { color: var(--ink-muted); }
+  .plan-meta strong { color: var(--primary-dark); }
+
+  .plan-section { margin-bottom: 20px; }
+
+  .plan-section-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .plan-section-title::before {
+    content: '';
+    width: 4px;
+    height: 18px;
+    background: var(--accent);
+    border-radius: 2px;
+  }
+
+  .objectives {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .obj-item {
+    background: var(--bg-paper);
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    border-right: 3px solid var(--primary-light);
+  }
+
+  .obj-num {
+    background: var(--primary);
+    color: white;
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 12px;
+    flex-shrink: 0;
+  }
+
+  .programs-tbl {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    font-size: 13px;
+  }
+
+  .programs-tbl th {
+    background: var(--primary);
+    color: white;
+    padding: 10px 14px;
+    text-align: right;
+    font-weight: 700;
+    font-size: 13px;
+  }
+
+  .programs-tbl td {
+    padding: 11px 14px;
+    border-bottom: 1px solid var(--border-light);
+    color: var(--ink);
+  }
+
+  .programs-tbl tr:last-child td { border-bottom: none; }
+  .programs-tbl tr:nth-child(even) td { background: var(--bg-paper); }
+
+  .tag-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 8px;
+  }
+
+  .tag {
+    background: white;
+    border: 1px solid var(--border-light);
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .tag.kpi { border-right: 3px solid var(--excellence); }
+  .tag.resource { border-right: 3px solid var(--progress); }
+
+  /* ===== EMPTY STATE ===== */
+  .empty {
+    text-align: center;
+    padding: 80px 24px;
+    background: white;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+  }
+
+  .empty-icon {
+    font-size: 72px;
+    margin-bottom: 18px;
+    opacity: 0.4;
+  }
+
+  .empty-title {
+    font-family: 'Reem Kufi', sans-serif;
+    font-size: 22px;
+    color: var(--primary-dark);
+    margin-bottom: 8px;
+    font-weight: 700;
+  }
+
+  .empty-text {
+    font-size: 14.5px;
+    max-width: 480px;
+    margin: 0 auto;
+    color: var(--ink-muted);
+    line-height: 1.8;
+  }
+
+  /* ===== LOADING ===== */
+  .loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 48px;
+    gap: 16px;
+  }
+
+  .spinner {
+    width: 52px; height: 52px;
+    border: 4px solid var(--bg-paper);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ===== SETTINGS ===== */
+  .settings-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .setting-item {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 22px;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .setting-label {
+    font-family: 'Reem Kufi', sans-serif;
+    font-weight: 700;
+    color: var(--primary-dark);
+    margin-bottom: 6px;
+    font-size: 16px;
+  }
+
+  .setting-hint {
+    color: var(--ink-muted);
+    font-size: 13.5px;
+    margin-bottom: 12px;
+    line-height: 1.7;
+  }
+
+  /* ===== CREDITS CARD ===== */
+  .credits {
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 50%, #2a5d8f 100%);
+    color: white;
+    padding: 34px;
+    border-radius: var(--radius-lg);
+    text-align: center;
+    margin-top: 24px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+  }
+
+  .credits::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(200, 161, 59, 0.2) 0%, transparent 40%),
+      radial-gradient(circle at 80% 70%, rgba(200, 161, 59, 0.15) 0%, transparent 40%);
+    pointer-events: none;
+  }
+
+  .credits-content { position: relative; z-index: 1; }
+
+  .credits-title {
+    font-family: 'Reem Kufi', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    letter-spacing: 0.3px;
+  }
+
+  .credits-title .name {
+    color: var(--accent);
+    background: linear-gradient(135deg, var(--accent-light) 0%, var(--accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .credits-divider {
+    width: 60px;
+    height: 2px;
+    background: var(--accent);
+    margin: 16px auto;
+    border-radius: 2px;
+  }
+
+  .credits-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--accent);
+    color: var(--primary-dark);
+    padding: 12px 28px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 700;
+    transition: all 0.2s;
+    box-shadow: 0 4px 14px rgba(200, 161, 59, 0.4);
+  }
+
+  .credits-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(200, 161, 59, 0.5);
+    background: var(--accent-light);
+  }
+
+  .credits-link::before { content: '✈'; font-size: 18px; }
+
+  /* ===== FOOTER ===== */
+  footer {
+    background: var(--primary-dark);
+    color: rgba(255, 255, 255, 0.7);
+    padding: 22px;
+    text-align: center;
+    font-size: 13px;
+    border-top: 3px solid var(--accent);
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 768px) {
+    .hero { padding: 28px 20px; }
+    .hero h2 { font-size: 26px; }
+    .section { padding: 22px; }
+    .topbar-inner { padding: 12px 16px; }
+    .brand-text h1 { font-size: 18px; }
+    main { padding: 20px 16px 60px; }
+    .domain-header { padding: 24px; }
+    .domain-header h2 { font-size: 24px; }
+  }
+
+  /* ===== SCHOOL INFO CARD ===== */
+  .school-info-card {
+    background: linear-gradient(135deg, var(--bg-paper) 0%, #fff 100%);
+    border: 1px solid var(--border);
+    border-right: 5px solid var(--accent);
+    border-radius: var(--radius-lg);
+    padding: 26px;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow);
+  }
+  .school-info-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    padding-bottom: 18px;
+    margin-bottom: 18px;
+    border-bottom: 2px dashed var(--border);
+  }
+  .school-info-title {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .school-info-title h3 {
+    font-family: 'Reem Kufi', sans-serif;
+    font-size: 22px;
+    color: var(--primary-dark);
+    font-weight: 700;
+  }
+  .school-info-title p {
+    font-size: 13.5px;
+    color: var(--ink-muted);
+    margin-top: 2px;
+  }
+  .overall-badge {
+    text-align: center;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    color: white;
+    padding: 14px 26px;
+    border-radius: 14px;
+    box-shadow: var(--shadow-md);
+  }
+  .overall-num {
+    font-family: 'Reem Kufi', sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1;
+  }
+  .overall-label {
+    font-size: 12.5px;
+    opacity: 0.95;
+    margin-top: 4px;
+  }
+  .school-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+  }
+  .info-item {
+    background: white;
+    border: 1px solid var(--border-light);
+    border-radius: 9px;
+    padding: 12px 14px;
+  }
+  .info-label {
+    font-size: 12px;
+    color: var(--ink-muted);
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .info-value {
+    font-size: 14.5px;
+    color: var(--primary-dark);
+    font-weight: 700;
+  }
+
+  /* ===== INDICATORS TABLE ===== */
+  .indicators-table-wrap {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 24px;
+  }
+  .indicators-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+  }
+  .indicators-table th {
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+    color: white;
+    padding: 13px 16px;
+    text-align: right;
+    font-weight: 700;
+    font-size: 13.5px;
+  }
+  .indicators-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border-light);
+    text-align: right;
+  }
+  .indicators-table tr:last-child td { border-bottom: none; }
+  .indicators-table tr:nth-child(even) td { background: var(--bg-paper); }
+  .indicators-table tr.row-needs td {
+    background: var(--launch-bg) !important;
+  }
+  .indicators-table tr:hover td { background: var(--progress-bg); }
+
+  /* ===== STRENGTH CARDS ===== */
+  .strength-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+  .strength-card {
+    background: linear-gradient(135deg, var(--excellence-bg) 0%, #fff 100%);
+    border: 1px solid rgba(45, 125, 78, 0.25);
+    border-right: 4px solid var(--excellence);
+    border-radius: 12px;
+    padding: 18px;
+    transition: all 0.2s;
+  }
+  .strength-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+  .strength-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .strength-tag {
+    background: var(--excellence);
+    color: white;
+    font-family: 'Reem Kufi', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 12px;
+  }
+  .strength-score {
+    font-family: 'Reem Kufi', sans-serif;
+    font-weight: 700;
+    color: var(--excellence);
+    font-size: 16px;
+  }
+  .strength-title {
+    font-size: 14.5px;
+    font-weight: 700;
+    color: var(--primary-dark);
+    line-height: 1.6;
+    margin-bottom: 8px;
+  }
+  .strength-proposal {
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.7;
+    padding-top: 8px;
+    border-top: 1px dashed rgba(45, 125, 78, 0.2);
+  }
+
+  /* ===== ANALYSIS / PROPOSAL TEXT IN PLANS ===== */
+  .report-proposal {
+    background: var(--bg-paper);
+    border-right: 3px solid var(--accent);
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-size: 13.5px;
+    line-height: 1.8;
+    color: var(--ink-soft);
+    margin-top: 8px;
+  }
+
+  /* ===== PRINT ===== */
+  @media print {
+    .topbar, .nav-tabs, .btn, .tabs, footer { display: none !important; }
+    .page { display: block !important; }
+    body { background: white; }
+    body::before { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <div class="brand-logo">🎓</div>
+      <div class="brand-text">
+        <h1>منصة التقويم الذاتي المدرسي</h1>
+        <p>الدليل الاسترشادي لأخصائي التقويم - مؤشرات، فقرات، شواهد، تقييم</p>
+      </div>
+    </div>
+    <nav class="nav-tabs">
+      <button class="nav-btn active" data-page="home">
+        <span>🏠</span> الرئيسية
+      </button>
+      <button class="nav-btn" data-page="domains">
+        <span>📚</span> المجالات
+      </button>
+      <button class="nav-btn" data-page="analysis">
+        <span>📊</span> تحليل التقرير
+      </button>
+      <button class="nav-btn" data-page="plans">
+        <span>🎯</span> خطط التحسين
+      </button>
+      <button class="nav-btn" data-page="settings">
+        <span>⚙️</span> الإعدادات
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ========================== HOME ========================== -->
+<section class="page active" id="page-home">
+  <div class="hero">
+    <div class="hero-content">
+      <div class="hero-eyebrow">✨ هيئة تقويم التعليم والتدريب</div>
+      <h2>أداة <span class="accent">تحليل الوثائق</span> التفاعلية<br>للتقويم الذاتي المدرسي</h2>
+      <p>منصة احترافية متخصصة لأخصائيي التقويم المدرسي، تستعرض المجالات والمعايير والمؤشرات والفقرات بشواهدها المتوقعة بطريقة تفاعلية، وتُمكّنك من استيراد تقارير التقويم الخارجية بصيغة PDF لتحليلها وتوليد خطط تحسين مفصّلة للحالات التي تحتاج تدخّلاً.</p>
+      <div class="stats" id="heroStats"></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2 class="section-title">مستويات الأداء</h2>
+    <p class="section-subtitle">معايير تصنيف الأداء وفق متوسط نسب التحقق - المرجع: هيئة تقويم التعليم والتدريب</p>
+    <div class="levels-grid" id="levelsGrid"></div>
+  </div>
+
+  <div class="section">
+    <h2 class="section-title">المجالات الرئيسية للتقويم</h2>
+    <p class="section-subtitle">انقر على أي مجال للاطلاع على معاييره ومؤشراته وفقراته وشواهده المتوقعة</p>
+    <div class="domains" id="domainsHome"></div>
+  </div>
+</section>
+
+<!-- ========================== DOMAINS ========================== -->
+<section class="page" id="page-domains">
+  <div id="domainsContent"></div>
+</section>
+
+<!-- ========================== ANALYSIS ========================== -->
+<section class="page" id="page-analysis">
+  <h2 class="section-title">تحليل تقرير التقويم الخارجي</h2>
+  <p class="section-subtitle">قم باستيراد تقرير التقويم بصيغة PDF أو إدخال نسب التحقق يدويًا للحصول على تحليل شامل وخطط تحسين تلقائية</p>
+
+  <div class="tabs">
+    <button class="tab active" data-tab="pdf"><span>📄</span> استيراد ملف PDF</button>
+    <button class="tab" data-tab="manual"><span>✏️</span> إدخال يدوي</button>
+  </div>
+
+  <div class="section" id="panel-pdf">
+    <div class="upload-area" id="uploadArea">
+      <span class="upload-icon">📥</span>
+      <div class="upload-text">اسحب ملف التقرير هنا أو انقر للاختيار</div>
+      <div class="upload-hint">PDF فقط - حد أقصى 20 ميجابايت</div>
+      <input type="file" id="pdfFile" accept=".pdf" />
+    </div>
+    <div class="alert alert-info" style="margin-top: 16px;">
+      <span>💡</span>
+      <span>سيتم استخراج نسب التحقق لكل معيار من التقرير وتحليلها تلقائيًا، ثم توليد خطط تحسين للمعايير التي في مستوى الانطلاق أو التهيئة.</span>
+    </div>
+  </div>
+
+  <div class="section" id="panel-manual" style="display:none;">
+    <h3 style="font-family:'Reem Kufi'; font-size:20px; color:var(--primary-dark); margin-bottom:8px;">إدخال نسب التحقق يدويًا</h3>
+    <p style="color: var(--ink-muted); margin-bottom: 22px; font-size: 14px;">أدخل نسبة التحقق لكل معيار (من 0 إلى 100)، يمكن ترك بعض الحقول فارغة</p>
+    <div id="manualInputs"></div>
+    <button class="btn btn-success" onclick="analyzeManual()" style="margin-top: 18px;">
+      <span>📊</span> تحليل النتائج وتوليد خطط التحسين
+    </button>
+  </div>
+
+  <div id="analysisResults"></div>
+</section>
+
+<!-- ========================== PLANS ========================== -->
+<section class="page" id="page-plans">
+  <h2 class="section-title">خطط التحسين والتطوير</h2>
+  <p class="section-subtitle">خطط تحسين متكاملة للمعايير في مستوى الانطلاق والتهيئة (تحت مستوى التقدم والتميز)</p>
+  <div id="plansContent">
+    <div class="empty">
+      <div class="empty-icon">📋</div>
+      <div class="empty-title">لا توجد خطط محفوظة بعد</div>
+      <div class="empty-text">قم باستيراد تقرير التقويم أو إدخال النسب يدويًا من صفحة "تحليل التقرير" لتوليد خطط التحسين تلقائيًا للحالات التي تحتاج تدخّلًا</div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================== SETTINGS ========================== -->
+<section class="page" id="page-settings">
+  <h2 class="section-title">الإعدادات والمعلومات</h2>
+  <p class="section-subtitle">معلومات المنصة والمراجع وإعدادات البيانات</p>
+
+  <div class="settings-grid">
+    <div class="setting-item">
+      <div class="setting-label">📚 المرجع المعتمد</div>
+      <p class="setting-hint">الدليل الاسترشادي لأخصائي التقويم المدرسي - أداة تحليل الوثائق (مؤشرات، فقرات، شواهد، تقييم) - هيئة تقويم التعليم والتدريب - سبتمبر 2023م</p>
+    </div>
+
+    <div class="setting-item">
+      <div class="setting-label">📊 سُلّم التقييم المعتمد</div>
+      <p class="setting-hint">
+        <strong>التميز:</strong> 90% فأعلى (مستوى مرتفع - يتطلب استدامة التميز والابتكار)<br>
+        <strong>التقدم:</strong> 75% إلى أقل من 90% (جيد - يتطلب استمرار المتابعة للتحسين والتطوير)<br>
+        <strong>الانطلاق:</strong> 50% إلى أقل من 75% (مقبول - يتطلب تحسينات كبيرة في بعض المجالات) ⚠️<br>
+        <strong>التهيئة:</strong> أقل من 50% (منخفض - يتطلب إحداث تدخلات جوهرية) 🚨
+      </p>
+    </div>
+
+    <div class="setting-item">
+      <div class="setting-label">🔢 معايير التقييم لكل فقرة</div>
+      <p class="setting-hint">
+        • محقق بدرجة منخفضة: إذا توافر شاهدان فأقل<br>
+        • محقق بدرجة متوسطة: إذا توافر 3-4 شواهد<br>
+        • محقق بدرجة مرتفعة: إذا توافر 5 شواهد<br>
+        • محقق بدرجة مرتفعة جدًا: إذا توافر 6 شواهد فأكثر
+      </p>
+    </div>
+
+    <div class="setting-item">
+      <div class="setting-label">🗑️ إعادة ضبط البيانات</div>
+      <p class="setting-hint">مسح جميع البيانات المُدخلة وخطط التحسين المحفوظة في الجلسة الحالية</p>
+      <button class="btn btn-danger" onclick="resetAll()">
+        <span>🗑️</span> مسح جميع البيانات
+      </button>
+    </div>
+
+    <div class="setting-item">
+      <div class="setting-label">🖨️ تصدير وطباعة</div>
+      <p class="setting-hint">طباعة الصفحة الحالية أو تصدير النتائج والخطط كملف PDF</p>
+      <button class="btn btn-accent" onclick="window.print()">
+        <span>🖨️</span> طباعة / تصدير PDF
+      </button>
+    </div>
+
+    <!-- بطاقة التصميم -->
+    <div class="credits">
+      <div class="credits-content">
+        <div class="credits-title">تصميم د/<span class="name">فواز</span></div>
+        <div class="credits-divider"></div>
+        <a href="https://t.me/TAqhjT3MFVE1Yzk0" target="_blank" rel="noopener" class="credits-link">
+          تفضل للمزيد هنا
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  © منصة التقويم الذاتي المدرسي - أداة تحليل الوثائق
+</footer>
+
+<!-- ===================== DATA ===================== -->
+<script>
+// ====== بيانات المجالات والمعايير والمؤشرات (مستخرجة من PDF) ======
+const DATA = {
+  domains: [
+    {
+      id: 1,
+      name: "الإدارة المدرسية",
+      icon: "🏛️",
+      color: "#1a4d7c",
+      desc: "يشمل التخطيط وقيادة العملية التعليمية والمجتمع المدرسي والتطوير المؤسسي",
+      standards: [
+        {
+          id: "1-1", name: "معيار التخطيط",
+          indicators: [
+            {
+              id: "1-1-1-1",
+              name: "تضع المدرسة خطة تشغيلية مكتملة العناصر، وفق أهداف تطويرية محددة",
+              paragraphs: [
+                {
+                  num: 1, text: "يوجد لدى المدرسة خطة تشغيلية مكتملة العناصر",
+                  docs: ["سجل الخطة التشغيلية"], source: "مدير المدرسة",
+                  evidence: ["توجد خطة تشغيلية تتضمن", "الأهداف", "برامج وأنشطة متنوعة", "متطلبات وإجراءات التنفيذ", "أدوار ومسؤوليات محددة", "مزمنة", "مؤشرات أداء لتحقق الأهداف", "يشارك فيها الكادر التعليمي", "مبادرات نوعية", "جوانب الإبداع والابتكار"]
+                },
+                {
+                  num: 2, text: "أهداف خطة المدرسة محددة، وقابلة للقياس",
+                  docs: ["سجل الخطة التشغيلية"], source: "مدير المدرسة",
+                  evidence: ["الأهداف محددة", "واضحة", "شاملة", "قابلة للقياس", "قابلة للتطبيق", "تطويرية وطموحة", "جوانب الإبداع والابتكار"]
+                },
+                {
+                  num: 3, text: "البرامج والأنشطة تحقق الأهداف التطويرية للمدرسة",
+                  docs: ["سجل برامج الخطة التشغيلية (توثيق برامج)"], source: "مدير المدرسة",
+                  evidence: ["البرامج والأنشطة مرتبطة بالأهداف", "مزمنة", "شاملة (تغطي جميع مجالات الأهداف)", "إجراءات تنفيذها واضحة", "البرامج والأنشطة متنوعة", "تلبي احتياجات جميع المتعلمين ومنهم ذوو الإعاقة", "تلبي احتياجات المتفوقين والموهوبين", "جوانب الإبداع والابتكار"]
+                },
+                {
+                  num: 4, text: "تتوزع الأدوار والمسؤوليات في تنفيذ خطة المدرسة على منسوبيها وفق خطتها الزمنية لتحقيق أهدافها التطويرية",
+                  docs: ["سجل الخطة التشغيلية", "سجل اللجان المدرسية", "سجل التكليفات"], source: "مدير المدرسة",
+                  evidence: ["الأدوار والمسؤوليات محددة", "ترتبط بالبرامج والأنشطة", "شاملة المهام والمسؤوليات", "مزمنة", "تتسم الأدوار المسندة لمنسوبي المدرسة", "جوانب الإبداع والابتكار"]
+                }
+              ]
+            },
+            {
+              id: "1-1-1-2",
+              name: "تتابع المدرسة تنفيذ خططها وتطورها بما يضمن تحقيق أهدافها",
+              paragraphs: [
+                {
+                  num: 5, text: "تتابع المدرسة تنفيذ البرامج والأنشطة وفق الخطة الزمنية",
+                  docs: ["سجل الخطة التشغيلية", "سجل المتابعة والتقويم للخطة", "سجل برامج النشاط", "سجل برامج الإرشاد"], source: "مدير المدرسة",
+                  evidence: ["توافر خطة للمتابعة", "خطة المتابعة مزمنة", "إجراءات المتابعة واضحة", "الأدوار والمسؤوليات محددة", "تحديد المشكلات والتحديات عند التنفيذ", "تقدم الحلول والبدائل لتطويرها", "توافر مؤشرات لمتابعة تقدم تنفيذ البرامج والأنشطة", "جوانب الإبداع والابتكار"]
+                },
+                {
+                  num: 6, text: "تُقَوِّم المدرسة تنفيذ خطتها بما يضمن تحقيق أهدافها",
+                  docs: ["سجل اللجنة الإدارية", "سجل الخطة التشغيلية (قسم المتابعة والتقويم)", "سجل توثيق البرامج"], source: "مدير المدرسة",
+                  evidence: ["توافر أدوات متنوعة في تقويم تنفيذ برامج وأنشطة الخطة (استبانات، تحليل محتوى)", "مراجعة الخطة", "مراجعة الأهداف", "مراجعة البرامج والأنشطة", "مراجعة المؤشرات لقياس تقدم تنفيذ البرامج", "مراجعة الموارد المالية والبشرية والمادية", "تحدد جوانب القوة وفرص التحسين", "تقدم الحلول والبدائل لتطويرها", "جوانب الإبداع والابتكار"]
+                },
+                {
+                  num: 7, text: "تطور المدرسة خطتها بما يضمن تحقيق أهدافها",
+                  docs: ["سجل اللجنة الإدارية", "سجل تطوير وتحسين الخطة التشغيلية"], source: "مدير المدرسة",
+                  evidence: ["تحليل نتائج التقويم", "تحديد جوانب التطوير في ضوء نتائج التقويم", "تحديد أهداف التطوير", "تحديد البرامج والأنشطة", "توافر إجراءات واضحة في تطوير الخطة", "إشراك المجتمع المدرسي في تطوير الخطة", "تحديد المشكلات والتحديات المتوقعة واقتراح الحلول والبدائل", "جوانب الإبداع والابتكار"]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          id: "1-2", name: "معيار قيادة العملية التعليمية",
+          indicators: [
+            {
+              id: "1-2-1-1", name: "تعزز المدرسة القيم الإسلامية والهوية الوطنية",
+              paragraphs: [{
+                num: 8, text: "تستهدف المدرسة تعزيز القيم الإسلامية والهوية الوطنية في خططها وبرامجها وأنشطتها",
+                docs: ["سجل لجنة التوجيه والإرشاد", "سجل التوجيه والإرشاد", "سجل الأنشطة والبرامج"], source: "رائد النشاط، الموجه الطلابي",
+                evidence: ["تستهدف المدرسة تعزيز القيم الإسلامية والهوية الوطنية في خططها", "توافر برامج وأنشطة تعزز القيم الإسلامية لدى المتعلمين", "توافر برامج وأنشطة تعزز الهوية الوطنية وقيم الانتماء للوطن والولاء للقيادة الرشيدة", "توافر برامج توعوية للمجتمع المحلي", "الاحتفاء بالمناسبات الوطنية (اليوم الوطني، يوم التأسيس، يوم العلم)", "تفعيل المناسبات لتعزيز القيم", "تنفيذ البرامج والأنشطة بأساليب متنوعة", "جوانب الإبداع والابتكار"]
+              }]
+            },
+            {
+              id: "1-2-1-2", name: "تلتزم المدرسة بقيم مهنة التعليم وأخلاقياتها",
+              paragraphs: [
+                {
+                  num: 9, text: "تنشر المدرسة الوعي بقيم مهنة التعليم وأخلاقياتها لدى منسوبيها",
+                  docs: ["سجل الاجتماعات", "سجل التبليغات", "سجل البرامج والأنشطة", "نشرات", "خطة متابعة السلوك الوظيفي"],
+                  source: "مدير المدرسة، وكيل الشؤون التعليمية، رائد النشاط",
+                  evidence: ["توافر إجراءات واضحة لنشر قواعد السلوك الوظيفي وقيم مهنة التعليم وأخلاقياتها", "تطبق المدرسة برامج توعوية", "شاملة للقيم وأخلاقيات المهنة", "تستخدم أساليب متنوعة", "مستمرة (مرتين على الأقل في السنة)", "توافر حوافز معلنة لتشجيع منسوبي المدرسة", "جوانب الإبداع والابتكار"]
+                },
+                {
+                  num: 10, text: "تطبق المدرسة قيم مهنة التعليم وأخلاقياتها في التعامل مع منسوبيها",
+                  docs: ["سجل التوجيه والإرشاد", "سجل التحفيز والتكريم", "سجل المخالفات", "سجل حصر الغياب والتأخر", "سجل استئذان الموظفين", "خطة متابعة السلوك الوظيفي"],
+                  source: "مدير المدرسة، وكيل الشؤون التعليمية، الموجه الطلابي",
+                  evidence: ["توافر إجراءات لتطبيق قواعد السلوك الوظيفي", "توافر برامج وأنشطة تعزز العلاقات الإيجابية القائمة على الاحترام المتبادل والتعاون والثقة", "تستخدم أساليب متنوعة", "شاملة لجميع منسوبيها", "تتابع التزام منسوبيها بقيم وأخلاقيات مهنة التعليم", "تقدم حوافز تشجيعية على الالتزام", "تطبق إجراءات واضحة للمساءلة بشأن المخالفات", "جوانب الإبداع والابتكار"]
+                }
+              ]
+            },
+            {
+              id: "1-2-1-3", name: "توفر المدرسة مناخًا آمنًا للتعلم والنمو نفسيًّا واجتماعيًّا",
+              paragraphs: [{
+                num: 11, text: "توفر المدرسة برامج وأنشطة تضمن مناخًا آمنًا للتعلم وتحدّ من حالات التنمر",
+                docs: ["سجل التوجيه والإرشاد", "سجل الحالات الطارئة", "سجل المخالفات السلوكية", "سجل البرامج الوقائية والعلاجية", "سجل مجالس الحوار الطلابي"],
+                source: "وكيل الشؤون الطلابية، الموجه الطلابي",
+                evidence: ["توافر برامج وأنشطة توعوية وقائية", "البرامج والأنشطة متنوعة", "مستمرة", "تشجع المتعلمين على المناقشة والحوار وتقبل الرأي الآخر", "تعزز التعاون والعلاقات الإيجابية والاحترام المتبادل", "تستخدم أساليب استباقية للكشف عن حالات التنمر", "توافر برامج لمعالجة حالات التنمر", "نادرًا ما تظهر حالات التنمر", "تتبع نتائج وأعمال مجالس الحوار الطلابية", "جوانب الإبداع والابتكار"]
+              }]
+            },
+            {
+              id: "1-2-1-4", name: "تنشر المدرسة قواعد السلوك والمواظبة وتتابع تطبيقها",
+              paragraphs: [{
+                num: 12, text: "تنشر المدرسة الوعي بقواعد السلوك والمواظبة، وتتابع تطبيقها",
+                docs: ["سجل التوجيه والإرشاد", "سجل الانضباط المدرسي", "سجل التوقيع على قواعد السلوك والمواظبة", "سجل الحالات الطارئة", "سجل المخالفات السلوكية", "سجل البرامج الوقائية والعلاجية", "سجل تعزيز السلوك الإيجابي"],
+                source: "وكيل الشؤون الطلابية، الموجهة الطلابية",
+                evidence: ["توافر إجراءات لنشر قواعد السلوك والمواظبة", "تطبق المدرسة برامج توعوية", "تستخدم أساليب متنوعة للنشر", "مستمرة (مرتين على الأقل في السنة)", "تتابع التزام المتعلمين بقواعد السلوك والانضباط المدرسي", "تستخدم أساليب متنوعة للمتابعة", "تطبيق إجراءات واضحة للحد من الغياب", "جوانب الإبداع والابتكار"]
+              }]
+            },
+            {
+              id: "1-2-1-5", name: "توفر المدرسة برامج وأنشطة تربوية داعمة للسلوك الإيجابي",
+              paragraphs: [
+                {
+                  num: 13, text: "توفر المدرسة برامج وأنشطة وقائية وعلاجية للمشكلات السلوكية التي تواجه المتعلمين بمن فيهم ذوو الإعاقة",
+                  docs: ["سجل تعزيز السلوك الإيجابي", "سجل لجنة التوجيه والإرشاد", "سجل التوجيه والإرشاد", "سجل المخالفات السلوكية"],
+                  source: "الموجه الطلابي، وكيل الشؤون الطلابية",
+                  evidence: ["توافر إجراءات محددة للكشف عن المشكلات السلوكية", "تطبق المدرسة برامج وأنشطة وقائية", "تطبق برامج علاجية للمشكلات السلوكية", "البرامج والأنشطة متنوعة", "شاملة جميع المتعلمين ومنهم ذوو الإعاقة", "مرتبطة بنتائج تشخيص المشكلات السلوكية", "تتابع المدرسة تطبيق البرامج والأنشطة", "تستخدم أساليب وطرقًا متنوعة للمتابعة", "جوانب الإبداع والابتكار"]
+                },
+                {
+                  num: 14, text: "توفر المدرسة برامج وأنشطة تعزز السلوك الإيجابي لدى المتعلمين",
+                  docs: ["سجل التوجيه والإرشاد", "سجل تعزيز السلوك الإيجابي"],
+                  source: "الموجه الطلابي، وكيل الشؤون الطلابية",
+                  evidence: ["تضع المدرسة خطة لتعزيز السلوك الإيجابي", "تطبق برامج وأنشطة توعوية لتعزيز السلوك الإيجابي", "البرامج والأنشطة متنوعة", "شاملة جميع المتعلمين", "تتابع تطبيق البرامج والأنشطة", "تقدم حوافز تعزز السلوك الإيجابي", "الحوافز متنوعة", "جوانب الإبداع والابتكار"]
+                }
+              ]
+            },
+            {
+              id: "1-2-1-6", name: "توفر المدرسة برامج وأنشطة إثرائية لتطوير مواهب المتعلمين وتهيئتهم للمستقبل",
+              paragraphs: [
+                {
+                  num: 15, text: "توفر المدرسة خطة للأنشطة الإثرائية غير الصفية، وتتابع تنفيذها",
+                  docs: ["سجل الأنشطة الإثرائية", "سجل الأنشطة والبرامج"],
+                  source: "وكيل الشؤون الطلابية، رائد النشاط",
+                  evidence: ["توافر خطة للأنشطة الإثرائية غير الصفية", "الخطة مكتملة العناصر", "تطبق المدرسة أنشطة إثرائية غير صفية متنوعة", "الأنشطة شاملة جميع المتعلمين ومنهم ذوو الإعاقة والموهوبون", "تقدم حوافز للمتعلمين وتشجعهم على المشاركة", "تستخدم أساليب متنوعة للحوافز (حوافز تشجيعية عينية أو معنوية)", "تتابع تنفيذ الأنشطة بانتظام", "جوانب الإبداع والابتكار"]
+                },
+                {
+                  num: 16, text: "توفر المدرسة برامج إثرائية لتطوير مواهب المتعلمين، وتتابع تنفيذها",
+                  docs: ["سجل لجنة التوجيه والإرشاد", "سجل الأنشطة والبرامج", "سجل الموهوبين"],
+                  source: "وكيل الشؤون الطلابية، رائد النشاط، الموجه الطلابي",
+                  evidence: ["تطبق المدرسة أساليب للكشف عن مواهب وقدرات المتعلمين", "تطبق برامج وأنشطة لتطوير مواهب المتعلمين", "البرامج والأنشطة متنوعة", "مرتبطة بنتائج تشخيص مواهب المتعلمين", "تستخدم أساليب متنوعة لتحفيز المتعلمين على المشاركة", "تتابع تنفيذ الأنشطة والبرامج بانتظام", "تقدم حوافز تدعم مواهب المتعلمين وتشجعهم على التميز", "جوانب الإبداع والابتكار"]
+                },
+                {
+                  num: 17, text: "تدعم المدرسة المشاركة في المسابقات الوطنية والدولية",
+                  docs: ["سجل لجنة التميز", "سجل لجنة التوجيه والإرشاد", "سجل المسابقات"],
+                  source: "مدير المدرسة، الموجه الطلابي، رائد النشاط",
+                  evidence: ["توفير معلومات عن المسابقات الوطنية والدولية", "نشر الوعي في المجتمع المدرسي عن المسابقات", "تقدم حوافز تشجع المتعلمين على التميز في المسابقات", "تتابع مشاركة المتعلمين والاحتفاء بمنجزاتهم", "دعم مشاركة المتعلمين ومنسوبي المدرسة في المسابقات الوطنية", "دعم مشاركة المتعلمين في المسابقات الدولية", "تحقيق المتعلمين مستويات متقدمة أو جوائز", "جوانب الإبداع والابتكار"]
+                },
+                {
+                  num: 18, text: "توفر المدرسة برامج وأنشطة إثرائية تهيئ المتعلمين لمستقبلهم الأكاديمي والمهني",
+                  docs: ["سجل الأنشطة الإثرائية", "سجل الموهوبين", "سجل لجنة التوجيه والإرشاد"],
+                  source: "وكيل الشؤون الطلابية، وكيل الشؤون التعليمية، الموجه الطلابي",
+                  evidence: ["تضع المدرسة خطة للإرشاد الأكاديمي والمهني", "تطبق برامج وأنشطة إثرائية تهيئ المتعلمين", "البرامج والأنشطة متنوعة", "شاملة جميع المتعلمين ومنهم ذوو الإعاقة", "تقدم حوافز تشجع المتعلمين على المشاركة", "استثمار مؤسسات المجتمع ذات العلاقة في تنفيذ البرامج", "تتابع تطبيق البرامج والأنشطة بانتظام", "حصول المتعلمين على جوائز تميز خارجية", "جوانب الإبداع والابتكار"]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          id: "1-3", name: "معيار المجتمع المدرسي",
+          indicators: [
+            {
+              id: "1-3-1-1", name: "تعزز المدرسة العمل التعاوني، والعلاقات الإيجابية والتعاون في المجتمع المدرسي",
+              paragraphs: [{
+                num: 19, text: "تضع المدرسة خطة لتعزيز العمل التعاوني بين منسوبيها، وتتابعها",
+                docs: ["سجل الخطة التشغيلية", "سجل البرامج والأنشطة", "سجل النمو المهني"],
+                source: "مدير المدرسة، وكيل الشؤون التعليمية، رائد النشاط",
+                evidence: ["تضع المدرسة خطة العمل التعاوني في المجتمع المدرسي", "توفر أنشطة ومهام تشجع التعاون والعمل بروح الفريق", "الأنشطة والمهام متنوعة", "شاملة جميع منسوبي المدرسة", "تتابع المدرسة تنفيذ الأنشطة بانتظام", "بأساليب متنوعة", "تعزز العمل الجماعي بأساليب وطرق مبتكرة", "جوانب الإبداع والابتكار"]
+              }]
+            },
+            {
+              id: "1-3-1-2", name: "تعزز المدرسة مشاركة الأسرة في تعلم أبنائهم والتحضير لمستقبلهم",
+              paragraphs: [
+                {
+                  num: 20, text: "توفر المدرسة أنشطة وبرامج للتوعية بدور الأسرة في دعم تعلم أبنائها والتحضير لمستقبلهم",
+                  docs: ["سجل استطلاع الرأي والاستبانات", "سجل التواصل مع أولياء الأمور", "سجل ملف البرامج والأنشطة", "سجل التوجيه والإرشاد", "سجل مجالس أولياء الأمور"],
+                  source: "مدير المدرسة، وكيل الشؤون الطلابية، رائد النشاط، الموجه الطلابي",
+                  evidence: ["توافر أنشطة وبرامج للتوعية بدور الأسرة", "الأنشطة والبرامج متنوعة (ورش تدريبية، حلقات، ندوات، نشرات)", "الأنشطة والبرامج مستمرة", "الأنشطة والبرامج شاملة (المجتمع المدرسي، أولياء الأمور والأسر)", "تشرك المدرسة الأسرة في تقويم تعلم أبنائهم ومتابعة أداء المهمات والواجبات", "تشرك الأسرة في تحديد المشكلات التي تواجه تعلم أبنائهم وتقديم الحلول", "توافر حوافز تدعم مشاركة الأسرة", "جوانب الإبداع والابتكار"]
+                },
+                {
+                  num: 21, text: "توفر المدرسة فرصًا للتواصل الفعال مع الأسرة",
+                  docs: ["سجل استطلاع الرأي والاستبانات", "سجل التواصل مع الأسرة", "سجل مجالس أولياء الأمور", "سجل الشراكة المجتمعية", "سجل الأنشطة والبرامج", "سجل التوجيه والإرشاد"],
+                  source: "مدير المدرسة، وكيل الشؤون الطلابية، رائد النشاط، الموجه الطلابي",
+                  evidence: ["توفر المدرسة أساليب للتواصل مع الأسرة", "تستخدم أساليب وطرق متنوعة", "التواصل بشكل مستمر", "تزويد الأسرة بمعلومات وبيانات عن تعلم أبنائها", "تتيح الفرصة لمشاركة الأسرة في الأنشطة والفعاليات (استثمار خبرات الوالدين التخصصية)", "تشرك الأسرة في تقويم خدمات المدرسة التعليمية وتطويرها", "تشرك الأسرة في تطوير خدمات المدرسة التعليمية", "جوانب الإبداع والابتكار"]
+                }
+              ]
+            },
+            {
+              id: "1-3-1-3", name: "تعزز المدرسة الشراكة المجتمعية لدعم التعلم والتأثير الإيجابي في المجتمع المحلي",
+              paragraphs: [
+                {
+                  num: 22, text: "توفر المدرسة فرصًا للتواصل والتعاون مع مؤسسات المجتمع لتعزيز تعلم المتعلمين",
+                  docs: ["سجل الخطة التشغيلية", "سجل البرامج والأنشطة", "سجل الشراكة المجتمعية", "سجل التوجيه والإرشاد"],
+                  source: "مدير المدرسة، رائد النشاط، الموجه الطلابي",
+                  evidence: ["توافر أساليب للتواصل والتعاون مع مؤسسات المجتمع", "الأساليب والطرق متنوعة", "مستمرة", "تنفذ برامج وأنشطة لتوعية المجتمع المدرسي بأهمية مشاركة مؤسسات المجتمع", "توافر شراكات مجتمعية مع المؤسسات الوطنية (المؤسسات والمراكز ذات العلاقة بالموهبة والإبداع وذوي الإعاقة)", "تدعم تبادل الخبرات ونقل المعرفة مع المدارس الأخرى", "جوانب الإبداع والابتكار"]
+                },
+                {
+                  num: 23, text: "تستثمر المدرسة إمكانات المؤسسات الوطنية في تلبية احتياجات ذوي الإعاقة والموهوبين",
+                  docs: ["سجل الخطة التشغيلية", "سجل البرامج والأنشطة", "سجل الشراكة المجتمعية", "سجل التوجيه والإرشاد"],
+                  source: "مدير المدرسة، رائد النشاط، الموجه الطلابي",
+                  evidence: ["توافر أساليب للتواصل مع مؤسسات المجتمع", "لتلبية احتياجات الموهوبين", "وذوي الإعاقة", "تقدم المدرسة أنشطة وبرامج لتعريف المجتمع بالخدمات", "تستثمر الخدمات التي تقدمها المؤسسات لدعم التعلم", "بأساليب وطرق متنوعة", "تتابع وتوثق مشاركة المؤسسات", "توافر الدعم والمساندة للمؤسسات الوطنية", "جوانب الإبداع والابتكار"]
+                },
+                {
+                  num: 24, text: "تقدم المدرسة أنشطة وفعاليات توعوية للمجتمع المحلي وتتيح إمكاناتها لخدمته",
+                  docs: ["سجل البرامج والأنشطة", "سجل الشراكة المجتمعية", "سجل التوجيه والإرشاد"],
+                  source: "رائد النشاط، الموجه الطلابي",
+                  evidence: ["توافر أنشطة وفعاليات توعوية للمجتمع المحلي", "الأنشطة والفعاليات متنوعة", "الأنشطة مستمرة", "شاملة (المجتمع المدرسي ومؤسسات المجتمع)", "تتيح المدرسة إمكاناتها لخدمة المجتمع المحلي", "تقدم خدمات متنوعة (الأندية الرياضية، برامج تدريبية، المكتبة، المسرح)", "تتابع وتوثق الأنشطة والفعاليات والخدمات", "جوانب الإبداع والابتكار"]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          id: "1-4", name: "معيار التطوير المؤسسي",
+          indicators: [
+            {
+              id: "1-4-1-1", name: "توفر المدرسة كادرًا تعليميًّا مكتملًا ومؤهلًا",
+              paragraphs: [
+                {
+                  num: 25, text: "يوجد لدى المدرسة كادر تعليمي مكتمل ومؤهل",
+                  docs: ["سجل أحوال الموظفين", "سجل التكاليف", "سجل اللجنة الإدارية", "سجل توزيع الأنصبة + الجدول المدرسي"],
+                  source: "مدير المدرسة",
+                  evidence: ["توافر آليات وإجراءات واضحة لاستقطاب الكوادر التعليمية المؤهلة", "الآليات معلنة", "توافر كادر تعليمي مكتمل (يغطي جميع المجالات التخصصية)", "نسب المؤهلين بكالوريوس فأعلى وفق السلم المحدد"]
+                },
+                {
+                  num: 26, text: "يتوافق مجال التخصص في المؤهل العلمي للكادر التعليمي مع العمل المكلف به",
+                  docs: ["بيانات الكادر التعليمي من نظام نور", "توزيع الأنصبة", "سجل أحوال الموظفين"],
+                  source: "مدير المدرسة",
+                  evidence: ["توافق مؤهل وخبرة الكادر التعليمي مع المجال التخصصي الذي يدرسه", "نسبة التوافق المحددة وفق سلم التقييم"]
+                }
+              ]
+            },
+            {
+              id: "1-4-1-2", name: "توفر المدرسة كادرًا إداريًّا مكتملًا ومؤهلًا",
+              paragraphs: [
+                {
+                  num: 27, text: "يوجد لدى المدرسة تشكيل إداري مكتمل للقيام بالمهام الإدارية",
+                  docs: ["سجل أحوال الموظفين", "سجل التكاليف", "سجل اللجنة الإدارية", "بيانات الكادر الإداري من نظام نور"],
+                  source: "مدير المدرسة",
+                  evidence: ["توافر آليات وإجراءات واضحة لاستقطاب الكوادر الإدارية المؤهلة", "الآليات معلنة", "توافر ملاك مكتمل من التشكيل الإداري وفقًا لحجم المدرسة", "نسب المؤهلات (دبلوم مشارك فأعلى)"]
+                },
+                {
+                  num: 28, text: "يتوافق مؤهل وخبرة الكادر الإداري مع المهام والأعمال المكلف بها",
+                  docs: ["سجل الوصف الوظيفي", "بيانات الكادر الإداري من نظام نور"],
+                  source: "مدير المدرسة",
+                  evidence: ["توافق مؤهل الكادر الإداري مع المجال التخصصي للعمل الإداري", "توافق المؤهل والخبرة مع العمل المكلف به", "نسبة التوافق المحددة"]
+                }
+              ]
+            },
+            {
+              id: "1-4-1-3", name: "تظهر المدرسة ثباتًا واستدامة مالية",
+              paragraphs: [
+                {
+                  num: 29, text: "توفر المدرسة خطة وتقريرًا ماليًّا سنويًّا معتمدًا",
+                  docs: ["سجل الخطة المالية", "سجل فريق الصندوق المدرسي"],
+                  source: "مدير المدرسة",
+                  evidence: ["توجد خطة مالية", "يوجد تقرير مالي لميزانية المدرسة", "الخطة والتقرير معتمدان", "محدثة وساري العمل بها", "يشارك أصحاب المصلحة (ذوو العلاقة) بالخطة والتقرير", "توثيق المعاملات المالية (الدخل والصرف)", "توجد خطة واضحة لتحقيق الاستدامة المالية", "جوانب الإبداع والابتكار"]
+                },
+                {
+                  num: 30, text: "توزع المدرسة الموارد المالية وفق أولوياتها لدعم العملية التعليمية",
+                  docs: ["سجل الخطة المالية", "سجل الموازنة المالية", "سجل فريق الصندوق المدرسي"],
+                  source: "مدير المدرسة",
+                  evidence: ["توزيع الموارد المالية وفقًا للخطة التشغيلية", "توزيع وفق أولوياتها لزيادة الفاعلية التعليمية", "تخصص بندًا من الميزانية لعمليات التطوير المهني", "تطبق إجراءات وضوابط واضحة للمراجعة والتدقيق", "توثق الموارد المالية وعمليات الدخل والصرف", "توافر آليات وضوابط واضحة لعمليات الصرف", "توافر آليات واضحة للمساءلة", "جوانب الإبداع والابتكار"]
+                },
+                {
+                  num: 31, text: "تظهر المدرسة القدرة على تغطية التزاماتها المالية",
+                  docs: ["سجل الخطة المالية", "سجل الموازنة المالية", "سجل فريق الصندوق المدرسي"],
+                  source: "مدير المدرسة",
+                  evidence: ["الموارد المالية للمدرسة تغطي جميع المصروفات التشغيلية", "توافق مصروفات المدرسة التشغيلية مع إيراداتها", "تطبق إجراءات واضحة للمراجعة والتدقيق", "بشكل مستمر", "تطبق إجراءات واضحة لمتابعة تغطية التزاماتها المالية", "تظهر التقارير المالية النمو في الموارد المالية", "تظهر التقارير المالية التنوع في الموارد المالية", "توافر احتياطي يغطي المصروفات الطارئة", "جوانب الإبداع والابتكار"]
+                },
+                {
+                  num: 32, text: "تنشر المدرسة سياسات واضحة في الرسوم والتحصيل لأصحاب المصلحة",
+                  docs: ["سجل السياسات المالية", "سجل تحصيل الرسوم", "استمارة الرسوم الدراسية", "الموقع الإلكتروني للمدرسة"],
+                  source: "مدير المدرسة",
+                  evidence: ["توفر المدرسة سياسات وضوابط واضحة في الرسوم وإجراءات التحصيل", "تشرك أصحاب المصلحة في وضع السياسات والضوابط", "توافر طرق وأساليب متنوعة لدفع الرسوم", "تنشر سياسات وطرق دفع الرسوم وإجراءات التحصيل", "تستخدم أساليب وطرقًا متنوعة في تبليغ أولياء الأمور", "توافر برامج توعوية", "تعلن عن التغيرات في الرسوم قبل بداية العام (ثلاثة أشهر على الأقل)", "توافر تسهيلات لدفع الرسوم المدرسية", "تتابع المدرسة عمليات دفع الرسوم", "عمليات المتابعة موثقة", "جوانب الإبداع والابتكار"]
+                }
+              ]
+            },
+            {
+              id: "1-4-1-4", name: "تشجع المدرسة منسوبيها للحصول على الرخصة المهنية",
+              paragraphs: [{
+                num: 33, text: "توفر المدرسة أنشطة وبرامج توعوية للحصول على الرخص المهنية",
+                docs: ["سجل الرخص المهنية", "سجل النمو المهني"],
+                source: "مدير المدرسة",
+                evidence: ["تقدم المدرسة أنشطة وبرامج توعوية حول أهمية الرخص المهنية", "الأنشطة والبرامج متنوعة", "شاملة للتخصصات", "تقدم حوافز لتشجيع المعلمين على الحصول على الرخص", "أساليب وطرق التحفيز متنوعة", "وجود معلمين حاصلين على رتب متقدمة", "في مستوى خبير", "جوانب الإبداع والابتكار"]
+              }]
+            },
+            {
+              id: "1-4-1-5", name: "تدعم المدرسة التطوير المهني لمنسوبيها وفقًا لنتائج تقويم الأداء الوظيفي",
+              paragraphs: [
+                {
+                  num: 34, text: "تبني المدرسة خطة التطوير المهني وفق نتائج تقويم الأداء الوظيفي واحتياجات منسوبيها",
+                  docs: ["سجل النمو المهني"],
+                  source: "مدير المدرسة",
+                  evidence: ["توافر خطة للتطوير المهني", "ترتبط الخطة بنتائج تحليل احتياجات منسوبي المدرسة", "ترتبط الخطة بنتائج تقويم الأداء الوظيفي", "يشارك المجتمع المدرسي في تحديد أهداف التطوير", "أساليب التطوير المهني متنوعة (ورش، دورات، ندوات علمية، زيارات الملاحظة للمدارس الأخرى)", "الخطة شاملة لمنسوبي المدرسة (إداري وتعليمي)", "جوانب الإبداع والابتكار"]
+                },
+                {
+                  num: 35, text: "تنفذ المدرسة خطة التطوير المهني لمنسوبيها وتتابعها بانتظام",
+                  docs: ["سجل التطوير المهني"],
+                  source: "مدير المدرسة",
+                  evidence: ["تطبق المدرسة برامج التطوير المهني", "برامج التطوير المهني مستمرة", "تستخدم المدرسة أساليب وطرقًا متنوعة", "تدعم منسوبيها في المشاركة", "تقدم حوافز لتشجيع منسوبيها على المشاركة في مجتمعات التعلم المهني", "إجراء بحوث إجرائية", "تتابع تنفيذ الخطة بأساليب متنوعة", "بانتظام", "تطبق أساليب لقياس أثر التدريب بانتظام", "بأساليب متنوعة", "جوانب الإبداع والابتكار"]
+                }
+              ]
+            },
+            {
+              id: "1-4-1-6", name: "تطبق المدرسة التقويم الذاتي المبني وفق المعايير المعتمدة من الهيئة",
+              paragraphs: [
+                {
+                  num: 36, text: "تطبق المدرسة التقويم الذاتي المبني وفق المعايير المعتمدة من الهيئة",
+                  docs: ["سجل لجنة التميز المدرسي", "سجل التقويم الذاتي"],
+                  source: "مدير المدرسة",
+                  evidence: ["تضع خطة لتطبيق التقويم الذاتي", "تشكل فريق التقويم وفق معايير واضحة", "تعقد اجتماعات ولقاءات لتهيئة المجتمع المدرسي للتقويم الذاتي", "تطبيق جميع إجراءات التقويم الذاتي", "تطبق معايير التقويم والاعتماد المدرسي في عمليات التقويم", "تتابع تطبيق التقويم الذاتي", "تستخدم أساليب متنوعة", "جوانب الإبداع والابتكار"]
+                },
+                {
+                  num: 37, text: "تشرك المدرسة منسوبيها في عمليات التقويم الذاتي ونتائجه",
+                  docs: ["سجل لجنة التميز المدرسي", "سجل التقويم الذاتي"],
+                  source: "مدير المدرسة",
+                  evidence: ["تنشر ثقافة التقويم الذاتي في المجتمع المدرسي", "تستخدم طرقًا وأساليب متنوعة", "مستمرة", "شاملة جميع منسوبيها", "تشرك منسوبيها وأصحاب المصلحة في التقويم الذاتي", "تطلع المدرسة منسوبيها وأصحاب المصلحة على نتائج التقويم الذاتي", "جوانب الإبداع والابتكار"]
+                }
+              ]
+            },
+            {
+              id: "1-4-1-7", name: "تنفذ المدرسة خطة للتحسين بناءً على نتائج التقويم المدرسي، وتتابعها",
+              paragraphs: [
+                {
+                  num: 38, text: "تبني المدرسة خطة التحسين في ضوء نتائج التقويم المدرسي",
+                  docs: ["سجل تطوير وتحسين الخطة التشغيلية", "سجل اللجنة الإدارية"],
+                  source: "مدير المدرسة",
+                  evidence: ["توجد خطة للتحسين", "خطة التحسين مبنية على نتائج التقويم المدرسي", "توافر جدول زمني في الخطة", "تحديد الأدوار والمسؤوليات في الخطة", "تحدد المتطلبات والموارد اللازمة وإجراءات التنفيذ", "توافر برامج وأنشطة لمعالجة جوانب التحسين", "البرامج والأنشطة متنوعة", "تركز على الأولويات وفق نتائج التقويم", "تشرك منسوبي المدرسة في إعداد خطة التحسين", "تحديد مؤشرات الإنجاز في الخطة", "جوانب الإبداع والابتكار"]
+                },
+                {
+                  num: 39, text: "تنفذ المدرسة خطة التحسين وتتابعها",
+                  docs: ["سجل تطوير وتحسين الخطة التشغيلية", "سجل اللجنة الإدارية"],
+                  source: "مدير المدرسة",
+                  evidence: ["تنفيذ برامج وأنشطة خطة التحسين", "تستخدم المدرسة طرقًا وأساليب متنوعة في التنفيذ", "تتابع تنفيذ الخطة بانتظام", "تقيم خطة التحسين بانتظام", "تحدد المشكلات والتحديات", "تقدم الحلول والبدائل", "تطور خطة التحسين بانتظام", "جوانب الإبداع والابتكار"]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      id: 2,
+      name: "التعليم والتعلم",
+      icon: "📚",
+      color: "#2d7d4e",
+      desc: "يشمل بناء خبرات التعلم وتقويم التعلم",
+      standards: [
+        {
+          id: "2-1", name: "معيار بناء خبرات التعلم",
+          indicators: [
+            {
+              id: "2-1-1-2", name: "تدعم المدرسة تنفيذ المناهج لتحقيق نواتج التعلم المستهدفة وفق الخطة الدراسية",
+              paragraphs: [
+                {
+                  num: 40, text: "توفر المدرسة أنشطة ومصادر لدعم تعلم محتوى المناهج (المعارف والمهارات والقيم)",
+                  docs: ["عينة من ملفات إنجاز المعلمين", "عينة من الأنشطة الصفية"],
+                  source: "وكيل الشؤون التعليمية",
+                  evidence: ["توافر أنشطة ومصادر متنوعة", "تدعم تعلم جميع موضوعات ومحتوى المنهج", "تركز أنشطة التعلم على اكتساب المعارف المستهدفة (المحتوى الرئيس المستهدف وليس المعارف الثانوية)", "تركز أنشطة التعلم على تنمية المهارات المستهدفة", "تستخدم أساليب وأنشطة محفزة متنوعة", "تعزز أنشطة التعلم القيم الوطنية المستهدفة", "جوانب الإبداع والابتكار"]
+                },
+                {
+                  num: 41, text: "تتابع المدرسة تنفيذ المناهج لتحقيق نواتج التعلم المستهدفة وفق الخطة الدراسية",
+                  docs: ["عينة من خطة توزيع المنهج", "ملف متابعة تنفيذ المنهج", "عينة من ملفات إنجاز المعلمين"],
+                  source: "وكيل الشؤون التعليمية",
+                  evidence: ["تتابع المدرسة تنفيذ المنهج وفق الخطة الدراسية", "تتابع بانتظام", "توثق عمليات التنفيذ وتحدد المشكلات والتحديات", "تقدم الحلول والبدائل لتنفيذ المنهج في الحالة الطارئة", "تتخذ إجراءات مناسبة في حال لم يلتزم المعلم بالخطة", "تستخدم طرقًا وأساليب متنوعة في المتابعة", "جوانب الإبداع والابتكار"]
+                }
+              ]
+            },
+            {
+              id: "2-1-1-6", name: "تنمي المدرسة المهارات القرائية والعددية الأساسية لدى المتعلمين",
+              paragraphs: [{
+                num: 42, text: "تنمي المدرسة المهارات القرائية والعددية الأساسية لدى المتعلمين",
+                docs: ["سجل الأنشطة الإثرائية", "سجل الأنشطة العلاجية", "سجل المسابقات", "نتائج الاختبارات الوطنية", "سجل تحدي القراءة", "سجل سد الفجوات (الرياضيات)"],
+                source: "وكيل الشؤون التعليمية، وكيل الشؤون الطلابية",
+                evidence: ["توافر أنشطة ومصادر تعلم تستهدف تنمية مهارات القراءة والكتابة", "توافر أنشطة ومصادر تعلم تستهدف تنمية المهارات العددية", "توافر خطط علاجية لتنمية مهارات القراءة والكتابة", "لتنمية المهارات العددية", "توافر خطط وأنشطة إثرائية لتنمية مهارات القراءة والكتابة", "لتنمية المهارات العددية", "تتابع تنفيذ الأنشطة والخطط العلاجية والإثرائية بانتظام", "الأنشطة والمصادر متنوعة", "تكريم المتعلمين الفائزين في المسابقات الوطنية", "تكريم المتعلمين الفائزين في المسابقات الدولية", "جوانب الإبداع والابتكار"]
+              }]
+            },
+            {
+              id: "2-1-1-7", name: "تنمي المدرسة مهارات التفكير العليا لدى المتعلمين",
+              paragraphs: [{
+                num: 43, text: "توفر المدرسة أنشطة تنمي مهارات التفكير العليا (الناقد والإبداعي وحل المشكلات) لدى المتعلمين",
+                docs: ["عينة من الأنشطة الصفية الخاصة بالمتعلمين"],
+                source: "وكيل الشؤون الطلابية",
+                evidence: ["توافر أنشطة ومصادر تعلم تستهدف تنمية مهارات التفكير الناقد (التحليل، الاستنتاج، التقويم)", "توافر أنشطة ومصادر تعلم تستهدف تنمية مهارات حل المشكلات", "توافر أنشطة ومصادر تعلم تستهدف تنمية التفكير الإبداعي (الطلاقة، والمرونة، والأصالة)", "توافر أنشطة إثرائية صفية وغير صفية لتنمية مهارات التفكير الناقد والإبداعي وحل المشكلات", "الأنشطة والمصادر متنوعة", "تتابع المدرسة تنفيذ الأنشطة بانتظام", "الأنشطة مبتكرة", "جوانب الإبداع والابتكار"]
+              }]
+            }
+          ]
+        },
+        {
+          id: "2-2", name: "معيار تقويم التعلم",
+          indicators: [
+            {
+              id: "2-2-1-1", name: "تقوّم المدرسة أداء المتعلمين باستخدام أساليب وأدوات تقويم متنوعة وفعّالة",
+              paragraphs: [{
+                num: 44, text: "تستخدم المدرسة أساليب وأدوات تقويم متنوعة تظهر التمايز في أداء المتعلمين",
+                docs: ["عينة من الأنشطة التعليمية الخاصة بالمتعلمين", "سجل تحضير الدروس", "سجل النمو المهني"],
+                source: "وكيل الشؤون الطلابية، وكيل الشؤون التعليمية",
+                evidence: ["توافر أساليب وأدوات تقويم تشخيصية", "توافر أساليب وأدوات التقويم البنائي (التكويني) لدعم التعلم", "توافر أساليب وأدوات التقويم الختامي", "أساليب وأدوات التقويم متنوعة (تقويم ذاتي، تقويم الأقران، مهام مفتوحة النهاية، مشروعات، مهام أدائية، ملف الإنجاز)", "تراعي الفروق الفردية بين المتعلمين", "تقدم المدرسة برامج لتدريب المعلمين على تطبيق أساليب وأدوات التقويم المتنوعة", "أساليب وأدوات التقويم تظهر التمايز في أداء المتعلمين", "توافر محكات واضحة لتحديد مستويات الأداء", "تتابع المدرسة تطبيق أساليب وأدوات التقويم", "تطبيق أساليب وأدوات تقويم مبتكرة", "جوانب الإبداع والابتكار"]
+              }]
+            },
+            {
+              id: "2-2-1-2", name: "تحلل المدرسة نتائج التقويم وتوظفها في تحسين نواتج التعلم بانتظام",
+              paragraphs: [{
+                num: 45, text: "تحلل المدرسة نتائج تقويم أداء المتعلمين، وتوظفها في تحسين تعلمهم بانتظام",
+                docs: ["سجل تحليل النتائج (لتخصصات مختلفة)", "سجل الأنشطة العلاجية", "سجل الأنشطة الإثرائية", "سجل لجنة التحصيل الدراسي"],
+                source: "مدير المدرسة، وكيل الشؤون الطلابية",
+                evidence: ["توافر أساليب وطرق لتحليل نتائج تقويم أداء المتعلمين", "تفسر المدرسة نتائج تقويم أداء المتعلمين", "تستخدم محكات واضحة في اتخاذ القرارات التعليمية", "توظف نتائج التقويم في إعداد خطط علاجية وبرامج إثرائية", "تحدد الفجوات والمشكلات", "تقترح الحلول والبدائل لتحسين التعلم", "توظف نتائج التقويم في دعم التعلم وتحسينه", "تتابع تنفيذ الخطط العلاجية والبرامج الإثرائية", "بانتظام", "تستخدم أساليب متنوعة للمتابعة", "تستخدم أساليب وطرقًا متنوعة لتحليل النتائج", "تبتكر أساليب وطرقًا في تحسين ودعم التعلم", "جوانب الإبداع والابتكار"]
+              }]
+            },
+            {
+              id: "2-2-1-3", name: "تقدم المدرسة التغذية الراجعة للمتعلمين بانتظام",
+              paragraphs: [{
+                num: 46, text: "تقدم المدرسة تغذية راجعة للمتعلمين بانتظام",
+                docs: ["سجل متابعة أداء المتعلمين", "سجل إنجاز المتعلمين / الكتب"],
+                source: "وكيل الشؤون التعليمية",
+                evidence: ["تقديم تغذية راجعة", "تقديم التغذية بانتظام", "تقديم التغذية الراجعة بطرق وأساليب متنوعة (إيجابية، تحفيزية، مقترحات تحسين، التقارير اليومية، التعليقات، ملف الإنجاز، تصحيح المهام)", "ترتبط بنواتج التعلم المستهدفة", "تركز على دعم التعلم وتحسين أداء المتعلمين", "توضح مستوى تقدم المتعلمين في تحقيق التوقعات", "تراعي الفروق الفردية بين المتعلمين", "جوانب الإبداع والابتكار"]
+              }]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      id: 3,
+      name: "نواتج التعلم",
+      icon: "🎯",
+      color: "#c8a13b",
+      desc: "يشمل التطور الشخصي والصحي والاجتماعي للمتعلمين",
+      standards: [
+        {
+          id: "3-1", name: "معيار التطور الشخصي والصحي والاجتماعي",
+          indicators: [
+            {
+              id: "3-1-2-4", name: "يشارك المتعلمون في الأنشطة المجتمعية والأعمال التطوعية",
+              paragraphs: [{
+                num: 47, text: "يشارك المتعلمون في أعمال تطوعية تخدم المجتمع",
+                docs: ["سجل العمل التطوعي", "سجل التوجيه والإرشاد"],
+                source: "وكيل الشؤون الطلابية، الموجه الطلابي",
+                evidence: ["توافر برامج وأنشطة تحفيزية للمشاركة في الأعمال التطوعية", "البرامج والأنشطة متنوعة", "المشاركة في الأعمال التطوعية داخل المدرسة", "المشاركة في الأعمال التطوعية في المجتمع المحلي", "الأعمال التطوعية متنوعة", "المشاركة في التوعية بالأعمال التطوعية التي تهدف إلى خدمة المجتمع", "جوانب الإبداع والابتكار"]
+              }]
+            },
+            {
+              id: "3-1-2-5", name: "يلتزم المتعلمون بقواعد السلوك والانضباط المدرسي",
+              paragraphs: [
+                {
+                  num: 48, text: "نسبة المتعلمين الملتزمين بقواعد السلوك",
+                  docs: ["سجل المخالفات السلوكية", "سجل التوجيه والإرشاد"],
+                  source: "وكيل الشؤون الطلابية، الموجه الطلابي",
+                  evidence: ["نسبة التزام المتعلمين بقواعد السلوك", "أقل من 50%", "ما بين 50% - أقل من 75%", "ما بين 75% - أقل من 90%", "90% فأعلى"]
+                },
+                {
+                  num: 49, text: "نسبة المتعلمين المنتظمين في الحضور",
+                  docs: ["سجل الانضباط المدرسي", "سجل التوجيه والإرشاد (التكريم)"],
+                  source: "وكيل الشؤون الطلابية، الموجه الطلابي",
+                  evidence: ["نسبة التزام المتعلمين بالحضور", "أقل من 50%", "ما بين 50% - أقل من 75%", "ما بين 75% - أقل من 90%", "90% فأعلى"]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      id: 4,
+      name: "البيئة المدرسية",
+      icon: "🏫",
+      color: "#c93838",
+      desc: "يشمل الأمن والسلامة والصيانة الوقائية والعلاجية",
+      standards: [
+        {
+          id: "4-1", name: "معيار الأمن والسلامة",
+          indicators: [
+            {
+              id: "4-1-1-1", name: "تتوافر في فصول المدرسة ومعاملها وجميع مرافقها متطلبات الأمن والسلامة",
+              paragraphs: [
+                {
+                  num: 50, text: "يوجد لدى المدرسة شهادة الأمن والسلامة من الدفاع المدني سارية العمل بها",
+                  docs: ["ملف لجنة الأمن والسلامة", "شهادة الأمن والسلامة من الدفاع المدني (سارية)"],
+                  source: "وكيل الشؤون المدرسية",
+                  evidence: ["توافر شهادة الأمن والسلامة من الدفاع المدني", "سارية العمل بها", "توافر برامج تعزز ثقافة الأمن والسلامة والتوعية بالمخاطر", "البرامج متنوعة", "توافر الخطط الوقائية وخطط الطوارئ", "توافر معلومات حول الاختبارات والتدريبات التي يخضع لها العاملون", "توافر تقارير الزيارات الدورية التي يقوم بها خبراء الأمن والسلامة"]
+                },
+                {
+                  num: 51, text: "الشهادات الصحية للعاملين سارية المفعول",
+                  docs: ["سجل الموجه الصحي"],
+                  source: "وكيل الشؤون المدرسية",
+                  evidence: ["توفير الشهادات الصحية للعاملين في المقصف المدرسي", "سارية العمل بها", "توافر إجراءات التأكد من سلامة العاملين وحمايتهم وحماية المتعلمين من الأمراض المعدية", "توافر نتائج الفحوصات الصحية التي يتم إجراؤها للعاملين بانتظام", "توافر سجلات التطعيمات الصادرة عن الجهات المختصة لكل عامل", "توافر تقارير صادرة عن الجهات الصحية الرسمية"]
+                }
+              ]
+            },
+            {
+              id: "4-1-2-2", name: "تعمل المدرسة على صيانة جميع مرافق المبنى وتجهيزاته بانتظام",
+              paragraphs: [{
+                num: 52, text: "تتوافر خطط لأعمال الصيانة الوقائية والعلاجية بانتظام",
+                docs: ["سجل الصيانة"],
+                source: "وكيل الشؤون المدرسية",
+                evidence: ["يوجد خطة لأعمال الصيانة", "الخطة شاملة تغطي جميع المرافق والتجهيزات", "توافر الإجراءات اللازمة للصيانة والعلاج الدوري", "توافر معلومات حول الفحوصات الدورية", "توافر إجراءات الحفاظ على سلامة المرافق والمعدات وتحسين الظروف الصحية والبيئية", "توافر معلومات حول الصيانة والإصلاحات اللازمة", "يوجد تقييم شامل للصحة والسلامة وتحقيق الرفاه للمتعلمين"]
+              }]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+
+// مستويات الأداء (من الصورة المرفقة)
+const LEVELS = [
+  {
+    id: "excellence", name: "التميز", icon: "⭐",
+    range: "90% فأعلى", min: 90, max: 100,
+    desc: "مستوى أداء مرتفع، <strong>ويتطلب استدامة التميز والابتكار</strong>",
+    color: "#2d7d4e", bg: "#e6f3ea"
+  },
+  {
+    id: "progress", name: "التقدم", icon: "✓",
+    range: "75% إلى أقل من 90%", min: 75, max: 89.99,
+    desc: "مستوى أداء جيد، <strong>ويتطلب استمرار المتابعة للتحسين والتطوير</strong>",
+    color: "#2563eb", bg: "#dbeafe"
+  },
+  {
+    id: "launch", name: "الانطلاق", icon: "📈",
+    range: "50% إلى أقل من 75%", min: 50, max: 74.99,
+    desc: "مستوى أداء مقبول، <strong>ويتطلب تحسينات كبيرة في بعض المجالات</strong>",
+    color: "#ea8a1f", bg: "#fef3e2", needsPlan: true
+  },
+  {
+    id: "preparation", name: "التهيئة", icon: "📝",
+    range: "أقل من 50%", min: 0, max: 49.99,
+    desc: "مستوى أداء منخفض، <strong>ويتطلب إحداث تدخلات جوهرية للتحسين والتطوير في معظم المجالات</strong>",
+    color: "#c93838", bg: "#fde8e8", needsPlan: true
+  }
+];
+
+// قوالب خطط التحسين لكل معيار
+const PLAN_TEMPLATES = {
+  "1-1": {
+    title: "خطة تحسين معيار التخطيط",
+    objectives: [
+      "بناء خطة تشغيلية مكتملة العناصر وفق أهداف SMART قابلة للقياس",
+      "تطوير آليات متابعة وتقويم تنفيذ الخطة بشكل منتظم",
+      "إشراك جميع منسوبي المدرسة في صياغة الخطة وتنفيذها",
+      "بناء مؤشرات أداء واضحة لكل هدف وبرنامج"
+    ],
+    programs: [
+      { name: "ورشة تدريبية في التخطيط الاستراتيجي والتشغيلي", duration: "أسبوع", target: "القيادة المدرسية واللجان" },
+      { name: "تطوير نموذج موحد للخطة التشغيلية", duration: "أسبوعان", target: "فريق التخطيط" },
+      { name: "تطبيق دورة PDCA على البرامج التطويرية", duration: "فصل دراسي", target: "جميع البرامج" },
+      { name: "تشكيل لجنة المتابعة والتقويم", duration: "دائم", target: "قادة العمل" },
+      { name: "إعداد تقارير المتابعة الشهرية", duration: "شهري", target: "إدارة المدرسة" }
+    ],
+    kpis: ["نسبة اكتمال عناصر الخطة 100%", "وجود مؤشرات قياس لكل هدف", "تقارير متابعة شهرية موثقة", "نسبة تحقق الأهداف 90%+"],
+    resources: ["نماذج خطط معتمدة من الهيئة", "برامج إدارة المشاريع الإلكترونية", "ميزانية تدريبية", "خبير تخطيط استراتيجي"]
+  },
+  "1-2": {
+    title: "خطة تحسين معيار قيادة العملية التعليمية",
+    objectives: [
+      "تعزيز القيم الإسلامية والهوية الوطنية في جميع أنشطة المدرسة",
+      "نشر ثقافة قواعد السلوك والمواظبة وضمان الالتزام بها",
+      "توفير بيئة آمنة للتعلم والحد من حالات التنمر بشكل استباقي",
+      "تطوير برامج إثرائية لاكتشاف ورعاية المواهب"
+    ],
+    programs: [
+      { name: "برنامج 'قيمي هويتي' للقيم الإسلامية والوطنية", duration: "فصلي", target: "جميع المتعلمين" },
+      { name: "ميثاق السلوك الإيجابي والانضباط المدرسي", duration: "سنوي", target: "المجتمع المدرسي" },
+      { name: "برنامج 'مدرستي بلا تنمر'", duration: "مستمر", target: "المتعلمون والمعلمون" },
+      { name: "نادي المواهب والإبداع", duration: "أسبوعي", target: "الموهوبون والمتميزون" },
+      { name: "حصص الإرشاد الأكاديمي والمهني", duration: "شهري", target: "المتعلمون" },
+      { name: "الاحتفاء بالمناسبات الوطنية (اليوم الوطني، يوم التأسيس، يوم العلم)", duration: "سنوي", target: "المجتمع المدرسي" }
+    ],
+    kpis: ["تقليل المخالفات السلوكية بنسبة 30%+", "زيادة المشاركة في الأنشطة الإثرائية 40%+", "رضا المتعلمين عن البيئة المدرسية 85%+", "صفر حالات تنمر موثقة"],
+    resources: ["مرشد طلابي مدرّب", "قاعات أنشطة مجهزة", "شراكات مع مراكز الموهبة والإبداع", "ميزانية لتنفيذ المناسبات"]
+  },
+  "1-3": {
+    title: "خطة تحسين معيار المجتمع المدرسي",
+    objectives: [
+      "تعزيز العمل التعاوني بين منسوبي المدرسة وروح الفريق",
+      "تفعيل دور الأسرة في تعليم أبنائها ومتابعة أدائهم",
+      "بناء شراكات مجتمعية فاعلة مع المؤسسات الوطنية",
+      "تقديم خدمات توعوية للمجتمع المحلي"
+    ],
+    programs: [
+      { name: "ورش 'نعمل معًا' لتعزيز العمل التعاوني", duration: "شهري", target: "هيئة التدريس والإدارة" },
+      { name: "مجالس أولياء الأمور الفصلية", duration: "فصلي", target: "أولياء الأمور" },
+      { name: "بوابة التواصل الإلكتروني مع الأسرة", duration: "مستمر", target: "الأسر" },
+      { name: "شراكات مع مؤسسات المجتمع المحلي (مراكز الموهبة وذوي الإعاقة)", duration: "سنوي", target: "المؤسسات" },
+      { name: "اليوم المفتوح للأسرة", duration: "فصلي", target: "الأسر" },
+      { name: "خدمات المجتمع (مكتبة، أندية رياضية، برامج تدريبية)", duration: "أسبوعي", target: "المجتمع المحلي" }
+    ],
+    kpis: ["نسبة حضور أولياء الأمور للاجتماعات 75%+", "عدد الشراكات المجتمعية 5+ شراكات سنويًا", "رضا الأسر 80%+", "خدمات مجتمعية موثقة"],
+    resources: ["منصة تواصل إلكترونية", "مذكرات تفاهم مع المؤسسات", "ميزانية للفعاليات والخدمات", "منسق شراكات مجتمعية"]
+  },
+  "1-4": {
+    title: "خطة تحسين معيار التطوير المؤسسي",
+    objectives: [
+      "استكمال الكادر التعليمي والإداري المؤهل",
+      "تحقيق الاستدامة المالية وضمان كفاءة الصرف",
+      "تشجيع منسوبي المدرسة على الحصول على الرخص المهنية",
+      "تطبيق التقويم الذاتي وفق معايير الهيئة وبناء خطط التحسين"
+    ],
+    programs: [
+      { name: "خطة استقطاب الكفاءات المؤهلة", duration: "سنوي", target: "الإدارة" },
+      { name: "برنامج التطوير المهني المستمر", duration: "شهري", target: "جميع المعلمين" },
+      { name: "ورش الإعداد لاختبار الرخصة المهنية", duration: "فصلي", target: "المعلمون" },
+      { name: "تطبيق منهجية التقويم الذاتي وفق دليل الهيئة", duration: "سنوي", target: "لجنة التقويم" },
+      { name: "خطة الاستدامة المالية وتنويع مصادر الدخل", duration: "سنوي", target: "الإدارة المالية" },
+      { name: "إعداد خطط التحسين بناء على نتائج التقويم", duration: "سنوي", target: "اللجنة الإدارية" }
+    ],
+    kpis: ["نسبة المؤهلين بكالوريوس فأعلى 90%+", "نسبة الحاصلين على الرخص المهنية 90%+", "تقرير تقويم ذاتي سنوي معتمد", "خطة تحسين موثقة قابلة للقياس"],
+    resources: ["خبراء تقويم مدرسي معتمدون", "برامج تدريبية متخصصة", "نظام مالي محاسبي", "نماذج التقويم الذاتي من الهيئة"]
+  },
+  "2-1": {
+    title: "خطة تحسين معيار بناء خبرات التعلم",
+    objectives: [
+      "دعم تنفيذ المناهج لتحقيق نواتج التعلم المستهدفة",
+      "تنمية المهارات القرائية والعددية الأساسية لدى المتعلمين",
+      "تنمية مهارات التفكير العليا (الناقد والإبداعي وحل المشكلات)",
+      "توفير مصادر تعلم متنوعة ومحفزة"
+    ],
+    programs: [
+      { name: "بنك المصادر التعليمية المتنوعة (رقمية ومطبوعة)", duration: "مستمر", target: "المعلمون والمتعلمون" },
+      { name: "برنامج 'أقرأ - أحسب' لتنمية الأساسيات", duration: "يومي", target: "المتعلمون" },
+      { name: "حصص تنمية التفكير الناقد والإبداعي", duration: "أسبوعي", target: "جميع المراحل" },
+      { name: "تحدي القراءة العربي ومسابقات الأدب", duration: "سنوي", target: "المتعلمون" },
+      { name: "مسابقات الرياضيات والعلوم الوطنية والدولية", duration: "فصلي", target: "المتعلمون المتميزون" },
+      { name: "خطط علاجية لسد فجوات التعلم", duration: "مستمر", target: "المتعلمون المحتاجون للدعم" }
+    ],
+    kpis: ["تحسن نتائج الاختبارات الوطنية 15%+", "نسبة إتقان القراءة الأساسية 90%+", "نسبة المشاركين في مسابقات التفكير 50%+", "تكريم فائزين وطنيًا ودوليًا"],
+    resources: ["مكتبة مدرسية محدّثة ورقمية", "برامج تنمية التفكير المعتمدة", "أدوات تعليمية تفاعلية", "معلمون مدرّبون على استراتيجيات التفكير"]
+  },
+  "2-2": {
+    title: "خطة تحسين معيار تقويم التعلم",
+    objectives: [
+      "استخدام أساليب وأدوات تقويم متنوعة وفعّالة تظهر التمايز",
+      "تحليل نتائج التقويم وتوظيفها في تحسين التعلم",
+      "تقديم تغذية راجعة منتظمة وفعّالة للمتعلمين",
+      "توظيف ملفات الإنجاز والمشروعات في التقويم"
+    ],
+    programs: [
+      { name: "ورشة 'التقويم البديل والأصيل'", duration: "أسبوعان", target: "المعلمون" },
+      { name: "نظام تحليل نتائج التقويم الإلكتروني", duration: "مستمر", target: "وكلاء الشؤون التعليمية" },
+      { name: "ملفات إنجاز رقمية للمتعلمين (Portfolio)", duration: "سنوي", target: "جميع المتعلمين" },
+      { name: "بنك أسئلة وفق مستويات بلوم", duration: "مستمر", target: "المعلمون" },
+      { name: "نظام التغذية الراجعة الفورية", duration: "يومي", target: "المتعلمون" },
+      { name: "خطط علاجية وإثرائية مبنية على نتائج التقويم", duration: "فصلي", target: "المتعلمون" }
+    ],
+    kpis: ["تنوع أدوات التقويم 5+ أنواع لكل معلم", "تقارير تحليل نتائج فصلية موثقة", "رضا المتعلمين عن التغذية الراجعة 85%+", "نسبة المتعلمين المتمايزين أداءً واضحة"],
+    resources: ["برنامج إدارة التقويم الإلكتروني", "أدوات روبركس معتمدة", "تدريب على التقويم البديل", "نماذج مهام أدائية وأصيلة"]
+  },
+  "3-1": {
+    title: "خطة تحسين معيار التطور الشخصي والصحي والاجتماعي",
+    objectives: [
+      "تعزيز مشاركة المتعلمين في الأعمال التطوعية وخدمة المجتمع",
+      "رفع نسبة الالتزام بقواعد السلوك إلى 90%+",
+      "رفع نسبة المنتظمين في الحضور إلى 95%+",
+      "تنمية المهارات الحياتية والاجتماعية للمتعلمين"
+    ],
+    programs: [
+      { name: "نادي التطوع المدرسي", duration: "أسبوعي", target: "المتعلمون" },
+      { name: "مبادرات خدمة المجتمع المحلي", duration: "فصلي", target: "جميع المتعلمين" },
+      { name: "نظام النقاط الإيجابية والتكريم", duration: "يومي", target: "المتعلمون" },
+      { name: "حملة 'حضوري قيمتي' للحد من الغياب", duration: "مستمر", target: "المتعلمون والأسر" },
+      { name: "تكريم المنضبطين والمتطوعين شهريًا", duration: "شهري", target: "المتعلمون المتميزون" },
+      { name: "برامج تنمية المهارات الحياتية", duration: "فصلي", target: "جميع المراحل" }
+    ],
+    kpis: ["نسبة المشاركين في التطوع 70%+", "نسبة الالتزام بالسلوك 90%+", "نسبة الحضور 95%+", "ساعات تطوعية موثقة 20+ ساعة/طالب"],
+    resources: ["مرشد طلابي", "شراكات مع جمعيات تطوعية", "نظام حوافز معتمد", "برامج تنمية المهارات الحياتية"]
+  },
+  "4-1": {
+    title: "خطة تحسين معيار الأمن والسلامة والصيانة",
+    objectives: [
+      "استيفاء جميع متطلبات الأمن والسلامة من الدفاع المدني",
+      "ضمان سريان الشهادات الصحية لجميع العاملين",
+      "تنفيذ خطة صيانة وقائية وعلاجية شاملة ومنتظمة",
+      "بناء ثقافة الأمن والسلامة في المجتمع المدرسي"
+    ],
+    programs: [
+      { name: "تجديد شهادة الأمن والسلامة من الدفاع المدني", duration: "فوري", target: "إدارة المدرسة" },
+      { name: "تدريبات الإخلاء الدورية", duration: "فصلي", target: "المجتمع المدرسي" },
+      { name: "فحص دوري للشهادات الصحية للعاملين", duration: "سنوي", target: "العاملون في المقصف" },
+      { name: "خطة الصيانة الوقائية الشاملة", duration: "شهري", target: "وكيل الشؤون المدرسية" },
+      { name: "برامج التوعية بالسلامة المرورية والمنزلية", duration: "فصلي", target: "المتعلمون" },
+      { name: "تقييم شامل للصحة والسلامة وتحقيق الرفاه", duration: "سنوي", target: "المدرسة" }
+    ],
+    kpis: ["100% استيفاء متطلبات الدفاع المدني", "100% شهادات صحية سارية", "صفر حوادث سنويًا", "تقرير صيانة شامل دوري"],
+    resources: ["متعاقد للصيانة الدورية", "أدوات السلامة (طفايات، إنذار، إسعافات أولية)", "ميزانية الصيانة الطارئة", "خبير أمن وسلامة"]
+  }
+};
+</script>
+
+<!-- ===================== LOGIC ===================== -->
+<script>
+// ========== التنقل بين الصفحات ==========
+document.querySelectorAll('.nav-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    const target = btn.dataset.page;
+    document.getElementById('page-' + target).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (target === 'domains') renderDomainsList();
+  });
+});
+
+// ========== تبديل التابات ==========
+document.querySelectorAll('.tab').forEach(t => {
+  t.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+    t.classList.add('active');
+    const k = t.dataset.tab;
+    document.getElementById('panel-pdf').style.display = k === 'pdf' ? '' : 'none';
+    document.getElementById('panel-manual').style.display = k === 'manual' ? '' : 'none';
+    if (k === 'manual') renderManualInputs();
+  });
+});
+
+// ========== إحصائيات الواجهة الرئيسية ==========
+function renderHeroStats() {
+  let stds = 0, inds = 0, paras = 0;
+  DATA.domains.forEach(d => {
+    stds += d.standards.length;
+    d.standards.forEach(s => {
+      inds += s.indicators.length;
+      s.indicators.forEach(i => paras += i.paragraphs.length);
+    });
+  });
+  const items = [
+    { n: DATA.domains.length, l: 'مجالات رئيسية', c: '#1a4d7c' },
+    { n: stds, l: 'معايير', c: '#2d7d4e' },
+    { n: inds, l: 'مؤشرات', c: '#c8a13b' },
+    { n: paras, l: 'فقرات تقييم', c: '#ea8a1f' }
+  ];
+  document.getElementById('heroStats').innerHTML = items.map(s =>
+    `<div class="stat" style="--stat-color:${s.c}">
+       <span class="stat-num">${s.n}</span>
+       <div class="stat-label">${s.l}</div>
+     </div>`).join('');
+}
+
+// ========== مستويات الأداء ==========
+function renderLevels() {
+  document.getElementById('levelsGrid').innerHTML = LEVELS.map(l =>
+    `<div class="level" style="--lvl-color:${l.color};--lvl-bg:${l.bg}">
+       <div class="level-icon-box">${l.icon}</div>
+       <div class="level-name">${l.name}</div>
+       <div class="level-range">${l.range}</div>
+       <div class="level-desc">${l.desc}</div>
+     </div>`).join('');
+}
+
+// ========== المجالات في الواجهة الرئيسية ==========
+function renderDomainsHome() {
+  document.getElementById('domainsHome').innerHTML = DATA.domains.map(d => {
+    let totalP = 0, totalS = d.standards.length;
+    d.standards.forEach(s => s.indicators.forEach(i => totalP += i.paragraphs.length));
+    return `
+      <div class="domain" style="--d-color:${d.color}" onclick="goDomain(${d.id})">
+        <span class="domain-icon">${d.icon}</span>
+        <h3>${d.name}</h3>
+        <div class="domain-meta">
+          <span>📐 ${totalS} معايير</span>
+          <span>📊 ${totalP} فقرة</span>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function goDomain(id) {
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelector('[data-page="domains"]').classList.add('active');
+  document.getElementById('page-domains').classList.add('active');
+  renderDomainDetails(id);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ========== قائمة المجالات ==========
+function renderDomainsList() {
+  document.getElementById('domainsContent').innerHTML = `
+    <h2 class="section-title">المجالات الرئيسية</h2>
+    <p class="section-subtitle">اختر المجال لاستعراض معاييره ومؤشراته وفقراته وشواهده المتوقعة</p>
+    <div class="domains">
+      ${DATA.domains.map(d => {
+        let totalP = 0;
+        d.standards.forEach(s => s.indicators.forEach(i => totalP += i.paragraphs.length));
+        return `
+          <div class="domain" style="--d-color:${d.color}" onclick="renderDomainDetails(${d.id})">
+            <span class="domain-icon">${d.icon}</span>
+            <h3>${d.name}</h3>
+            <div class="domain-meta">
+              <span>📐 ${d.standards.length} معايير</span>
+              <span>📊 ${totalP} فقرة</span>
+            </div>
+          </div>`;
+      }).join('')}
+    </div>`;
+}
+
+// ========== تفاصيل المجال ==========
+function renderDomainDetails(id) {
+  const d = DATA.domains.find(x => x.id === id);
+  if (!d) return;
+
+  document.getElementById('domainsContent').innerHTML = `
+    <div class="breadcrumb">
+      <a onclick="renderDomainsList()">🏠 المجالات</a>
+      <span class="breadcrumb-sep">›</span>
+      <span class="breadcrumb-current">${d.name}</span>
+    </div>
+
+    <div class="domain-header" style="--d-color:${d.color}">
+      <div class="domain-header-content">
+        <div class="domain-header-icon">${d.icon}</div>
+        <h2>${d.name}</h2>
+        <p>${d.desc}</p>
+      </div>
+    </div>
+
+    ${d.standards.map(s => `
+      <div class="standard">
+        <div class="standard-head">
+          <h3>${s.name}</h3>
+          <span class="standard-badge">${s.indicators.length} مؤشرات</span>
+        </div>
+        ${s.indicators.map(ind => `
+          <div class="indicator">
+            <div class="indicator-head">
+              <span class="indicator-tag">المؤشر ${ind.id}</span>
+              <div class="indicator-title">${ind.name}</div>
+            </div>
+            ${ind.paragraphs.map(p => `
+              <div class="para">
+                <div class="para-head">
+                  <div class="para-num">${p.num}</div>
+                  <div class="para-text">${p.text}</div>
+                </div>
+                <div class="para-grid">
+                  <div class="meta-block">
+                    <div class="meta-label">📁 الوثائق المطلوبة</div>
+                    <div class="chips">${p.docs.map(x => `<span class="chip">${x}</span>`).join('')}</div>
+                  </div>
+                  <div class="meta-block">
+                    <div class="meta-label">👤 المصدر</div>
+                    <div class="chips"><span class="chip source">${p.source}</span></div>
+                  </div>
+                </div>
+                <button class="ev-toggle" onclick="toggleEv(this)">
+                  <span>👁️</span> عرض الشواهد المتوقعة (${p.evidence.length})
+                </button>
+                <div class="ev-list hidden">
+                  ${p.evidence.map(e => `
+                    <div class="ev-item">
+                      <span class="ev-check">✓</span>
+                      <span>${e}</span>
+                    </div>`).join('')}
+                </div>
+              </div>`).join('')}
+          </div>`).join('')}
+      </div>`).join('')}`;
+}
+
+function toggleEv(btn) {
+  const list = btn.nextElementSibling;
+  list.classList.toggle('hidden');
+  btn.innerHTML = list.classList.contains('hidden')
+    ? `<span>👁️</span> عرض الشواهد المتوقعة (${list.children.length})`
+    : `<span>🙈</span> إخفاء الشواهد`;
+}
+
+// ========== استيراد PDF ==========
+const uploadArea = document.getElementById('uploadArea');
+const pdfFile = document.getElementById('pdfFile');
+
+uploadArea.addEventListener('click', () => pdfFile.click());
+uploadArea.addEventListener('dragover', e => { e.preventDefault(); uploadArea.classList.add('dragover'); });
+uploadArea.addEventListener('dragleave', () => uploadArea.classList.remove('dragover'));
+uploadArea.addEventListener('drop', e => {
+  e.preventDefault();
+  uploadArea.classList.remove('dragover');
+  if (e.dataTransfer.files.length) processFile(e.dataTransfer.files[0]);
+});
+pdfFile.addEventListener('change', e => {
+  if (e.target.files.length) processFile(e.target.files[0]);
+});
+
+// آخر تحليل (معلومات المدرسة + المؤشرات التفصيلية)
+let lastReport = null;
+
+async function processFile(file) {
+  if (file.type !== 'application/pdf') {
+    alert('يرجى اختيار ملف PDF فقط');
+    return;
+  }
+  const results = document.getElementById('analysisResults');
+  results.innerHTML = `
+    <div class="section">
+      <div class="loading">
+        <div class="spinner"></div>
+        <div style="color:var(--primary);font-weight:600;font-size:15px;">جاري قراءة وتحليل التقرير واستخراج البيانات...</div>
+      </div>
+    </div>`;
+
+  try {
+    const ab = await file.arrayBuffer();
+    const pdf = await pdfjsLib.getDocument({ data: ab }).promise;
+    let text = '';
+    for (let i = 1; i <= pdf.numPages; i++) {
+      const page = await pdf.getPage(i);
+      const content = await page.getTextContent();
+      // ترتيب العناصر حسب الموضع (y تنازلي ثم x) للحفاظ على بنية الأسطر
+      const items = content.items.map(it => ({
+        str: it.str,
+        x: it.transform[4],
+        y: it.transform[5]
+      }));
+      // تجميع حسب السطر (تقريب y)
+      items.sort((a, b) => (b.y - a.y) || (a.x - b.x));
+      let line = '', lastY = null;
+      const lines = [];
+      for (const it of items) {
+        if (lastY === null || Math.abs(it.y - lastY) < 4) {
+          line += it.str + ' ';
+        } else {
+          lines.push(line.trim());
+          line = it.str + ' ';
+        }
+        lastY = it.y;
+      }
+      if (line.trim()) lines.push(line.trim());
+      text += lines.join('\n') + '\n';
+    }
+    const report = extractETECReport(text);
+    lastReport = report;
+    showReportResults(report);
+  } catch (err) {
+    console.error(err);
+    results.innerHTML = `
+      <div class="alert alert-warn">
+        <span>⚠️</span>
+        <span>تعذّر قراءة الملف: ${err.message}. يرجى التأكد من أنه تقرير تقويم خارجي صادر عن هيئة تقويم التعليم، أو استخدام خيار "الإدخال اليدوي".</span>
+      </div>`;
+  }
+}
+
+// ========== تطبيع النص العربي (تحويل أشكال العرض إلى حروف عادية) ==========
+function normalizeArabic(text) {
+  // NFKC يحوّل Arabic Presentation Forms إلى الحروف الأساسية
+  let t = text.normalize('NFKC');
+  // إزالة التشكيل والمحارف الخفية
+  t = t.replace(/[\u064B-\u065F\u0670\u200C-\u200F\u202A-\u202E]/g, '');
+  // توحيد الألف والياء والتاء المربوطة للمطابقة المرنة
+  return t;
+}
+
+function simplify(s) {
+  return normalizeArabic(s)
+    .replace(/[أإآا]/g, 'ا')
+    .replace(/ى/g, 'ي')
+    .replace(/ة/g, 'ه')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+// ========== خريطة ربط معرّفات التقرير بمعايير المنصة ==========
+// التقرير يستخدم ترميز: [رقم المؤشر]-1-[رقم المعيار]-[رقم المجال]
+// المعيار = الرقمان الأخيران (معيار-مجال). نربطها بمعايير DATA
+const STD_MAP = {
+  // الإدارة المدرسية (مجال 1)
+  '1-1': '1-1', // التخطيط
+  '2-1': '1-2', // قيادة العملية التعليمية
+  '3-1': '1-3', // المجتمع المدرسي
+  '4-1': '1-4', // التطوير المؤسسي
+  // التعليم والتعلم (مجال 2)
+  '1-2': '2-1', // بناء خبرات التعلم
+  '2-2': '2-2', // تقويم التعلم
+  // نواتج التعلم (مجال 3)
+  '1-3': '3-1', // التحصيل التعليمي  -> نطابقه مع معيار نواتج التعلم
+  '2-3': '3-1', // التطور الشخصي والصحي والاجتماعي
+  // البيئة المدرسية (مجال 4)
+  '1-4': '4-1', // المبنى المدرسي
+  '2-4': '4-1'  // الأمن والسلامة
+};
+
+// أسماء المعايير كما تظهر في بطاقة التقرير (للنسب الوزنية المباشرة)
+const STD_NAME_MAP = [
+  { keys: ['التخطيط'], std: '1-1' },
+  { keys: ['قيادة العملية', 'العملية التعليمية'], std: '1-2' },
+  { keys: ['المجتمع المدرسي'], std: '1-3' },
+  { keys: ['التطوير المؤسسي'], std: '1-4' },
+  { keys: ['بناء خبرات', 'خبرات التعلم'], std: '2-1' },
+  { keys: ['تقويم التعلم'], std: '2-2' },
+  { keys: ['التحصيل التعليمي'], std: '3-1' },
+  { keys: ['التطور الشخصي', 'الشخصي والصحي'], std: '3-1' },
+  { keys: ['المبنى المدرسي'], std: '4-1' },
+  { keys: ['الامن والسلامه', 'الأمن والسلامة'], std: '4-1' }
+];
+
+// ========== المحرك الرئيسي لاستخراج تقرير ETEC ==========
+function extractETECReport(rawText) {
+  const text = normalizeArabic(rawText);
+  const simple = simplify(rawText);
+  const levels = ['التميز', 'التقدم', 'الانطلاق', 'التهيئة'];
+
+  // ===== 1) معلومات المدرسة =====
+  const info = {};
+
+  // الرقم الوزاري
+  let m = text.match(/S-?\d{4,7}/);
+  info.ministryId = m ? m[0] : null;
+
+  // تاريخ التقويم
+  m = text.match(/\d{4}\/\d{2}\/\d{2}/);
+  info.date = m ? m[0] : null;
+
+  // الأداء العام: أول نسبة صحيحة بصيغة NN% (87%)
+  m = text.match(/(?:^|\s)(\d{2,3})\s*%/);
+  info.overall = m ? parseInt(m[1]) : null;
+
+  // اسم المدرسة - نبحث عن السياق بعد "اسم المدرسة"
+  const nameMatch = simple.match(/اسم المدرسه[\s:]*([^\n]{3,60}?)(?:اداره|الرقم|نوع|مكتب|جنس|\d)/);
+  if (nameMatch) {
+    info.name = nameMatch[1].trim();
+  }
+  // محاولة احتياطية: سطر يبدأ أو ينتهي بنوع المدرسة
+  if (!info.name || info.name.length < 4) {
+    const nfkc = rawText.normalize('NFKC');
+    const lines = nfkc.split('\n').map(l => l.trim());
+    for (let L of lines) {
+      // سطر قصير يحوي نوع المدرسة وكلمات إضافية، بدون كلمات التقرير
+      if (/(الابتدائية|الابتدائيه|المتوسطة|المتوسطه|الثانوية|الثانويه)/.test(L)
+          && L.length >= 8 && L.length < 50
+          && !/تقرير|تقويم|محتويات|المدينة المنورة بمنطقة|بمنطقة|الإدارة/.test(L)
+          && !/S-?\d/.test(L)) {
+        info.name = L.replace(/\s+/g, ' ').trim();
+        break;
+      }
+    }
+  }
+  // تنظيف الاسم وإصلاح ترتيب الكلمات المعكوس
+  if (info.name) {
+    info.name = info.name.replace(/(تقرير|التقويم|الخارجي|المدرسي|المحتويات|S-?\d+).*/g, '').replace(/\s+/g, ' ').trim();
+    // إذا بدأ بكلمة غير "الابتدائية/المتوسطة/الثانوية" بينما تحتوي كلمة منها لاحقًا، نعكس الترتيب
+    const typeWords = ['الابتدائية','الابتدائيه','المتوسطة','المتوسطه','الثانوية','الثانويه'];
+    const words = info.name.split(' ').filter(Boolean);
+    const hasType = words.some(w => typeWords.includes(w));
+    if (hasType && !typeWords.includes(words[0])) {
+      info.name = words.slice().reverse().join(' ');
+    }
+    if (info.name.length < 4) info.name = null;
+  }
+
+  // إدارة التعليم - تظهر معكوسة الكلمات. نلتقط السطر ونعيد ترتيبه
+  // نستخدم النص المطبّع بالكامل (text) لأن الأسطر تنقسم فيه بشكل صحيح
+  const nfkcAll = rawText.normalize('NFKC');
+  const eduLines = text.split('\n').map(l => l.trim());
+  for (let L of eduLines) {
+    if (/الإدارة العامة للتعليم/.test(L) && /بمنطقة/.test(L) && L.length < 80) {
+      let clean = L.replace(/\s+/g, ' ').trim();
+      const w = clean.split(' ');
+      if (w.indexOf('الإدارة') > 2) {
+        clean = w.slice().reverse().join(' ');
+      }
+      info.education = clean.replace(/(اسم|نوع|مكتب|الرقم|حكومي|أهلي).*/, '').trim();
+      break;
+    }
+  }
+  // احتياطي
+  if (!info.education) {
+    const regMatch = text.match(/(الإدارة العامة للتعليم[^\n]{2,40})/);
+    if (regMatch) {
+      let clean = regMatch[1].replace(/\s+/g, ' ').trim();
+      const w = clean.split(' ');
+      if (w.indexOf('الإدارة') > 2) clean = w.slice().reverse().join(' ');
+      info.education = clean.replace(/(اسم|نوع|مكتب|الرقم).*/, '').trim();
+    }
+  }
+
+  // مكتب التعليم - معكوس أيضًا
+  for (let L of eduLines) {
+    if (/مكتب التعليم/.test(L) && L.length < 45 && !/إدارة|اسم المدرسة|الإدارة العامة/.test(L)) {
+      let clean = L.replace(/\s+/g, ' ').trim();
+      const w = clean.split(' ');
+      if (w.indexOf('مكتب') > 1) clean = w.slice().reverse().join(' ');
+      const o = clean.replace(/(حكومي|أهلي|نوع|اسم|الرقم).*/, '').trim();
+      if (/^مكتب التعليم\s+\S/.test(o)) { info.office = o; break; }
+    }
+  }
+
+  // مكتب التعليم
+  const offMatch = rawText.normalize('NFKC').match(/(مكتب التعليم[^\n]{2,30})/);
+  if (offMatch) info.office = offMatch[1].replace(/\s+/g, ' ').trim();
+
+  // المرحلة / الجنس / النوع
+  if (/ابتدائية/.test(simple)) info.stage = 'ابتدائية';
+  else if (/متوسطة|متوسطه/.test(simple)) info.stage = 'متوسطة';
+  else if (/ثانوية|ثانويه/.test(simple)) info.stage = 'ثانوية';
+  info.gender = /بنات/.test(simple) ? 'بنات' : (/بنين/.test(simple) ? 'بنين' : null);
+  info.type = /حكومي/.test(simple) ? 'حكومي' : (/اهلي|أهلي/.test(simple) ? 'أهلي' : null);
+
+  // أعداد (طلاب / تعليمية / وكلاء) — تظهر متتالية مثل: 2 29 284 (معكوسة)
+  // نبحث ضمن نافذة قريبة من كلمة "الطلاب"، ونستبعد قيم السنوات (>=2020)
+  const studentsIdx = text.indexOf('الطلاب');
+  let searchZone = text;
+  if (studentsIdx !== -1) {
+    searchZone = text.slice(Math.max(0, studentsIdx - 30), studentsIdx + 60);
+  }
+  const numSeqs = [...searchZone.matchAll(/(\d{1,4})\s+(\d{1,4})\s+(\d{1,4})/g)];
+  let bestStudents = 0, bestTeachers = 0;
+  numSeqs.forEach(seq => {
+    const vals = [parseInt(seq[1]), parseInt(seq[2]), parseInt(seq[3])]
+      .filter(v => v < 2020); // استبعاد السنوات
+    if (!vals.length) return;
+    const mx = Math.max(...vals);
+    if (mx > bestStudents && mx >= 20 && mx < 5000) {
+      bestStudents = mx;
+      const others = vals.filter(v => v !== mx).sort((a, b) => b - a);
+      bestTeachers = others[0] || 0;
+    }
+  });
+  if (bestStudents) info.students = bestStudents;
+  if (bestTeachers) info.teachers = bestTeachers;
+
+  // ===== 2) أزواج (نسبة + مستوى) للمؤشرات التفصيلية =====
+  const idRe = /(\d{1,2}-\d-\d-\d)/g;
+  const idPositions = [];
+  let mm;
+  while ((mm = idRe.exec(text)) !== null) {
+    idPositions.push({ start: mm.index, end: mm.index + mm[0].length, id: mm[1] });
+  }
+
+  // دالة عكس ترتيب الكلمات (النص في PDF يظهر معكوس الكلمات)
+  function reverseWords(s) {
+    return s.split(/\s+/).filter(Boolean).reverse().join(' ');
+  }
+
+  // تنظيف نص المقترح: يبدأ من "يتوقع" ويزيل الضوضاء
+  function cleanProposal(prop) {
+    const i = prop.indexOf('يتوقع');
+    if (i !== -1) prop = prop.slice(i);
+    prop = prop.replace(/\d{1,3}\.\d{1,2}\s*%?/g, '');
+    prop = prop.replace(/تقرير التقويم المدرسي/g, '');
+    prop = prop.replace(/المؤشرات ومقترحات التحسين|المستوى/g, '');
+    prop = prop.replace(/[A-Za-z]/g, '');
+    prop = prop.replace(/\s+/g, ' ').trim();
+    return prop;
+  }
+
+  const scoreRe = new RegExp('(\\d{1,3}\\.\\d{1,2})\\s*\\n?\\s*(' + levels.join('|') + ')', 'g');
+  const indicatorResults = [];
+  let sm;
+  while ((sm = scoreRe.exec(text)) !== null) {
+    const score = parseFloat(sm[1]);
+    const level = sm[2];
+    // أقرب معرّف يسبق هذه النسبة
+    let best = null;
+    for (const ip of idPositions) {
+      if (ip.start < sm.index) best = ip;
+      else break;
+    }
+    if (best) {
+      // العنوان: الكلمات على نفس سطر المعرّف قبله (معكوسة)
+      const lineStart = text.lastIndexOf('\n', best.start) + 1;
+      const titleRaw = text.slice(lineStart, best.start).trim();
+      const title = titleRaw ? reverseWords(titleRaw) : '';
+      // المقترح: النص بين نهاية المعرّف وبداية النسبة (نعكس كل سطر)
+      const middle = text.slice(best.end, sm.index).trim();
+      const propLines = middle.split('\n').map(l => l.trim()).filter(Boolean);
+      let proposal = propLines.map(l => reverseWords(l)).join(' ');
+      proposal = cleanProposal(proposal);
+
+      // التصنيف حسب القواعد المعتمدة
+      let classification, classId;
+      if (score < 50) { classification = 'نقطة حرجة'; classId = 'critical'; }
+      else if (score < 75) { classification = 'نقطة احتياج'; classId = 'need'; }
+      else { classification = 'نقطة قوة'; classId = 'strength'; }
+      const needsIntervention = score < 75; // الانطلاق أو التهيئة
+
+      indicatorResults.push({
+        id: best.id, title, proposal, score, level,
+        classification, classId, needsIntervention
+      });
+    }
+  }
+
+  // ===== 3) نسب المعايير الوزنية (من بطاقة التقرير) =====
+  // نمط: NN.NN% يظهر بجوار اسم المعيار
+  const stdScores = {}; // std-id -> [scores]
+  // نجمع كل النسب التفصيلية حسب المعيار المرتبط
+  indicatorResults.forEach(r => {
+    // معرف المؤشر: a-1-b-c => المعيار = b-c
+    const parts = r.id.split('-');
+    if (parts.length === 4) {
+      const stdKey = parts[2] + '-' + parts[3]; // معيار-مجال
+      const mapped = STD_MAP[stdKey];
+      if (mapped) {
+        if (!stdScores[mapped]) stdScores[mapped] = [];
+        stdScores[mapped].push(r.score);
+      }
+    }
+  });
+
+  // ===== 4) بناء كائن النتائج النهائي بصيغة المنصة =====
+  const scores = {};
+  DATA.domains.forEach(d => {
+    scores[d.id] = { name: d.name, standards: {} };
+    d.standards.forEach(s => {
+      let val = null;
+      if (stdScores[s.id] && stdScores[s.id].length) {
+        // متوسط مؤشرات هذا المعيار
+        const arr = stdScores[s.id];
+        val = arr.reduce((a, b) => a + b, 0) / arr.length;
+        val = Math.round(val * 100) / 100;
+      }
+      scores[d.id].standards[s.id] = {
+        name: s.name,
+        score: val !== null ? val : null
+      };
+    });
+  });
+
+  // ===== 5) محاولة قراءة النسب الوزنية المباشرة للمعايير من البطاقة =====
+  // نبحث عن النسب الأربع الكبرى للمجالات + نسب المعايير
+  const cardScores = extractCardScores(text);
+
+  // إذا توفرت نسبة وزنية مباشرة للمعيار، نستخدمها (أدق من المتوسط)
+  Object.keys(cardScores).forEach(stdId => {
+    for (const d of DATA.domains) {
+      if (scores[d.id].standards[stdId]) {
+        scores[d.id].standards[stdId].score = cardScores[stdId];
+      }
+    }
+  });
+
+  // لأي معيار لم نجد له نسبة، نحسب من متوسط مؤشراته أو نتركه 0
+  DATA.domains.forEach(d => {
+    d.standards.forEach(s => {
+      if (scores[d.id].standards[s.id].score === null) {
+        scores[d.id].standards[s.id].score = 0;
+      }
+    });
+  });
+
+  // ===== 6) حساب نسب المجالات (متوسط معاييرها) ومستوياتها =====
+  const domainScores = {};
+  DATA.domains.forEach(d => {
+    const stds = Object.values(scores[d.id].standards).filter(s => s.score > 0);
+    let domainAvg = 0;
+    if (stds.length) {
+      domainAvg = stds.reduce((a, s) => a + s.score, 0) / stds.length;
+      domainAvg = Math.round(domainAvg * 100) / 100;
+    }
+    domainScores[d.id] = { name: d.name, score: domainAvg };
+  });
+
+  return {
+    info,
+    scores,
+    domainScores,
+    indicators: indicatorResults,
+    foundCount: indicatorResults.length
+  };
+}
+
+// ========== استخراج النسب الوزنية للمعايير من بطاقة التقرير ==========
+function extractCardScores(text) {
+  const result = {};
+  const simple = simplify(text);
+  // نمط: اسم المعيار قريب من نسبة NN.NN%
+  STD_NAME_MAP.forEach(entry => {
+    for (const key of entry.keys) {
+      const sk = simplify(key);
+      const idx = simple.indexOf(sk);
+      if (idx !== -1) {
+        // ابحث عن نسبة% ضمن نافذة قريبة (قبل أو بعد)
+        const window = simple.slice(Math.max(0, idx - 80), idx + 80);
+        const pm = window.match(/(\d{2,3}\.\d{1,2})\s*%/);
+        if (pm) {
+          const v = parseFloat(pm[1]);
+          if (v >= 0 && v <= 100 && !result[entry.std]) {
+            result[entry.std] = v;
+          }
+        }
+      }
+    }
+  });
+  return result;
+}
+
+// ========== (متوافقية للخلف) ==========
+function extractScores(text) {
+  return extractETECReport(text).scores;
+}
+
+// ========== مستوى الأداء ==========
+function getLevel(score) {
+  for (const lv of LEVELS) {
+    if (score >= lv.min && score <= lv.max) return lv;
+  }
+  return LEVELS[LEVELS.length - 1];
+}
+
+// ========== عرض نتائج التقرير الكامل (مع معلومات المدرسة) ==========
+function showReportResults(report) {
+  const info = report.info || {};
+
+  // بطاقة معلومات المدرسة
+  const infoRows = [
+    ['🏫 اسم المدرسة', info.name],
+    ['🏛️ إدارة التعليم', info.education],
+    ['📍 مكتب التعليم', info.office],
+    ['🔢 الرقم الوزاري', info.ministryId],
+    ['🎓 المرحلة', info.stage],
+    ['👥 جنس المدرسة', info.gender],
+    ['🏷️ نوع المدرسة', info.type],
+    ['👨‍🎓 عدد الطلاب', info.students],
+    ['👩‍🏫 شاغلو الوظائف التعليمية', info.teachers],
+    ['📅 تاريخ التقويم', info.date]
+  ].filter(r => r[1]);
+
+  let infoCard = '';
+  if (infoRows.length) {
+    infoCard = `
+      <div class="school-info-card">
+        <div class="school-info-header">
+          <div class="school-info-title">
+            <span style="font-size:28px;">🏫</span>
+            <div>
+              <h3>${info.name || 'معلومات المدرسة'}</h3>
+              ${info.education ? `<p>${info.education}</p>` : ''}
+            </div>
+          </div>
+          ${info.overall != null ? `
+            <div class="overall-badge">
+              <div class="overall-num">${info.overall}%</div>
+              <div class="overall-label">${getLevel(info.overall).icon} الأداء العام (${getLevel(info.overall).name})</div>
+            </div>` : ''}
+        </div>
+        <div class="school-info-grid">
+          ${infoRows.map(r => `
+            <div class="info-item">
+              <div class="info-label">${r[0]}</div>
+              <div class="info-value">${r[1]}</div>
+            </div>`).join('')}
+        </div>
+      </div>`;
+  }
+
+  // نعرض ملخص النتائج العادي بعد بطاقة المعلومات
+  showResults(report.scores, infoCard, report.indicators, report.domainScores, info.overall);
+}
+
+// ========== عرض النتائج ==========
+function showResults(scores, infoCard, indicators, domainScores, overallScore) {
+  infoCard = infoCard || '';
+
+  // عدّ المعايير حسب المستوى (للتحليل الداخلي)
+  let stdCount = 0;
+  Object.values(scores).forEach(d => {
+    Object.values(d.standards).forEach(s => { if (s.score > 0) stdCount++; });
+  });
+
+  // ===== إحصاء المؤشرات حسب المستوى (هذا ما يُعرض في الملخص) =====
+  let excellence = 0, progress = 0, launch = 0, preparation = 0;
+  let indCount = 0;
+  if (indicators && indicators.length) {
+    indicators.forEach(i => {
+      indCount++;
+      if (i.score >= 90) excellence++;
+      else if (i.score >= 75) progress++;
+      else if (i.score >= 50) launch++;
+      else preparation++;
+    });
+  } else {
+    // الإدخال اليدوي: نعدّ المعايير
+    Object.values(scores).forEach(d => {
+      Object.values(d.standards).forEach(s => {
+        if (s.score > 0) {
+          if (s.score >= 90) excellence++;
+          else if (s.score >= 75) progress++;
+          else if (s.score >= 50) launch++;
+          else preparation++;
+        }
+      });
+    });
+  }
+
+  // ===== الأداء العام: نستخدم النسبة الرسمية من التقرير إن توفّرت =====
+  let avg, avgLevel;
+  if (overallScore != null && overallScore > 0) {
+    // نعرضه كما هو (بدون كسور إن كان عددًا صحيحًا)
+    avg = Number.isInteger(overallScore) ? String(overallScore) : overallScore.toFixed(1);
+    avgLevel = getLevel(parseFloat(avg));
+  } else {
+    // وإلا نحسب متوسط المعايير
+    let t = 0, c = 0;
+    Object.values(scores).forEach(d => {
+      Object.values(d.standards).forEach(s => { if (s.score > 0) { t += s.score; c++; } });
+    });
+    avg = c ? (t / c).toFixed(1) : '0';
+    avgLevel = getLevel(parseFloat(avg));
+  }
+
+  const summaryUnit = (indicators && indicators.length) ? 'مؤشر' : 'معيار';
+  const summaryUnitPlural = (indicators && indicators.length) ? 'مؤشرات' : 'معايير';
+
+  let html = `
+    <div class="alert alert-success">
+      <span>✅</span>
+      <span>تم تحليل التقرير بنجاح! تم رصد <strong>${stdCount} معايير</strong>${indicators && indicators.length ? ` و <strong>${indicators.length} مؤشرًا</strong>` : ''}. الأداء العام للمدرسة: <strong>${avg}%</strong> (مستوى ${avgLevel.name})</span>
+    </div>
+
+    ${infoCard}
+
+    <h3 class="section-title">ملخص نتائج التقويم</h3>
+    <p class="section-subtitle">الأداء العام للمدرسة وتوزيع ${summaryUnitPlural} (${indCount || stdCount}) على مستويات الأداء</p>
+
+    <div class="results-summary">
+      <div class="result-card l-${avgLevel.id}">
+        <div class="result-icon">${avgLevel.icon}</div>
+        <div class="result-num">${avg}%</div>
+        <div class="result-label">الأداء العام<br>(${avgLevel.name})</div>
+      </div>
+      <div class="result-card l-excellence">
+        <div class="result-icon">⭐</div>
+        <div class="result-num">${excellence}</div>
+        <div class="result-label">${summaryUnitPlural} في التميز</div>
+      </div>
+      <div class="result-card l-progress">
+        <div class="result-icon">✓</div>
+        <div class="result-num">${progress}</div>
+        <div class="result-label">${summaryUnitPlural} في التقدم</div>
+      </div>
+      <div class="result-card l-launch">
+        <div class="result-icon">📈</div>
+        <div class="result-num">${launch}</div>
+        <div class="result-label">${summaryUnitPlural} في الانطلاق</div>
+      </div>
+      <div class="result-card l-preparation">
+        <div class="result-icon">📝</div>
+        <div class="result-num">${preparation}</div>
+        <div class="result-label">${summaryUnitPlural} في التهيئة</div>
+      </div>
+    </div>
+
+    <h3 class="section-title">التحليل التفصيلي حسب المجال</h3>`;
+
+  Object.entries(scores).forEach(([did, dd]) => {
+    const d = DATA.domains.find(x => x.id === parseInt(did));
+    // نستخدم نسبة المجال المستخرجة إن توفّرت، وإلا نحسب المتوسط
+    let dAvg;
+    if (domainScores && domainScores[did] && domainScores[did].score > 0) {
+      dAvg = domainScores[did].score.toFixed(1);
+    } else {
+      let dt = 0, dc = 0;
+      Object.values(dd.standards).forEach(s => { if (s.score > 0) { dt += s.score; dc++; } });
+      dAvg = dc ? (dt / dc).toFixed(1) : '0';
+    }
+    const dLvl = getLevel(parseFloat(dAvg));
+
+    html += `
+      <div class="d-result">
+        <div class="d-result-head">
+          <h3>${d.icon} ${d.name}</h3>
+          <div class="score-badge">
+            <span>${dAvg}%</span>
+            <span class="pill ${dLvl.id}">${dLvl.icon} ${dLvl.name}</span>
+          </div>
+        </div>
+        ${Object.entries(dd.standards).map(([sid, sd]) => {
+          const lv = getLevel(sd.score);
+          return `
+            <div class="s-result">
+              <div class="s-name">${sd.name}</div>
+              <div class="progress-bar">
+                <div class="progress-fill ${lv.id}" style="width:${sd.score}%"></div>
+              </div>
+              <div style="display:flex;gap:8px;align-items:center;">
+                <strong style="font-family:'Reem Kufi';color:var(--primary-dark);font-size:15px;">${sd.score}%</strong>
+                <span class="pill ${lv.id}">${lv.icon} ${lv.name}</span>
+              </div>
+            </div>`;
+        }).join('')}
+      </div>`;
+  });
+
+  // ===== جدول المؤشرات التفصيلية (عنوان + نسبة + مستوى + تصنيف) =====
+  if (indicators && indicators.length) {
+    const sorted = [...indicators].sort((a, b) => a.score - b.score);
+    const strengths = indicators.filter(i => i.score >= 75);
+    const needs = indicators.filter(i => i.score >= 50 && i.score < 75);
+    const critical = indicators.filter(i => i.score < 50);
+
+    // ملخص التصنيفات
+    html += `
+      <h3 class="section-title">تصنيف المؤشرات</h3>
+      <div class="results-summary">
+        <div class="result-card l-excellence">
+          <div class="result-icon">💪</div>
+          <div class="result-num">${strengths.length}</div>
+          <div class="result-label">نقاط قوة (75%+)</div>
+        </div>
+        <div class="result-card l-launch">
+          <div class="result-icon">⚠️</div>
+          <div class="result-num">${needs.length}</div>
+          <div class="result-label">نقاط احتياج (50-75%)</div>
+        </div>
+        <div class="result-card l-preparation">
+          <div class="result-icon">🚨</div>
+          <div class="result-num">${critical.length}</div>
+          <div class="result-label">نقاط حرجة (أقل من 50%)</div>
+        </div>
+      </div>
+
+      <h3 class="section-title">المؤشرات التفصيلية</h3>
+      <p class="section-subtitle">جميع المؤشرات المستخرجة من التقرير (${indicators.length} مؤشرًا) مرتبة من الأضعف إلى الأقوى</p>
+      <div class="indicators-table-wrap">
+        <table class="indicators-table">
+          <thead>
+            <tr>
+              <th style="width:90px;">الرمز</th>
+              <th>نص المؤشر</th>
+              <th style="width:80px;">النسبة</th>
+              <th style="width:120px;">المستوى</th>
+              <th style="width:120px;">التصنيف</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${sorted.map(ind => {
+              const lv = getLevel(ind.score);
+              const clsColor = ind.classId === 'critical' ? 'var(--preparation)'
+                : ind.classId === 'need' ? 'var(--launch)' : 'var(--excellence)';
+              const clsIcon = ind.classId === 'critical' ? '🚨'
+                : ind.classId === 'need' ? '⚠️' : '💪';
+              return `
+                <tr class="${ind.needsIntervention ? 'row-needs' : ''}">
+                  <td><strong style="font-family:'Reem Kufi';">${ind.id}</strong></td>
+                  <td style="font-size:13px;line-height:1.5;">${ind.title || '—'}</td>
+                  <td><strong style="color:var(--primary-dark);">${ind.score}%</strong></td>
+                  <td><span class="pill ${lv.id}">${lv.icon} ${ind.level || lv.name}</span></td>
+                  <td><span style="color:${clsColor};font-weight:700;font-size:12.5px;">${clsIcon} ${ind.classification}</span></td>
+                </tr>`;
+            }).join('')}
+          </tbody>
+        </table>
+      </div>`;
+  }
+
+  // توليد خطط التحسين (للمؤشرات في الانطلاق والتهيئة فقط - تدخّل عاجل)
+  const plans = generatePlans(scores, indicators);
+
+  if (plans.length) {
+    html += `
+      <h3 class="section-title">🎯 خطط التحسين (تدخّل عاجل)</h3>
+      <div class="alert alert-warn">
+        <span>🎯</span>
+        <span>تم توليد <strong>${plans.length} خطة تحسين</strong> للمؤشرات في مستوى الانطلاق أو التهيئة (تحتاج تدخّلًا عاجلًا - دون مستوى التقدم)</span>
+      </div>
+      ${plans.map(renderPlan).join('')}`;
+
+    document.getElementById('plansContent').innerHTML = `
+      <div class="alert alert-info">
+        <span>💡</span>
+        <span>تم توليد <strong>${plans.length} خطة تحسين</strong> بناءً على نتائج التحليل الأخير. يمكنك طباعة الصفحة لحفظها.</span>
+      </div>
+      ${plans.map(renderPlan).join('')}`;
+  } else {
+    html += `
+      <div class="alert alert-success" style="margin-top:24px;">
+        <span>🎉</span>
+        <span>جميع المؤشرات في مستوى التقدم أو التميز - لا حاجة لخطط تحسين عاجلة! استمر في المتابعة والتطوير.</span>
+      </div>`;
+  }
+
+  // ===== قسم توظيف نقاط القوة واستدامة التميز (مؤشرات التميز 90%+) =====
+  if (indicators && indicators.length) {
+    const excellenceInds = indicators.filter(i => i.score >= 90).sort((a, b) => b.score - a.score);
+    if (excellenceInds.length) {
+      html += `
+        <h3 class="section-title">⭐ توظيف نقاط القوة واستدامة التميز</h3>
+        <div class="alert alert-success">
+          <span>🏆</span>
+          <span>المدرسة متميزة في <strong>${excellenceInds.length} مؤشرًا</strong> (90% فأعلى). يوصى بتوظيف هذه النقاط ومشاركة خبراتها مع المدارس الأخرى واستدامة التميز فيها.</span>
+        </div>
+        <div class="strength-grid">
+          ${excellenceInds.map(ind => `
+            <div class="strength-card">
+              <div class="strength-head">
+                <span class="strength-tag">${ind.id}</span>
+                <span class="strength-score">⭐ ${ind.score}%</span>
+              </div>
+              <div class="strength-title">${ind.title || '—'}</div>
+              ${ind.proposal ? `<div class="strength-proposal">${ind.proposal}</div>` : ''}
+            </div>`).join('')}
+        </div>`;
+    }
+  }
+
+  document.getElementById('analysisResults').innerHTML = html;
+  document.getElementById('analysisResults').scrollIntoView({ behavior: 'smooth' });
+}
+
+// ========== توليد خطط التحسين ==========
+// يولّد خططًا للحالات دون مستوى التقدم (الانطلاق <75% والتهيئة <50%)
+// سواء على مستوى المعيار أو على مستوى المؤشر الفردي
+function generatePlans(scores, indicators) {
+  const plans = [];
+
+  // الخطط تُبنى على المؤشرات في الانطلاق/التهيئة فقط (تدخّل عاجل)
+  // كل مؤشر <75% يُربط بمعياره وتُولّد له خطة، ولا تدخل مؤشرات التميز هنا
+  if (indicators && indicators.length) {
+    indicators.forEach(ind => {
+      if (ind.score < 75) {
+        // معرف المؤشر: a-1-b-c => المعيار = b-c
+        const parts = ind.id.split('-');
+        if (parts.length === 4) {
+          const stdKey = parts[2] + '-' + parts[3];
+          const mapped = STD_MAP[stdKey];
+          if (mapped) {
+            // ابحث عن اسم المعيار والمجال
+            let sname = mapped, dname = '';
+            for (const d of DATA.domains) {
+              const st = d.standards.find(s => s.id === mapped);
+              if (st) { sname = st.name; dname = d.name; break; }
+            }
+            // هل توجد خطة لهذا المعيار مسبقًا؟ نضيف المؤشر إليها
+            let existing = plans.find(p => p.sid === mapped);
+            if (existing) {
+              existing.weakIndicators.push(ind);
+              if (ind.score < existing.score) {
+                existing.score = ind.score;
+                existing.level = getLevel(ind.score);
+              }
+            } else {
+              const tpl = PLAN_TEMPLATES[mapped];
+              if (tpl) {
+                plans.push({
+                  sid: mapped, sname, dname,
+                  score: ind.score, level: getLevel(ind.score), tpl,
+                  weakIndicators: [ind]
+                });
+              }
+            }
+          }
+        }
+      }
+    });
+  }
+
+  // ترتيب حسب الأولوية (الأقل أولًا)
+  plans.sort((a, b) => a.score - b.score);
+  return plans;
+}
+
+// ========== عرض خطة تحسين ==========
+function renderPlan(p) {
+  const urgent = p.level.id === 'preparation';
+  return `
+    <div class="plan ${urgent ? 'urgent' : 'improvement'}">
+      <div class="plan-badge ${urgent ? 'urgent' : 'improvement'}">
+        ${urgent ? '🚨 تدخّل عاجل' : '⚠️ يحتاج تحسين'}
+      </div>
+      <h3>${p.tpl.title}</h3>
+      <div class="plan-meta">
+        <span>📊 المجال: <strong>${p.dname}</strong></span>
+        <span>📐 المعيار: <strong>${p.sname}</strong></span>
+        <span>📈 النسبة الحالية: <strong>${p.score}%</strong></span>
+        <span>🎯 المستوى: <strong>${p.level.icon} ${p.level.name}</strong></span>
+      </div>
+
+      ${p.weakIndicators && p.weakIndicators.length ? `
+        <div class="plan-section">
+          <div class="plan-section-title">🔍 المؤشرات التي تحتاج تدخّلًا عاجلًا</div>
+          ${p.weakIndicators.map(ind => {
+            const lv = getLevel(ind.score);
+            const clsColor = ind.classId === 'critical' ? 'var(--preparation)' : 'var(--launch)';
+            const clsIcon = ind.classId === 'critical' ? '🚨' : '⚠️';
+            return `
+              <div style="background:white;border:1px solid var(--border-light);border-right:3px solid ${clsColor};border-radius:9px;padding:14px 16px;margin-bottom:10px;">
+                <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px;">
+                  <span style="background:${clsColor};color:white;font-family:'Reem Kufi';font-size:12px;font-weight:700;padding:4px 12px;border-radius:12px;">${ind.id}</span>
+                  <strong style="color:var(--primary-dark);font-size:14px;">${ind.title || ''}</strong>
+                  <span class="pill ${lv.id}" style="margin-right:auto;">${lv.icon} ${ind.score}% (${ind.level || lv.name})</span>
+                  <span style="color:${clsColor};font-weight:700;font-size:12.5px;">${clsIcon} ${ind.classification}</span>
+                </div>
+                ${ind.proposal ? `
+                  <div style="font-size:11px;font-weight:700;color:var(--accent-dark);margin:8px 0 4px;">📋 مقترح التحسين من التقرير:</div>
+                  <div class="report-proposal">${ind.proposal}</div>` : ''}
+              </div>`;
+          }).join('')}
+        </div>` : ''}
+
+      <div class="plan-section">
+        <div class="plan-section-title">🎯 الأهداف الاستراتيجية</div>
+        <div class="objectives">
+          ${p.tpl.objectives.map((o, i) => `
+            <div class="obj-item">
+              <div class="obj-num">${i + 1}</div>
+              <span>${o}</span>
+            </div>`).join('')}
+        </div>
+      </div>
+
+      <div class="plan-section">
+        <div class="plan-section-title">📅 البرامج والأنشطة التنفيذية</div>
+        <table class="programs-tbl">
+          <thead>
+            <tr>
+              <th>البرنامج / النشاط</th>
+              <th style="width:130px;">المدة</th>
+              <th>الفئة المستهدفة</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${p.tpl.programs.map(pr => `
+              <tr>
+                <td><strong>${pr.name}</strong></td>
+                <td>${pr.duration}</td>
+                <td>${pr.target}</td>
+              </tr>`).join('')}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="plan-section">
+        <div class="plan-section-title">📊 مؤشرات النجاح (KPIs)</div>
+        <div class="tag-grid">
+          ${p.tpl.kpis.map(k => `
+            <div class="tag kpi">
+              <span style="color:var(--excellence);font-weight:700;">✓</span>
+              <span>${k}</span>
+            </div>`).join('')}
+        </div>
+      </div>
+
+      <div class="plan-section" style="margin-bottom:0;">
+        <div class="plan-section-title">🛠️ الموارد المطلوبة</div>
+        <div class="tag-grid">
+          ${p.tpl.resources.map(r => `
+            <div class="tag resource">
+              <span>📦</span>
+              <span>${r}</span>
+            </div>`).join('')}
+        </div>
+      </div>
+    </div>`;
+}
+
+// ========== الإدخال اليدوي ==========
+function renderManualInputs() {
+  let html = '';
+  DATA.domains.forEach(d => {
+    html += `
+      <div class="manual-group">
+        <h4 style="color:${d.color}">
+          <span style="font-size:24px;">${d.icon}</span> ${d.name}
+        </h4>
+        ${d.standards.map(s => `
+          <div class="manual-row">
+            <label>${s.name}</label>
+            <input type="number" min="0" max="100" placeholder="0-100"
+                   data-d="${d.id}" data-s="${s.id}" class="score-in">
+          </div>`).join('')}
+      </div>`;
+  });
+  document.getElementById('manualInputs').innerHTML = html;
+}
+
+function analyzeManual() {
+  const scores = {};
+  let hasData = false;
+  DATA.domains.forEach(d => {
+    scores[d.id] = { name: d.name, standards: {} };
+    d.standards.forEach(s => {
+      const inp = document.querySelector(`.score-in[data-d="${d.id}"][data-s="${s.id}"]`);
+      const v = inp ? parseFloat(inp.value) : 0;
+      if (v > 0) hasData = true;
+      scores[d.id].standards[s.id] = {
+        name: s.name,
+        score: isNaN(v) ? 0 : Math.min(100, Math.max(0, v))
+      };
+    });
+  });
+  if (!hasData) {
+    alert('يرجى إدخال نسبة لمعيار واحد على الأقل');
+    return;
+  }
+  showResults(scores);
+}
+
+// ========== الإعدادات ==========
+function resetAll() {
+  if (!confirm('هل أنت متأكد من مسح جميع البيانات؟')) return;
+  document.getElementById('analysisResults').innerHTML = '';
+  document.getElementById('plansContent').innerHTML = `
+    <div class="empty">
+      <div class="empty-icon">📋</div>
+      <div class="empty-title">لا توجد خطط محفوظة بعد</div>
+      <div class="empty-text">قم باستيراد تقرير التقويم أو إدخال النسب يدويًا من صفحة "تحليل التقرير" لتوليد خطط التحسين تلقائيًا</div>
+    </div>`;
+  document.querySelectorAll('.score-in').forEach(i => i.value = '');
+  alert('✓ تم مسح البيانات بنجاح');
+}
+
+// ========== التشغيل ==========
+renderHeroStats();
+renderLevels();
+renderDomainsHome();
+</script>
+
+</body>
+</html>
