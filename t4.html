@@ -1,0 +1,2370 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>منصة تقييم أداء المعلم</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    :root {
+      --primary: #1a3a6b;
+      --primary-light: #2563eb;
+      --secondary: #0ea5e9;
+      --accent: #f59e0b;
+      --accent2: #10b981;
+      --accent3: #8b5cf6;
+      --danger: #ef4444;
+      --bg: #f0f4ff;
+      --card: #ffffff;
+      --text: #1e293b;
+      --text-light: #64748b;
+      --border: #e2e8f0;
+      --gradient1: linear-gradient(135deg, #1a3a6b 0%, #2563eb 50%, #0ea5e9 100%);
+      --gradient2: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
+      --gradient3: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      --gradient4: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+      --shadow: 0 4px 24px rgba(37,99,235,0.10);
+      --shadow-lg: 0 8px 40px rgba(37,99,235,0.18);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Cairo', 'Tajawal', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      direction: rtl;
+    }
+
+    /* ===== HEADER ===== */
+    .site-header {
+      background: var(--gradient1);
+      padding: 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 20px rgba(26,58,107,0.3);
+    }
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 28px;
+    }
+    .header-logo {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .header-icon {
+      width: 52px; height: 52px;
+      background: rgba(255,255,255,0.18);
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 26px;
+      border: 2px solid rgba(255,255,255,0.3);
+    }
+    .header-title h1 {
+      color: #fff;
+      font-size: 1.35rem;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+    .header-title p {
+      color: rgba(255,255,255,0.75);
+      font-size: 0.78rem;
+      font-weight: 400;
+    }
+    .header-actions {
+      display: flex;
+      gap: 10px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 9px 20px;
+      border-radius: 10px;
+      font-family: 'Cairo', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      transition: all 0.25s;
+      text-decoration: none;
+    }
+    .btn-white {
+      background: rgba(255,255,255,0.95);
+      color: var(--primary);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .btn-white:hover { background: #fff; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(0,0,0,0.15); }
+    .btn-accent {
+      background: var(--gradient2);
+      color: #fff;
+      box-shadow: 0 2px 10px rgba(245,158,11,0.3);
+    }
+    .btn-accent:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(245,158,11,0.4); }
+    .btn-green {
+      background: var(--gradient3);
+      color: #fff;
+      box-shadow: 0 2px 10px rgba(16,185,129,0.3);
+    }
+    .btn-green:hover { transform: translateY(-1px); }
+    .btn-purple {
+      background: var(--gradient4);
+      color: #fff;
+    }
+    .btn-purple:hover { transform: translateY(-1px); }
+
+    /* ===== TABS ===== */
+    .tabs-wrapper {
+      background: #fff;
+      border-bottom: 2px solid var(--border);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .tabs-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      gap: 0;
+      padding: 0 28px;
+      overflow-x: auto;
+    }
+    .tab-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 16px 22px;
+      font-family: 'Cairo', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text-light);
+      background: none;
+      border: none;
+      border-bottom: 3px solid transparent;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .tab-btn:hover { color: var(--primary-light); }
+    .tab-btn.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary-light);
+      background: linear-gradient(to bottom, transparent, rgba(37,99,235,0.04));
+    }
+    .tab-icon { font-size: 1.1rem; }
+
+    /* ===== MAIN CONTENT ===== */
+    .main-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* ===== HERO SECTION ===== */
+    .hero-section {
+      background: var(--gradient1);
+      border-radius: 20px;
+      padding: 40px 48px;
+      margin-bottom: 28px;
+      position: relative;
+      overflow: hidden;
+      color: #fff;
+    }
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      top: -60px; left: -60px;
+      width: 250px; height: 250px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 50%;
+    }
+    .hero-section::after {
+      content: '';
+      position: absolute;
+      bottom: -80px; right: -40px;
+      width: 300px; height: 300px;
+      background: rgba(255,255,255,0.04);
+      border-radius: 50%;
+    }
+    .hero-content { position: relative; z-index: 1; }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 50px;
+      padding: 6px 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+    .hero-content h2 {
+      font-size: 2rem;
+      font-weight: 900;
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+    .hero-content p {
+      font-size: 1rem;
+      opacity: 0.85;
+      max-width: 600px;
+      line-height: 1.7;
+    }
+    .hero-stats {
+      display: flex;
+      gap: 24px;
+      margin-top: 28px;
+      flex-wrap: wrap;
+    }
+    .hero-stat {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 14px;
+      padding: 14px 22px;
+      text-align: center;
+      min-width: 110px;
+    }
+    .hero-stat .stat-num {
+      font-size: 1.8rem;
+      font-weight: 900;
+      line-height: 1;
+    }
+    .hero-stat .stat-label {
+      font-size: 0.75rem;
+      opacity: 0.8;
+      margin-top: 4px;
+    }
+
+    /* ===== SCHOOL INFO CARD ===== */
+    .info-card {
+      background: var(--card);
+      border-radius: 18px;
+      padding: 28px 32px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+    .info-card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 22px;
+      padding-bottom: 16px;
+      border-bottom: 2px solid var(--border);
+    }
+    .info-card-icon {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+    .icon-blue { background: linear-gradient(135deg, #dbeafe, #bfdbfe); }
+    .icon-green { background: linear-gradient(135deg, #d1fae5, #a7f3d0); }
+    .icon-orange { background: linear-gradient(135deg, #fef3c7, #fde68a); }
+    .icon-purple { background: linear-gradient(135deg, #ede9fe, #ddd6fe); }
+    .icon-red { background: linear-gradient(135deg, #fee2e2, #fecaca); }
+
+    .info-card-header h3 {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+    .info-card-header p {
+      font-size: 0.78rem;
+      color: var(--text-light);
+      margin-top: 2px;
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 16px;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .form-group.full { grid-column: 1 / -1; }
+    .form-label {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .form-label span { color: var(--danger); }
+    .form-input, .form-select, .form-textarea {
+      padding: 10px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      font-family: 'Cairo', sans-serif;
+      font-size: 0.88rem;
+      color: var(--text);
+      background: #f8fafc;
+      transition: all 0.2s;
+      direction: rtl;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      outline: none;
+      border-color: var(--primary-light);
+      background: #fff;
+      box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+    }
+    .form-textarea { resize: vertical; min-height: 80px; }
+
+    /* ===== EVALUATION SECTION ===== */
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .section-title-bar {
+      width: 5px; height: 28px;
+      border-radius: 3px;
+      background: var(--gradient1);
+      flex-shrink: 0;
+    }
+    .section-title h3 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+    .section-title p {
+      font-size: 0.8rem;
+      color: var(--text-light);
+    }
+
+    /* ===== EVAL ITEMS ===== */
+    .eval-item {
+      background: var(--card);
+      border-radius: 16px;
+      padding: 22px 26px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow);
+      border: 1.5px solid var(--border);
+      transition: all 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+    .eval-item::before {
+      content: '';
+      position: absolute;
+      right: 0; top: 0; bottom: 0;
+      width: 5px;
+      background: var(--gradient1);
+      border-radius: 0 16px 16px 0;
+    }
+    .eval-item:hover {
+      border-color: var(--primary-light);
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-2px);
+    }
+    .eval-item-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .eval-item-info {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      flex: 1;
+    }
+    .eval-num {
+      width: 36px; height: 36px;
+      background: var(--gradient1);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff;
+      font-size: 0.85rem;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+    .eval-item-title {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--primary);
+      line-height: 1.4;
+    }
+    .eval-item-subtitle {
+      font-size: 0.78rem;
+      color: var(--text-light);
+      margin-top: 3px;
+    }
+    .eval-weight-badge {
+      background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+      color: var(--primary);
+      border-radius: 8px;
+      padding: 4px 12px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* Stars Rating */
+    .stars-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .stars-label {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-light);
+      min-width: 80px;
+    }
+    .stars {
+      display: flex;
+      gap: 6px;
+    }
+    .star-btn {
+      font-size: 1.6rem;
+      cursor: pointer;
+      transition: all 0.15s;
+      color: #d1d5db;
+      background: none;
+      border: none;
+      padding: 0;
+      line-height: 1;
+    }
+    .star-btn:hover, .star-btn.active { color: #f59e0b; transform: scale(1.15); }
+    .star-score {
+      background: var(--gradient2);
+      color: #fff;
+      border-radius: 8px;
+      padding: 4px 12px;
+      font-size: 0.85rem;
+      font-weight: 800;
+      min-width: 50px;
+      text-align: center;
+    }
+
+    /* Progress bar */
+    .eval-progress {
+      height: 8px;
+      background: #e2e8f0;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 14px;
+    }
+    .eval-progress-fill {
+      height: 100%;
+      border-radius: 4px;
+      background: var(--gradient1);
+      transition: width 0.4s ease;
+      width: 0%;
+    }
+
+    /* AI Suggestions */
+    .ai-suggestions {
+      background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+      border: 1px solid #bae6fd;
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 12px;
+    }
+    .ai-suggestions-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .ai-badge {
+      background: linear-gradient(135deg, #0ea5e9, #2563eb);
+      color: #fff;
+      border-radius: 6px;
+      padding: 2px 8px;
+      font-size: 0.7rem;
+      font-weight: 800;
+    }
+    .ai-suggestions-header span {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #0369a1;
+    }
+    .ai-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .ai-chip {
+      background: #fff;
+      border: 1px solid #bae6fd;
+      border-radius: 20px;
+      padding: 5px 14px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #0369a1;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .ai-chip:hover {
+      background: #0ea5e9;
+      color: #fff;
+      border-color: #0ea5e9;
+    }
+
+    /* Feedback textarea */
+    .feedback-area {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      font-family: 'Cairo', sans-serif;
+      font-size: 0.85rem;
+      color: var(--text);
+      background: #f8fafc;
+      resize: vertical;
+      min-height: 70px;
+      direction: rtl;
+      transition: all 0.2s;
+    }
+    .feedback-area:focus {
+      outline: none;
+      border-color: var(--primary-light);
+      background: #fff;
+      box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+    }
+
+    /* ===== RESULTS PANEL ===== */
+    .results-panel {
+      background: var(--card);
+      border-radius: 18px;
+      padding: 28px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      position: sticky;
+      top: 80px;
+    }
+    .result-score-circle {
+      width: 130px; height: 130px;
+      border-radius: 50%;
+      background: conic-gradient(var(--primary-light) 0%, #e2e8f0 0%);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 20px;
+      position: relative;
+      transition: all 0.5s;
+    }
+    .result-score-inner {
+      width: 100px; height: 100px;
+      background: #fff;
+      border-radius: 50%;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+    .result-score-num {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: var(--primary);
+      line-height: 1;
+    }
+    .result-score-label {
+      font-size: 0.7rem;
+      color: var(--text-light);
+      font-weight: 600;
+    }
+    .result-grade {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .grade-badge {
+      display: inline-block;
+      padding: 8px 24px;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-weight: 900;
+      margin-bottom: 6px;
+    }
+    .grade-excellent { background: linear-gradient(135deg, #d1fae5, #a7f3d0); color: #065f46; }
+    .grade-very-good { background: linear-gradient(135deg, #dbeafe, #bfdbfe); color: #1e3a8a; }
+    .grade-good { background: linear-gradient(135deg, #fef3c7, #fde68a); color: #78350f; }
+    .grade-acceptable { background: linear-gradient(135deg, #fed7aa, #fdba74); color: #7c2d12; }
+    .grade-weak { background: linear-gradient(135deg, #fee2e2, #fecaca); color: #7f1d1d; }
+
+    .result-items-list { margin-top: 16px; }
+    .result-item-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.8rem;
+    }
+    .result-item-row:last-child { border-bottom: none; }
+    .result-item-name { color: var(--text); font-weight: 600; flex: 1; }
+    .result-item-score {
+      font-weight: 800;
+      color: var(--primary-light);
+      min-width: 40px;
+      text-align: center;
+    }
+    .result-mini-bar {
+      width: 60px; height: 6px;
+      background: #e2e8f0;
+      border-radius: 3px;
+      overflow: hidden;
+      margin: 0 8px;
+    }
+    .result-mini-fill {
+      height: 100%;
+      border-radius: 3px;
+      background: var(--gradient1);
+      transition: width 0.4s;
+    }
+
+    /* ===== CHART ===== */
+    .chart-container {
+      position: relative;
+      height: 280px;
+      margin-top: 20px;
+    }
+
+    /* ===== PROCEDURES TAB ===== */
+    .procedures-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .procedure-card {
+      background: var(--card);
+      border-radius: 16px;
+      padding: 22px;
+      box-shadow: var(--shadow);
+      border: 1.5px solid var(--border);
+      transition: all 0.25s;
+    }
+    .procedure-card:hover {
+      border-color: var(--primary-light);
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-2px);
+    }
+    .procedure-card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .procedure-icon {
+      width: 46px; height: 46px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+    .procedure-card-header h4 {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+    .procedure-card-header p {
+      font-size: 0.75rem;
+      color: var(--text-light);
+    }
+    .procedure-steps {
+      list-style: none;
+    }
+    .procedure-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px dashed var(--border);
+      font-size: 0.82rem;
+      color: var(--text);
+      line-height: 1.5;
+    }
+    .procedure-step:last-child { border-bottom: none; }
+    .step-dot {
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      background: var(--gradient1);
+      color: #fff;
+      font-size: 0.65rem;
+      font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* ===== PLAN TAB ===== */
+    .plan-timeline {
+      position: relative;
+      padding-right: 30px;
+    }
+    .plan-timeline::before {
+      content: '';
+      position: absolute;
+      right: 10px; top: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--primary-light), var(--secondary));
+    }
+    .plan-item {
+      position: relative;
+      margin-bottom: 20px;
+    }
+    .plan-dot {
+      position: absolute;
+      right: -24px;
+      top: 16px;
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      background: var(--primary-light);
+      border: 3px solid #fff;
+      box-shadow: 0 0 0 2px var(--primary-light);
+    }
+    .plan-card {
+      background: var(--card);
+      border-radius: 14px;
+      padding: 18px 22px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+    .plan-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .plan-card-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+    .plan-period {
+      background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+      color: var(--primary);
+      border-radius: 6px;
+      padding: 3px 10px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+    .plan-input {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-family: 'Cairo', sans-serif;
+      font-size: 0.83rem;
+      background: #f8fafc;
+      direction: rtl;
+      margin-bottom: 8px;
+    }
+    .plan-input:focus {
+      outline: none;
+      border-color: var(--primary-light);
+      background: #fff;
+    }
+
+    /* ===== INFOGRAPHIC TAB ===== */
+    .infographic-container {
+      background: var(--card);
+      border-radius: 20px;
+      padding: 32px;
+      box-shadow: var(--shadow);
+    }
+    .infographic-title {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .infographic-title h2 {
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+    .infographic-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .infographic-card {
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.25s;
+    }
+    .infographic-card:hover { transform: translateY(-4px); }
+    .infographic-card.c1 { background: linear-gradient(135deg, #1a3a6b, #2563eb); color: #fff; }
+    .infographic-card.c2 { background: linear-gradient(135deg, #0ea5e9, #0284c7); color: #fff; }
+    .infographic-card.c3 { background: linear-gradient(135deg, #10b981, #059669); color: #fff; }
+    .infographic-card.c4 { background: linear-gradient(135deg, #f59e0b, #d97706); color: #fff; }
+    .infographic-card.c5 { background: linear-gradient(135deg, #8b5cf6, #7c3aed); color: #fff; }
+    .infographic-card.c6 { background: linear-gradient(135deg, #ef4444, #dc2626); color: #fff; }
+    .infographic-card.c7 { background: linear-gradient(135deg, #ec4899, #db2777); color: #fff; }
+    .infographic-card.c8 { background: linear-gradient(135deg, #14b8a6, #0d9488); color: #fff; }
+    .infographic-card.c9 { background: linear-gradient(135deg, #f97316, #ea580c); color: #fff; }
+    .infographic-card.c10 { background: linear-gradient(135deg, #6366f1, #4f46e5); color: #fff; }
+    .infographic-card.c11 { background: linear-gradient(135deg, #84cc16, #65a30d); color: #fff; }
+    .infographic-score {
+      font-size: 2.2rem;
+      font-weight: 900;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .infographic-name {
+      font-size: 0.78rem;
+      font-weight: 700;
+      opacity: 0.9;
+      line-height: 1.4;
+    }
+    .infographic-weight {
+      font-size: 0.7rem;
+      opacity: 0.7;
+      margin-top: 4px;
+    }
+    .infographic-bar {
+      height: 4px;
+      background: rgba(255,255,255,0.25);
+      border-radius: 2px;
+      margin-top: 10px;
+      overflow: hidden;
+    }
+    .infographic-bar-fill {
+      height: 100%;
+      background: rgba(255,255,255,0.8);
+      border-radius: 2px;
+      transition: width 0.5s;
+    }
+
+    /* ===== FOOTER ===== */
+    .site-footer {
+      background: var(--gradient1);
+      color: #fff;
+      text-align: center;
+      padding: 28px;
+      margin-top: 40px;
+    }
+    .footer-link {
+      display: inline-block;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 10px;
+      padding: 10px 24px;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-top: 10px;
+      transition: all 0.2s;
+    }
+    .footer-link:hover { background: rgba(255,255,255,0.25); transform: translateY(-1px); }
+    .footer-design {
+      font-size: 0.85rem;
+      opacity: 0.8;
+      margin-bottom: 6px;
+    }
+
+    /* ===== PRINT STYLES ===== */
+    @media print {
+      body { background: #fff !important; }
+      .site-header, .tabs-wrapper, .header-actions, .no-print { display: none !important; }
+      .main-content { padding: 0 !important; max-width: 100% !important; }
+      .tab-panel { display: block !important; }
+      .eval-item { break-inside: avoid; box-shadow: none !important; border: 1px solid #ddd !important; }
+      .info-card { box-shadow: none !important; border: 1px solid #ddd !important; }
+      .results-panel { position: static !important; }
+      .ai-suggestions { display: none !important; }
+      .star-btn { font-size: 1rem !important; }
+      * { font-size: 11px !important; }
+      h1, h2, h3 { font-size: 14px !important; }
+      .hero-section { padding: 16px !important; }
+      .hero-section::before, .hero-section::after { display: none !important; }
+      .hero-stats { display: none !important; }
+      @page { margin: 1.5cm; size: A4; }
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .header-inner { padding: 12px 16px; }
+      .header-title h1 { font-size: 1rem; }
+      .main-content { padding: 16px; }
+      .hero-section { padding: 24px 20px; }
+      .hero-content h2 { font-size: 1.4rem; }
+      .form-grid { grid-template-columns: 1fr; }
+      .procedures-grid { grid-template-columns: 1fr; }
+      .infographic-grid { grid-template-columns: repeat(2, 1fr); }
+      .header-actions .btn span { display: none; }
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in { animation: fadeInUp 0.4s ease forwards; }
+
+    /* Notification */
+    .notification {
+      position: fixed;
+      bottom: 24px;
+      left: 24px;
+      background: var(--primary);
+      color: #fff;
+      border-radius: 12px;
+      padding: 14px 22px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      z-index: 9999;
+      transform: translateY(100px);
+      transition: transform 0.3s;
+    }
+    .notification.show { transform: translateY(0); }
+
+    /* Layout for eval + results */
+    .eval-layout {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 24px;
+      align-items: start;
+    }
+    @media (max-width: 1024px) {
+      .eval-layout { grid-template-columns: 1fr; }
+      .results-panel { position: static; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-logo">
+      <div class="header-icon">🏫</div>
+      <div class="header-title">
+        <h1>منصة تقييم أداء المعلم</h1>
+        <p>نظام متكامل لتقييم وتطوير الكوادر التعليمية</p>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="btn btn-white no-print" onclick="printPage()">
+        <span>🖨️</span><span>طباعة</span>
+      </button>
+      <button class="btn btn-accent no-print" onclick="exportPDF()">
+        <span>📄</span><span>تصدير PDF</span>
+      </button>
+      <button class="btn btn-green no-print" onclick="saveData()">
+        <span>💾</span><span>حفظ</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- TABS -->
+<div class="tabs-wrapper no-print">
+  <div class="tabs-inner">
+    <button class="tab-btn active" onclick="switchTab('tab-eval', this)">
+      <span class="tab-icon">📋</span> نموذج التقييم
+    </button>
+    <button class="tab-btn" onclick="switchTab('tab-feedback', this)">
+      <span class="tab-icon">💬</span> التغذية الراجعة
+    </button>
+    <button class="tab-btn" onclick="switchTab('tab-infographic', this)">
+      <span class="tab-icon">📊</span> الإنفوجرافيك
+    </button>
+    <button class="tab-btn" onclick="switchTab('tab-procedures', this)">
+      <span class="tab-icon">⚙️</span> الإجراءات والخطط
+    </button>
+    <button class="tab-btn" onclick="switchTab('tab-plan', this)">
+      <span class="tab-icon">📅</span> خطة التطوير
+    </button>
+  </div>
+</div>
+
+<div class="main-content">
+
+  <!-- ===================== TAB 1: EVALUATION ===================== -->
+  <div id="tab-eval" class="tab-panel active fade-in">
+
+    <!-- Hero -->
+    <div class="hero-section">
+      <div class="hero-content">
+        <div class="hero-badge">⭐ نموذج تقييم أداء المعلم</div>
+        <h2>استمارة التقييم الشامل للأداء التعليمي</h2>
+        <p>نظام متكامل لقياس وتقييم أداء المعلم وفق معايير وطنية معتمدة، يشمل جميع جوانب العملية التعليمية والتربوية.</p>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <div class="stat-num">11</div>
+            <div class="stat-label">عنصر تقييم</div>
+          </div>
+          <div class="hero-stat">
+            <div class="stat-num">5</div>
+            <div class="stat-label">مستويات التقييم</div>
+          </div>
+          <div class="hero-stat">
+            <div class="stat-num">100%</div>
+            <div class="stat-label">الوزن الكلي</div>
+          </div>
+          <div class="hero-stat">
+            <div class="stat-num" id="hero-score">0</div>
+            <div class="stat-label">درجتك الحالية</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- School Info -->
+    <div class="info-card">
+      <div class="info-card-header">
+        <div class="info-card-icon icon-blue">🏫</div>
+        <div>
+          <h3>بيانات المدرسة والمقيِّم</h3>
+          <p>أدخل بيانات المدرسة والمعلومات الأساسية للتقييم</p>
+        </div>
+      </div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">اسم المدرسة <span>*</span></label>
+          <input type="text" class="form-input" id="school-name" placeholder="أدخل اسم المدرسة" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">المرحلة الدراسية <span>*</span></label>
+          <select class="form-select" id="school-stage">
+            <option value="">-- اختر المرحلة --</option>
+            <option>الابتدائية</option>
+            <option>المتوسطة</option>
+            <option>الثانوية</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">المادة الدراسية <span>*</span></label>
+          <input type="text" class="form-input" id="subject" placeholder="مثال: الرياضيات" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">الصف الدراسي</label>
+          <input type="text" class="form-input" id="grade-class" placeholder="مثال: الثالث متوسط" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">الفصل الدراسي</label>
+          <select class="form-select" id="semester">
+            <option value="">-- اختر الفصل --</option>
+            <option>الفصل الأول</option>
+            <option>الفصل الثاني</option>
+            <option>الفصل الثالث</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">العام الدراسي</label>
+          <input type="text" class="form-input" id="academic-year" placeholder="مثال: 1446-1447هـ" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">تاريخ التقييم</label>
+          <input type="date" class="form-input" id="eval-date" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">المقيِّم</label>
+          <select class="form-select" id="evaluator-role">
+            <option value="">-- صفة المقيِّم --</option>
+            <option>مدير المدرسة</option>
+            <option>المشرف التربوي</option>
+            <option>رئيس القسم</option>
+            <option>المقيِّم الذاتي</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Evaluation Items + Results -->
+    <div class="eval-layout">
+      <div>
+        <div class="section-title">
+          <div class="section-title-bar"></div>
+          <div>
+            <h3>عناصر التقييم</h3>
+            <p>قيّم كل عنصر من 1 إلى 5 نجوم</p>
+          </div>
+        </div>
+
+        <!-- ITEM 1 -->
+        <div class="eval-item fade-in">
+          <div class="eval-item-header">
+            <div class="eval-item-info">
+              <div class="eval-num">1</div>
+              <div>
+                <div class="eval-item-title">أداء الواجبات الوظيفية</div>
+                <div class="eval-item-subtitle">الالتزام بالحضور والانضباط والمهام الإدارية والتنظيمية</div>
+              </div>
+            </div>
+            <div class="eval-weight-badge">الوزن: 10%</div>
+          </div>
+          <div class="eval-progress"><div class="eval-progress-fill" id="prog-1"></div></div>
+          <div class="stars-container">
+            <span class="stars-label">التقييم:</span>
+            <div class="stars" id="stars-1">
+              <button class="star-btn" onclick="setRating(1,1)" title="ضعيف">★</button>
+              <button class="star-btn" onclick="setRating(1,2)" title="مقبول">★</button>
+              <button class="star-btn" onclick="setRating(1,3)" title="جيد">★</button>
+              <button class="star-btn" onclick="setRating(1,4)" title="جيد جداً">★</button>
+              <button class="star-btn" onclick="setRating(1,5)" title="ممتاز">★</button>
+            </div>
+            <div class="star-score" id="score-1">0/5</div>
+          </div>
+          <div class="ai-suggestions">
+            <div class="ai-suggestions-header">
+              <span class="ai-badge">🤖 AI</span>
+              <span>مؤشرات الأداء المقترحة</span>
+            </div>
+            <div class="ai-chips">
+              <span class="ai-chip" onclick="addToFeedback(1, this)">الالتزام بالدوام الرسمي</span>
+              <span class="ai-chip" onclick="addToFeedback(1, this)">تسليم الوثائق في وقتها</span>
+              <span class="ai-chip" onclick="addToFeedback(1, this)">المشاركة في الأنشطة المدرسية</span>
+              <span class="ai-chip" onclick="addToFeedback(1, this)">الالتزام باللوائح والأنظمة</span>
+              <span class="ai-chip" onclick="addToFeedback(1, this)">إعداد السجلات والملفات</span>
+            </div>
+          </div>
+          <textarea class="feedback-area" id="fb-1" placeholder="أضف ملاحظاتك وتغذيتك الراجعة هنا..."></textarea>
+        </div>
+
+        <!-- ITEM 2 -->
+        <div class="eval-item fade-in">
+          <div class="eval-item-header">
+            <div class="eval-item-info">
+              <div class="eval-num">2</div>
+              <div>
+                <div class="eval-item-title">التفاعل مع المجتمع المهني</div>
+                <div class="eval-item-subtitle">المشاركة في مجتمعات التعلم المهنية والتعاون مع الزملاء</div>
+              </div>
+            </div>
+            <div class="eval-weight-badge">الوزن: 10%</div>
+          </div>
+          <div class="eval-progress"><div class="eval-progress-fill" id="prog-2"></div></div>
+          <div class="stars-container">
+            <span class="stars-label">التقييم:</span>
+            <div class="stars" id="stars-2">
+              <button class="star-btn" onclick="setRating(2,1)">★</button>
+              <button class="star-btn" onclick="setRating(2,2)">★</button>
+              <button class="star-btn" onclick="setRating(2,3)">★</button>
+              <button class="star-btn" onclick="setRating(2,4)">★</button>
+              <button class="star-btn" onclick="setRating(2,5)">★</button>
+            </div>
+            <div class="star-score" id="score-2">0/5</div>
+          </div>
+          <div class="ai-suggestions">
+            <div class="ai-suggestions-header">
+              <span class="ai-badge">🤖 AI</span>
+              <span>مؤشرات الأداء المقترحة</span>
+            </div>
+            <div class="ai-chips">
+              <span class="ai-chip" onclick="addToFeedback(2, this)">المشاركة في الاجتماعات المهنية</span>
+              <span class="ai-chip" onclick="addToFeedback(2, this)">التعاون مع الزملاء</span>
+              <span class="ai-chip" onclick="addToFeedback(2, this)">مشاركة الممارسات الجيدة</span>
+              <span class="ai-chip" onclick="addToFeedback(2, this)">الانخراط في التطوير المهني</span>
+              <span class="ai-chip" onclick="addToFeedback(2, this)">قيادة مجموعات العمل</span>
+            </div>
+          </div>
+          <textarea class="feedback-area" id="fb-2" placeholder="أضف ملاحظاتك وتغذيتك الراجعة هنا..."></textarea>
+        </div>
+
+        <!-- ITEM 3 -->
+        <div class="eval-item fade-in">
+          <div class="eval-item-header">
+            <div class="eval-item-info">
+              <div class="eval-num">3</div>
+              <div>
+                <div class="eval-item-title">التفاعل مع أولياء الأمور</div>
+                <div class="eval-item-subtitle">التواصل الفعّال مع أسر الطلاب ومتابعة مستوياتهم</div>
+              </div>
+            </div>
+            <div class="eval-weight-badge">الوزن: 10%</div>
+          </div>
+          <div class="eval-progress"><div class="eval-progress-fill" id="prog-3"></div></div>
+          <div class="stars-container">
+            <span class="stars-label">التقييم:</span>
+            <div class="stars" id="stars-3">
+              <button class="star-btn" onclick="setRating(3,1)">★</button>
+              <button class="star-btn" onclick="setRating(3,2)">★</button>
+              <button class="star-btn" onclick="setRating(3,3)">★</button>
+              <button class="star-btn" onclick="setRating(3,4)">★</button>
+              <button class="star-btn" onclick="setRating(3,5)">★</button>
+            </div>
+            <div class="star-score" id="score-3">0/5</div>
+          </div>
+          <div class="ai-suggestions">
+            <div class="ai-suggestions-header">
+              <span class="ai-badge">🤖 AI</span>
+              <span>مؤشرات الأداء المقترحة</span>
+            </div>
+            <div class="ai-chips">
+              <span class="ai-chip" onclick="addToFeedback(3, this)">التواصل الدوري مع الأسر</span>
+              <span class="ai-chip" onclick="addToFeedback(3, this)">إبلاغ أولياء الأمور بالتقدم</span>
+              <span class="ai-chip" onclick="addToFeedback(3, this)">الاستجابة لمخاوف الأسر</span>
+              <span class="ai-chip" onclick="addToFeedback(3, this)">عقد اجتماعات دورية</span>
+              <span class="ai-chip" onclick="addToFeedback(3, this)">توظيف قنوات التواصل الرقمي</span>
+            </div>
+          </div>
+          <textarea class="feedback-area" id="fb-3" placeholder="أضف ملاحظاتك وتغذيتك الراجعة هنا..."></textarea>
+        </div>
+
+        <!-- ITEM 4 -->
+        <div class="eval-item fade-in">
+          <div class="eval-item-header">
+            <div class="eval-item-info">
+              <div class="eval-num">4</div>
+              <div>
+                <div class="eval-item-title">التنويع في استراتيجيات التدريس</div>
+                <div class="eval-item-subtitle">توظيف أساليب تدريسية متنوعة تراعي الفروق الفردية</div>
+              </div>
+            </div>
+            <div class="eval-weight-badge">الوزن: 10%</div>
+          </div>
+          <div class="eval-progress"><div class="eval-progress-fill" id="prog-4"></div></div>
+          <div class="stars-container">
+            <span class="stars-label">التقييم:</span>
+            <div class="stars" id="stars-4">
+              <button class="star-btn" onclick="setRating(4,1)">★</button>
+              <button class="star-btn" onclick="setRating(4,2)">★</button>
+              <button class="star-btn" onclick="setRating(4,3)">★</button>
+              <button class="star-btn" onclick="setRating(4,4)">★</button>
+              <button class="star-btn" onclick="setRating(4,5)">★</button>
+            </div>
+            <div class="star-score" id="score-4">0/5</div>
+          </div>
+          <div class="ai-suggestions">
+            <div class="ai-suggestions-header">
+              <span class="ai-badge">🤖 AI</span>
+              <span>مؤشرات الأداء المقترحة</span>
+            </div>
+            <div class="ai-chips">
+              <span class="ai-chip" onclick="addToFeedback(4, this)">التعلم التعاوني</span>
+              <span class="ai-chip" onclick="addToFeedback(4, this)">حل المشكلات والمشاريع</span>
+              <span class="ai-chip" onclick="addToFeedback(4, this)">التعلم النشط والتفاعلي</span>
+              <span class="ai-chip" onclick="addToFeedback(4, this)">مراعاة أنماط التعلم</span>
+              <span class="ai-chip" onclick="addToFeedback(4, this)">التعلم القائم على الاستقصاء</span>
+            </div>
+          </div>
+          <textarea class="feedback-area" id="fb-4" placeholder="أضف ملاحظاتك وتغذيتك الراجعة هنا..."></textarea>
+        </div>
+
+        <!-- ITEM 5 -->
+        <div class="eval-item fade-in">
+          <div class="eval-item-header">
+            <div class="eval-item-info">
+              <div class="eval-num">5</div>
+              <div>
+                <div class="eval-item-title">تحسين نتائج المتعلمين</div>
+                <div class="eval-item-subtitle">رفع مستوى تحصيل الطلاب وتحقيق الأهداف التعليمية</div>
+              </div>
+            </div>
+            <div class="eval-weight-badge">الوزن: 10%</div>
+          </div>
+          <div class="eval-progress"><div class="eval-progress-fill" id="prog-5"></div></div>
+          <div class="stars-container">
+            <span class="stars-label">التقييم:</span>
+            <div class="stars" id="stars-5">
+              <button class="star-btn" onclick="setRating(5,1)">★</button>
+              <button class="star-btn" onclick="setRating(5,2)">★</button>
+              <button class="star-btn" onclick="setRating(5,3)">★</button>
+              <button class="star-btn" onclick="setRating(5,4)">★</button>
+              <button class="star-btn" onclick="setRating(5,5)">★</button>
+            </div>
+            <div class="star-score" id="score-5">0/5</div>
+          </div>
+          <div class="ai-suggestions">
+            <div class="ai-suggestions-header">
+              <span class="ai-badge">🤖 AI</span>
+              <span>مؤشرات الأداء المقترحة</span>
+            </div>
+            <div class="ai-chips">
+              <span class="ai-chip" onclick="addToFeedback(5, this)">رفع نسبة النجاح</span>
+              <span class="ai-chip" onclick="addToFeedback(5, this)">تقليص الفجوات التحصيلية</span>
+              <span class="ai-chip" onclick="addToFeedback(5, this)">برامج الدعم والتعزيز</span>
+              <span class="ai-chip" onclick="addToFeedback(5, this)">متابعة الطلاب ضعيفي التحصيل</span>
+              <span class="ai-chip" onclick="addToFeedback(5, this)">تحقيق الأهداف التعليمية</span>
+            </div>
+          </div>
+          <textarea class="feedback-area" id="fb-5" placeholder="أضف ملاحظاتك وتغذيتك الراجعة هنا..."></textarea>
+        </div>
+
+        <!-- ITEM 6 -->
+        <div class="eval-item fade-in">
+          <div class="eval-item-header">
+            <div class="eval-item-info">
+              <div class="eval-num">6</div>
+              <div>
+                <div class="eval-item-title">إعداد وتنفيذ خطة التعلم</div>
+                <div class="eval-item-subtitle">التخطيط المنهجي للدروس وتنفيذها وفق الأهداف المحددة</div>
+              </div>
+            </div>
+            <div class="eval-weight-badge">الوزن: 10%</div>
+          </div>
+          <div class="eval-progress"><div class="eval-progress-fill" id="prog-6"></div></div>
+          <div class="stars-container">
+            <span class="stars-label">التقييم:</span>
+            <div class="stars" id="stars-6">
+              <button class="star-btn" onclick="setRating(6,1)">★</button>
+              <button class="star-btn" onclick="setRating(6,2)">★</button>
+              <button class="star-btn" onclick="setRating(6,3)">★</button>
+              <button class="star-btn" onclick="setRating(6,4)">★</button>
+              <button class="star-btn" onclick="setRating(6,5)">★</button>
+            </div>
+            <div class="star-score" id="score-6">0/5</div>
+          </div>
+          <div class="ai-suggestions">
+            <div class="ai-suggestions-header">
+              <span class="ai-badge">🤖 AI</span>
+              <span>مؤشرات الأداء المقترحة</span>
+            </div>
+            <div class="ai-chips">
+              <span class="ai-chip" onclick="addToFeedback(6, this)">وضوح الأهداف التعليمية</span>
+              <span class="ai-chip" onclick="addToFeedback(6, this)">ترابط عناصر الخطة</span>
+              <span class="ai-chip" onclick="addToFeedback(6, this)">التوزيع الزمني المناسب</span>
+              <span class="ai-chip" onclick="addToFeedback(6, this)">مراعاة المنهج الدراسي</span>
+              <span class="ai-chip" onclick="addToFeedback(6, this)">التنفيذ الفعلي للخطة</span>
+            </div>
+          </div>
+          <textarea class="feedback-area" id="fb-6" placeholder="أضف ملاحظاتك وتغذيتك الراجعة هنا..."></textarea>
+        </div>
+
+        <!-- ITEM 7 -->
+        <div class="eval-item fade-in">
+          <div class="eval-item-header">
+            <div class="eval-item-info">
+              <div class="eval-num">7</div>
+              <div>
+                <div class="eval-item-title">توظيف تقنيات ووسائل التعلم المناسبة</div>
+                <div class="eval-item-subtitle">استخدام التكنولوجيا والوسائل التعليمية لتعزيز التعلم</div>
+              </div>
+            </div>
+            <div class="eval-weight-badge">الوزن: 10%</div>
+          </div>
+          <div class="eval-progress"><div class="eval-progress-fill" id="prog-7"></div></div>
+          <div class="stars-container">
+            <span class="stars-label">التقييم:</span>
+            <div class="stars" id="stars-7">
+              <button class="star-btn" onclick="setRating(7,1)">★</button>
+              <button class="star-btn" onclick="setRating(7,2)">★</button>
+              <button class="star-btn" onclick="setRating(7,3)">★</button>
+              <button class="star-btn" onclick="setRating(7,4)">★</button>
+              <button class="star-btn" onclick="setRating(7,5)">★</button>
+            </div>
+            <div class="star-score" id="score-7">0/5</div>
+          </div>
+          <div class="ai-suggestions">
+            <div class="ai-suggestions-header">
+              <span class="ai-badge">🤖 AI</span>
+              <span>مؤشرات الأداء المقترحة</span>
+            </div>
+            <div class="ai-chips">
+              <span class="ai-chip" onclick="addToFeedback(7, this)">توظيف السبورة الذكية</span>
+              <span class="ai-chip" onclick="addToFeedback(7, this)">استخدام التطبيقات التعليمية</span>
+              <span class="ai-chip" onclick="addToFeedback(7, this)">الوسائل البصرية والسمعية</span>
+              <span class="ai-chip" onclick="addToFeedback(7, this)">منصات التعلم الإلكتروني</span>
+              <span class="ai-chip" onclick="addToFeedback(7, this)">ملاءمة التقنية للمحتوى</span>
+            </div>
+          </div>
+          <textarea class="feedback-area" id="fb-7" placeholder="أضف ملاحظاتك وتغذيتك الراجعة هنا..."></textarea>
+        </div>
+
+        <!-- ITEM 8 -->
+        <div class="eval-item fade-in">
+          <div class="eval-item-header">
+            <div class="eval-item-info">
+              <div class="eval-num">8</div>
+              <div>
+                <div class="eval-item-title">تهيئة بيئة تعليمية</div>
+                <div class="eval-item-subtitle">إعداد بيئة صفية محفزة وآمنة تدعم التعلم الفعّال</div>
+              </div>
+            </div>
+            <div class="eval-weight-badge">الوزن: 5%</div>
+          </div>
+          <div class="eval-progress"><div class="eval-progress-fill" id="prog-8"></div></div>
+          <div class="stars-container">
+            <span class="stars-label">التقييم:</span>
+            <div class="stars" id="stars-8">
+              <button class="star-btn" onclick="setRating(8,1)">★</button>
+              <button class="star-btn" onclick="setRating(8,2)">★</button>
+              <button class="star-btn" onclick="setRating(8,3)">★</button>
+              <button class="star-btn" onclick="setRating(8,4)">★</button>
+              <button class="star-btn" onclick="setRating(8,5)">★</button>
+            </div>
+            <div class="star-score" id="score-8">0/5</div>
+          </div>
+          <div class="ai-suggestions">
+            <div class="ai-suggestions-header">
+              <span class="ai-badge">🤖 AI</span>
+              <span>مؤشرات الأداء المقترحة</span>
+            </div>
+            <div class="ai-chips">
+              <span class="ai-chip" onclick="addToFeedback(8, this)">ترتيب وتنظيم الفصل</span>
+              <span class="ai-chip" onclick="addToFeedback(8, this)">توفير مواد التعلم</span>
+              <span class="ai-chip" onclick="addToFeedback(8, this)">بيئة آمنة وداعمة</span>
+              <span class="ai-chip" onclick="addToFeedback(8, this)">عرض أعمال الطلاب</span>
+              <span class="ai-chip" onclick="addToFeedback(8, this)">مناخ صفي إيجابي</span>
+            </div>
+          </div>
+          <textarea class="feedback-area" id="fb-8" placeholder="أضف ملاحظاتك وتغذيتك الراجعة هنا..."></textarea>
+        </div>
+
+        <!-- ITEM 9 -->
+        <div class="eval-item fade-in">
+          <div class="eval-item-header">
+            <div class="eval-item-info">
+              <div class="eval-num">9</div>
+              <div>
+                <div class="eval-item-title">الإدارة الصفية</div>
+                <div class="eval-item-subtitle">إدارة الوقت والنظام الصفي وضبط سلوك الطلاب بفاعلية</div>
+              </div>
+            </div>
+            <div class="eval-weight-badge">الوزن: 5%</div>
+          </div>
+          <div class="eval-progress"><div class="eval-progress-fill" id="prog-9"></div></div>
+          <div class="stars-container">
+            <span class="stars-label">التقييم:</span>
+            <div class="stars" id="stars-9">
+              <button class="star-btn" onclick="setRating(9,1)">★</button>
+              <button class="star-btn" onclick="setRating(9,2)">★</button>
+              <button class="star-btn" onclick="setRating(9,3)">★</button>
+              <button class="star-btn" onclick="setRating(9,4)">★</button>
+              <button class="star-btn" onclick="setRating(9,5)">★</button>
+            </div>
+            <div class="star-score" id="score-9">0/5</div>
+          </div>
+          <div class="ai-suggestions">
+            <div class="ai-suggestions-header">
+              <span class="ai-badge">🤖 AI</span>
+              <span>مؤشرات الأداء المقترحة</span>
+            </div>
+            <div class="ai-chips">
+              <span class="ai-chip" onclick="addToFeedback(9, this)">إدارة الوقت الصفي</span>
+              <span class="ai-chip" onclick="addToFeedback(9, this)">ضبط النظام والانضباط</span>
+              <span class="ai-chip" onclick="addToFeedback(9, this)">تعزيز السلوك الإيجابي</span>
+              <span class="ai-chip" onclick="addToFeedback(9, this)">التعامل مع التحديات السلوكية</span>
+              <span class="ai-chip" onclick="addToFeedback(9, this)">تنظيم مجموعات العمل</span>
+            </div>
+          </div>
+          <textarea class="feedback-area" id="fb-9" placeholder="أضف ملاحظاتك وتغذيتك الراجعة هنا..."></textarea>
+        </div>
+
+        <!-- ITEM 10 -->
+        <div class="eval-item fade-in">
+          <div class="eval-item-header">
+            <div class="eval-item-info">
+              <div class="eval-num">10</div>
+              <div>
+                <div class="eval-item-title">تحليل نتائج المتعلمين وتشخيص مستوياتهم</div>
+                <div class="eval-item-subtitle">قراءة بيانات الأداء وتحديد نقاط القوة والضعف لدى الطلاب</div>
+              </div>
+            </div>
+            <div class="eval-weight-badge">الوزن: 10%</div>
+          </div>
+          <div class="eval-progress"><div class="eval-progress-fill" id="prog-10"></div></div>
+          <div class="stars-container">
+            <span class="stars-label">التقييم:</span>
+            <div class="stars" id="stars-10">
+              <button class="star-btn" onclick="setRating(10,1)">★</button>
+              <button class="star-btn" onclick="setRating(10,2)">★</button>
+              <button class="star-btn" onclick="setRating(10,3)">★</button>
+              <button class="star-btn" onclick="setRating(10,4)">★</button>
+              <button class="star-btn" onclick="setRating(10,5)">★</button>
+            </div>
+            <div class="star-score" id="score-10">0/5</div>
+          </div>
+          <div class="ai-suggestions">
+            <div class="ai-suggestions-header">
+              <span class="ai-badge">🤖 AI</span>
+              <span>مؤشرات الأداء المقترحة</span>
+            </div>
+            <div class="ai-chips">
+              <span class="ai-chip" onclick="addToFeedback(10, this)">تحليل نتائج الاختبارات</span>
+              <span class="ai-chip" onclick="addToFeedback(10, this)">تشخيص الصعوبات التعليمية</span>
+              <span class="ai-chip" onclick="addToFeedback(10, this)">رصد التقدم الأكاديمي</span>
+              <span class="ai-chip" onclick="addToFeedback(10, this)">توظيف البيانات في التدريس</span>
+              <span class="ai-chip" onclick="addToFeedback(10, this)">تصنيف مستويات الطلاب</span>
+            </div>
+          </div>
+          <textarea class="feedback-area" id="fb-10" placeholder="أضف ملاحظاتك وتغذيتك الراجعة هنا..."></textarea>
+        </div>
+
+        <!-- ITEM 11 -->
+        <div class="eval-item fade-in">
+          <div class="eval-item-header">
+            <div class="eval-item-info">
+              <div class="eval-num">11</div>
+              <div>
+                <div class="eval-item-title">تنوع أساليب التقويم</div>
+                <div class="eval-item-subtitle">استخدام أدوات تقويم متعددة لقياس مخرجات التعلم بدقة</div>
+              </div>
+            </div>
+            <div class="eval-weight-badge">الوزن: 10%</div>
+          </div>
+          <div class="eval-progress"><div class="eval-progress-fill" id="prog-11"></div></div>
+          <div class="stars-container">
+            <span class="stars-label">التقييم:</span>
+            <div class="stars" id="stars-11">
+              <button class="star-btn" onclick="setRating(11,1)">★</button>
+              <button class="star-btn" onclick="setRating(11,2)">★</button>
+              <button class="star-btn" onclick="setRating(11,3)">★</button>
+              <button class="star-btn" onclick="setRating(11,4)">★</button>
+              <button class="star-btn" onclick="setRating(11,5)">★</button>
+            </div>
+            <div class="star-score" id="score-11">0/5</div>
+          </div>
+          <div class="ai-suggestions">
+            <div class="ai-suggestions-header">
+              <span class="ai-badge">🤖 AI</span>
+              <span>مؤشرات الأداء المقترحة</span>
+            </div>
+            <div class="ai-chips">
+              <span class="ai-chip" onclick="addToFeedback(11, this)">التقويم التكويني المستمر</span>
+              <span class="ai-chip" onclick="addToFeedback(11, this)">الاختبارات الختامية</span>
+              <span class="ai-chip" onclick="addToFeedback(11, this)">التقويم الأدائي والمشاريع</span>
+              <span class="ai-chip" onclick="addToFeedback(11, this)">ملفات الإنجاز</span>
+              <span class="ai-chip" onclick="addToFeedback(11, this)">التقويم الذاتي للطلاب</span>
+            </div>
+          </div>
+          <textarea class="feedback-area" id="fb-11" placeholder="أضف ملاحظاتك وتغذيتك الراجعة هنا..."></textarea>
+        </div>
+
+        <!-- General Notes -->
+        <div class="info-card">
+          <div class="info-card-header">
+            <div class="info-card-icon icon-orange">📝</div>
+            <div>
+              <h3>الملاحظات العامة والتوصيات</h3>
+              <p>أضف ملاحظاتك الختامية وتوصياتك للتطوير</p>
+            </div>
+          </div>
+          <div class="form-grid">
+            <div class="form-group full">
+              <label class="form-label">نقاط القوة</label>
+              <textarea class="form-textarea" id="strengths" rows="3" placeholder="اذكر أبرز نقاط القوة لدى المعلم..."></textarea>
+            </div>
+            <div class="form-group full">
+              <label class="form-label">جوانب التطوير والتحسين</label>
+              <textarea class="form-textarea" id="improvements" rows="3" placeholder="اذكر الجوانب التي تحتاج إلى تطوير..."></textarea>
+            </div>
+            <div class="form-group full">
+              <label class="form-label">التوصيات والإجراءات المقترحة</label>
+              <textarea class="form-textarea" id="recommendations" rows="3" placeholder="اكتب توصياتك وإجراءاتك المقترحة..."></textarea>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RESULTS PANEL -->
+      <div>
+        <div class="results-panel">
+          <div class="section-title" style="margin-bottom:16px;">
+            <div class="section-title-bar"></div>
+            <div><h3>نتيجة التقييم</h3></div>
+          </div>
+          <div class="result-score-circle" id="score-circle">
+            <div class="result-score-inner">
+              <div class="result-score-num" id="total-score">0.0</div>
+              <div class="result-score-label">من 5</div>
+            </div>
+          </div>
+          <div class="result-grade">
+            <div class="grade-badge grade-weak" id="grade-badge">لم يُقيَّم بعد</div>
+            <div style="font-size:0.78rem;color:var(--text-light);margin-top:4px;" id="grade-percent">0%</div>
+          </div>
+          <div class="result-items-list" id="result-items-list">
+            <!-- filled by JS -->
+          </div>
+          <div class="chart-container">
+            <canvas id="radarChart"></canvas>
+          </div>
+          <button class="btn btn-accent" style="width:100%;margin-top:16px;justify-content:center;" onclick="exportPDF()">
+            📄 تصدير النتيجة PDF
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== TAB 2: FEEDBACK ===================== -->
+  <div id="tab-feedback" class="tab-panel">
+    <div class="hero-section" style="background: linear-gradient(135deg, #059669 0%, #10b981 50%, #34d399 100%);">
+      <div class="hero-content">
+        <div class="hero-badge">💬 سجل التغذية الراجعة</div>
+        <h2>المراجعة والتغذية الراجعة الشاملة</h2>
+        <p>سجّل ملاحظاتك وتغذيتك الراجعة لكل عنصر من عناصر التقييم لدعم تطوير الأداء المهني.</p>
+      </div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-header">
+        <div class="info-card-icon icon-green">💬</div>
+        <div>
+          <h3>سجل المراجعة والتغذية الراجعة</h3>
+          <p>يمكنك إدخال التغذية الراجعة لكل عنصر بشكل مفصّل</p>
+        </div>
+      </div>
+      <div id="feedback-summary">
+        <!-- Generated by JS -->
+      </div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-header">
+        <div class="info-card-icon icon-purple">🎯</div>
+        <div>
+          <h3>خلاصة التغذية الراجعة الإجمالية</h3>
+          <p>ملخص شامل لنتائج التقييم والتوصيات</p>
+        </div>
+      </div>
+      <div class="form-grid">
+        <div class="form-group full">
+          <label class="form-label">الخلاصة الإجمالية للتقييم</label>
+          <textarea class="form-textarea" id="overall-summary" rows="4" placeholder="اكتب خلاصة شاملة لنتيجة التقييم..."></textarea>
+        </div>
+        <div class="form-group full">
+          <label class="form-label">الأهداف التطويرية للفترة القادمة</label>
+          <textarea class="form-textarea" id="dev-goals" rows="4" placeholder="حدد الأهداف التطويرية المتفق عليها..."></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">تاريخ المراجعة القادمة</label>
+          <input type="date" class="form-input" id="next-review" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">آلية المتابعة</label>
+          <select class="form-select" id="followup-method">
+            <option value="">-- اختر آلية المتابعة --</option>
+            <option>زيارة صفية</option>
+            <option>اجتماع دوري</option>
+            <option>مراجعة الوثائق</option>
+            <option>تقرير ذاتي</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== TAB 3: INFOGRAPHIC ===================== -->
+  <div id="tab-infographic" class="tab-panel">
+    <div class="infographic-container">
+      <div class="infographic-title">
+        <h2>🏆 إنفوجرافيك تقييم أداء المعلم</h2>
+        <p style="color:var(--text-light);font-size:0.9rem;">عرض بصري شامل لنتائج التقييم</p>
+      </div>
+      <!-- School info display -->
+      <div style="background:var(--gradient1);border-radius:16px;padding:20px 28px;color:#fff;margin-bottom:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;">
+        <div>
+          <div style="font-size:0.78rem;opacity:0.75;">المدرسة</div>
+          <div style="font-size:1.1rem;font-weight:800;" id="ig-school">---</div>
+        </div>
+        <div>
+          <div style="font-size:0.78rem;opacity:0.75;">المادة</div>
+          <div style="font-size:1.1rem;font-weight:800;" id="ig-subject">---</div>
+        </div>
+        <div>
+          <div style="font-size:0.78rem;opacity:0.75;">العام الدراسي</div>
+          <div style="font-size:1.1rem;font-weight:800;" id="ig-year">---</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-size:2.5rem;font-weight:900;line-height:1;" id="ig-total">0.0</div>
+          <div style="font-size:0.78rem;opacity:0.75;">التقدير الإجمالي / 5</div>
+          <div style="font-size:1rem;font-weight:800;margin-top:4px;" id="ig-grade">---</div>
+        </div>
+      </div>
+      <!-- Items grid -->
+      <div class="infographic-grid" id="infographic-grid">
+        <!-- Generated by JS -->
+      </div>
+      <!-- Chart -->
+      <div style="background:#f8fafc;border-radius:16px;padding:24px;margin-bottom:20px;">
+        <h3 style="font-size:1rem;font-weight:800;color:var(--primary);margin-bottom:16px;text-align:center;">📊 مخطط الأداء الشامل</h3>
+        <div style="height:320px;position:relative;">
+          <canvas id="barChart"></canvas>
+        </div>
+      </div>
+      <div style="text-align:center;" class="no-print">
+        <button class="btn btn-accent" onclick="exportPDF()" style="margin:0 8px;">📄 تصدير PDF</button>
+        <button class="btn btn-white" onclick="printPage()" style="margin:0 8px;color:var(--primary);border:1.5px solid var(--border);">🖨️ طباعة</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== TAB 4: PROCEDURES ===================== -->
+  <div id="tab-procedures" class="tab-panel">
+    <div class="hero-section" style="background: linear-gradient(135deg, #7c3aed 0%, #8b5cf6 50%, #a78bfa 100%);">
+      <div class="hero-content">
+        <div class="hero-badge">⚙️ الإجراءات والتبويبات</div>
+        <h2>الإجراءات التفصيلية لتطوير الأداء</h2>
+        <p>إجراءات مُولَّدة بالذكاء الاصطناعي لدعم تطوير أداء المعلم في كل محور من محاور التقييم.</p>
+      </div>
+    </div>
+    <div class="procedures-grid">
+
+      <div class="procedure-card">
+        <div class="procedure-card-header">
+          <div class="procedure-icon icon-blue">📋</div>
+          <div>
+            <h4>إجراءات أداء الواجبات الوظيفية</h4>
+            <p>خطوات تعزيز الالتزام المهني</p>
+          </div>
+        </div>
+        <ul class="procedure-steps">
+          <li class="procedure-step"><span class="step-dot">1</span>مراجعة سجلات الحضور والانصراف بشكل أسبوعي</li>
+          <li class="procedure-step"><span class="step-dot">2</span>متابعة تسليم الوثائق والتقارير في مواعيدها</li>
+          <li class="procedure-step"><span class="step-dot">3</span>المشاركة الفاعلة في الاجتماعات واللجان المدرسية</li>
+          <li class="procedure-step"><span class="step-dot">4</span>الالتزام بالأنظمة واللوائح التعليمية</li>
+          <li class="procedure-step"><span class="step-dot">5</span>تحديث الملفات والسجلات المهنية دورياً</li>
+        </ul>
+      </div>
+
+      <div class="procedure-card">
+        <div class="procedure-card-header">
+          <div class="procedure-icon icon-green">🤝</div>
+          <div>
+            <h4>إجراءات التفاعل المهني</h4>
+            <p>بناء مجتمع التعلم المهني</p>
+          </div>
+        </div>
+        <ul class="procedure-steps">
+          <li class="procedure-step"><span class="step-dot">1</span>الانضمام إلى مجتمعات التعلم المهنية الإلكترونية</li>
+          <li class="procedure-step"><span class="step-dot">2</span>تنظيم جلسات التشارك المعرفي مع الزملاء</li>
+          <li class="procedure-step"><span class="step-dot">3</span>المشاركة في ورش العمل والدورات التدريبية</li>
+          <li class="procedure-step"><span class="step-dot">4</span>توثيق الممارسات الجيدة ومشاركتها</li>
+          <li class="procedure-step"><span class="step-dot">5</span>الإسهام في تطوير المناهج والمواد التعليمية</li>
+        </ul>
+      </div>
+
+      <div class="procedure-card">
+        <div class="procedure-card-header">
+          <div class="procedure-icon icon-orange">👨‍👩‍👧</div>
+          <div>
+            <h4>إجراءات التواصل مع الأسر</h4>
+            <p>تعزيز الشراكة مع أولياء الأمور</p>
+          </div>
+        </div>
+        <ul class="procedure-steps">
+          <li class="procedure-step"><span class="step-dot">1</span>إعداد خطة تواصل دورية مع أولياء الأمور</li>
+          <li class="procedure-step"><span class="step-dot">2</span>إرسال تقارير دورية عن تقدم الطلاب</li>
+          <li class="procedure-step"><span class="step-dot">3</span>عقد لقاءات فردية مع أسر الطلاب المحتاجين للدعم</li>
+          <li class="procedure-step"><span class="step-dot">4</span>توظيف تطبيقات التواصل المدرسي</li>
+          <li class="procedure-step"><span class="step-dot">5</span>الاستجابة الفورية لمخاوف الأسر وتساؤلاتهم</li>
+        </ul>
+      </div>
+
+      <div class="procedure-card">
+        <div class="procedure-card-header">
+          <div class="procedure-icon icon-purple">🎓</div>
+          <div>
+            <h4>إجراءات استراتيجيات التدريس</h4>
+            <p>تنويع أساليب التعليم والتعلم</p>
+          </div>
+        </div>
+        <ul class="procedure-steps">
+          <li class="procedure-step"><span class="step-dot">1</span>دراسة أنماط التعلم المختلفة لدى الطلاب</li>
+          <li class="procedure-step"><span class="step-dot">2</span>تضمين استراتيجيتين على الأقل في كل درس</li>
+          <li class="procedure-step"><span class="step-dot">3</span>توظيف التعلم التعاوني وحل المشكلات</li>
+          <li class="procedure-step"><span class="step-dot">4</span>تطبيق مبادئ التعلم المتمايز</li>
+          <li class="procedure-step"><span class="step-dot">5</span>تقييم فاعلية الاستراتيجيات المستخدمة</li>
+        </ul>
+      </div>
+
+      <div class="procedure-card">
+        <div class="procedure-card-header">
+          <div class="procedure-icon icon-red">📈</div>
+          <div>
+            <h4>إجراءات تحسين نتائج الطلاب</h4>
+            <p>رفع مستوى التحصيل الأكاديمي</p>
+          </div>
+        </div>
+        <ul class="procedure-steps">
+          <li class="procedure-step"><span class="step-dot">1</span>تحديد الطلاب ضعيفي التحصيل وتصنيف احتياجاتهم</li>
+          <li class="procedure-step"><span class="step-dot">2</span>تصميم برامج دعم وعلاج فردية</li>
+          <li class="procedure-step"><span class="step-dot">3</span>تطبيق إجراءات التعلم المسبق للطلاب المتقدمين</li>
+          <li class="procedure-step"><span class="step-dot">4</span>متابعة التقدم الأكاديمي بشكل أسبوعي</li>
+          <li class="procedure-step"><span class="step-dot">5</span>تعديل الخطط التدريسية بناءً على النتائج</li>
+        </ul>
+      </div>
+
+      <div class="procedure-card">
+        <div class="procedure-card-header">
+          <div class="procedure-icon icon-blue">📅</div>
+          <div>
+            <h4>إجراءات التخطيط للتعلم</h4>
+            <p>إعداد خطط تعليمية فعّالة</p>
+          </div>
+        </div>
+        <ul class="procedure-steps">
+          <li class="procedure-step"><span class="step-dot">1</span>إعداد الخطط الفصلية والأسبوعية والدرسية</li>
+          <li class="procedure-step"><span class="step-dot">2</span>ربط الأهداف بمعايير المنهج الوطني</li>
+          <li class="procedure-step"><span class="step-dot">3</span>تضمين أنشطة التقويم في الخطة</li>
+          <li class="procedure-step"><span class="step-dot">4</span>مراجعة الخطط وتحديثها دورياً</li>
+          <li class="procedure-step"><span class="step-dot">5</span>توثيق التأملات التدريسية بعد كل درس</li>
+        </ul>
+      </div>
+
+      <div class="procedure-card">
+        <div class="procedure-card-header">
+          <div class="procedure-icon icon-green">💻</div>
+          <div>
+            <h4>إجراءات توظيف التقنية</h4>
+            <p>دمج التكنولوجيا في التعليم</p>
+          </div>
+        </div>
+        <ul class="procedure-steps">
+          <li class="procedure-step"><span class="step-dot">1</span>حضور دورات تدريبية في التقنيات التعليمية</li>
+          <li class="procedure-step"><span class="step-dot">2</span>توظيف منصات التعلم الإلكتروني بانتظام</li>
+          <li class="procedure-step"><span class="step-dot">3</span>إنتاج محتوى رقمي تفاعلي للطلاب</li>
+          <li class="procedure-step"><span class="step-dot">4</span>استخدام أدوات التقييم الرقمي</li>
+          <li class="procedure-step"><span class="step-dot">5</span>تقييم أثر التقنية على تحصيل الطلاب</li>
+        </ul>
+      </div>
+
+      <div class="procedure-card">
+        <div class="procedure-card-header">
+          <div class="procedure-icon icon-orange">🏫</div>
+          <div>
+            <h4>إجراءات البيئة التعليمية</h4>
+            <p>تهيئة فصل دراسي محفز</p>
+          </div>
+        </div>
+        <ul class="procedure-steps">
+          <li class="procedure-step"><span class="step-dot">1</span>ترتيب الفصل وفق احتياجات النشاط التعليمي</li>
+          <li class="procedure-step"><span class="step-dot">2</span>عرض أعمال الطلاب وإنجازاتهم</li>
+          <li class="procedure-step"><span class="step-dot">3</span>توفير مواد التعلم اللازمة</li>
+          <li class="procedure-step"><span class="step-dot">4</span>ضمان سلامة البيئة الصفية</li>
+          <li class="procedure-step"><span class="step-dot">5</span>تعزيز المناخ الإيجابي والمحفز</li>
+        </ul>
+      </div>
+
+      <div class="procedure-card">
+        <div class="procedure-card-header">
+          <div class="procedure-icon icon-purple">🎯</div>
+          <div>
+            <h4>إجراءات الإدارة الصفية</h4>
+            <p>ضبط النظام وإدارة الوقت</p>
+          </div>
+        </div>
+        <ul class="procedure-steps">
+          <li class="procedure-step"><span class="step-dot">1</span>وضع قواعد وتوقعات واضحة للطلاب</li>
+          <li class="procedure-step"><span class="step-dot">2</span>توظيف نظام التعزيز الإيجابي</li>
+          <li class="procedure-step"><span class="step-dot">3</span>إدارة الوقت الصفي بكفاءة</li>
+          <li class="procedure-step"><span class="step-dot">4</span>التعامل الاحترافي مع التحديات السلوكية</li>
+          <li class="procedure-step"><span class="step-dot">5</span>توثيق الحوادث السلوكية ومتابعتها</li>
+        </ul>
+      </div>
+
+      <div class="procedure-card">
+        <div class="procedure-card-header">
+          <div class="procedure-icon icon-red">🔍</div>
+          <div>
+            <h4>إجراءات تحليل نتائج المتعلمين</h4>
+            <p>قراءة البيانات وتشخيص المستويات</p>
+          </div>
+        </div>
+        <ul class="procedure-steps">
+          <li class="procedure-step"><span class="step-dot">1</span>جمع بيانات الأداء من مصادر متعددة</li>
+          <li class="procedure-step"><span class="step-dot">2</span>تحليل النتائج وتحديد الاتجاهات</li>
+          <li class="procedure-step"><span class="step-dot">3</span>تصنيف الطلاب وفق مستوياتهم</li>
+          <li class="procedure-step"><span class="step-dot">4</span>توظيف نتائج التحليل في التخطيط</li>
+          <li class="procedure-step"><span class="step-dot">5</span>إعداد تقارير دورية عن مستويات الطلاب</li>
+        </ul>
+      </div>
+
+      <div class="procedure-card">
+        <div class="procedure-card-header">
+          <div class="procedure-icon icon-blue">✅</div>
+          <div>
+            <h4>إجراءات تنويع التقويم</h4>
+            <p>أدوات قياس متعددة وشاملة</p>
+          </div>
+        </div>
+        <ul class="procedure-steps">
+          <li class="procedure-step"><span class="step-dot">1</span>تصميم أدوات تقويم متنوعة لكل وحدة</li>
+          <li class="procedure-step"><span class="step-dot">2</span>توظيف التقويم التكويني المستمر</li>
+          <li class="procedure-step"><span class="step-dot">3</span>تطبيق التقويم الأدائي والمشاريع</li>
+          <li class="procedure-step"><span class="step-dot">4</span>تفعيل التقويم الذاتي وتقويم الأقران</li>
+          <li class="procedure-step"><span class="step-dot">5</span>ربط نتائج التقويم بقرارات التدريس</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===================== TAB 5: DEVELOPMENT PLAN ===================== -->
+  <div id="tab-plan" class="tab-panel">
+    <div class="hero-section" style="background: linear-gradient(135deg, #d97706 0%, #f59e0b 50%, #fbbf24 100%);">
+      <div class="hero-content">
+        <div class="hero-badge">📅 خطة التطوير المهني</div>
+        <h2>خطة التطوير المهني للمعلم</h2>
+        <p>خطة تطوير مهني شاملة ومتكاملة تستهدف رفع كفاءة المعلم في جميع محاور التقييم.</p>
+      </div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-header">
+        <div class="info-card-icon icon-orange">🎯</div>
+        <div>
+          <h3>أهداف خطة التطوير المهني</h3>
+          <p>حدد الأهداف الرئيسية لخطة التطوير</p>
+        </div>
+      </div>
+      <div class="form-grid">
+        <div class="form-group full">
+          <label class="form-label">الهدف العام لخطة التطوير</label>
+          <input type="text" class="form-input" id="plan-goal" placeholder="مثال: رفع مستوى الأداء التدريسي إلى مستوى ممتاز خلال الفصل الدراسي القادم" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">تاريخ بداية الخطة</label>
+          <input type="date" class="form-input" id="plan-start" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">تاريخ نهاية الخطة</label>
+          <input type="date" class="form-input" id="plan-end" />
+        </div>
+      </div>
+    </div>
+
+    <div class="plan-timeline">
+      <div class="plan-item">
+        <div class="plan-dot"></div>
+        <div class="plan-card">
+          <div class="plan-card-header">
+            <div class="plan-card-title">📚 المرحلة الأولى: التشخيص والتقييم</div>
+            <div class="plan-period">الأسبوع 1-2</div>
+          </div>
+          <input class="plan-input" type="text" placeholder="الهدف من هذه المرحلة..." id="phase1-goal" />
+          <textarea class="plan-input" rows="2" placeholder="الإجراءات والأنشطة المخططة..." id="phase1-activities" style="resize:vertical;"></textarea>
+          <input class="plan-input" type="text" placeholder="مؤشرات النجاح والقياس..." id="phase1-indicators" />
+        </div>
+      </div>
+      <div class="plan-item">
+        <div class="plan-dot"></div>
+        <div class="plan-card">
+          <div class="plan-card-header">
+            <div class="plan-card-title">🔧 المرحلة الثانية: التدريب والتطوير</div>
+            <div class="plan-period">الأسبوع 3-6</div>
+          </div>
+          <input class="plan-input" type="text" placeholder="الهدف من هذه المرحلة..." id="phase2-goal" />
+          <textarea class="plan-input" rows="2" placeholder="الإجراءات والأنشطة المخططة..." id="phase2-activities" style="resize:vertical;"></textarea>
+          <input class="plan-input" type="text" placeholder="مؤشرات النجاح والقياس..." id="phase2-indicators" />
+        </div>
+      </div>
+      <div class="plan-item">
+        <div class="plan-dot"></div>
+        <div class="plan-card">
+          <div class="plan-card-header">
+            <div class="plan-card-title">🚀 المرحلة الثالثة: التطبيق والممارسة</div>
+            <div class="plan-period">الأسبوع 7-10</div>
+          </div>
+          <input class="plan-input" type="text" placeholder="الهدف من هذه المرحلة..." id="phase3-goal" />
+          <textarea class="plan-input" rows="2" placeholder="الإجراءات والأنشطة المخططة..." id="phase3-activities" style="resize:vertical;"></textarea>
+          <input class="plan-input" type="text" placeholder="مؤشرات النجاح والقياس..." id="phase3-indicators" />
+        </div>
+      </div>
+      <div class="plan-item">
+        <div class="plan-dot"></div>
+        <div class="plan-card">
+          <div class="plan-card-header">
+            <div class="plan-card-title">📊 المرحلة الرابعة: المتابعة والتقييم</div>
+            <div class="plan-period">الأسبوع 11-12</div>
+          </div>
+          <input class="plan-input" type="text" placeholder="الهدف من هذه المرحلة..." id="phase4-goal" />
+          <textarea class="plan-input" rows="2" placeholder="الإجراءات والأنشطة المخططة..." id="phase4-activities" style="resize:vertical;"></textarea>
+          <input class="plan-input" type="text" placeholder="مؤشرات النجاح والقياس..." id="phase4-indicators" />
+        </div>
+      </div>
+      <div class="plan-item">
+        <div class="plan-dot" style="background:var(--accent2);box-shadow:0 0 0 2px var(--accent2);"></div>
+        <div class="plan-card" style="border-color:var(--accent2);">
+          <div class="plan-card-header">
+            <div class="plan-card-title" style="color:var(--accent2);">✅ المرحلة الخامسة: التقييم النهائي والاستدامة</div>
+            <div class="plan-period" style="background:linear-gradient(135deg,#d1fae5,#a7f3d0);color:#065f46;">الأسبوع 13-14</div>
+          </div>
+          <input class="plan-input" type="text" placeholder="الهدف من هذه المرحلة..." id="phase5-goal" />
+          <textarea class="plan-input" rows="2" placeholder="الإجراءات والأنشطة المخططة..." id="phase5-activities" style="resize:vertical;"></textarea>
+          <input class="plan-input" type="text" placeholder="مؤشرات النجاح والقياس..." id="phase5-indicators" />
+        </div>
+      </div>
+    </div>
+
+    <div class="info-card">
+      <div class="info-card-header">
+        <div class="info-card-icon icon-blue">📋</div>
+        <div>
+          <h3>الدعم والموارد المطلوبة</h3>
+          <p>حدد الموارد والدعم اللازم لتنفيذ الخطة</p>
+        </div>
+      </div>
+      <div class="form-grid">
+        <div class="form-group full">
+          <label class="form-label">الدورات التدريبية المطلوبة</label>
+          <textarea class="form-textarea" id="training-needs" rows="2" placeholder="اذكر الدورات والبرامج التدريبية المطلوبة..."></textarea>
+        </div>
+        <div class="form-group full">
+          <label class="form-label">الموارد والأدوات المطلوبة</label>
+          <textarea class="form-textarea" id="resources-needed" rows="2" placeholder="اذكر الموارد والأدوات اللازمة..."></textarea>
+        </div>
+        <div class="form-group full">
+          <label class="form-label">الدعم المطلوب من الإدارة</label>
+          <textarea class="form-textarea" id="admin-support" rows="2" placeholder="اذكر الدعم المطلوب من إدارة المدرسة..."></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-design">تصميم د/فواز</div>
+  <div style="font-size:0.82rem;opacity:0.75;margin-bottom:8px;">تفضل للمزيد</div>
+  <a href="https://llt.me/TAqhjT3MFVE1Yzk0" target="_blank" class="footer-link">
+    🔗 llt.me/TAqhjT3MFVE1Yzk0
+  </a>
+  <div style="font-size:0.75rem;opacity:0.6;margin-top:14px;">منصة تقييم أداء المعلم &copy; 2025 — جميع الحقوق محفوظة</div>
+</footer>
+
+<!-- Notification -->
+<div class="notification" id="notification"></div>
+
+<script>
+// ===================== DATA =====================
+const evalItems = [
+  { id: 1, name: 'أداء الواجبات الوظيفية', weight: 0.10 },
+  { id: 2, name: 'التفاعل مع المجتمع المهني', weight: 0.10 },
+  { id: 3, name: 'التفاعل مع أولياء الأمور', weight: 0.10 },
+  { id: 4, name: 'التنويع في استراتيجيات التدريس', weight: 0.10 },
+  { id: 5, name: 'تحسين نتائج المتعلمين', weight: 0.10 },
+  { id: 6, name: 'إعداد وتنفيذ خطة التعلم', weight: 0.10 },
+  { id: 7, name: 'توظيف تقنيات ووسائل التعلم المناسبة', weight: 0.10 },
+  { id: 8, name: 'تهيئة بيئة تعليمية', weight: 0.05 },
+  { id: 9, name: 'الإدارة الصفية', weight: 0.05 },
+  { id: 10, name: 'تحليل نتائج المتعلمين وتشخيص مستوياتهم', weight: 0.10 },
+  { id: 11, name: 'تنوع أساليب التقويم', weight: 0.10 },
+];
+const ratings = new Array(12).fill(0);
+const colors = ['c1','c2','c3','c4','c5','c6','c7','c8','c9','c10','c11'];
+
+// ===================== TABS =====================
+function switchTab(tabId, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  btn.classList.add('active');
+  if (tabId === 'tab-infographic') updateInfographic();
+  if (tabId === 'tab-feedback') updateFeedbackTab();
+}
+
+// ===================== RATING =====================
+function setRating(itemId, value) {
+  ratings[itemId] = value;
+  const stars = document.querySelectorAll(`#stars-${itemId} .star-btn`);
+  stars.forEach((s, i) => {
+    s.classList.toggle('active', i < value);
+  });
+  document.getElementById(`score-${itemId}`).textContent = `${value}/5`;
+  const pct = (value / 5) * 100;
+  document.getElementById(`prog-${itemId}`).style.width = pct + '%';
+  updateResults();
+}
+
+function addToFeedback(itemId, chip) {
+  const ta = document.getElementById(`fb-${itemId}`);
+  const text = chip.textContent.trim();
+  if (ta.value && !ta.value.endsWith('، ')) {
+    ta.value += '، ';
+  }
+  ta.value += text;
+  showNotification('✅ تمت الإضافة: ' + text);
+}
+
+// ===================== RESULTS =====================
+let radarChart = null;
+function updateResults() {
+  let total = 0;
+  evalItems.forEach(item => {
+    const r = ratings[item.id];
+    const weighted = (r / 5) * item.weight;
+    total += weighted;
+  });
+  const score5 = total * 5;
+  document.getElementById('total-score').textContent = score5.toFixed(2);
+  document.getElementById('hero-score').textContent = score5.toFixed(1);
+
+  // Grade
+  let grade = '', gradeClass = '';
+  if (total >= 0.9) { grade = 'ممتاز ⭐⭐⭐'; gradeClass = 'grade-excellent'; }
+  else if (total >= 0.8) { grade = 'جيد جداً ⭐⭐'; gradeClass = 'grade-very-good'; }
+  else if (total >= 0.7) { grade = 'جيد ⭐'; gradeClass = 'grade-good'; }
+  else if (total >= 0.6) { grade = 'مقبول'; gradeClass = 'grade-acceptable'; }
+  else if (total > 0) { grade = 'ضعيف'; gradeClass = 'grade-weak'; }
+  else { grade = 'لم يُقيَّم بعد'; gradeClass = 'grade-weak'; }
+
+  const badge = document.getElementById('grade-badge');
+  badge.textContent = grade;
+  badge.className = 'grade-badge ' + gradeClass;
+  document.getElementById('grade-percent').textContent = (total * 100).toFixed(1) + '%';
+
+  // Circle
+  const circle = document.getElementById('score-circle');
+  const pct = total * 100;
+  circle.style.background = `conic-gradient(#2563eb ${pct}%, #e2e8f0 ${pct}%)`;
+
+  // Items list
+  const list = document.getElementById('result-items-list');
+  list.innerHTML = evalItems.map(item => {
+    const r = ratings[item.id];
+    const pct = (r / 5) * 100;
+    return `<div class="result-item-row">
+      <span class="result-item-name">${item.name.substring(0, 20)}${item.name.length > 20 ? '...' : ''}</span>
+      <div class="result-mini-bar"><div class="result-mini-fill" style="width:${pct}%"></div></div>
+      <span class="result-item-score">${r}/5</span>
+    </div>`;
+  }).join('');
+
+  // Radar Chart
+  updateRadarChart();
+}
+
+function updateRadarChart() {
+  const ctx = document.getElementById('radarChart').getContext('2d');
+  const labels = evalItems.map(i => i.name.length > 12 ? i.name.substring(0, 12) + '...' : i.name);
+  const data = evalItems.map(i => ratings[i.id]);
+
+  if (radarChart) radarChart.destroy();
+  radarChart = new Chart(ctx, {
+    type: 'radar',
+    data: {
+      labels,
+      datasets: [{
+        label: 'التقييم',
+        data,
+        backgroundColor: 'rgba(37,99,235,0.15)',
+        borderColor: '#2563eb',
+        borderWidth: 2,
+        pointBackgroundColor: '#2563eb',
+        pointRadius: 4,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        r: {
+          min: 0, max: 5,
+          ticks: { stepSize: 1, font: { family: 'Cairo', size: 10 } },
+          pointLabels: { font: { family: 'Cairo', size: 9 } }
+        }
+      },
+      plugins: {
+        legend: { display: false }
+      }
+    }
+  });
+}
+
+// ===================== INFOGRAPHIC =====================
+let barChart = null;
+function updateInfographic() {
+  // Update header info
+  document.getElementById('ig-school').textContent = document.getElementById('school-name').value || '---';
+  document.getElementById('ig-subject').textContent = document.getElementById('subject').value || '---';
+  document.getElementById('ig-year').textContent = document.getElementById('academic-year').value || '---';
+
+  let total = 0;
+  evalItems.forEach(item => {
+    total += (ratings[item.id] / 5) * item.weight;
+  });
+  const score5 = total * 5;
+  document.getElementById('ig-total').textContent = score5.toFixed(2);
+
+  let grade = '';
+  if (total >= 0.9) grade = 'ممتاز';
+  else if (total >= 0.8) grade = 'جيد جداً';
+  else if (total >= 0.7) grade = 'جيد';
+  else if (total >= 0.6) grade = 'مقبول';
+  else if (total > 0) grade = 'ضعيف';
+  else grade = '---';
+  document.getElementById('ig-grade').textContent = grade;
+
+  // Grid
+  const grid = document.getElementById('infographic-grid');
+  grid.innerHTML = evalItems.map((item, idx) => {
+    const r = ratings[item.id];
+    const pct = (r / 5) * 100;
+    return `<div class="infographic-card ${colors[idx]}">
+      <div class="infographic-score">${r}<span style="font-size:1rem;">/5</span></div>
+      <div class="infographic-name">${item.name}</div>
+      <div class="infographic-weight">الوزن: ${(item.weight * 100).toFixed(0)}%</div>
+      <div class="infographic-bar"><div class="infographic-bar-fill" style="width:${pct}%"></div></div>
+    </div>`;
+  }).join('');
+
+  // Bar Chart
+  const ctx2 = document.getElementById('barChart').getContext('2d');
+  const labels2 = evalItems.map(i => i.name.length > 14 ? i.name.substring(0, 14) + '...' : i.name);
+  const data2 = evalItems.map(i => ratings[i.id]);
+  const bgColors = ['#1a3a6b','#0ea5e9','#10b981','#f59e0b','#8b5cf6','#ef4444','#ec4899','#14b8a6','#f97316','#6366f1','#84cc16'];
+
+  if (barChart) barChart.destroy();
+  barChart = new Chart(ctx2, {
+    type: 'bar',
+    data: {
+      labels: labels2,
+      datasets: [{
+        label: 'التقييم',
+        data: data2,
+        backgroundColor: bgColors,
+        borderRadius: 8,
+        borderSkipped: false,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      indexAxis: 'y',
+      scales: {
+        x: { min: 0, max: 5, ticks: { stepSize: 1, font: { family: 'Cairo', size: 10 } } },
+        y: { ticks: { font: { family: 'Cairo', size: 9 } } }
+      },
+      plugins: {
+        legend: { display: false }
+      }
+    }
+  });
+}
+
+// ===================== FEEDBACK TAB =====================
+function updateFeedbackTab() {
+  const container = document.getElementById('feedback-summary');
+  container.innerHTML = evalItems.map(item => {
+    const fb = document.getElementById(`fb-${item.id}`)?.value || '';
+    const r = ratings[item.id];
+    return `<div style="border:1.5px solid var(--border);border-radius:12px;padding:16px 20px;margin-bottom:14px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+        <div style="font-size:0.92rem;font-weight:800;color:var(--primary);">${item.name}</div>
+        <div style="background:var(--gradient2);color:#fff;border-radius:8px;padding:3px 12px;font-size:0.8rem;font-weight:800;">${r}/5</div>
+      </div>
+      <textarea class="feedback-area" id="fb2-${item.id}" placeholder="أضف تغذيتك الراجعة لهذا العنصر..." style="min-height:60px;">${fb}</textarea>
+    </div>`;
+  }).join('');
+}
+
+// ===================== SAVE =====================
+function saveData() {
+  const data = {
+    schoolName: document.getElementById('school-name').value,
+    subject: document.getElementById('subject').value,
+    academicYear: document.getElementById('academic-year').value,
+    ratings: ratings.slice(1, 12),
+    feedbacks: evalItems.map(i => document.getElementById(`fb-${i.id}`)?.value || ''),
+    strengths: document.getElementById('strengths').value,
+    improvements: document.getElementById('improvements').value,
+    recommendations: document.getElementById('recommendations').value,
+  };
+  localStorage.setItem('teacherEvalData', JSON.stringify(data));
+  showNotification('✅ تم حفظ البيانات بنجاح!');
+}
+
+function loadData() {
+  const saved = localStorage.getItem('teacherEvalData');
+  if (!saved) return;
+  try {
+    const data = JSON.parse(saved);
+    if (data.schoolName) document.getElementById('school-name').value = data.schoolName;
+    if (data.subject) document.getElementById('subject').value = data.subject;
+    if (data.academicYear) document.getElementById('academic-year').value = data.academicYear;
+    if (data.ratings) {
+      data.ratings.forEach((r, i) => {
+        if (r > 0) setRating(i + 1, r);
+      });
+    }
+    if (data.feedbacks) {
+      data.feedbacks.forEach((fb, i) => {
+        const el = document.getElementById(`fb-${i + 1}`);
+        if (el) el.value = fb;
+      });
+    }
+    if (data.strengths) document.getElementById('strengths').value = data.strengths;
+    if (data.improvements) document.getElementById('improvements').value = data.improvements;
+    if (data.recommendations) document.getElementById('recommendations').value = data.recommendations;
+  } catch(e) {}
+}
+
+// ===================== PRINT =====================
+function printPage() {
+  window.print();
+}
+
+// ===================== PDF EXPORT =====================
+function exportPDF() {
+  showNotification('⏳ جاري تصدير PDF...');
+  const element = document.body;
+  const opt = {
+    margin: [10, 10, 10, 10],
+    filename: 'تقييم-أداء-المعلم.pdf',
+    image: { type: 'jpeg', quality: 0.95 },
+    html2canvas: {
+      scale: 1.5,
+      useCORS: true,
+      allowTaint: true,
+      scrollY: 0,
+      windowWidth: 1200,
+    },
+    jsPDF: {
+      unit: 'mm',
+      format: 'a4',
+      orientation: 'portrait',
+      compress: true,
+    },
+    pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+  };
+
+  // Hide non-print elements
+  const noPrint = document.querySelectorAll('.no-print');
+  noPrint.forEach(el => el.style.display = 'none');
+
+  // Show all tabs for PDF
+  const panels = document.querySelectorAll('.tab-panel');
+  panels.forEach(p => p.style.display = 'block');
+
+  html2pdf().set(opt).from(element).save().then(() => {
+    noPrint.forEach(el => el.style.display = '');
+    panels.forEach(p => p.style.display = '');
+    // Restore active tab
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    const activeTab = document.querySelector('.tab-btn.active');
+    if (activeTab) {
+      const tabId = activeTab.getAttribute('onclick').match(/'([^']+)'/)[1];
+      document.getElementById(tabId).classList.add('active');
+    } else {
+      document.getElementById('tab-eval').classList.add('active');
+    }
+    showNotification('✅ تم تصدير PDF بنجاح!');
+  });
+}
+
+// ===================== NOTIFICATION =====================
+function showNotification(msg) {
+  const n = document.getElementById('notification');
+  n.textContent = msg;
+  n.classList.add('show');
+  setTimeout(() => n.classList.remove('show'), 3000);
+}
+
+// ===================== INIT =====================
+window.addEventListener('DOMContentLoaded', () => {
+  // Set today's date
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('eval-date').value = today;
+
+  // Load saved data
+  loadData();
+
+  // Update results
+  updateResults();
+});
+</script>
+</body>
+</html>
