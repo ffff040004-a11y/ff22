@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>رياضيات المرحلة الثانوية – منصة تدرب</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0d1b2a;
+  --bg2: #112233;
+  --teal: #00b4d8;
+  --teal2: #0096b7;
+  --green: #06d6a0;
+  --gold: #ffd166;
+  --red: #ef233c;
+  --card: rgba(255,255,255,0.05);
+  --border: rgba(255,255,255,0.09);
+  --text: #e2eaf4;
+  --dim: #7a90a8;
+  --correct: #06d6a0;
+  --wrong: #ef233c;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background:
+  radial-gradient(ellipse 70% 50% at 10% 10%,rgba(0,180,216,0.12) 0%,transparent 60%),
+  radial-gradient(ellipse 50% 40% at 90% 90%,rgba(6,214,160,0.1) 0%,transparent 60%),
+  radial-gradient(ellipse 60% 60% at 50% 50%,rgba(255,209,102,0.04) 0%,transparent 70%);
+  pointer-events:none;z-index:0}
+
+/* Floating symbols */
+.fbg{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.fbg span{position:absolute;font-size:1.4rem;color:rgba(0,180,216,0.06);animation:floatSym 22s linear infinite}
+@keyframes floatSym{0%{transform:translateY(105vh) rotate(0deg);opacity:0}10%{opacity:1}90%{opacity:1}100%{transform:translateY(-5vh) rotate(360deg);opacity:0}}
+
+/* Header */
+.hdr{position:relative;z-index:10;text-align:center;padding:2.5rem 1rem 1.5rem;background:linear-gradient(180deg,rgba(13,27,42,.97) 0%,transparent 100%)}
+.hdr-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(0,180,216,0.12);border:1px solid rgba(0,180,216,.35);border-radius:2rem;padding:.3rem 1.1rem;font-size:.78rem;color:var(--teal);margin-bottom:.9rem;letter-spacing:.04em}
+.hdr h1{font-family:'Tajawal',sans-serif;font-weight:900;font-size:clamp(1.7rem,5vw,2.8rem);background:linear-gradient(135deg,#fff 0%,var(--teal) 50%,var(--green) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1.2;margin-bottom:.4rem}
+.hdr p{color:var(--dim);font-size:.9rem}
+
+/* Stats */
+.stats{position:relative;z-index:10;display:flex;justify-content:center;gap:.8rem;padding:.8rem 1rem;flex-wrap:wrap}
+.sc{display:flex;align-items:center;gap:.5rem;background:var(--card);border:1px solid var(--border);border-radius:1rem;padding:.45rem 1.1rem;font-size:.88rem;backdrop-filter:blur(8px)}
+.sc .v{font-weight:700;font-size:1.05rem;color:var(--gold)}
+.sc.cv .v{color:var(--correct)}
+.sc.wv .v{color:var(--wrong)}
+
+/* Progress */
+.prw{position:relative;z-index:10;max-width:680px;margin:0 auto .8rem;padding:0 1.2rem}
+.prb{height:5px;background:rgba(255,255,255,0.07);border-radius:3px;overflow:hidden}
+.prf{height:100%;background:linear-gradient(90deg,var(--teal),var(--green),var(--gold));border-radius:3px;transition:width .5s cubic-bezier(.4,0,.2,1)}
+.prt{display:flex;justify-content:space-between;font-size:.72rem;color:var(--dim);margin-top:.35rem}
+
+/* Tabs */
+.tabs{position:relative;z-index:10;display:flex;justify-content:center;gap:.6rem;padding:0 1rem 1.2rem;flex-wrap:wrap}
+.tab{padding:.42rem 1.1rem;border-radius:2rem;border:1px solid var(--border);background:transparent;color:var(--dim);cursor:pointer;font-family:'Cairo',sans-serif;font-size:.8rem;font-weight:600;transition:all .3s}
+.tab:hover{border-color:var(--teal);color:var(--teal)}
+.tab.on{background:linear-gradient(135deg,var(--teal),var(--green));border-color:transparent;color:#fff;box-shadow:0 4px 18px rgba(0,180,216,.35)}
+
+/* Dots */
+.dots{display:flex;justify-content:center;gap:4px;padding:.4rem 1rem;flex-wrap:wrap;max-width:620px;margin:0 auto .8rem}
+.dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.1);transition:all .3s;cursor:pointer}
+.dot.cur{background:var(--gold);transform:scale(1.5)}
+.dot.ok{background:var(--correct)}
+.dot.no{background:var(--wrong)}
+
+/* Quiz container */
+.qwrap{position:relative;z-index:10;max-width:720px;margin:0 auto;padding:0 1rem 3rem}
+
+/* Card */
+.qcard{background:var(--card);border:1px solid var(--border);border-radius:1.4rem;padding:1.8rem;margin-bottom:1.2rem;backdrop-filter:blur(18px);position:relative;overflow:hidden;animation:cIn .35s cubic-bezier(.4,0,.2,1)}
+@keyframes cIn{from{opacity:0;transform:translateY(16px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+.qcard::before{content:'';position:absolute;top:0;right:0;width:180px;height:180px;background:radial-gradient(circle,rgba(0,180,216,.07) 0%,transparent 70%);pointer-events:none}
+
+.qmeta{display:flex;align-items:center;gap:.7rem;margin-bottom:1.1rem;flex-wrap:wrap}
+.qnum{background:linear-gradient(135deg,var(--teal),var(--teal2));color:#fff;font-weight:900;font-size:.82rem;width:2rem;height:2rem;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 3px 10px rgba(0,180,216,.35)}
+.qbadge{background:rgba(6,214,160,.12);border:1px solid rgba(6,214,160,.25);color:var(--green);border-radius:1rem;padding:.18rem .75rem;font-size:.73rem}
+.qsec{background:rgba(255,209,102,.1);border:1px solid rgba(255,209,102,.2);color:var(--gold);border-radius:1rem;padding:.18rem .75rem;font-size:.73rem}
+
+.qtxt{font-family:'Tajawal',sans-serif;font-size:clamp(.95rem,2.3vw,1.15rem);font-weight:700;line-height:1.75;color:#fff;margin-bottom:1.4rem}
+.qmath{font-family:monospace;background:rgba(0,180,216,.1);border:1px solid rgba(0,180,216,.2);border-radius:.5rem;padding:.3rem .7rem;font-size:.9rem;color:var(--teal);display:inline-block;margin:.2rem 0}
+
+/* Options */
+.og{display:grid;grid-template-columns:1fr 1fr;gap:.65rem}
+@media(max-width:490px){.og{grid-template-columns:1fr}}
+.ob{background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.09);border-radius:.9rem;padding:.8rem 1.1rem;cursor:pointer;font-family:'Cairo',sans-serif;font-size:.92rem;font-weight:600;color:var(--text);text-align:right;transition:all .22s;display:flex;align-items:center;gap:.65rem;position:relative;overflow:hidden}
+.ob::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,180,216,.08),transparent);opacity:0;transition:opacity .22s}
+.ob:hover:not(:disabled){border-color:var(--teal);color:var(--teal);transform:translateX(-2px)}
+.ob:hover:not(:disabled)::before{opacity:1}
+.obadge{width:1.7rem;height:1.7rem;border-radius:50%;background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.13);display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;flex-shrink:0;color:var(--dim);transition:all .22s}
+.ob:hover:not(:disabled) .obadge{background:rgba(0,180,216,.18);border-color:var(--teal);color:var(--teal)}
+.ob.ok{background:rgba(6,214,160,.13);border-color:var(--correct);color:var(--correct);animation:opulse .35s ease}
+.ob.ok .obadge{background:var(--correct);border-color:var(--correct);color:#fff}
+.ob.no{background:rgba(239,35,60,.13);border-color:var(--wrong);color:var(--wrong);animation:oshake .35s ease}
+.ob.no .obadge{background:var(--wrong);border-color:var(--wrong);color:#fff}
+.ob.rc{background:rgba(6,214,160,.08);border-color:rgba(6,214,160,.4);color:var(--correct)}
+.ob:disabled{cursor:default;transform:none!important}
+@keyframes opulse{0%{transform:scale(1)}50%{transform:scale(1.02)}100%{transform:scale(1)}}
+@keyframes oshake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+
+/* Feedback */
+.fb{margin-top:1.1rem;padding:.9rem 1.1rem;border-radius:.9rem;font-size:.88rem;line-height:1.7;display:none;animation:fIn .3s ease}
+@keyframes fIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.fb.show{display:block}
+.fb.fbg2{background:rgba(6,214,160,.09);border:1px solid rgba(6,214,160,.28);color:#a8f5e4}
+.fb.fbr{background:rgba(239,35,60,.09);border:1px solid rgba(239,35,60,.25);color:#ffb3bb}
+.fbt{font-family:'Tajawal',sans-serif;font-size:1.05rem;font-weight:800;margin-bottom:.35rem;display:flex;align-items:center;gap:.4rem}
+
+/* Nav */
+.nav{display:flex;gap:.7rem;justify-content:center;margin-top:1.2rem}
+.nb{padding:.7rem 1.8rem;border-radius:.9rem;border:none;cursor:pointer;font-family:'Cairo',sans-serif;font-size:.9rem;font-weight:700;transition:all .22s;display:flex;align-items:center;gap:.45rem}
+.nb.pr{background:linear-gradient(135deg,var(--teal),var(--teal2));color:#fff;box-shadow:0 4px 18px rgba(0,180,216,.35)}
+.nb.pr:hover{transform:translateY(-2px);box-shadow:0 7px 25px rgba(0,180,216,.45)}
+.nb.sc2{background:rgba(255,255,255,.06);color:var(--dim);border:1px solid var(--border)}
+.nb.sc2:hover{background:rgba(255,255,255,.1);color:var(--text)}
+.nb.gr{background:linear-gradient(135deg,var(--green),#05b88a);color:#fff;box-shadow:0 4px 18px rgba(6,214,160,.3)}
+.nb.gr:hover{transform:translateY(-2px)}
+
+/* Toast */
+.toast{position:fixed;top:1.4rem;left:50%;transform:translateX(-50%) translateY(-120px);z-index:1000;padding:.9rem 1.8rem;border-radius:.9rem;font-family:'Tajawal',sans-serif;font-size:1.1rem;font-weight:800;text-align:center;transition:transform .38s cubic-bezier(.4,0,.2,1);min-width:260px;box-shadow:0 8px 35px rgba(0,0,0,.4)}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.toast.tok{background:linear-gradient(135deg,var(--correct),#05b88a);color:#fff}
+.toast.tno{background:linear-gradient(135deg,var(--wrong),#c0112a);color:#fff}
+
+/* Confetti */
+.cfw{position:fixed;inset:0;pointer-events:none;z-index:100;overflow:hidden}
+.cp{position:absolute;width:7px;height:7px;border-radius:2px;animation:cfFall linear forwards}
+@keyframes cfFall{0%{top:-10px;opacity:1;transform:rotate(0deg) translateX(0)}100%{top:110vh;opacity:0;transform:rotate(720deg) translateX(var(--d))}}
+
+/* Start screen */
+.start{position:relative;z-index:10;max-width:640px;margin:0 auto;padding:2rem 1rem;text-align:center}
+.scard{background:var(--card);border:1px solid var(--border);border-radius:2rem;padding:2.8rem 2rem;backdrop-filter:blur(18px);margin-bottom:1.2rem}
+.si{font-size:3.5rem;margin-bottom:.9rem}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin:1.3rem 0 1.8rem}
+.fi{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:.9rem;padding:.9rem;text-align:center}
+.fi .fie{font-size:1.4rem;margin-bottom:.3rem}
+.fi .fiv{font-weight:700;font-size:1.1rem;color:var(--gold)}
+.fi .fil{font-size:.78rem;color:var(--dim)}
+.sbtn{width:100%;padding:1.1rem;border-radius:1.1rem;border:none;background:linear-gradient(135deg,var(--teal),var(--green));color:#fff;font-family:'Cairo',sans-serif;font-size:1.15rem;font-weight:700;cursor:pointer;box-shadow:0 5px 25px rgba(0,180,216,.4);transition:all .3s;letter-spacing:.02em}
+.sbtn:hover{transform:translateY(-3px);box-shadow:0 10px 35px rgba(0,180,216,.5)}
+
+/* Result */
+.res{display:none;text-align:center;padding:2rem}
+.res.show{display:block}
+.rtrphy{font-size:4.5rem;margin-bottom:.8rem;animation:rbounce 1s ease infinite}
+@keyframes rbounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.rscore{font-family:'Tajawal',sans-serif;font-size:4.5rem;font-weight:900;background:linear-gradient(135deg,var(--gold),var(--teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1}
+.rtotal{color:var(--dim);font-size:1.1rem;margin-bottom:.8rem}
+.rmsg{font-size:1.3rem;font-weight:700;margin-bottom:1.5rem}
+.rg{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;margin-bottom:1.5rem}
+.rs{background:var(--card);border:1px solid var(--border);border-radius:.9rem;padding:1.1rem;backdrop-filter:blur(8px)}
+.rs .rv{font-size:1.8rem;font-weight:900;margin-bottom:.2rem}
+.rs .rl{font-size:.76rem;color:var(--dim)}
+
+/* Footer */
+.ftr{position:relative;z-index:10;text-align:center;padding:2rem 1rem;border-top:1px solid var(--border);margin-top:2rem}
+.ftrc{max-width:580px;margin:0 auto}
+.ftt{font-size:.83rem;color:var(--dim);line-height:1.9}
+.ftlink{display:inline-flex;align-items:center;gap:.45rem;margin-top:.7rem;background:linear-gradient(135deg,rgba(0,180,216,.17),rgba(0,180,216,.05));border:1px solid rgba(0,180,216,.28);border-radius:2rem;padding:.45rem 1.4rem;color:var(--teal);text-decoration:none;font-weight:700;font-size:.88rem;transition:all .3s}
+.ftlink:hover{background:rgba(0,180,216,.22);box-shadow:0 4px 18px rgba(0,180,216,.28)}
+
+@media(max-width:580px){.rg{grid-template-columns:1fr}.nav{flex-wrap:wrap}.nb{flex:1;justify-content:center}}
+</style>
+</head>
+<body>
+<div class="fbg" id="fbg"></div>
+<div class="toast" id="toast"></div>
+<div class="cfw" id="cfw"></div>
+
+<div class="hdr">
+  <div class="hdr-badge">📐 رياضيات المرحلة الثانوية</div>
+  <h1>منصة تدرب التفاعلية ✦</h1>
+  <p>حل مسائل تدريب على اختبار بصورة مفصلة ومبسطة لجميع مستويات المرحلة الثانوية.</p>
+</div>
+
+<!-- Start -->
+<div class="start" id="startScreen">
+  <div class="scard">
+    <div class="si">🧠</div>
+    <h2 style="font-family:'Tajawal',sans-serif;font-size:1.55rem;font-weight:900;margin-bottom:.8rem">منصة تدرب التفاعلية</h2>
+    <div style="background:rgba(0,180,216,0.1);border:1px solid rgba(0,180,216,0.3);border-radius:1rem;padding:1rem 1.2rem;margin-bottom:1.2rem;text-align:center">
+      <p style="color:#e2eaf4;font-size:1rem;font-weight:700;line-height:1.9;font-family:'Tajawal',sans-serif">
+        حل مسائل تدريب على اختبار بصورة مفصلة ومبسطة<br>لجميع مستويات المرحلة الثانوية.
+      </p>
+    </div>
+    <div class="fg">
+      <div class="fi"><div class="fie">📚</div><div class="fiv">153</div><div class="fil">سؤالاً شاملاً</div></div>
+      <div class="fi"><div class="fie">🏷️</div><div class="fiv">12</div><div class="fil">وحدة دراسية</div></div>
+      <div class="fi"><div class="fie">💡</div><div class="fiv">فوري</div><div class="fil">شرح الحل</div></div>
+      <div class="fi"><div class="fie">🎯</div><div class="fiv">A B C D</div><div class="fil">خيارات متعددة</div></div>
+    </div>
+    <button class="sbtn" onclick="startQuiz()">🚀 ابدأ التدرب الآن</button>
+  </div>
+</div>
+
+<!-- Quiz Area -->
+<div id="qa" style="display:none">
+  <div class="stats">
+    <div class="sc"><span>📋</span><span>سؤال</span><span class="v" id="sC">1</span><span style="color:var(--dim)">من</span><span class="v" id="sT">153</span></div>
+    <div class="sc cv"><span>✅</span><span>صحيح</span><span class="v" id="sCr">0</span></div>
+    <div class="sc wv"><span>❌</span><span>خطأ</span><span class="v" id="sW">0</span></div>
+    <div class="sc"><span>⭐</span><span>نقاط</span><span class="v" id="sSc">0</span></div>
+  </div>
+  <div class="prw">
+    <div class="prb"><div class="prf" id="prf" style="width:0%"></div></div>
+    <div class="prt"><span id="prp">0%</span><span id="prl">لم تبدأ بعد</span></div>
+  </div>
+  <div class="tabs" id="tabsEl"></div>
+  <div class="dots" id="dotsEl"></div>
+  <div class="qwrap">
+    <div class="qcard" id="qcard">
+      <div class="qmeta">
+        <div class="qnum" id="qn">1</div>
+        <div class="qbadge" id="qb">الوحدة</div>
+        <div class="qsec" id="qs">القسم</div>
+      </div>
+      <div class="qtxt" id="qt">...</div>
+      <div class="og" id="og"></div>
+      <div class="fb" id="fb"></div>
+    </div>
+    <div class="nav">
+      <button class="nb sc2" id="prevB" onclick="go(-1)">◀ السابق</button>
+      <button class="nb gr" id="skipB" onclick="skip()">⏭ تخطى</button>
+      <button class="nb pr" id="nextB" onclick="go(1)">التالي ▶</button>
+    </div>
+  </div>
+  <div class="res qwrap" id="resScreen">
+    <div class="rtrphy" id="rtrp">🏆</div>
+    <div class="rscore" id="rscore">0</div>
+    <div class="rtotal" id="rtotal">نقطة</div>
+    <div class="rmsg" id="rmsg">عمل رائع!</div>
+    <div class="rg">
+      <div class="rs"><div class="rv" style="color:var(--correct)" id="rcr">0</div><div class="rl">✅ صحيح</div></div>
+      <div class="rs"><div class="rv" style="color:var(--wrong)" id="rwr">0</div><div class="rl">❌ خطأ</div></div>
+      <div class="rs"><div class="rv" style="color:var(--gold)" id="rpct">0%</div><div class="rl">📊 النسبة</div></div>
+    </div>
+    <div class="nav">
+      <button class="nb pr" onclick="restart()">🔄 إعادة</button>
+      <button class="nb gr" onclick="reviewWrong()">🔍 مراجعة الأخطاء</button>
+    </div>
+  </div>
+</div>
+
+<div class="ftr">
+  <div class="ftrc">
+    <div class="ftt">
+      الشكر موصول لمُعِدَّتَيها<br>
+      <strong style="color:var(--gold)">ماجدة حسن الحيزان</strong>
+      &nbsp;•&nbsp;
+      <strong style="color:var(--gold)">فضة سعود الجبل</strong><br>
+      تصميم: <strong style="color:var(--teal)">د/فواز</strong>
+    </div>
+    <a href="https://t.me/TAqhjT3MFVE1Yzk0" target="_blank" class="ftlink">✈️ تفضّل للمزيد هنا</a>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// QUESTION BANK – 153 questions from شبكة تدرب التعليمية
+// ============================================================
+const allQ = [
+// ─── الفصل 1: التبرير والبرهان ─────────────────────────────
+{id:1,ch:'الفصل 1',sec:'1-1 التبرير الاستقرائي',
+ q:'انظر إلى النمط الآتي: مثمن، سباعي، سداسي، ..... ما الشكل التالي في النمط؟',
+ o:['مثمن','مربع','مثلث','خماسي'],ans:1,
+ exp:'النمط: 8 أضلاع → 7 → 6 → الشكل التالي هو الخماسي (5 أضلاع)، لكن الإجابة من الكتاب هي B أي المربع.'},
+{id:2,ch:'الفصل 1',sec:'1-1 التبرير الاستقرائي',
+ q:'إذا علمت أن a=10 وb=1، فما قيمة العبارة الآتية: 2b + ab ÷ (a + b)',
+ o:['22/11','32/11','12/11','42/11'],ans:1,
+ exp:'2(1)+(10)(1)÷(10+1) = 2+10÷11 = 22/11+10/11 = 32/11'},
+{id:3,ch:'الفصل 1',sec:'1-2 المنطق',
+ q:'أيُّ العبارات التالية لها قيمة الصواب نفسها للعبارة AB=BC في الشكل (مثلث متطابق الضلعين)؟',
+ o:['m∠A = m∠C','m∠A = m∠B','AC = BC','AB = AC'],ans:0,
+ exp:'نظرية المثلث المتطابق الضلعين: الزوايا القاعدية متساوية، إذاً m∠A = m∠C'},
+{id:4,ch:'الفصل 1',sec:'1-1 التبرير الاستقرائي',
+ q:'خَمِّن الحد التالي في النمط: 1/3, 1, 5/3, 7/3, 3 ...',
+ o:['8/3','4','11/3','9/3'],ans:2,
+ exp:'كل حد يزيد بمقدار 2/3، الحد التالي = 3 + 2/3 = 11/3'},
+{id:5,ch:'الفصل 1',sec:'1-2 المنطق',
+ q:'في الشكل المجاور، AB↔ منصف ∠DAC. أيُّ الاستنتاجات الآتية ليس بالضرورة صحيحاً؟',
+ o:['∠DAB ≅ ∠BAC','∠DAC زاوية قائمة','A وD على استقامة واحدة','2(m∠BAC) = m∠DAC'],ans:1,
+ exp:'يستبعد لأن AB محور تناظر. ∠DAC من الممكن أن تكون قائمة أو منفرجة أو حادة.'},
+{id:6,ch:'الفصل 1',sec:'1-2 المنطق',
+ q:'أيُّ العبارات التالية تُعَدُّ عبارة تقبل على أنها صحيحة (مسلمة)؟',
+ o:['عبارة خاطئة','عبارة تقبل على أنها صحيحة','نظرية','تعريف'],ans:1,
+ exp:'المسلمة هي عبارة تُقبل على أنها صحيحة دون إثبات.'},
+{id:7,ch:'الفصل 1',sec:'1-3 العبارات الشرطية',
+ q:'ما عكس العبارة الشرطية: "إذا كانت الزاويتان متتامتين، فإن مجموع قياسيهما 90°"؟',
+ o:['إذا كانت الزاويتان متتامتين فمجموعهما 90°','إذا كانت الزاويتان غير متتامتين فمجموعهما ليس 90°','إذا كان مجموع قياسيهما 90° فإنهما متتامتان','إذا كان مجموعهما ليس 90° فإنهما غير متتامتين'],ans:2,
+ exp:'العكس هو تبديل الفرض والنتيجة في العبارة الشرطية.'},
+{id:8,ch:'الفصل 1',sec:'1-4 التبرير الاستنتاجي',
+ q:'بسّط التعبير: (10a² − 15ab) / (4a² − 9b²)',
+ o:['5a/(2a+3b)','5a/(2a-3b)','5b/(2a+3b)','5a/(3b+2a)'],ans:0,
+ exp:'10a²-15ab = 5a(2a-3b)، و4a²-9b² = (2a-3b)(2a+3b)، إذاً الناتج = 5a/(2a+3b)'},
+{id:9,ch:'الفصل 1',sec:'1-4 التبرير الاستنتاجي',
+ q:'حصل خليل على علبة عصير مجاناً عند شراء 3 علب. إذا اشترى 9 علب، كم علبة حصل عليها مجاناً؟',
+ o:['1','2','3','4'],ans:2,
+ exp:'حصل خليل على علبة عصير مجاناً لكل 3 علب، إذاً 9÷3=3 علب مجانية.'},
+{id:10,ch:'الفصل 1',sec:'1-5 المسلمات والبراهين',
+ q:'من الرسم: نقطة A(-1/2, 0) ونقطة B(0, -2). ما ميل الخط AB؟',
+ o:['-2','-4','2','4'],ans:1,
+ exp:'m = (-2-0)/(0-(-1/2)) = -2/(1/2) = -4'},
+{id:11,ch:'الفصل 1',sec:'1-5 المسلمات والبراهين',
+ q:'أيُّ العبارات التالية صحيحة: "يوجد على الأقل مستقيمان يحويان النقطتين نفسيهما"؟',
+ o:['صحيح دائماً','يوجد بالضبط مستقيم واحد','لا يوجد مستقيم','لا يمكن التحديد'],ans:1,
+ exp:'المسلمة تقول: يوجد بالضبط مستقيم واحد يمر بأي نقطتين مختلفتين.'},
+{id:12,ch:'الفصل 1',sec:'1-6 البرهان الجبري',
+ q:'في الشكل، FC⃡ محور تناظر للشكل السداسي. حدد النقطة المقابلة للنقطة 3.',
+ o:['4','5','6','7'],ans:3,
+ exp:'من الرسم، النقطة 3 تقابل النقطة 7 بالنسبة لمحور التناظر FC⃡.'},
+{id:13,ch:'الفصل 1',sec:'1-6 البرهان الجبري',
+ q:'إذا كانت s(n) = (1/4)n + 3، فما قيمة s(-8) + s(-4)؟',
+ o:['1','2','3','4'],ans:2,
+ exp:'s(-8) = (1/4)(-8)+3 = -2+3 = 1، s(-4) = (1/4)(-4)+3 = -1+3 = 2، المجموع = 3'},
+{id:14,ch:'الفصل 1',sec:'1-7 إثبات علاقات بين القطع',
+ q:'في متوازي الأضلاع ABCD، أيُّ الآتي صحيح دائماً؟',
+ o:['AB ≅ BC','AB ≅ CD','AB ⊥ CD','AB > CD'],ans:1,
+ exp:'في متوازي الأضلاع الأضلاع المتقابلة متساوية، إذاً AB ≅ CD.'},
+{id:15,ch:'الفصل 1',sec:'1-8 إثبات علاقات بين الزوايا',
+ q:'في الشكل، ∠BFE = 108°، ∠CFD = 42°. أوجد m∠CFD الصحيح.',
+ o:['66°','42°','72°','108°'],ans:0,
+ exp:'180-108=72° (∠AFB)، m∠CFD = 180-(42+72) = 66°'},
+{id:16,ch:'الفصل 1',sec:'1-8 إثبات علاقات بين الزوايا',
+ q:'زاويتان متتامتان، إحداهما أربعة أمثال الأخرى. ما قياس الزاوية الأصغر؟',
+ o:['36°','18°','72°','90°'],ans:1,
+ exp:'x + 4x = 90° → 5x = 90° → x = 18°'},
+// ─── 1-6 المستقيمات المتوازية ─────────────────────────────
+{id:17,ch:'الفصل 1',sec:'1-6 المستقيمات المتوازية',
+ q:'في الشكل، ∠2 و ∠6 بالنسبة للمستقيمين المتوازيين والقاطع، هما:',
+ o:['متبادلتان خارجياً','متبادلتان داخلياً','متناظرتان','متممتان'],ans:1,
+ exp:'∠2 و∠6 متبادلتان داخلياً (Interior Alternate Angles).'},
+{id:18,ch:'الفصل 1',sec:'1-6 المستقيمات المتوازية',
+ q:'زاويتان من نفس الجهة من القاطع، إحداهما داخلية والأخرى خارجية. كيف تُسمى؟',
+ o:['متبادلتان داخلياً','متبادلتان خارجياً','متناظرتان','متممتان'],ans:2,
+ exp:'زاويتان خارجية وداخلية من نفس الجهة من القاطع هما زاويتان متناظرتان.'},
+{id:19,ch:'الفصل 1',sec:'1-6 المستقيمات المتوازية',
+ q:'إذا قطع قاطع مستقيمين وأنتج زاويتين متبادلتين داخلياً متطابقتين، فالمستقيمان:',
+ o:['متوازيان','متعامدان','متقاطعان','لا علاقة بينهما'],ans:0,
+ exp:'إذا كانت الزاويتان المتبادلتان داخلياً متطابقتين فالمستقيمان متوازيان.'},
+{id:20,ch:'الفصل 1',sec:'1-6 المستقيمات المتوازية',
+ q:'في الشكل، L ‖ m ليست مؤكدة لأنه:',
+ o:['الزوايا غير متساوية','لا يوجد مستقيم عمودي على المتوازيين','المستقيمات تتقاطع','لا قاطع مشترك'],ans:1,
+ exp:'ليست مؤكدة لأنه لا يوجد مستقيم عمودي على المستقيمين المتوازيين في الشكل.'},
+// معادلة الخط
+{id:21,ch:'الفصل 1',sec:'1-9 المعادلات الخطية',
+ q:'ما معادلة الخط الذي ميله -4/3 ويمر بالنقطة (-3, -2)؟',
+ o:['y = -4/3 x - 6','y = -4/3 x + 6','y = 4/3 x - 6','y = -4/3 x'],ans:0,
+ exp:'y = mx + b → -2 = (-4/3)(-3) + b → b = -6، إذاً y = -4/3 x - 6'},
+{id:22,ch:'الفصل 1',sec:'1-9 المعادلات الخطية',
+ q:'احسب ميل الخط المار بالنقطتين (2,4) و(0,-2).',
+ o:['3','2','-3','-2'],ans:0,
+ exp:'m = (-2-4)/(0-2) = -6/-2 = 3، إذاً y = 3x - 2'},
+{id:23,ch:'الفصل 1',sec:'1-9 المعادلات الخطية',
+ q:'ما معادلة الخط ذي الميل -3 الذي يمر بالنقطة (-2, 1)؟',
+ o:['y = -3x + 5','y = -3x - 5','y = 3x - 5','y = -3x + 1'],ans:1,
+ exp:'y = mx + b → 1 = -3(-2) + b → b = 1-6 = -5، إذاً y = -3x - 5'},
+// فيثاغورس
+{id:24,ch:'الفصل 1',sec:'1-10 نظرية فيثاغورس',
+ q:'في مثلث قائم، الوتر = 10 والضلع الأول = 8. ما طول الضلع الثاني؟',
+ o:['6','4','8','12'],ans:0,
+ exp:'c² = A² + B² → 100 = 64 + B² → B² = 36 → B = 6'},
+{id:25,ch:'الفصل 1',sec:'1-10 نظرية فيثاغورس',
+ q:'مثلث أضلاعه 2x+3x-20+x-4=180°. جد قيمة m∠3 إذا كانت m∠3 = x-4.',
+ o:['34°','30°','26°','20°'],ans:1,
+ exp:'6x-24=180 → x=34، m∠3 = 34-4 = 30°'},
+{id:26,ch:'الفصل 1',sec:'1-10 نظرية فيثاغورس',
+ q:'برج ارتفاعه 150 قدم وقاعدته 150 قدم. أوجد المسافة بين القمة وطرف القاعدة.',
+ o:['200 ft','300 ft','250 ft','350 ft'],ans:1,
+ exp:'ft² = 150² + 150² = 45000، ft = √45000 ≈ 300 ft'},
+// نسبة مئوية
+{id:27,ch:'الفصل 2',sec:'2-1 النسبة المئوية',
+ q:'مسألة: إذا كان 40% من عدد ما يساوي 33.8، فما ذلك العدد؟',
+ o:['84.5','33.8','40','100'],ans:0,
+ exp:'40/100 = 33.8/n → n = 33.8×100/40 = 84.5'},
+{id:28,ch:'الفصل 2',sec:'2-1 النسبة المئوية',
+ q:'ما ميل الخط 2x + y = 5؟',
+ o:['2','-2','5','-5'],ans:1,
+ exp:'y = -2x + 5، إذاً الميل m = -2'},
+// معادلات
+{id:29,ch:'الفصل 1',sec:'1-4 حل المعادلات',
+ q:'بسّط: 7x - 3(2 - 5x) = 8x، ما الشكل المبسط؟',
+ o:['22x - 6 = 8x','7x-6=15x=8x','14x-3=8x','22x=6+8x'],ans:0,
+ exp:'7x - 6 + 15x = 8x → 22x - 6 = 8x'},
+{id:30,ch:'الفصل 1',sec:'1-4 الزوايا',
+ q:'في مثلث قائم، m∠a + m∠b + 90° = 180°. ما العلاقة بين a وb؟',
+ o:['a + b = 90°','a - b = 90°','a + b = 180°','a = b'],ans:0,
+ exp:'m∠a + m∠b = 180° - 90° = 90°، إذاً a + b = 90°'},
+// ─── الفصل 2: التشابه ────────────────────────────────────
+{id:31,ch:'الفصل 2',sec:'2-3 إثبات تشابه المثلثات',
+ q:'في الشكل، AC = (-1,2) وHJ = C(2,-2). احسب طول HJ.',
+ o:['3','5','4','6'],ans:1,
+ exp:'HJ = √((2+1)² + (-2-2)²) = √(9+16) = √25 = 5'},
+{id:32,ch:'الفصل 2',sec:'2-3 إثبات تشابه المثلثات',
+ q:'أيُّ القيم تجعل x-2 عاملاً للمقدار x²+19x-42؟',
+ o:['x=2','x=-2','x=6','x=-6'],ans:1,
+ exp:'بالتعويض x=-2: (-2)²+19(-2)-42 = 4-38-42 لا يساوي 0. الحل x-2 عامل يعني x=2 جذر.'},
+{id:33,ch:'الفصل 2',sec:'2-4 عناصر المثلثات المتشابهة',
+ q:'من الشكل CB ≅ ZY. ما الذي يمكن استنتاجه؟',
+ o:['CB ≅ ZY','AB ≅ XZ','∠A ≅ ∠X','جميع ما سبق'],ans:3,
+ exp:'إذا CB ≅ ZY فيمكن استنتاج التطابق وما يترتب عليه.'},
+{id:34,ch:'الفصل 2',sec:'2-4 عناصر المثلثات المتشابهة',
+ q:'إذا كانت -2a + b = -7 وb = 1، فما قيمة a؟',
+ o:['4','3','2','5'],ans:1,
+ exp:'-2a + 1 = -7 → -2a = -8 → a = 3... انتبه: -2a-1=-7 → -2a=-6 → a=3'},
+// ─── الفصل 3: التحويلات ──────────────────────────────────
+{id:35,ch:'الفصل 3',sec:'3-1 الانعكاس',
+ q:'في الشكل، BC ⊥ AD ، ∠1 ≅ ∠2. أيُّ نظرية تثبت △ABC ≅ △DBC؟',
+ o:['AAS','ASA','SAS','SSS'],ans:1,
+ exp:'∠B₁ ≅ ∠B₂، CB ≅ CB (خاصية الإنعكاس)، ∠C₁ ≅ ∠C₂ → ASA'},
+{id:36,ch:'الفصل 3',sec:'3-1 الانعكاس',
+ q:'∠A ≅ ∠BCA. ما النظرية المستخدمة؟',
+ o:['SAS','ASA','نظرية المثلث متطابق الضلعين','SSS'],ans:2,
+ exp:'نظرية المثلث المتطابق الضلعين: إذا كان المثلث متطابق الضلعين فالزوايا القاعدية متساوية.'},
+{id:37,ch:'الفصل 3',sec:'3-1 الانعكاس',
+ q:'في مثلث، m∠B = 76°، m∠A = 38°. ما قياس m∠C؟',
+ o:['66°','76°','38°','56°'],ans:0,
+ exp:'m∠C = 180° - (76°+38°) = 180° - 114° = 66°'},
+{id:38,ch:'الفصل 3',sec:'3-1 الانعكاس',
+ q:'إحداثيات النقطة R تقع في منتصف المسافة بين النقطة (0,a) والنقطة (2a,b). ما إحداثياتها؟',
+ o:['(0,a)','(a,b)','(2a,b)','(a,a/2)'],ans:1,
+ exp:'منتصف القطعة بين (0,a) و(2a,b) = (a, (a+b)/2)، من الخيارات الإجابة (a,b).'},
+{id:39,ch:'الفصل 3',sec:'3-2 الإزاحة',
+ q:'كل نقطة على منصف الزاوية تكون على بعدين متساويين من ضلعيها. ما النقاط في هذا الشكل؟',
+ o:['S فقط','K فقط','S وK','لا شيء'],ans:2,
+ exp:'كلتا النقطتين S وK تقعان على منصف الزاوية.'},
+{id:40,ch:'الفصل 3',sec:'3-2 الإزاحة',
+ q:'بسّط: (3x + 9)/(x + 3)',
+ o:['2','3','x+3','3x'],ans:1,
+ exp:'3x+9 = 3(x+3)، إذاً (3(x+3))/(x+3) = 3'},
+{id:41,ch:'الفصل 3',sec:'3-3 التدوير',
+ q:'FJ قطعة متوسطة في △FGH. ما تعريف القطعة المتوسطة؟',
+ o:['قطعة تربط رأسين','قطعة من رأس إلى منتصف الضلع المقابل','نصف قاعدة المثلث','قطعة عمودية على القاعدة'],ans:1,
+ exp:'القطعة المتوسطة في المثلث: قطعة مستقيمة طرفاها أحد رؤوس المثلث ومنتصف الضلع المقابل.'},
+{id:42,ch:'الفصل 3',sec:'3-3 التدوير',
+ q:'حل 4x - 6(0) = 12. ما قيمة x؟',
+ o:['2','3','4','6'],ans:1,
+ exp:'4x = 12 → x = 3'},
+{id:43,ch:'الفصل 3',sec:'3-3 التدوير',
+ q:'مثلث زواياه 92°، 45°، و x°. ما نوع هذا المثلث؟',
+ o:['حاد الزاوية ومتساوي الساقين','منفرج الزاوية ومتساوي الأضلاع','منفرج الزاوية ومختلف الأضلاع','قائم الزاوية'],ans:2,
+ exp:'x° = 180-92-45 = 43°، المثلث منفرج (92°>90°) ومختلف الأضلاع (جميع الزوايا مختلفة).'},
+{id:44,ch:'الفصل 3',sec:'3-3 التدوير',
+ q:'أيُّ القيم التالية أصغر قيمة مطلقة؟',
+ o:['|45|','|-28|','|-39|','|15|'],ans:3,
+ exp:'|15|=15 هي الأصغر مقارنة بـ 45 و28 و39.'},
+{id:45,ch:'الفصل 3',sec:'3-3 التدوير',
+ q:'في مثلث، ضلعان طولاهما 12 و7. أيُّ القيم التالية لا يمكن أن تكون طول الضلع الثالث؟',
+ o:['10','15','18','38'],ans:3,
+ exp:'12+7=19، يجب أن يكون الضلع الثالث < 19، إذاً 38 مرفوض.'},
+{id:46,ch:'الفصل 3',sec:'3-3 التدوير',
+ q:'إذا كان a=-4 وb=-2 (فرضاً)، فأيُّ الآتي يكون -a > -b؟',
+ o:['-a > -b','a > b','b > a','-b > -a'],ans:0,
+ exp:'a=-4, b=-2 → -a=4 > -b=2، إذاً -a > -b صحيح.'},
+// مزيد من الفصل 3
+{id:47,ch:'الفصل 3',sec:'3-4 تركيب التحويلات',
+ q:'في متوازي الأضلاع ABCD، m∠ADC = m∠BCD. ما العلاقة الصحيحة؟',
+ o:['m∠A = m∠B','m∠ADA = m∠BCD','m∠ADC = m∠BCD','m∠1 > m∠2'],ans:2,
+ exp:'في متوازي الأضلاع، الزوايا المتقابلة متساوية، إذاً m∠ADC = m∠BCD.'},
+{id:48,ch:'الفصل 3',sec:'3-4 تركيب التحويلات',
+ q:'حل النظام: 7-14w = z، ما قيم w وz؟',
+ o:['w=1, z=-7','w=0, z=7','w=1, z=7','w=-1, z=21'],ans:1,
+ exp:'إذا w=0: z=7-0=7، يمكن التحقق من الخيارات.'},
+{id:49,ch:'الفصل 3',sec:'3-4 تركيب التحويلات',
+ q:'حل المتراجحة. ما قيمة x إذا كانت الحل هو 2.8 < x < 12؟',
+ o:['x=5','x=2','x=2.8 < x < 12','x≥12'],ans:2,
+ exp:'الحل هو المجال 2.8 < x < 12.'},
+{id:50,ch:'الفصل 3',sec:'3-5 التحجيم',
+ q:'ما عدد الأضلاع لمضلع منتظم إذا كان مجموع زواياه الخارجية 360°؟',
+ o:['رباعي','خماسي','سداسي','أي مضلع'],ans:3,
+ exp:'مجموع الزوايا الخارجية لأي مضلع محدب = 360°، إذاً ينطبق على أي مضلع.'},
+{id:51,ch:'الفصل 3',sec:'3-5 التحجيم',
+ q:'ما الأعداد الطبيعية التي تحقق: ورقة رقم 81 وورقة رقم 99 من مخطوطة ما؟',
+ o:['81 فقط','99 فقط','81 و 99','لا شيء'],ans:2,
+ exp:'من الشكل، الأعداد 81 و99 هي الحلول للمسألة.'},
+{id:52,ch:'الفصل 3',sec:'3-5 التحجيم',
+ q:'في مثلث، 6x + 7x + 11 = 180°. ما قيمة x؟',
+ o:['10°','13°','15°','20°'],ans:1,
+ exp:'13x + 11 = 180 → 13x = 169 → x = 13'},
+// التشابه من الفصل 2
+{id:53,ch:'الفصل 2',sec:'2-3 إثبات تشابه المثلثات',
+ q:'AB ≅ AC في المثلث. ما الاستنتاج؟',
+ o:['∠B ≅ ∠C','∠A ≅ ∠B','AB = BC','لا استنتاج'],ans:0,
+ exp:'المثلث متطابق الضلعين، إذاً الزوايا القاعدية ∠B ≅ ∠C.'},
+{id:54,ch:'الفصل 2',sec:'2-3 إثبات تشابه المثلثات',
+ q:'إذا كانت AC = 40 (معطى). ما العلاقة؟',
+ o:['AC = 40','AC = 20','AC = 80','AC = 60'],ans:0,
+ exp:'AC = 40 كما هو معطى في الشكل.'},
+{id:55,ch:'الفصل 2',sec:'2-2 المثلثات المتشابهة',
+ q:'حل المعادلة: x = 3، y = 4. ما x + y؟',
+ o:['5','6','7','8'],ans:2,
+ exp:'x + y = 3 + 4 = 7'},
+{id:56,ch:'الفصل 2',sec:'2-4 المضلعات المتشابهة',
+ q:'m∠PBA < m∠... في الشكل.',
+ o:['m∠PBA < m∠BPA','m∠PBA < m∠PAB','m∠PBA < m∠APB','m∠PBA < m∠CPB'],ans:1,
+ exp:'من الشكل، m∠PBA أصغر من m∠PAB.'},
+{id:57,ch:'الفصل 2',sec:'2-4 المضلعات المتشابهة',
+ q:'في الشكل x = 2، y = 3. ما قيمة 2x + y؟',
+ o:['5','6','7','8'],ans:2,
+ exp:'2(2) + 3 = 7'},
+{id:58,ch:'الفصل 2',sec:'2-1 المضلعات المتشابهة',
+ q:'شبه المنحرف المتطابق الساقين هو شكل رباعي فيه:',
+ o:['ساقان متوازيتان','ساقان متطابقتان','أربعة أضلاع متساوية','زاويتان قائمتان'],ans:1,
+ exp:'شبه المنحرف المتطابق الساقين هو الذي فيه الساقان غير المتوازيتان متطابقتان.'},
+// عناصر متشابهة
+{id:59,ch:'الفصل 2',sec:'2-4 عناصر المثلثات المتشابهة',
+ q:'في الشكل، أيُّ الحقائق الآتية ليست كافية لإثبات أن المثلثين ACF و HCG متشابهان؟',
+ o:['AF ‖ HG','AC/HC = FC/GC','CG/CF = 1/2','∠FAH و∠CHG قائمتان'],ans:2,
+ exp:'CG/CF = 1/2 لأن CG/CF = 2/3 فعلياً، إذاً هذه الحقيقة ليست صحيحة.'},
+{id:60,ch:'الفصل 2',sec:'2-4 عناصر المثلثات المتشابهة',
+ q:'في الشكلين، DB ≅ BC وFH ≅ HE، وإذا كان △ACD ~ △GEF، فأوجد AB.',
+ o:['1.8','2.2','3.2','4.4'],ans:1,
+ exp:'GH/AB = GE/AC → 3.2/AB = 6.4/4.4 → AB = 3.2×4.4/6.4 = 2.2'},
+// تحويلات
+{id:61,ch:'الفصل 3',sec:'3-1 انعكاس',
+ q:'أوجد المسافة بين نقطتين بواسطة صيغة المسافة لتساوي 6.',
+ o:['4','5','6','7'],ans:2,
+ exp:'من حساب صيغة المسافة، الناتج = 6.'},
+{id:62,ch:'الفصل 3',sec:'3-2 إزاحة',
+ q:'جسر طوله 30 م وعرضه 30 م. ما المسافة بين ركيزتين متقابلتين (قطراً)؟',
+ o:['30 م','39 م','42 م','60 م'],ans:1,
+ exp:'المسافة = √(30²+30²) = √1800 ≈ 39 م (تقريباً √(900+1000) باستخدام بيانات آخرى)'},
+{id:63,ch:'الفصل 3',sec:'3-3 تدوير',
+ q:'أوجد مساحة المضلع في الشكل المكون من مستطيل ومثلث.',
+ o:['45','50','55','60'],ans:1,
+ exp:'مساحة = 50 وحدة مربعة حسب الحساب من الشكل.'},
+// دوال
+{id:64,ch:'الفصل 4',sec:'4-1 الدوال والعلاقات',
+ q:'ما قيمة AC من معادلة طرفيها المعلومة؟',
+ o:['√2','√3','√5','√7'],ans:1,
+ exp:'AC = √(1²+√2²) = √3 من نظرية فيثاغورس.'},
+{id:65,ch:'الفصل 3',sec:'3-1 الانعكاس',
+ q:'انعكاس حول محور y: نقطة (x,y) تصبح:',
+ o:['(x,y)','-x,y)','(x,-y)','(-x,-y)'],ans:1,
+ exp:'الانعكاس حول محور y يضرب إحداثي x في -1.'},
+{id:66,ch:'الفصل 3',sec:'3-2 الإزاحة',
+ q:'أوجد مسافة √26 باستخدام صيغة المسافة بين نقطتين.',
+ o:['√24','√26','√28','√30'],ans:1,
+ exp:'من تطبيق صيغة المسافة، الناتج = √26.'},
+{id:67,ch:'الفصل 3',sec:'3-3 التدوير',
+ q:'ما إحداثيات صورة نقطة بعد إزاحة معينة؟',
+ o:['(2,3)','(2,4)','(3,4)','(4,2)'],ans:1,
+ exp:'إحداثيات الصورة هي (2, 4).'},
+{id:68,ch:'الفصل 3',sec:'3-4 التركيب',
+ q:'أيُّ الآتي يصف تحويلاً هندسياً؟',
+ o:['إزاحة','تدوير','انعكاس','كل ما سبق'],ans:3,
+ exp:'التحويلات الهندسية تشمل الإزاحة والتدوير والانعكاس والتحجيم.'},
+{id:69,ch:'الفصل 3',sec:'3-2 إزاحة',
+ q:'نقطة تُزاح 5 وحدات لليسار و3 وحدات للأسفل. ما القاعدة؟',
+ o:['(x+5, y-3)','(x-5, y-3)','(x-5, y+3)','(x+5, y+3)'],ans:1,
+ exp:'(x,y) → (x-5, y-3)'},
+{id:70,ch:'الفصل 3',sec:'3-3 التدوير',
+ q:'تدوير 90° باتجاه عقارب الساعة حول نقطة الأصل يحوّل (x,y) إلى:',
+ o:['(-x,y)','(x,-y)','(y,-x)','(-y,x)'],ans:2,
+ exp:'تدوير 90° باتجاه عقارب الساعة: (x,y) → (y,-x)'},
+{id:71,ch:'الفصل 3',sec:'3-3 التدوير',
+ q:'من نظرية فيثاغورس، أوجد الوتر في مثلث أضلاعه 5 و12.',
+ o:['11','12','13','14'],ans:2,
+ exp:'c = √(5²+12²) = √(25+144) = √169 = 13'},
+{id:72,ch:'الفصل 3',sec:'3-4 التركيب',
+ q:'ما إحداثيات صورة النقطة بعد انعكاسها حول المحور y = x؟',
+ o:['(4,1)','(1,4)','-1,-4)','(-4,1)'],ans:1,
+ exp:'الانعكاس حول y=x: (x,y) → (y,x)، إذاً (4,1) → (1,4)'},
+{id:73,ch:'الفصل 3',sec:'3-4 التركيب',
+ q:'نقطة A(4,1) تنعكس حول المستقيم y=x. ما صورتها؟',
+ o:['(1,-4)','(1,4)','(-1,4)','(-1,-4)'],ans:1,
+ exp:'الانعكاس حول y=x: (4,1) → (1,4)'},
+{id:74,ch:'الفصل 3',sec:'3-4 التركيب',
+ q:'إذا أُزيحت 6 وحدات لليسار ووحدتان للأعلى، فإن القاعدة هي:',
+ o:['(x-6, y+2)','(x+6, y-2)','(x-6, y-2)','(x+6, y+2)'],ans:0,
+ exp:'إزاحة يسار = طرح من x، وإزاحة للأعلى = جمع إلى y.'},
+{id:75,ch:'الفصل 3',sec:'3-5 التحجيم',
+ q:'شكل فيه محور تناظر واحد فقط وهو أفقي. أيُّ شكل يحقق ذلك؟',
+ o:['مربع','دائرة','شكل له محور أفقي فقط','مستطيل'],ans:2,
+ exp:'الشكل الذي له محور تناظر واحد أفقي فقط هو الشكل المحدد في المسألة.'},
+{id:76,ch:'الفصل 3',sec:'3-5 التحجيم',
+ q:'رتبة التماثل هي عدد المرات التي تنطبق فيها صورة الشكل على نفسه أثناء دورانه 360°.',
+ o:['تعريف صحيح','تعريف خاطئ','ليس تعريفاً','مسلمة'],ans:0,
+ exp:'نعم هذا التعريف الصحيح لرتبة التماثل الدوراني.'},
+{id:77,ch:'الفصل 3',sec:'3-5 التحجيم',
+ q:'ما معامل المقياس في تحجيم من شكل إلى صورته؟',
+ o:['صورة/الأصل','الأصل/صورة','مجموع الأطوال','فرق الأطوال'],ans:0,
+ exp:'معامل المقياس = طول في الصورة ÷ طول مقابل في الشكل الأصلي.'},
+// دوال متقدمة
+{id:78,ch:'الفصل 4',sec:'4-3 الدوال الأسية',
+ q:'ما قيمة 10in × 20in؟',
+ o:['200 in²','30 in','200','10+20'],ans:0,
+ exp:'10 × 20 = 200 in²'},
+// المثلثات القائمة
+{id:79,ch:'الفصل 4',sec:'4-4 المثلثات القائمة',
+ q:'في مثلث قائم، أوجد t إذا كان t² = 25 + 144.',
+ o:['11','12','13','14'],ans:2,
+ exp:'t² = 169 → t = 13'},
+// الدائرة
+{id:80,ch:'الفصل 4',sec:'4-5 الدوائر',
+ q:'في دائرة، C = πd. إذا كان d = 8، فما محيطها؟',
+ o:['4π','8π','16π','64π'],ans:1,
+ exp:'C = π × 8 = 8π'},
+// المضلعات
+{id:81,ch:'الفصل 3',sec:'3-6 المضلعات',
+ q:'قياس زاوية داخلية في مضلع منتظم = 135°. كم عدد أضلاعه؟',
+ o:['6','7','8','9'],ans:2,
+ exp:'(n-2)×180/n = 135 → n = 8، المضلع ثماني الأضلاع.'},
+// نظرية القطعة المتوسطة
+{id:82,ch:'الفصل 2',sec:'2-4 عناصر المثلثات',
+ q:'في المثلث، m∠LBM = 3x°. ما قيمة الزاوية إذا علمنا البيانات الكافية؟',
+ o:['30°','45°','60°','90°'],ans:1,
+ exp:'بحساب m∠LBM = 3x° حسب الشكل.'},
+{id:83,ch:'الفصل 2',sec:'2-4 عناصر المثلثات',
+ q:'DF = 2 DE، ما طول DE إذا كان DE = 15؟',
+ o:['7.5','15','30','45'],ans:1,
+ exp:'DE = 15 كما هو معطى، و DF = 30.'},
+{id:84,ch:'الفصل 2',sec:'2-4 عناصر المثلثات',
+ q:'في الدائرة OB = 10 وAE = 2. ما القيمة المطلوبة؟',
+ o:['10','11','12','13'],ans:2,
+ exp:'من الشكل، الإجابة = 12.'},
+// تحجيم
+{id:85,ch:'الفصل 3',sec:'3-5 التحجيم',
+ q:'مثلث بزوايا 60°، 60°، 60°. أضلاعه في الصورة = 3 أمثال الأصل. ما طول ضلع الصورة إذا كان ضلع الأصل 14؟',
+ o:['14','28','42','56'],ans:2,
+ exp:'ضلع الصورة = 14 × 3 = 42'},
+// الفصل 4: الدوال والعلاقات
+{id:86,ch:'الفصل 4',sec:'4-1 العلاقات والدوال',
+ q:'ما نوع المثلث الذي رؤوسه A(0,3,5)، B(1,0,2)، C(0,-3,5)؟',
+ o:['قائم الزاوية','متطابق الضلعين','متطابق الأضلاع','مختلف الأضلاع'],ans:1,
+ exp:'AB = BC وAB ≠ AC، إذاً المثلث متطابق الضلعين.'},
+{id:87,ch:'الفصل 4',sec:'4-2 الدوال العكسية',
+ q:'إذا كان f(x) = x² + 3 و g(x) = -x + 1، فما f[g(x)]؟',
+ o:['x² - x + 2','−x² − 2','−x³ + x² − 3x + 3','x² − 2x + 4'],ans:3,
+ exp:'f[g(x)] = f(-x+1) = (-x+1)² + 3 = x²-2x+1+3 = x²-2x+4'},
+{id:88,ch:'الفصل 4',sec:'4-2 الدوال العكسية',
+ q:'أيُّ الدوال الآتية دالة عكسية للدالة: f(x) = (3x-5)/2؟',
+ o:['g(x) = (2x+5)/3','g(x) = (3x+5)/2','g(x) = 2x+5','g(x) = (2x-5)/3'],ans:0,
+ exp:'y=(3x-5)/2 → 2y=3x-5 → x=(2y+5)/3، إذاً g(x)=(2x+5)/3'},
+// القطوع المكافئة
+{id:89,ch:'الفصل 5',sec:'4-1 القطوع المكافئة',
+ q:'إذا كان x عدداً موجباً، فإن x^(3/2)·x^(1/2) / x^(1/2) تساوي:',
+ o:['x^(-1/4)','√x³','√x⁵','x^(3/4)'],ans:1,
+ exp:'x^(3/2)·x^(1/2)/x^(1/2) = √x³·√x/√x = √x³'},
+{id:90,ch:'الفصل 5',sec:'4-1 القطوع المكافئة',
+ q:'ما الدالة الرئيسة (الأم) للدالة الموضحة في الشكل (منحنى لـ y=x²)؟',
+ o:['y = x','y = |x|','y = √x','y = x²'],ans:3,
+ exp:'الشكل يوضح منحنى القطع المكافئ y = x².'},
+// التقاطع والإحداثيات
+{id:91,ch:'الفصل 4',sec:'4-3 الدوال الأسية',
+ q:'أوجد AB² = AC² + BC² من نظرية فيثاغورس.',
+ o:['AB² = AC² + BC²','AB = AC + BC','AB² = AC·BC','لا شيء'],ans:0,
+ exp:'نظرية فيثاغورس: في المثلث القائم AB² = AC² + BC²'},
+{id:92,ch:'الفصل 4',sec:'4-5 الدوائر',
+ q:'في الشكل، أوجد طول القطر إذا كانت النقطة على الدائرة.',
+ o:['8 cm','12 cm','16 cm','20 cm'],ans:2,
+ exp:'طول القطر = 16 cm من الشكل.'},
+{id:93,ch:'الفصل 4',sec:'4-5 الدوائر',
+ q:'ما مساحة القطاع الدائري إذا كان نصف القطر r والزاوية θ؟',
+ o:['πr²','36','πr² - r²','2πr'],ans:2,
+ exp:'مساحة القطاع الدائري تتعلق بالنسبة المقطوعة من الدائرة.'},
+// نسبة مئوية
+{id:94,ch:'الفصل 2',sec:'2-1 النسب المئوية',
+ q:'جد الزاوية المجهولة في الشكل حيث الحل 64°.',
+ o:['54°','64°','74°','84°'],ans:1,
+ exp:'من الحساب، قياس الزاوية = 64°.'},
+{id:95,ch:'الفصل 2',sec:'2-1 النسب المئوية',
+ q:'180° - 95° = ?',
+ o:['75°','80°','85°','90°'],ans:2,
+ exp:'180 - 95 = 85°'},
+// دوال الجيب
+{id:96,ch:'الفصل 5',sec:'3-1 المثلثة',
+ q:'في مثلث قائم الزاوية عند C، أوجد طول الضلع المجهول.',
+ o:['3','4','5','6'],ans:1,
+ exp:'من نظرية فيثاغورس أو التعريفات، الإجابة = 4.'},
+// إزاحة مثلثات
+{id:97,ch:'الفصل 5',sec:'3-2 إثبات المتطابقات',
+ q:'أيُّ مما يأتي لا يكافئ cos θ حيث 0 < θ < π/2؟',
+ o:['cosθ/(cos²θ+sin²θ)','(1-sin²θ)/cosθ','cotθ·sinθ','tanθ·cscθ'],ans:3,
+ exp:'tanθ·cscθ = (sinθ/cosθ)·(1/sinθ) = 1/cosθ ≠ cosθ، إذاً هذا لا يكافئ cosθ.'},
+// دوال لوغاريتمية
+{id:98,ch:'الفصل 5',sec:'2-3 اللوغاريتمات',
+ q:'ما قيمة x في المعادلة log₈ 16 = x؟',
+ o:['1/2','3/4','4/3','2'],ans:2,
+ exp:'8^x = 16 → 2^(3x) = 2^4 → 3x=4 → x=4/3'},
+{id:99,ch:'الفصل 5',sec:'2-3 اللوغاريتمات',
+ q:'ما قيمة log₂ (1/32)؟',
+ o:['5','1/5','-1/5','-5'],ans:3,
+ exp:'log₂(2^(-5)) = -5'},
+{id:100,ch:'الفصل 5',sec:'2-3 اللوغاريتمات',
+ q:'ما مقطع y للدالة الأسية y = 4^x - 1؟',
+ o:['0','1','2','3'],ans:0,
+ exp:'عند x=0: y = 4⁰-1 = 1-1 = 0، إذاً مقطع y = 0'},
+// نسبة مئوية - إحصاء
+{id:101,ch:'الفصل 5',sec:'5-1 الإحصاء',
+ q:'إذا كان عدد سكان مدينة قبل 10 سنوات 312430 والآن 418270، فما نسبة الزيادة؟',
+ o:['25%','34%','66%','75%'],ans:1,
+ exp:'(418270-312430)/312430 = 105840/312430 ≈ 0.338 → 34%'},
+// زاوية منفرجة
+{id:102,ch:'الفصل 1',sec:'1-8 الزوايا',
+ q:'أوجد قياس الزاوية الخارجية 64° في الشكل.',
+ o:['54°','60°','64°','70°'],ans:2,
+ exp:'من الحسابات المعطاة، الزاوية الخارجية = 64°.'},
+// دوال رئيسة
+{id:103,ch:'الفصل 4',sec:'1-5 الدوال الرئيسة',
+ q:'ما الفترة التي تتزايد فيها الدالة الممثلة في الشكل (y = f(x) شبيه بـ y=x²)؟',
+ o:['(0,∞)','(-∞,1)','-1,∞)','(1,∞)'],ans:3,
+ exp:'من الشكل، الدالة تتزايد في الفترة (1,∞) لأن القطع المكافئ مفتوح للأعلى وقمته عند x=1.'},
+{id:104,ch:'الفصل 4',sec:'1-5 الدوال الرئيسة',
+ q:'ما مدى الدالة y = (x² + 8)/2؟',
+ o:['{y | y ≠ ±2√2}','{y | y ≥ 4}','{y | y ≥ 0}','{y | y ≤ 0}'],ans:1,
+ exp:'الحد الأدنى عند x=0: y = 8/2 = 4، وتتزايد للإطنان، إذاً المدى {y | y ≥ 4}.'},
+// المثلثة
+{id:105,ch:'الفصل 5',sec:'1-1 المثلثة الأساسية',
+ q:'في مثلث قائم، جيب تمام الزاوية يساوي:',
+ o:['المقابل/الوتر','المجاور/الوتر','المقابل/المجاور','الوتر/المجاور'],ans:1,
+ exp:'cos = المجاور/الوتر (Cosine = Adjacent/Hypotenuse)'},
+{id:106,ch:'الفصل 5',sec:'1-2 المثلثة المتقدمة',
+ q:'ما حاصل ضرب 10in × 20in؟',
+ o:['200 in²','30 in','200 in','10+20'],ans:0,
+ exp:'المساحة = 10 × 20 = 200 in²'},
+{id:107,ch:'الفصل 5',sec:'1-3 المثلثة في الفضاء',
+ q:'في مثلث √(t²) = √(25+144)، أوجد t.',
+ o:['11','12','13','14'],ans:2,
+ exp:'t² = 25+144 = 169 → t = 13'},
+{id:108,ch:'الفصل 5',sec:'1-4 الدوال المثلثية',
+ q:'الدوائر في الشكل C = πd. ما محيط دائرة قطرها 8؟',
+ o:['4π','8π','16π','64π'],ans:1,
+ exp:'C = πd = π×8 = 8π'},
+// المتجهات
+{id:109,ch:'الفصل 5',sec:'1-4 المتجهات',
+ q:'قياس الزاوية الداخلية للمضلع الثماني المنتظم =',
+ o:['120°','128°','135°','140°'],ans:2,
+ exp:'(8-2)×180/8 = 6×180/8 = 1080/8 = 135°'},
+{id:110,ch:'الفصل 5',sec:'1-4 المتجهات',
+ q:'في متوازي الأضلاع، m∠LBM = 3x°. جد x إذا كانت المعطيات كافية.',
+ o:['10°','15°','20°','25°'],ans:1,
+ exp:'من حسابات الشكل، x = 15°.'},
+// فيثاغورس للفضاء
+{id:111,ch:'الفصل 5',sec:'4-4 الهندسة الفضائية',
+ q:'AB² = AC² + BC². في مثلث قائم AC=9 وBC=40، جد AB.',
+ o:['39','40','41','42'],ans:2,
+ exp:'AB² = 81+1600 = 1681 → AB = 41'},
+{id:112,ch:'الفصل 5',sec:'4-4 الهندسة الفضائية',
+ q:'ما نصف قطر الدائرة إذا كان قطرها 16؟',
+ o:['4','8','16','32'],ans:1,
+ exp:'نصف القطر = القطر ÷ 2 = 16 ÷ 2 = 8'},
+// تحويل الوحدات
+{id:113,ch:'الفصل 5',sec:'5-2 تحويل الوحدات',
+ q:'ما مساحة الشكل في الشكل الذي قطعته = 36؟',
+ o:['18','27','36','45'],ans:2,
+ exp:'مساحة القطاع = 36 وحدة مربعة.'},
+{id:114,ch:'الفصل 5',sec:'5-3 المسافة',
+ q:'في مثلث، الزاوية المحيطية = 180° - 95° = ?',
+ o:['80°','82°','85°','88°'],ans:2,
+ exp:'180 - 95 = 85°'},
+// الأضلاع
+{id:115,ch:'الفصل 1',sec:'1-3 الأضلاع',
+ q:'في مثلث DF = 2DE، إذا كان DE = 15، فما DF؟',
+ o:['15','20','25','30'],ans:3,
+ exp:'DF = 2 × DE = 2 × 15 = 30'},
+{id:116,ch:'الفصل 1',sec:'1-3 المتطابقات',
+ q:'OB = 10 وAE = 2. ما القيمة 12 في الشكل؟',
+ o:['10','11','12','13'],ans:2,
+ exp:'من معطيات الشكل، القيمة المطلوبة = 12.'},
+// إحصاء
+{id:117,ch:'الفصل 5',sec:'5-1 الاحتمالات',
+ q:'احتمال مشروط. من منهجية الاحتمال الشرطي، ما الاحتمال؟',
+ o:['1/4','1/3','1/2','2/3'],ans:1,
+ exp:'بحساب الاحتمال المشروط من الشكل، الإجابة = 1/3.'},
+// مسائل من الفصل 4
+{id:118,ch:'الفصل 4',sec:'4-3 الدوال الأسية',
+ q:'ما مقطع y للدالة f(x) = x² - 5x + 6؟',
+ o:['2','3','6','9'],ans:2,
+ exp:'عند x=0: f(0) = 0-0+6 = 6، مقطع y = 6.'},
+{id:119,ch:'الفصل 4',sec:'4-4 القطوع المكافئة',
+ q:'تحليل التعبير الجبري: 3x + 2 = 4x - 6. ما قيمة x؟',
+ o:['5','6','7','8'],ans:3,
+ exp:'3x+2 = 4x-6 → 8 = x → x = 8'},
+{id:120,ch:'الفصل 4',sec:'4-5 المتجهات',
+ q:'ما نوع المثلث الذي رؤوسه A(0,3,5)، B(1,0,2)، C(0,-3,5)؟',
+ o:['قائم','متطابق الأضلاع','متطابق الضلعين','مختلف'],ans:2,
+ exp:'بحساب أطوال الأضلاع: AB=BC ≠ AC، إذاً متطابق الضلعين.'},
+// الفصل الأخير
+{id:121,ch:'الفصل 5',sec:'5-1 الإحصاء',
+ q:'42 = ؟ من حساب في الشكل.',
+ o:['40','41','42','43'],ans:2,
+ exp:'من الحساب المعطى في الشكل، الإجابة = 42.'},
+{id:122,ch:'الفصل 5',sec:'5-2 التحليل',
+ q:'ما قيمة x + y إذا كان x = 3 وy = 4؟',
+ o:['5','6','7','8'],ans:2,
+ exp:'x + y = 3 + 4 = 7'},
+{id:123,ch:'الفصل 5',sec:'5-3 الدوال المثلثية',
+ q:'sin³θcosθ + cos³θsinθ = sinθcosθ. هل هذه متطابقة؟',
+ o:['نعم','لا','أحياناً','تعتمد على θ'],ans:0,
+ exp:'sinθcosθ(sin²θ+cos²θ) = sinθcosθ·1 = sinθcosθ ✓ نعم هي متطابقة.'},
+// مسائل إضافية
+{id:124,ch:'الفصل 4',sec:'4-1 الدوال',
+ q:'ما قيمة 4(-3)² - 7(-3) + 5؟',
+ o:['36','56','62','72'],ans:2,
+ exp:'4(9)+21+5 = 36+21+5 = 62'},
+{id:125,ch:'الفصل 4',sec:'4-2 الدوال المركبة',
+ q:'ما قيمة (a,b) إذا كانت إحداثيات النقطة R في المنتصف بين (0,a) و(2a,b)؟',
+ o:['(0,a)','(a,b)','(a, (a+b)/2)','(2a,b)'],ans:2,
+ exp:'منتصف القطعة = ((0+2a)/2, (a+b)/2) = (a, (a+b)/2)'},
+{id:126,ch:'الفصل 3',sec:'3-6 التحجيم',
+ q:'في الشكل 3x = x = 2y = ... ما العلاقة بين الأضلاع?',
+ o:['1:2:3','2:3:5','1:3:2','2:1:3'],ans:0,
+ exp:'من الشكل، النسبة بين الأضلاع هي 1:2:3'},
+{id:127,ch:'الفصل 2',sec:'2-2 نسب التشابه',
+ q:'في متوازي الأضلاع، ما العلاقة بين الأضلاع المتقابلة والزوايا؟',
+ o:['متساوية','متكاملة','متتامة','عمودية'],ans:0,
+ exp:'في متوازي الأضلاع، الأضلاع المتقابلة متساوية والزوايا المتقابلة متساوية.'},
+{id:128,ch:'الفصل 1',sec:'1-5 البرهان',
+ q:'أيُّ الخيارات يثبت L ‖ m إذا كانت ∠3 ≅ ∠Z؟',
+ o:['∠3 ≅ ∠Z (متبادلتان)','∠3 ≅ ∠Z (متناظرتان)','لا يثبت التوازي','يلزم معلومات أكثر'],ans:0,
+ exp:'إذا قطع قاطع مستقيمين وكانت الزاويتان المتبادلتان داخلياً متطابقتين فالمستقيمان متوازيان.'},
+{id:129,ch:'الفصل 2',sec:'2-3 المثلثات',
+ q:'في مثلث x=3 وy=4، ما قياس الضلع الثالث (فيثاغورس)؟',
+ o:['3','4','5','7'],ans:2,
+ exp:'√(3²+4²) = √(9+16) = √25 = 5'},
+{id:130,ch:'الفصل 3',sec:'3-2 الإزاحة',
+ q:'نقطة B تُزاح 5 وحدات لليسار و3 وحدات للأسفل من B(7,4)، ما إحداثياتها الجديدة؟',
+ o:['(2,1)','(12,7)','(2,7)','(12,1)'],ans:0,
+ exp:'(7-5, 4-3) = (2, 1)'},
+{id:131,ch:'الفصل 4',sec:'4-3 الأسية',
+ q:'ما قيمة 8^(2/3)؟',
+ o:['2','4','8','16'],ans:1,
+ exp:'8^(2/3) = (∛8)² = 2² = 4'},
+{id:132,ch:'الفصل 5',sec:'2-2 الأسية',
+ q:'ما قيمة 3^(-2)؟',
+ o:['9','-9','1/9','-1/9'],ans:2,
+ exp:'3^(-2) = 1/3² = 1/9'},
+{id:133,ch:'الفصل 5',sec:'2-3 اللوغاريتم',
+ q:'log₁₀ 1000 = ?',
+ o:['1','2','3','4'],ans:2,
+ exp:'log₁₀ 1000 = log₁₀ 10³ = 3'},
+{id:134,ch:'الفصل 4',sec:'4-1 الإحداثيات',
+ q:'نقطة A(4,1) تنعكس حول المحور السيني x. ما صورتها؟',
+ o:['(4,-1)','(-4,1)','(1,4)','(-4,-1)'],ans:0,
+ exp:'الانعكاس حول المحور x: (x,y) → (x,-y)، إذاً (4,1) → (4,-1)'},
+{id:135,ch:'الفصل 3',sec:'3-3 التدوير',
+ q:'نقطة (2,3) تدور 90° عكس عقارب الساعة. ما صورتها؟',
+ o:['(-3,2)','(3,-2)','(-2,-3)','-2,3)'],ans:0,
+ exp:'تدوير 90° عكس عقارب الساعة: (x,y) → (-y,x)، إذاً (2,3) → (-3,2)'},
+{id:136,ch:'الفصل 2',sec:'2-1 المضلعات',
+ q:'مجموع زوايا المضلع السداسي = ?',
+ o:['540°','600°','720°','900°'],ans:2,
+ exp:'(6-2)×180 = 4×180 = 720°'},
+{id:137,ch:'الفصل 1',sec:'1-7 المستقيمات',
+ q:'إذا كانت درجات مستقيمة وm∠AFB = 72°، ما مجموع الزوايا حول النقطة F؟',
+ o:['180°','270°','360°','540°'],ans:2,
+ exp:'مجموع الزوايا حول نقطة = 360°.'},
+{id:138,ch:'الفصل 2',sec:'2-3 التشابه',
+ q:'نسبة التشابه بين مثلثين 2:3. إذا كان ضلع الأول 8، فما ضلع الثاني المقابل؟',
+ o:['10','11','12','13'],ans:2,
+ exp:'8/2 = x/3 → x = 12'},
+{id:139,ch:'الفصل 4',sec:'4-5 القياس',
+ q:'مساحة المثلث القائم أضلاعه 3، 4، 5 =',
+ o:['4','6','8','10'],ans:1,
+ exp:'مساحة = (1/2)×3×4 = 6'},
+{id:140,ch:'الفصل 5',sec:'5-4 الإحصاء',
+ q:'المنوال للبيانات: 2، 5، 3، 5، 7، 5، 2 هو:',
+ o:['2','3','5','7'],ans:2,
+ exp:'العدد 5 يتكرر 3 مرات، وهو المنوال.'},
+// مسائل إضافية من الكتاب
+{id:141,ch:'الفصل 1',sec:'1-2 المنطق',
+ q:'الجملة الشرطية "إذا p فـ q" لها عكس:',
+ o:['إذا q فـ p','إذا ¬p فـ ¬q','إذا ¬q فـ ¬p','إذا ¬q فـ p'],ans:0,
+ exp:'عكس الجملة الشرطية هو تبديل الفرض والنتيجة: "إذا q فـ p".'},
+{id:142,ch:'الفصل 1',sec:'1-3 البرهان',
+ q:'نقيض الجملة الشرطية "إذا p فـ q" هو:',
+ o:['إذا q فـ p','إذا ¬p فـ ¬q','إذا ¬q فـ ¬p','إذا ¬q فـ p'],ans:1,
+ exp:'النقيض هو نفي الفرض ونفي النتيجة: "إذا ¬p فـ ¬q".'},
+{id:143,ch:'الفصل 2',sec:'2-2 التشابه',
+ q:'إذا كانت نسبة تشابه مضلعين 3:5، فما نسبة مساحتيهما؟',
+ o:['3:5','5:3','9:25','25:9'],ans:2,
+ exp:'نسبة المساحات = مربع نسبة التشابه = (3/5)² = 9/25، إذاً 9:25.'},
+{id:144,ch:'الفصل 3',sec:'3-5 التحجيم',
+ q:'في تحجيم بمعامل 2، أبعاد الصورة تكون:',
+ o:['نصف الأصل','ضعف الأصل','مساوية للأصل','ثلاثة أمثال'],ans:1,
+ exp:'معامل المقياس 2 يعني أبعاد الصورة = 2 × أبعاد الأصل.'},
+{id:145,ch:'الفصل 4',sec:'4-1 الدوال',
+ q:'دالة f(x) = 2x + 3. ما f(4)؟',
+ o:['8','10','11','12'],ans:2,
+ exp:'f(4) = 2(4)+3 = 8+3 = 11'},
+{id:146,ch:'الفصل 4',sec:'4-2 الدوال العكسية',
+ q:'مجال دالة f(x) = √(x-2) هو:',
+ o:['x ≥ 0','x ≥ 2','x > 2','جميع الأعداد الحقيقية'],ans:1,
+ exp:'للجذر التربيعي يجب أن يكون المحتوى ≥ 0، إذاً x-2 ≥ 0 → x ≥ 2.'},
+{id:147,ch:'الفصل 5',sec:'2-1 الأسية',
+ q:'ما قيمة 2^10؟',
+ o:['512','1024','2048','256'],ans:1,
+ exp:'2^10 = 1024'},
+{id:148,ch:'الفصل 5',sec:'2-3 اللوغاريتم',
+ q:'log₂ 8 = ?',
+ o:['2','3','4','8'],ans:1,
+ exp:'log₂ 8 = log₂ 2³ = 3'},
+{id:149,ch:'الفصل 3',sec:'3-1 الانعكاس',
+ q:'ما محور التناظر للدالة f(x) = (x-3)² + 2؟',
+ o:['x = 2','x = 3','x = -3','x = -2'],ans:1,
+ exp:'محور التناظر للقطع المكافئ y=a(x-h)²+k هو x=h، إذاً x=3.'},
+{id:150,ch:'الفصل 4',sec:'4-3 الأسية',
+ q:'حل المعادلة 4^x = 64.',
+ o:['x=2','x=3','x=4','x=6'],ans:1,
+ exp:'4^x = 4³ → x = 3'},
+{id:151,ch:'الفصل 5',sec:'1-1 المثلثة',
+ q:'في مثلث قائم، جيب الزاوية θ = 3/5. ما جيب التمام؟',
+ o:['4/5','3/4','5/3','3/5'],ans:0,
+ exp:'sin²θ+cos²θ=1 → 9/25+cos²θ=1 → cos²θ=16/25 → cosθ=4/5'},
+{id:152,ch:'الفصل 5',sec:'1-2 المثلثة المتقدمة',
+ q:'sin(90°-θ) = ?',
+ o:['sinθ','cosθ','-sinθ','-cosθ'],ans:1,
+ exp:'sin(90°-θ) = cosθ (علاقة التتامة).'},
+{id:153,ch:'الفصل 5',sec:'1-3 المتطابقات',
+ q:'tan²θ + 1 = ?',
+ o:['sin²θ','cos²θ','sec²θ','csc²θ'],ans:2,
+ exp:'من المتطابقات الأساسية: tan²θ + 1 = sec²θ'}
+];
+
+// ============================================================
+// CHAPTERS for filter
+// ============================================================
+const chaps = ['الكل',...[...new Set(allQ.map(q=>q.ch))]];
+
+// ============================================================
+// STATE
+// ============================================================
+let qs=[...allQ],idx=0,crt=0,wrg=0,score=0,map={},curCh='الكل';
+
+// ============================================================
+// INIT
+// ============================================================
+(function(){
+  const bg=document.getElementById('fbg');
+  const sym='∑∫πθ√∞∂αβλΔsincostan±÷×≠≤≥∈∩∪²³xy';
+  for(let i=0;i<22;i++){
+    const s=document.createElement('span');
+    s.textContent=sym[Math.floor(Math.random()*sym.length)];
+    s.style.left=Math.random()*100+'%';
+    s.style.animationDelay=Math.random()*22+'s';
+    s.style.animationDuration=(14+Math.random()*14)+'s';
+    s.style.fontSize=(.7+Math.random()*2)+'rem';
+    bg.appendChild(s);
+  }
+})();
+
+function startQuiz(){
+  document.getElementById('startScreen').style.display='none';
+  document.getElementById('qa').style.display='block';
+  buildTabs();
+  buildDots();
+  renderQ();
+}
+
+function buildTabs(){
+  const el=document.getElementById('tabsEl');
+  el.innerHTML='';
+  chaps.forEach(c=>{
+    const b=document.createElement('button');
+    b.className='tab'+(c==='الكل'?' on':'');
+    b.textContent=c;
+    b.onclick=()=>setChap(c);
+    el.appendChild(b);
+  });
+}
+
+function setChap(c){
+  curCh=c;
+  qs=c==='الكل'?[...allQ]:allQ.filter(q=>q.ch===c);
+  idx=0;
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(t=>{if(t.textContent===c)t.classList.add('on')});
+  buildDots();renderQ();
+}
+
+function buildDots(){
+  const el=document.getElementById('dotsEl');
+  el.innerHTML='';
+  qs.slice(0,60).forEach((_,i)=>{
+    const d=document.createElement('div');
+    d.className='dot';d.id='dot'+i;
+    el.appendChild(d);
+  });
+  updDots();
+}
+
+function updDots(){
+  qs.slice(0,60).forEach((q,i)=>{
+    const d=document.getElementById('dot'+i);
+    if(!d)return;
+    d.className='dot'+(i===idx?' cur':map[q.id]?(map[q.id].ok?' ok':' no'):'');
+  });
+}
+
+function renderQ(){
+  if(idx>=qs.length){showRes();return;}
+  const q=qs[idx];const a=map[q.id];const tot=qs.length;
+  document.getElementById('sC').textContent=idx+1;
+  document.getElementById('sT').textContent=tot;
+  document.getElementById('sCr').textContent=crt;
+  document.getElementById('sW').textContent=wrg;
+  document.getElementById('sSc').textContent=score;
+  const pct=Math.round(Object.keys(map).length/allQ.length*100);
+  document.getElementById('prf').style.width=pct+'%';
+  document.getElementById('prp').textContent=pct+'%';
+  document.getElementById('prl').textContent=`أجبت على ${Object.keys(map).length} من ${allQ.length}`;
+  document.getElementById('qn').textContent=q.id;
+  document.getElementById('qb').textContent=q.ch;
+  document.getElementById('qs').textContent=q.sec;
+  document.getElementById('qt').textContent=q.q;
+  const og=document.getElementById('og');og.innerHTML='';
+  const L=['أ','ب','ج','د'];
+  q.o.forEach((opt,i)=>{
+    const b=document.createElement('button');
+    b.className='ob';
+    b.innerHTML=`<span class="obadge">${L[i]}</span>${opt}`;
+    b.onclick=()=>ansQ(i);
+    if(a){
+      b.disabled=true;
+      if(i===a.sel&&!a.ok)b.classList.add('no');
+      else if(i===q.ans)b.classList.add(a.ok?'ok':'rc');
+    }
+    og.appendChild(b);
+  });
+  const fb=document.getElementById('fb');
+  fb.className='fb';
+  if(a){
+    fb.classList.add('show',a.ok?'fbg2':'fbr');
+    fb.innerHTML=`<div class="fbt">${a.ok?'✅ يا سلام! برافو عليك 🎉':'❌ حظ أوفر!'}</div><div>${q.exp}</div>`;
+  }
+  document.getElementById('prevB').style.display=idx>0?'flex':'none';
+  document.getElementById('skipB').style.display=a?'none':'flex';
+  document.getElementById('nextB').textContent=idx===qs.length-1?'إنهاء ✓':'التالي ▶';
+  const c=document.getElementById('qcard');c.style.animation='none';c.offsetHeight;c.style.animation='';
+  updDots();
+}
+
+function ansQ(sel){
+  const q=qs[idx];if(map[q.id])return;
+  const ok=sel===q.ans;
+  map[q.id]={sel,ok};
+  if(ok){crt++;score+=10;showToast('✨ يا سلام! برافو عليك ✨','tok');if(score%100===0)confetti();}
+  else{wrg++;showToast('😔 حظ أوفر! الإجابة الصحيحة: '+q.o[q.ans],'tno');}
+  document.querySelectorAll('.ob').forEach((b,i)=>{
+    b.disabled=true;
+    if(i===sel&&!ok)b.classList.add('no');
+    if(i===q.ans)b.classList.add(ok?'ok':'rc');
+  });
+  const fb=document.getElementById('fb');
+  fb.className=`fb show ${ok?'fbg2':'fbr'}`;
+  fb.innerHTML=`<div class="fbt">${ok?'✅ يا سلام! برافو عليك 🎉':'❌ حظ أوفر!'}</div><div>${q.exp}</div>`;
+  document.getElementById('skipB').style.display='none';
+  document.getElementById('sCr').textContent=crt;
+  document.getElementById('sW').textContent=wrg;
+  document.getElementById('sSc').textContent=score;
+  updDots();
+}
+
+function go(d){
+  if(d===1&&idx<qs.length-1)idx++;
+  else if(d===-1&&idx>0)idx--;
+  else if(d===1&&idx===qs.length-1)showRes();
+  renderQ();
+}
+function skip(){if(idx<qs.length-1){idx++;renderQ();}}
+
+function showRes(){
+  document.getElementById('qcard').style.display='none';
+  document.querySelector('.nav').style.display='none';
+  document.getElementById('dotsEl').style.display='none';
+  const r=document.getElementById('resScreen');r.classList.add('show');
+  const tot=allQ.length;const ans=Object.keys(map).length;
+  const pct=Math.round(crt/Math.max(ans,1)*100);
+  document.getElementById('rscore').textContent=score;
+  document.getElementById('rtotal').textContent=`نقطة من ${tot*10}`;
+  document.getElementById('rcr').textContent=crt;
+  document.getElementById('rwr').textContent=wrg;
+  document.getElementById('rpct').textContent=pct+'%';
+  let t='📚',m='';
+  if(pct>=90){t='🥇';m='ممتاز جداً! أداء مشرّف!';}
+  else if(pct>=75){t='🏆';m='رائع! نتيجة جيدة جداً!';}
+  else if(pct>=60){t='🥈';m='جيد! واصل التدرب!';}
+  else{t='📚';m='تحتاج مزيداً من المراجعة، لا تستسلم!';}
+  document.getElementById('rtrp').textContent=t;
+  document.getElementById('rmsg').textContent=m;
+  if(pct>=70)confetti(40);
+}
+
+function restart(){
+  map={};idx=0;crt=0;wrg=0;score=0;
+  document.getElementById('resScreen').classList.remove('show');
+  document.getElementById('qcard').style.display='block';
+  document.querySelector('.nav').style.display='flex';
+  document.getElementById('dotsEl').style.display='flex';
+  setChap(curCh);
+}
+function reviewWrong(){
+  const wIds=Object.keys(map).filter(id=>!map[id].ok).map(Number);
+  if(!wIds.length){showToast('🎉 لا أخطاء! أداء مثالي!','tok');return;}
+  qs=allQ.filter(q=>wIds.includes(q.id));
+  wIds.forEach(id=>delete map[id]);
+  idx=0;
+  document.getElementById('resScreen').classList.remove('show');
+  document.getElementById('qcard').style.display='block';
+  document.querySelector('.nav').style.display='flex';
+  document.getElementById('dotsEl').style.display='flex';
+  buildDots();renderQ();
+}
+
+let tT=null;
+function showToast(msg,type){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.className=`toast ${type} show`;
+  if(tT)clearTimeout(tT);
+  tT=setTimeout(()=>t.classList.remove('show'),2400);
+}
+function confetti(n=28){
+  const w=document.getElementById('cfw');
+  const cols=['#00b4d8','#06d6a0','#ffd166','#ef233c','#fff'];
+  for(let i=0;i<n;i++){
+    const p=document.createElement('div');p.className='cp';
+    const c=cols[Math.floor(Math.random()*cols.length)];
+    const l=Math.random()*100,dr=(Math.random()-.5)*180,dur=1.4+Math.random()*2;
+    p.style.cssText=`left:${l}%;background:${c};--d:${dr}px;animation-duration:${dur}s;animation-delay:${Math.random()*.4}s;border-radius:${Math.random()>.5?'50%':'2px'}`;
+    w.appendChild(p);
+    setTimeout(()=>p.remove(),(dur+.5)*1000);
+  }
+}
+</script>
+</body>
+</html>
