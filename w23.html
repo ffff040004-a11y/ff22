@@ -1,0 +1,1320 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>اختبر نفسك بالرخصة المهنية التربوية - التربية الإسلامية</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #c9a227;
+    --gold-light: #e8c84a;
+    --gold-dark: #8b6f1a;
+    --navy: #0a1628;
+    --navy-mid: #122040;
+    --navy-light: #1a3060;
+    --blue: #1e4d8c;
+    --blue-light: #2d6bc4;
+    --white: #f8f5ee;
+    --cream: #fdf6e3;
+    --success: #2ecc71;
+    --danger: #e74c3c;
+    --text-light: #d4c9a8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Tajawal', sans-serif;
+    background: var(--navy);
+    color: var(--white);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* Animated background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse at 20% 50%, rgba(30,77,140,0.3) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 20%, rgba(201,162,39,0.15) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 80%, rgba(10,22,40,0.8) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .stars {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: var(--gold-light);
+    border-radius: 50%;
+    animation: twinkle var(--d, 3s) ease-in-out infinite;
+    animation-delay: var(--delay, 0s);
+    opacity: var(--op, 0.5);
+  }
+
+  @keyframes twinkle {
+    0%, 100% { opacity: var(--op, 0.5); transform: scale(1); }
+    50% { opacity: 0.1; transform: scale(0.5); }
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    padding: 30px 0 20px;
+    animation: slideDown 0.8s ease;
+  }
+
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .header-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--gold-dark), var(--gold), var(--gold-light));
+    color: var(--navy);
+    font-size: 11px;
+    font-weight: 800;
+    padding: 5px 18px;
+    border-radius: 20px;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+
+  .header h1 {
+    font-family: 'Amiri', serif;
+    font-size: clamp(22px, 5vw, 38px);
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--gold-light), var(--white), var(--gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.4;
+    margin-bottom: 8px;
+  }
+
+  .header p {
+    color: var(--text-light);
+    font-size: 14px;
+  }
+
+  .gold-line {
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 12px auto;
+    border-radius: 2px;
+  }
+
+  /* Settings Panel */
+  #settings-panel {
+    animation: fadeIn 0.6s ease 0.3s both;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .settings-card {
+    background: linear-gradient(135deg, rgba(18,32,64,0.9), rgba(26,48,96,0.7));
+    border: 1px solid rgba(201,162,39,0.3);
+    border-radius: 20px;
+    padding: 30px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4), inset 0 1px 0 rgba(201,162,39,0.2);
+  }
+
+  .settings-title {
+    font-family: 'Amiri', serif;
+    font-size: 20px;
+    color: var(--gold-light);
+    text-align: center;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .settings-title::before, .settings-title::after {
+    content: '❖';
+    color: var(--gold);
+    font-size: 14px;
+  }
+
+  .setting-group {
+    margin-bottom: 20px;
+  }
+
+  .setting-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-light);
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .radio-group {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .radio-option {
+    flex: 1;
+    min-width: 80px;
+  }
+
+  .radio-option input { display: none; }
+
+  .radio-option label {
+    display: block;
+    text-align: center;
+    padding: 10px 15px;
+    border: 1px solid rgba(201,162,39,0.3);
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.25s ease;
+    background: rgba(10,22,40,0.5);
+    color: var(--text-light);
+  }
+
+  .radio-option input:checked + label {
+    background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+    border-color: var(--gold);
+    color: var(--navy);
+    box-shadow: 0 4px 15px rgba(201,162,39,0.4);
+    transform: translateY(-1px);
+  }
+
+  .radio-option label:hover {
+    border-color: var(--gold);
+    color: var(--gold-light);
+    background: rgba(201,162,39,0.1);
+  }
+
+  .start-btn {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, var(--gold-dark), var(--gold), var(--gold-light));
+    border: none;
+    border-radius: 14px;
+    color: var(--navy);
+    font-family: 'Tajawal', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+    position: relative;
+    overflow: hidden;
+    letter-spacing: 0.5px;
+  }
+
+  .start-btn::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.5s ease;
+  }
+
+  .start-btn:hover::before { left: 100%; }
+  .start-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(201,162,39,0.5);
+  }
+
+  /* Quiz Panel */
+  #quiz-panel { display: none; }
+
+  .progress-area {
+    margin-bottom: 20px;
+    animation: fadeIn 0.4s ease;
+  }
+
+  .progress-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+
+  .q-counter {
+    font-size: 13px;
+    color: var(--gold-light);
+    font-weight: 700;
+  }
+
+  .score-badge {
+    background: rgba(201,162,39,0.15);
+    border: 1px solid rgba(201,162,39,0.4);
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--gold-light);
+  }
+
+  .progress-bar {
+    height: 6px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold-dark), var(--gold-light));
+    border-radius: 10px;
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Question Card */
+  .question-card {
+    background: linear-gradient(135deg, rgba(18,32,64,0.95), rgba(26,48,96,0.8));
+    border: 1px solid rgba(201,162,39,0.25);
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 18px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 15px 50px rgba(0,0,0,0.3), inset 0 1px 0 rgba(201,162,39,0.15);
+    animation: cardIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .question-card::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 120px; height: 120px;
+    background: radial-gradient(circle, rgba(201,162,39,0.08) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  @keyframes cardIn {
+    from { opacity: 0; transform: scale(0.95) translateY(10px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+  .q-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px; height: 36px;
+    background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+    border-radius: 50%;
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--navy);
+    margin-bottom: 14px;
+    box-shadow: 0 4px 12px rgba(201,162,39,0.3);
+  }
+
+  .question-text {
+    font-size: clamp(16px, 3vw, 20px);
+    font-weight: 700;
+    line-height: 1.7;
+    color: var(--white);
+    position: relative;
+  }
+  
+  /* Options */
+  .options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+
+  @media (max-width: 500px) {
+    .options-grid { grid-template-columns: 1fr; }
+  }
+
+  .option-btn {
+    position: relative;
+    padding: 14px 18px;
+    background: rgba(10,22,40,0.7);
+    border: 1.5px solid rgba(201,162,39,0.2);
+    border-radius: 14px;
+    color: var(--text-light);
+    font-family: 'Tajawal', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    text-align: right;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    overflow: hidden;
+    line-height: 1.5;
+  }
+
+  .option-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent, rgba(201,162,39,0.05));
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+
+  .option-btn:hover:not(:disabled) {
+    border-color: var(--gold);
+    color: var(--white);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  }
+
+  .option-btn:hover:not(:disabled)::before { opacity: 1; }
+
+  .option-btn.correct {
+    background: rgba(46,204,113,0.15);
+    border-color: var(--success);
+    color: #a8ffc4;
+    animation: correctPulse 0.4s ease;
+  }
+
+  .option-btn.wrong {
+    background: rgba(231,76,60,0.15);
+    border-color: var(--danger);
+    color: #ffb3b3;
+    animation: wrongShake 0.4s ease;
+  }
+
+  .option-btn.reveal {
+    background: rgba(46,204,113,0.1);
+    border-color: rgba(46,204,113,0.5);
+    color: #a8ffc4;
+  }
+
+  @keyframes correctPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+  }
+
+  @keyframes wrongShake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    75% { transform: translateX(6px); }
+  }
+
+  /* Feedback popup */
+  .feedback-overlay {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .feedback-overlay.show {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .feedback-box {
+    background: linear-gradient(135deg, var(--navy-mid), var(--navy-light));
+    border-radius: 24px;
+    padding: 35px 45px;
+    text-align: center;
+    max-width: 320px;
+    width: 90%;
+    transform: scale(0.7) translateY(20px);
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+  }
+
+  .feedback-overlay.show .feedback-box {
+    transform: scale(1) translateY(0);
+  }
+
+  .feedback-box.correct-box {
+    border: 2px solid var(--success);
+  }
+
+  .feedback-box.wrong-box {
+    border: 2px solid var(--danger);
+  }
+
+  .feedback-emoji {
+    font-size: 52px;
+    display: block;
+    margin-bottom: 12px;
+    animation: bounce 0.6s ease;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    30% { transform: translateY(-15px); }
+    60% { transform: translateY(-7px); }
+  }
+
+  .feedback-title {
+    font-family: 'Amiri', serif;
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .feedback-box.correct-box .feedback-title { color: var(--success); }
+  .feedback-box.wrong-box .feedback-title { color: var(--danger); }
+
+  .feedback-subtitle {
+    font-size: 15px;
+    color: var(--text-light);
+    margin-bottom: 6px;
+  }
+
+  .correct-answer-show {
+    font-size: 14px;
+    color: #a8ffc4;
+    background: rgba(46,204,113,0.1);
+    border: 1px solid rgba(46,204,113,0.3);
+    border-radius: 8px;
+    padding: 8px 14px;
+    margin-top: 10px;
+    direction: rtl;
+  }
+
+  /* Particles */
+  .particle-container {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 99;
+  }
+
+  .particle {
+    position: absolute;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    animation: particleFly 1.5s ease-out forwards;
+  }
+
+  @keyframes particleFly {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(-200px) rotate(360deg); opacity: 0; }
+  }
+
+  /* Next button */
+  .next-btn {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, var(--blue), var(--blue-light));
+    border: 1px solid rgba(201,162,39,0.3);
+    border-radius: 14px;
+    color: var(--white);
+    font-family: 'Tajawal', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    display: none;
+    margin-top: 5px;
+  }
+
+  .next-btn:hover {
+    background: linear-gradient(135deg, var(--blue-light), var(--blue));
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(30,77,140,0.4);
+  }
+
+  /* Results Panel */
+  #results-panel { display: none; }
+
+  .results-card {
+    background: linear-gradient(135deg, rgba(18,32,64,0.95), rgba(26,48,96,0.8));
+    border: 1px solid rgba(201,162,39,0.3);
+    border-radius: 24px;
+    padding: 40px 30px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    animation: cardIn 0.6s ease;
+  }
+
+  .trophy {
+    font-size: 72px;
+    display: block;
+    margin-bottom: 15px;
+    animation: spin3d 2s ease infinite alternate;
+  }
+
+  @keyframes spin3d {
+    from { transform: rotateY(0deg) scale(1); }
+    to { transform: rotateY(20deg) scale(1.05); }
+  }
+
+  .results-title {
+    font-family: 'Amiri', serif;
+    font-size: 32px;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--gold-light), var(--white));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 20px;
+  }
+
+  .score-circle {
+    width: 140px; height: 140px;
+    border-radius: 50%;
+    background: conic-gradient(var(--gold) var(--pct, 0%), rgba(255,255,255,0.1) 0%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 25px;
+    position: relative;
+    box-shadow: 0 0 30px rgba(201,162,39,0.3);
+  }
+
+  .score-circle-inner {
+    width: 110px; height: 110px;
+    background: var(--navy);
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .score-num {
+    font-size: 30px;
+    font-weight: 900;
+    color: var(--gold-light);
+    line-height: 1;
+  }
+
+  .score-total {
+    font-size: 13px;
+    color: var(--text-light);
+  }
+
+  .stats-row {
+    display: flex;
+    gap: 12px;
+    margin: 20px 0;
+    justify-content: center;
+  }
+
+  .stat-box {
+    flex: 1;
+    max-width: 140px;
+    padding: 14px 10px;
+    border-radius: 14px;
+    text-align: center;
+  }
+
+  .stat-box.correct-stat {
+    background: rgba(46,204,113,0.1);
+    border: 1px solid rgba(46,204,113,0.3);
+  }
+
+  .stat-box.wrong-stat {
+    background: rgba(231,76,60,0.1);
+    border: 1px solid rgba(231,76,60,0.3);
+  }
+
+  .stat-num {
+    font-size: 28px;
+    font-weight: 900;
+    display: block;
+  }
+
+  .stat-box.correct-stat .stat-num { color: var(--success); }
+  .stat-box.wrong-stat .stat-num { color: var(--danger); }
+
+  .stat-label {
+    font-size: 13px;
+    color: var(--text-light);
+  }
+
+  .result-msg {
+    font-family: 'Amiri', serif;
+    font-size: 20px;
+    color: var(--gold-light);
+    margin-bottom: 25px;
+    line-height: 1.6;
+  }
+
+  .replay-btn {
+    padding: 15px 40px;
+    background: linear-gradient(135deg, var(--gold-dark), var(--gold), var(--gold-light));
+    border: none;
+    border-radius: 14px;
+    color: var(--navy);
+    font-family: 'Tajawal', sans-serif;
+    font-size: 17px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-left: 10px;
+  }
+
+  .replay-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(201,162,39,0.5);
+  }
+
+  .home-btn {
+    padding: 15px 40px;
+    background: transparent;
+    border: 2px solid rgba(201,162,39,0.4);
+    border-radius: 14px;
+    color: var(--gold-light);
+    font-family: 'Tajawal', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .home-btn:hover {
+    background: rgba(201,162,39,0.1);
+    border-color: var(--gold);
+    transform: translateY(-2px);
+  }
+
+  /* Footer credit */
+  .footer-credit {
+    text-align: center;
+    padding: 20px 10px;
+    margin-top: 10px;
+    border-top: 1px solid rgba(201,162,39,0.15);
+  }
+
+  .footer-credit p {
+    color: var(--text-light);
+    font-size: 13px;
+    line-height: 2;
+  }
+
+  .footer-credit a {
+    color: var(--gold-light);
+    text-decoration: none;
+    font-weight: 700;
+    transition: color 0.2s;
+  }
+
+  .footer-credit a:hover { color: var(--gold); }
+
+  /* Confetti */
+  @keyframes confettiFall {
+    0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+  }
+
+  .confetti-piece {
+    position: fixed;
+    width: 10px; height: 10px;
+    animation: confettiFall linear forwards;
+    z-index: 200;
+    pointer-events: none;
+  }
+</style>
+</head>
+<body>
+
+<!-- Stars background -->
+<div class="stars" id="stars"></div>
+
+<!-- Feedback overlay -->
+<div class="feedback-overlay" id="feedbackOverlay">
+  <div class="feedback-box" id="feedbackBox">
+    <span class="feedback-emoji" id="feedbackEmoji">🎉</span>
+    <div class="feedback-title" id="feedbackTitle">ياسلام برافو عليك</div>
+    <div class="feedback-subtitle" id="feedbackSubtitle">إجابة صحيحة رائعة</div>
+    <div class="correct-answer-show" id="correctAnswerShow" style="display:none"></div>
+  </div>
+</div>
+
+<!-- Particles container -->
+<div class="particle-container" id="particleContainer"></div>
+
+<div class="container">
+  <!-- Header -->
+  <div class="header">
+    <div class="header-badge">اختبار تفاعلي شامل</div>
+    <h1>اختبر نفسك بالرخصة المهنية التربوية<br>التربية الإسلامية</h1>
+    <div class="gold-line"></div>
+    <p style="color: var(--text-light); font-size: 14px;">مستخرج من أحدث وأشمل التجميعات - راجع معلوماتك بثقة</p>
+  </div>
+
+  <!-- Settings Panel -->
+  <div id="settings-panel">
+    <div class="settings-card">
+      <div class="settings-title">ضبط الاختبار</div>
+
+      <div class="setting-group">
+        <span class="setting-label">🎯 عدد الأسئلة</span>
+        <div class="radio-group">
+          <div class="radio-option">
+            <input type="radio" name="qcount" id="q10" value="10">
+            <label for="q10">١٠ أسئلة</label>
+          </div>
+          <div class="radio-option">
+            <input type="radio" name="qcount" id="q20" value="20" checked>
+            <label for="q20">٢٠ سؤالاً</label>
+          </div>
+          <div class="radio-option">
+            <input type="radio" name="qcount" id="q30" value="30">
+            <label for="q30">٣٠ سؤالاً</label>
+          </div>
+          <div class="radio-option">
+            <input type="radio" name="qcount" id="qall" value="all">
+            <label for="qall">الكل (شامل)</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="setting-group">
+        <span class="setting-label">📚 نوع الأسئلة</span>
+        <div class="radio-group">
+          <div class="radio-option">
+            <input type="radio" name="qtype" id="qmix" value="mix" checked>
+            <label for="qmix">مختلطة</label>
+          </div>
+          <div class="radio-option">
+            <input type="radio" name="qtype" id="qfiqh" value="fiqh">
+            <label for="qfiqh">فقه</label>
+          </div>
+          <div class="radio-option">
+            <input type="radio" name="qtype" id="qaqeedah" value="aqeedah">
+            <label for="qaqeedah">عقيدة</label>
+          </div>
+          <div class="radio-option">
+            <input type="radio" name="qtype" id="qhadith" value="hadith">
+            <label for="qhadith">حديث</label>
+          </div>
+          <div class="radio-option">
+            <input type="radio" name="qtype" id="qusul" value="usul">
+            <label for="qusul">أصول و قرآن</label>
+          </div>
+        </div>
+      </div>
+
+      <button class="start-btn" onclick="startQuiz()">🚀 ابدأ الاختبار الآن</button>
+
+      <!-- Footer credit in settings -->
+      <div class="footer-credit">
+        <p>الشكر موصول لمن افادنا بها</p>
+        <p>تصميم د/فواز &nbsp;|&nbsp; <a href="https://t.me/TAqhjT3MFVE1Yzk0" target="_blank">تفضل للمزيد هنا 📲</a></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quiz Panel -->
+  <div id="quiz-panel">
+    <div class="progress-area">
+      <div class="progress-info">
+        <span class="q-counter" id="qCounter">السؤال ١ من ١٠</span>
+        <span class="score-badge" id="scoreBadge">النتيجة: ٠</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill" style="width:0%"></div>
+      </div>
+    </div>
+
+    <div class="question-card" id="questionCard">
+      <div class="q-number" id="qNum">١</div>
+      <div class="question-text" id="questionText">نص السؤال هنا</div>
+    </div>
+
+    <div class="options-grid" id="optionsGrid"></div>
+    <button class="next-btn" id="nextBtn" onclick="nextQuestion()">السؤال التالي ◀</button>
+  </div>
+
+  <!-- Results Panel -->
+  <div id="results-panel">
+    <div class="results-card">
+      <span class="trophy" id="trophyEmoji">🏆</span>
+      <div class="results-title" id="resultsTitle">أداء رائع!</div>
+      <div class="score-circle" id="scoreCircle">
+        <div class="score-circle-inner">
+          <span class="score-num" id="scoreNum">0</span>
+          <span class="score-total" id="scoreTotal">من 10</span>
+        </div>
+      </div>
+      <div class="stats-row">
+        <div class="stat-box correct-stat">
+          <span class="stat-num" id="correctCount">0</span>
+          <span class="stat-label">✅ صحيح</span>
+        </div>
+        <div class="stat-box wrong-stat">
+          <span class="stat-num" id="wrongCount">0</span>
+          <span class="stat-label">❌ خطأ</span>
+        </div>
+      </div>
+      <p class="result-msg" id="resultMsg">أحسنت! استمر في المذاكرة.</p>
+      <button class="replay-btn" onclick="replayQuiz()">🔁 حاول مجدداً</button>
+      <button class="home-btn" onclick="goHome()">🏠 الرئيسية</button>
+    </div>
+
+    <div class="footer-credit">
+      <p>الشكر موصول لمن افادنا بها</p>
+      <p>تصميم د/فواز &nbsp;|&nbsp; <a href="https://t.me/TAqhjT3MFVE1Yzk0" target="_blank">تفضل للمزيد هنا 📲</a></p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// Generate stars
+(function() {
+  const container = document.getElementById('stars');
+  for (let i = 0; i < 60; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    s.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*100}%;--d:${2+Math.random()*4}s;--delay:${Math.random()*4}s;--op:${0.2+Math.random()*0.6};width:${1+Math.random()*3}px;height:${1+Math.random()*3}px`;
+    container.appendChild(s);
+  }
+})();
+
+// ==================== QUESTION BANK ====================
+// جميع أسئلة التجميعات مدرجة بدقة ومقسمة حسب التخصصات
+const allQuestions = [
+  // فقه
+  {q:"مما أجمع العلماء على تحريم أكله:", opts:["الميتة والبغل","الميتة والضبع","الميتة والتمساح","البغل والتمساح"], ans:0, type:"fiqh"},
+  {q:"ما حكم المبيت بمنى للحاج أيام التشريق ؟", opts:["واجب","مستحب","ركن","سنة"], ans:0, type:"fiqh"},
+  {q:"شخص عقد على امرأة بشرط أن يزوجه أخته، هذا النكاح يسمى:", opts:["نكاح المتعة","نكاح التحليل","نكاح الشغار","نكاح المسافر"], ans:2, type:"fiqh"},
+  {q:"باع شخص لآخر سلعة بثمن مؤجل ثم اشتراها منه بثمن أقل نقداً، يسمى بيع:", opts:["الصرف","التورق","التقسيط","العينة"], ans:3, type:"fiqh"},
+  {q:"في أي عام شرعت الأضحية ؟", opts:["السنة الأولى من الهجرة","السنة الثانية من البعثة","السنة الثالثة من الهجرة","السنة الثانية من الهجرة"], ans:3, type:"fiqh"},
+  {q:"ما الذي يبطل الاعتكاف ؟", opts:["الاستحاضة","الردة ثم الرجوع للإسلام","الوطء","الخروج لغير حاجة"], ans:2, type:"fiqh"},
+  {q:"الأصل في حكم الأطعمة:", opts:["الإباحة إلا ما جاء النص بتحريمه","حسب العرف والعادة مالم يخالف النص","التفريق بين طعام البحر وطعام البر","التحريم إلا ما جاء النص بإباحته"], ans:0, type:"fiqh"},
+  {q:"شخص نسي غسل يده اليسرى وتذكر بعد الانتهاء من الوضوء فماذا عليه؟", opts:["يعيد الوضوء","يغسل اليسرى وما بعدها","يغسل اليسرى","يغسل اليمنى ثم اليسرى وما بعدها"], ans:1, type:"fiqh"},
+  {q:"شخص لاعن زوجته وأراد الرجوع لها:", opts:["يراجعها قبل انقضاء العدة","يتزوجها بعد طلاقها","لا يجوز الرجوع لأنهما تلاعنا","يتزوجها بعقد ومهر جديدين"], ans:2, type:"fiqh"},
+  {q:"عقوبة من قذف الكافر، ما حكمه؟", opts:["الحد","ثمانين جلدة","التعزير","أربعين جلدة"], ans:2, type:"fiqh"},
+  {q:"ما عدة المطلقة طلاقاً بائناً؟", opts:["لا عدة عليها","حيضة واحدة","ثلاثة قروء","أربعة أشهر وعشرة أيام"], ans:2, type:"fiqh"},
+  {q:"محرم صاد حمامة فماذا عليه؟", opts:["فدية أذى","شاة","هدي","شاتين"], ans:1, type:"fiqh"},
+  {q:"إي مما يلي لا يشترط فيه الحول لوجوب الزكاة؟", opts:["الذهب والفضة","عروض التجارة","الخارج من الأرض","الإبل السائمة"], ans:2, type:"fiqh"},
+  {q:"شخص اشترى سلعة وبعد خروجه اكتشف أنها مقلدة، له خيار:", opts:["الشرط","المجلس","التدليس","الغبن"], ans:2, type:"fiqh"},
+  {q:"شخص استبدل عشرة دراهم بدينار على أن يستلمها بعد شهر، يسمى:", opts:["ربا الفضل","ربا النسيئة","ربا الديون","ربا الجاهلية"], ans:1, type:"fiqh"},
+  {q:"أقل نصاب بهيمة الأنعام على الترتيب (الإبل، الغنم، البقر)؟", opts:["5، 40، 30","40، 30، 5","30، 40، 5","40، 5، 30"], ans:0, type:"fiqh"}, 
+  {q:"رجل نسي غسل يده في الوضوء ثلاثاً، وغسلها مرة واحدة؟", opts:["لا شيء عليه وصح وضوؤه","يعيد الوضوء","يكمل الغسل ثلاثاً","يغسلها ثلاث مرات"], ans:0, type:"fiqh"},
+  {q:"أسباب الإرث:", opts:["القرابة","النسب والولاء والنكاح","النسب والقرابة","النسب والولاء"], ans:1, type:"fiqh"},
+  {q:"من أركان الصلاة:", opts:["التشهد الأول","التكبير للركوع","الجلوس بين السجدتين","استقبال القبلة"], ans:2, type:"fiqh"},
+  {q:"نقل الدين من شخص إلى آخر يسمى:", opts:["الكفالة","الضمان","الرهن","الحوالة"], ans:3, type:"fiqh"},
+  {q:"ربط النفس بالامتناع عن شيء أو الإقدام عليه بمعنى حقيقة أو اعتقاد ؟", opts:["القصص","المناسبة","القسم","الأمثال"], ans:2, type:"fiqh"},
+  {q:"قطع رجل إصبع الإبهام من يد رجل آخر خطأ، فما مقدار الدية إذا كانت دية القتل الخطأ ٣٠٠ الف ريال ؟", opts:["٥٠ الف ريال","١٥٠ الف ريال","٣٠ الف ريال","١٠٠ الف ريال"], ans:2, type:"fiqh"},
+  {q:"أقل نصاب بهيمة الأنعام على الترتيب هو: ( ٥ - ٤٠ - ٣٠ )", opts:["الإبل، الغنم، البقر","الغنم، البقر، الإبل","البقر، الغنم، الإبل","الغنم، الإبل، البقر"], ans:0, type:"fiqh"},
+  {q:"أفضل اللباس هو :", opts:["الأخضر","الأسود","الأبيض","المزعفر"], ans:2, type:"fiqh"},
+  {q:"لبي رجل بالعمرة وأصابه مرض حال دون إكمال نسكه، فماذا عليه ؟", opts:["لا شيء عليه","صيام ثلاثة أيام","هدي","فدية"], ans:2, type:"fiqh"},
+  {q:"من واجبات الحج ؟", opts:["السعي","الوقوف بعرفة","طواف الإفاضة","رمي الجمار"], ans:3, type:"fiqh"},
+  {q:"٣٦ من الأبل فيها :", opts:["جدعة","حقة","بنت مخاض","بنت لبون"], ans:3, type:"fiqh"},
+  {q:"توفي رجل عن أم وابن ابن فما نصيب الأم؟", opts:["السدس","لا ترث شيئا","الثلثان","الثلث"], ans:0, type:"fiqh"},
+  {q:"أجمع العلماء على نجاسة:", opts:["الخمر","الكلب","الجلد بعد دبغه","الدم المسفوح"], ans:3, type:"fiqh"},
+  {q:"حاج جامع أهله قبل التحلل الاول فماذا عليه ؟", opts:["حجه صحيح","حجه صحيح وعليه بدنة","يفسد حجه وعليه بدنه ويقضيه من العام المقبل","يفسح حجه وعليه شاة ويقظيه"], ans:2, type:"fiqh"},
+  {q:"عقد رجل على امرأة ولم يسم المهر فما حكم هذا العقد", opts:["غير جائز، لاختلال أحد شروط النكاح","جائز، إذا أسقط الولي المهر","غير جائز، لاختلال أحد أركان النكاح","جائز، وللمرأة مهر المثل"], ans:3, type:"fiqh"},
+  {q:"يرى جمهور العلماء أن من لا يعرف ........... يجب عليه أن لا يفتي في الفرائض.", opts:["التعصيب","الحجب","العول","المناسخات"], ans:1, type:"fiqh"},
+  {q:"يعتبر الإنسان محدثا إذا:", opts:["شك هل هو محدث أو متوضئ","تيقن الحدث وشك في الطهارة","تيقن الطهارة وشك في الحدث","شك في الطهارة والحدث وكان قبلهما طاهرا"], ans:1, type:"fiqh"},
+  {q:"هلك هالك عن زوجة وابن وأخت شقيقة، ما مقدار إرث الزوجة ؟", opts:["السدس","الربع","الثمن","النصف"], ans:2, type:"fiqh"},
+  {q:"رجل لديه ٢٠٠ من الغنم المعلوفة، ما مقدار الزكاة فيها ؟", opts:["شاتان","لا زكاة فيها","ه شياه","شیاه"], ans:1, type:"fiqh"},
+  {q:"حاج ترك رمي الجمرات في ايام التشريق، فماذا عليه", opts:["يطعم عن كل يوم صدقة","عن كل يوم شاة","بدنة","شاة لثلاثة أيام"], ans:1, type:"fiqh"},
+  {q:"عند الجمع بين الصلاتين يكفي", opts:["أذان وإقامة لكل صلاة","أذان واحد وإقامة لكل صلاة","أذان لكل صلاة وإقامة واحدة","يقيم ولا يؤذن"], ans:1, type:"fiqh"},
+  {q:"من شروط إباحة الذبيحة أهلية المذكي، ويراد بها أن يكون", opts:["مسلما، بالغا","مسلما، عاقلاً، بالغاً","مسلماً أو كتابياً، بالغاً","مسلماً أو كتابياً، عاقلاً"], ans:3, type:"fiqh"},
+  {q:"هي أن يبيع شخص على آخر سلعة بثمن مؤجل ثم يشتريها منه نقداً بثمن أقل، تعريف لـ:", opts:["التورق","السلم","المرابحة","العينة"], ans:3, type:"fiqh"},
+  {q:"رجل نسي الجلوس للتشهد الأول، فما الحكم؟", opts:["يجب أن يعيد الصلاة كاملة","يسجد للسهو قبل السلام","يكمل صلاته ولا شيء عليه","يسجد للسهو بعد السلام"], ans:1, type:"fiqh"},
+  {q:"إبراهيم احرم وذهب للبر ودل شخص على حمامة فصادها، ما الحكم لو اكل منها إبراهيم ؟", opts:["مباح","محرم","مكروه","جائز"], ans:1, type:"fiqh"},
+  {q:"رجل باع شاه حيه أي العبارات التالية أصح، بعتك اياها إلا.........", opts:["لحمها","شحمها","كبدها","رأسها"], ans:3, type:"fiqh"},
+  {q:"ما حكم الخروج للجهاد التطوع في حق المدين الذي لم يأذن له الدائن ؟", opts:["مباح","محرم","مستحب","واجب"], ans:1, type:"fiqh"},
+  {q:"الصداق يندرج تحت :", opts:["الفرائض","الاركان","الشروط","المستحبات"], ans:2, type:"fiqh"},
+  {q:"مقدار زكاة ١٠٠٠ جرام من الذهب", opts:["٢٠ جرام","٥٠ جرام","١٥ جرام","٢٥ جرام"], ans:3, type:"fiqh"},
+  {q:"حلفت امرأة ألا تغتاب وحنثت، وأخذت أخرى ملابس أختها وحلفت أنها لم تفعل، وحلفت ثالثة على صديقتها ألا تكثر، تجب الكفارة على :", opts:["علياء وحنان","فاطمة وعلياء","فاطمة","حنان"], ans:2, type:"fiqh"},
+  {q:"يقبل القاضي الرجعة بالإقرار في:", opts:["الدين","القتل","السرقة","الردة"], ans:0, type:"fiqh"},
+  {q:"توضأ رجل فخالف عدد الغسلات حيث غسل بعض أعضائه مرتين وبعضها مره فاذا عليه:", opts:["إعادة الوضوء","إعادة غسلها ثلاثا","لا شيء عليه","إكمال العدد ثلاثا"], ans:2, type:"fiqh"},
+  {q:"لا تسقط الزكاة بسب عدم حولان الحول في:", opts:["الإبل السائمة","الخارج من الارض","الذهب والفضة","عروض التجارة"], ans:1, type:"fiqh"},
+  {q:"صفه التيمم أن يبدأ بمسح", opts:["الكفين للمرفقين والوجه","الكفين ثم الوجه","الوجه ثم الكفين","الوجه ثم الذراعين"], ans:2, type:"fiqh"},
+  {q:"قام شخص بالادعاء على آخر بأن عليه دينا وأنكر، ثم اتفقا أن يعطيه مبلغا أقل، يسمى:", opts:["الصلح على إقرار","الاعسار","الصلح على إنكار","حق الشفعة"], ans:2, type:"fiqh"},
+  {q:"أي البيع أصح", opts:["بعتك الشاة التي بالقطيع","بعتك القطيع إلا شاة","بعتك شاة من القطيع","بعتك هذا القطيع إلا هذه الشاة"], ans:3, type:"fiqh"},
+  {q:"اختر الترتيب الصحيح لأولوية حضانة الرضيع ؟", opts:["جدته لامه - جدته لأبيه - خالته - عمته - جده لأبيه","خالته - عمته - جدته لأبيه - جده لامه - جده لأبيه","خالته - جدته لامه - عمته - جده لامه - جده لأبيه","جده لأبيه - جده لامه - جدته لأبيه - خالته - عمته"], ans:0, type:"fiqh"},
+  {q:"رجل حلف أن يصوم ثلاثة أيام:", opts:["يلزمه الصيام","لا شيء عليه","يتوب وعليه كفارة","لا يصوم ويطعم عن كل يوم مسكينا"], ans:0, type:"fiqh"},
+  {q:"تجب الكفارة في:", opts:["اليمين المنعقدة","اليمين الغموس","جميع ما سبق","يمين اللغو"], ans:0, type:"fiqh"},
+  {q:"الموقوذة هي:", opts:["الشاة التي يحبس نفسها حتى تموت","الشاة التي تهرب فلا يقدر عليها فترمى","الشاة التي تضرب فتموت من غير تذكية","الشاة التي تسقط بعلو فتموت"], ans:2, type:"fiqh"},
+  {q:"متى ينتهي وقت الوقوف بعرفة ؟", opts:["عند طلوع فجر اليوم العاشر","منتصف ليلة العاشر","عند غروب شمس اليوم التاسع","قبل غروب شمس اليوم التاسع"], ans:0, type:"fiqh"},
+  {q:"من شروط إباحة الصيد أن يكون الصائد:", opts:["مسلما بالغا عاقلا","مسلما بالغا","مسلما أو كتابيا عاقلا","مسلما أو كتابيا بالغا"], ans:2, type:"fiqh"},
+  {q:"الصوم المكروه هو :", opts:["التشريق","السبت","يوم العيد","الشك"], ans:1, type:"fiqh"},
+  {q:"من البيوع الجائزة ؟", opts:["بيع العربون التورق","بيع حبل الحبلة المعاطاة","التقسيط، العينة","تلقي الركبان، السلم"], ans:0, type:"fiqh"},
+  {q:"الموادعة يقصد بها :", opts:["صلح الحديبية","طواف الوداع","الودائع البنكية","غنائم الحرب"], ans:0, type:"fiqh"},
+  {q:"على المتمتع الذي لم يجد الهدي أن:", opts:["يصوم ثلاثة أيام في الحج وسبعة إذا رجع","يطعم ستة مساكين","يصوم ثلاثة أيام في الحج","يذبح شاة"], ans:0, type:"fiqh"},
+  {q:"أي الكلاب يصح أكل صيدها ؟", opts:["كلب الحراسة","الكلب المعلم","الكلب البوليسي","كلب الماشية"], ans:1, type:"fiqh"},
+  {q:"من أركان البيع في الاقتصاد الإسلامي المتعاقدان وهما:", opts:["الإسلام والرشد","الإسلام والاختيار","الإسلام والعقل","الاختيار والرشد"], ans:3, type:"fiqh"},
+  {q:"ما علة تحريم أكل الجلالة ؟", opts:["لخطورة سمها","الامر بقتلها","من الفواسق الخمس","أكلها النجاسة"], ans:3, type:"fiqh"},
+  {q:"امرأة تمتلك ٣٣ بقرة ومضى عليها الحول، فكم زكاتها ؟", opts:["تبيعان","تبيع","حقة","بنت مخاض"], ans:1, type:"fiqh"},
+  {q:"رجل يملك أربعين شاة وباع وحده قبل أن يحول عليه الحول بقصد الفرار من الزكاة، تؤخذ منه الزكاة عملا بالقاعدة الفقهية ؟", opts:["الأمور بمقاصدها","من استعجل الشيء قبل أوانه عوقب بحرمانه","لا ضرر ولا ضرار","العادة محكمة"], ans:1, type:"fiqh"},
+  {q:"أحل الله الميتتان وهما :", opts:["الحوت والضفدع","الحوت والجراد","الضفدع والعنكبوت","الجراد والضفدع"], ans:1, type:"fiqh"},
+  {q:"يكون النحر خاص بـ:", opts:["البقر","الغنم","الإبل","الخيل"], ans:2, type:"fiqh"},
+  {q:"هي المال المدفوع إلى من يحفظه بلا عوض:", opts:["النجش","الرهن","الوديعة","العارية"], ans:2, type:"fiqh"},
+  {q:"الآلة التي تجرح الصيد ؟", opts:["الظفر","القصب","السن","العظم"], ans:2, type:"fiqh"},
+  {q:"ماعز وقعت من مكان مرتفع وذبحها رجل قبل أن تموت، ما حكم أكلها", opts:["جائز","واجب","مكروه","محرم"], ans:0, type:"fiqh"},
+  {q:"أحمد ستقلع طائرته قبل دخول وقت الظهر ولن يصل الا بعد الغروب:", opts:["يصلي الظهر قبل دخول الوقت","يجمع الظهر والعصر يصليهم قبل الاقلاع","يصلي الظهر والعصر بعد ما يصل","يصلي بالطائرة حسب استطاعته"], ans:3, type:"fiqh"},
+  {q:"شخص صلى دون ستره ولم يكن هناك حاجز يمنع الناس، ماذا عليه ؟", opts:["يمنع وإذا أصر يدفع بقوة","يسمح لهم بالمرور","يمنع إذا مرت امرأة","لا شيء عليه"], ans:0, type:"fiqh"},
+  {q:"حكم تبادل العملات النقدية", opts:["جائز مثلا بمثل","جائز يدا بيد","لا تجوز مطلقا","جائزة مطلقا"], ans:1, type:"fiqh"},
+
+  // عقيدة وفرق (Aqeedah)
+  {q:"(يا أيها الناس إنا خلقناكم من ذكر وأنثى وجعلناكم شعوبا وقبائل لتعارفوا) تدل على:", opts:["التوازن","الشمولية","العالمية والعمومية","الربانية"], ans:2, type:"aqeedah"},
+  {q:"الشرك أول ما ظهر بسبب الغلو في:", opts:["قوم عاد","قوم لوط","قوم نوح","قوم شعيب"], ans:2, type:"aqeedah"},
+  {q:"مصادر تلقي العقيدة:", opts:["العقل","القياس","الفطرة","السنة"], ans:3, type:"aqeedah"},
+  {q:"أي الآيات التالية تحوي ركني التوحيد ؟", opts:["وما يومن أكثرهم بالله إلا وهم مشركون","قل هذه سبيلي أدعو إلى الله","وإذ قال إبراهيم لأبيه وقومه إنني براء مما تعبدون إلا الذي فطرني","ولئن سألتهم من خلق السماوات والأرض"], ans:2, type:"aqeedah"},
+  {q:"توحيد الربوبية ؟", opts:["يستلزم توحيد الألوهية","متضمن توحيد الألوهية","يشمل توحيد الألوهية","يخالف توحيد الألوهية"], ans:0, type:"aqeedah"},
+  {q:"مراتب القدر على الترتيب", opts:["الكتابة - العلم - الخلق - المشيئة","العلم - الكتابة - المشيئة - الخلق","الخلق - الكتابة - المشيئة - العلم","العلم - الكتابة - الخلق - المشيئة"], ans:1, type:"aqeedah"},
+  {q:"يقصد بتوحيد الربوية ؟", opts:["توحيد الله بإفراد العباد","توحيد الله فيما وصف نفسه","الانقياد التام لله","توحيد الله بأفعاله"], ans:3, type:"aqeedah"},
+  {q:"مؤلف كتاب ( مقالات الإسلاميين واختلاف المصلين ) هو:", opts:["أبو الحسن الأشعري","الشافعي","أحمد بن حنبل","اسحاق بن راهويه"], ans:0, type:"aqeedah"},
+  {q:"الفرق بين الاسم والصفة أن:", opts:["الصفات مشتقة من الأسماء","كل اسم يتضمن صفة","الأسماء مصادر الصفات","كل صفة تتضمن اسم"], ans:3, type:"aqeedah"},
+  {q:"سورتان تضمنت نوعين من التوحيد الاولى تضمنت التوحيد الارادي والثانية التوحيد القولي العملي", opts:["الاخلاص، الكافرون","الكافرون، الاخلاص","الإخلاص الفلق","الناس، الكافرون"], ans:1, type:"aqeedah"},
+  {q:"الفرقة التي ضلت في فهم نصوص الوعد هي:", opts:["الخوارج","المرجئة","الصوفية","الشيعة"], ans:1, type:"aqeedah"},
+  {q:"من أحكامهم الخروج على الحاكم وتكفير مرتكب الكبيرة", opts:["المرجئة","الخوارج","القادرية","الشيعة"], ans:1, type:"aqeedah"},
+  {q:"الزيدية من فرق الشيعة ولكنهم يخالفونهم في:", opts:["زواج المتعة","الزكاة","الآذان حي على خير العمل","يترضون بأمامه أبي بكر وعمر"], ans:3, type:"aqeedah"},
+  {q:"عقيدة الشيعة في التوحيد", opts:["أشاعرة","صوفية","خوارج","معتزلة"], ans:3, type:"aqeedah"},
+  {q:"من الكلمات التي ظاهرها الخير وباطنها السوء والضلال ؟", opts:["وحدة الأديان","حوار الحضارات","تمكين المرأة","المساواة"], ans:0, type:"aqeedah"},
+  {q:"الديانة الوضعية هي:", opts:["النصرانية","الاشتراكية","البوذية","الشيوعية"], ans:2, type:"aqeedah"},
+  {q:"تنوعت ضلالات الفرق؛ فمنهم من ضل في باب الإيمان كا....... وفي القدر كا....... وفي الصفات كا.......", opts:["الباطنية، القادرية، الجهمية","المرجئة، الجبرية، المعتزلة","الخوارج، القادرية، الاشاعرة","الخوارج، المرجئة الجهمية"], ans:2, type:"aqeedah"}, 
+  {q:"من الشخصيات البارزة والذي أحدث الفتنة في الصحابة وأصله يهودي ؟", opts:["الجهم بن صفوان","عبد الله بن أبي بن سلول","عبد الله بن كلاب","عبد الله بن سبأ"], ans:3, type:"aqeedah"},
+  {q:"أهل السنة والجماعة وسط في حكمهم على الصحابة بين", opts:["المعتزلة والأشاعرة","الخوارج والشيعة","المعطلة والشيعة","السبئية والروافض"], ans:1, type:"aqeedah"},
+  {q:"التوسل بجاه النبي صلى الله عليه وسلم:", opts:["مكروه","مستحب","بدعة","جائز"], ans:2, type:"aqeedah"},
+  {q:"اليهود الذين أمر معاذ بقتلهم ؟", opts:["يهود بني قريضه","يهود بن النضير","يهود بني المصطلق","يهود خيبر"], ans:0, type:"aqeedah"},
+  {q:"أول فرقة ظهرت في الإسلام ؟", opts:["المرجئة","الخوارج","الأشاعرة","المعتزلة"], ans:1, type:"aqeedah"},
+  {q:"من أسماء العقيدة ما عدا:", opts:["أصول الدين","أساس الدين","الفقه الأكبر","أصول الفقه"], ans:3, type:"aqeedah"},
+  {q:"مؤسس البهائية هو :", opts:["ميرزا على الشيرازي","الجعد بن قيس","غلام أحمد القادياني","عبد الله بن سبأ اليهودي"], ans:0, type:"aqeedah"},
+  {q:"القادرية فرقة من فرق", opts:["الشيعة","الصوفية","الخوارج","الأشاعرة"], ans:1, type:"aqeedah"},
+  {q:"من صور الشرك الأصغر ؟", opts:["البدعة","الكبيرة","الرياء","الدعاء"], ans:2, type:"aqeedah"},
+  {q:"الآية التي تدل على صفه الملك لله عز وجل:", opts:["يهب لمن يشاء اناثا ويهب لمن يشاء الذكور","ليس كمثله شيء","وما قدروا الله حق قدره","لا تدركه الابصار وهو يدرك الابصار"], ans:0, type:"aqeedah"},
+
+  // حديث (Hadith)
+  {q:"قال البخاري في صحيحه... عن عروة عن عائشة... يكون السابق مرسلا إذا سقط من إسناده:", opts:["عروة بين الزبير","عائشة رضي الله عنها","الزهري","أبو اليمان"], ans:1, type:"hadith"},
+  {q:"قال رسول الله ( فإنما أهلك من كان قبلكم .... مسائلهم و.... على أنبيائهم )", opts:["كثرة - اختلافهم","قلة - اتفاقهم","كثرة - اتفاقهم","قلة - اختلافهم"], ans:0, type:"hadith"},
+  {q:"علو الإسناد يراد به", opts:["قلة عدد رجال الإسناد بالنسبة لإسناد آخر","أن يكون الرواة من أهل العدالة","كثرة عدد رجال الإسناد","ورود الحديث من أكثر من طريق"], ans:0, type:"hadith"},
+  {q:"إذا كان الحديثان متعارضان في الظاهر، فما التعامل الأولي مع هذا التعارض ؟", opts:["القول بالنسخ","الترجيح بين الحديثين","الجمع بين الحديثين","التوقف عن العمل بهما"], ans:2, type:"hadith"},
+  {q:"قول عائشة رضي الله عنها : ( كان النبي صلى الله عليه وسلم يعجبه التيمن... ) يعد من المرفوع", opts:["الفعلي","القولي","التقريري","الحكمي"], ans:0, type:"hadith"},
+  {q:"ما رواه عدل تام الضبط بسند متصل غير معل ولا شاذ هو الحديث ؟", opts:["الصحيح","الضعيف","الموضوع","المرسل"], ans:0, type:"hadith"},
+  {q:"قال رسول الله صلى الله عليه وسلم ( أزهد في ...... يحبك الله وأزهد فيما ...... يحبك الناس ) ؟", opts:["الآخرة - عند الله","الدنيا - عند الناس","الآخرة - عند الناس","الدنيا - عند الله"], ans:1, type:"hadith"},
+  {q:"سئل الحسن البصري عن الصلاة خلف المبتدع فقال : (صل وعليه بدعته) ما نوع الحديث ؟", opts:["موقوف","مرفوع","متواتر","مقطوع"], ans:3, type:"hadith"},
+  {q:"المسند كتب ألفت في الحديث تروى فيها الأحاديث حسب:", opts:["الإسناد المتصل","من رواه من الصحابة","المتواتر والأحاد","الصحة والضعف"], ans:1, type:"hadith"},
+  {q:"من هم المقصود في رواه الخمسة ؟", opts:["ابو داود والترمذي والنسائي وأحمد بن حنبل ومسلم","ابو داود والترمذي والنسائي وابن ماجه وأحمد بن حنبل","ابو داود والترمذي وابن ماجه ومسلم","ابو داود ومسلم وابن ماجه والنسائي"], ans:1, type:"hadith"},
+  {q:"الحديث الضعيف ما افتقد شرطاً فأكثر من شروط الحديث:", opts:["الصحيح","الحسن","الموضوع","المرسل"], ans:0, type:"hadith"},
+  {q:"يقال للحديث الذي رواه الشيخان البخاري ومسلم", opts:["رواه الاثنان","رواه الجماعة","متفق عليه","رواه الثلاثة"], ans:2, type:"hadith"},
+  {q:"ما المقصود بكلمة رواه الثلاثة ؟", opts:["الترمذي والنسائي وأبو داود","البخاري، والترمذي، ومسلم","أبو داود وابن ماجه، والنسائي","البخاري، والترمذي والنسائي"], ans:0, type:"hadith"},
+  {q:"تعد كتب الأطراف مصدرا مناسبا لـ:", opts:["كلمة غريبة من الحديث","أول الحديث","راوي الحديث من الصحابة","موضوع الحديث"], ans:1, type:"hadith"},
+  {q:"مما يميز كتب الأحاديث بالأحكام:", opts:["رويت أحاديث بالأسانيد","جمع على صحة أحاديثها","مرتبه على ابواب الفقه","مرتبه على المسانيد"], ans:2, type:"hadith"},
+  {q:"من مؤلف كتاب علوم الحديث ؟", opts:["ابن حجر","الذهبي","ابن صلاح","ابن كثير"], ans:2, type:"hadith"},
+  {q:"عن انس أن أصحاب رسول الله على عهده ينتظرون العشاء حتى تخفق رؤوسهم ثم يصلون (نوع الحديث)؟", opts:["مرفوع قولي","مرفوع تقريري","مرفوع فعلي","مرفوع حكما"], ans:1, type:"hadith"},
+  {q:"قال رسول الله \"إن كذبا علي ليس ككذب على أحد..\" روى الحديث أكثر من ٢٠ صحابي وهو يمثل أحد أنواع الحديث:", opts:["العزيز","المرسل","الصحيح لذاته","المتواتر"], ans:3, type:"hadith"},
+  {q:"التفرد إذا كان إسناد الحديث:", opts:["الغريب النسبي","غريب الحديث","العزيز","الغريب المطلق"], ans:1, type:"hadith"},
+  {q:"المراد بالثلاثيات في علم الأحاديث، الأحاديث التي:", opts:["بين راويتها والنبي ثلاثة أشخاص فقط","رواها ثلاثة من الصحابة","ورد في متنها ثلاثة أصناف","رويت من ثلاث طرق"], ans:0, type:"hadith"},
+  {q:"قوله صلى الله عليه وسلم: (ألا إني نهيتكم عن زيارة القبور فزوروها...) هذا الحديث مثال في علم المصطلح على:", opts:["النسخ","التواتر","الاعتبار","الشذوذ"], ans:0, type:"hadith"},
+  {q:"يشترط لقبول الأحاديث الضعيفة ؟", opts:["أن يندرج تحت أصل معمول به","أن لا يكون الضعف شديد","جميع ما سبق","لا يعتقد عند العمل بعد ثبوته"], ans:2, type:"hadith"},
+  {q:"المذهب الذي اشتهر بالحديث هو :", opts:["المالكي","الحنبلي","الحنفي","الشافعي"], ans:1, type:"hadith"},
+  {q:"الضعيف إذا تعدد طرقه", opts:["الحسن لذاته","الحسن لغيرة","الموضوع","الأحاد"], ans:1, type:"hadith"},
+  {q:"أوسع كتب المسانيد في الحديث هو مسند:", opts:["الحميدي","ابن حبان","الامام أحمد","الطيالسي"], ans:2, type:"hadith"},
+  {q:"إذا روى الحديث الحسن لذاته من طريق آخر مثله وأقوى منه فيطلق عليه:", opts:["الصحيح لذاته","الصحيح لغيره","المستفيض","الحسن لغيره"], ans:1, type:"hadith"},
+  {q:"قول الشافعي: انه يدخل ضمن باب الفقه وهو ثلث العلم يقصد به حديث:", opts:["من أحدث في أمرنا هذا ما ليس فيه فهو رد","انما الاعمال بالنيات","الدين النصيحة","البر حسن الخلق"], ans:1, type:"hadith"},
+  {q:"قال صلى الله عليه وسلم : (البر ........ والإثم ما حاك في النفس وكرهت أن يطلع الناس ) ؟", opts:["سوء الخلق","النصيحة","المعاملة","حسن الخلق"], ans:3, type:"hadith"},
+  {q:"قال رسول الله صلى الله عليه وسلم ألحقوا ......... بأهلها فما أبقت فالأولى رجل ذكر ؟", opts:["التركة","الفرائض","الحدود","الشفاعات"], ans:1, type:"hadith"},
+
+  // أصول وقرآن وتجويد (Usul)
+  {q:"ما ثبت بدليل شرعي خال من معارض راجح يسمى عند الأصوليين:", opts:["الرخصة","العزيمة","السبب","الشرط"], ans:1, type:"usul"},
+  {q:"( وما بكم من نعمه فمن الله ) كلمة ( نعمه ) تفيد العموم وفقاً للقاعدة:", opts:["النكرة في سياق النفي تفيد العموم","النكرة في سياق الشرط تفيد العموم","النكرة في سياق الاثبات تفيد العموم","الحذف المتعلق يفيد العموم"], ans:1, type:"usul"},
+  {q:"هي قضية كلية تنطبق على كل جزئي، تسمى:", opts:["القاعدة","الخاص","العام","الضابط"], ans:0, type:"usul"},
+  {q:"تعرف السور المكية بأنها:", opts:["ما نزل من القرآن بمكة ولو بعد الهجرة","ما نزل بعد الهجرة","ما وقع خطابا لأهل مكة","ما نزل من القرآن قبل هجرة الرسول"], ans:3, type:"usul"},
+  {q:"أصح طرق التفسير التي يعتمد عليها المفسر هي:", opts:["تفسير القرآن بأقوال الصحابة","تفسير القرآن بالسنة","تفسير القرآن بالقرآن","تفسير القرآن بأقوال التابعين"], ans:2, type:"usul"},
+  {q:"ما دل عليه خطاب الشرع المتعلق بأفعال المكلفين من طلب أو تخيير أو وضع، تعريف لـ:", opts:["الحكم الوضعي","الحكم التكليفي","أصول الفقه","الحكم الشرعي"], ans:3, type:"usul"}, 
+  {q:"إذا وقعت النكرة في سياق النفي أو النهي أو الشرط دلت على ... وإذا وقعت في سياق الأمر دلت على ... :", opts:["الإطلاق، العموم","العموم، التقييد","العموم، التخصيص","العموم، الإطلاق"], ans:3, type:"usul"},
+  {q:"الكلمة التي يقف عليها القارئ ولا يستحسن الوقف (يستحيي) وقف:", opts:["حسن","تام","كافي","قبيح"], ans:3, type:"usul"},
+  {q:"الخطأ الذي يعرض للفظ فيخل بكمال صفاته هو:", opts:["التنغيم","صفات الحروف","اللحن الخفي","اللحن الجلي"], ans:2, type:"usul"},
+  {q:"(وعاشروهن بالمعروف) هذه الآية دليل على قاعدة:", opts:["الأمور بمقاصدها","لا ضرر ولا ضرار","المشقة تجلب التيسير","العادة محكمة"], ans:3, type:"usul"},
+  {q:"الواجب الذي يكون فيه المكلف مخيراً بين أمور محصورة، يطلق عليه:", opts:["الواجب الموسع","الواجب المضيق","الواجب المبهم","الواجب غير المحدد"], ans:2, type:"usul"},
+  {q:"مؤلف كتاب (مقالات الإسلاميين واختلاف المصلين) هو:", opts:["أبو الحسن الأشعري","الشافعي","أحمد بن حنبل","إسحاق بن راهويه"], ans:0, type:"usul"},
+  {q:"تفسير معالم التنزيل للبغوي يعد من كتب التفسير ؟", opts:["العقدي","العلمي","الفقهي","اللغوي"], ans:0, type:"usul"},
+  {q:"القراءة باطمئنان مع السرعة ومراعاة الاحكام", opts:["الحدر","الترتيل","التحقيق","التدوير"], ans:0, type:"usul"},
+  {q:"أي القواعد الآتية صحيحة ؟", opts:["كل نجس يوجب الطهارة","كل ما أوجب الطهارة نجس","لا تشترط النية لإزالة النجاسة","من صلى ناسيا رفع الحدث كمن صلى ناسيا إزالة النجاسة"], ans:2, type:"usul"},
+  {q:"اللفظ المستغرق لجميع أفراده بلا حصر تعريف لـ :", opts:["المقيد","التخصيص","المطلق","العام"], ans:3, type:"usul"},
+  {q:"من المؤلفات من أصول الفقه على طريقة الجمهور:", opts:["كشف الاسرار لعبد العزيز البخاري","التوضيح لصدر الشريعة الحنفي","التقريب والارشاد للباقلاني","التحرير لابن همام"], ans:2, type:"usul"},
+  {q:"ما حكم تعلم اصول الفقه من حيث الأصل ؟", opts:["فرض عين","مندوب","فرض كفاية","مباح"], ans:2, type:"usul"},
+  {q:"هو ما نزل من قرآن بشأنه وقت وقوعه كحادثة أو سؤال هو تعريف لـ :", opts:["سبب النزول","المناسبة","فضائل السور","الوحي"], ans:0, type:"usul"},
+  {q:"ما دل على التشابه في الآيات ؟", opts:["وأتوا به متشابها","يتبعون ما تشابه منه","وأخر متشابهات","كتابا متشابها"], ans:1, type:"usul"},
+  {q:"ما حكم تجويد \"سميع بصير\"", opts:["إدغام","إظهار","إدغام بغنة","اقلاب"], ans:3, type:"usul"},
+  {q:"(أ، و، ي) صفات هذه الحروف", opts:["الصغير","الهمس","اللين والمد","الاستعلاء"], ans:2, type:"usul"},
+  {q:"كلمة اخر الآية تسمى:", opts:["الواصلة","القافية","الفاصلة","المسجع"], ans:2, type:"usul"},
+  {q:"يوجد ثلاث نقاط فوق كلمة ( لا ريب ) و ( فيه ) هذا يعني ؟", opts:["وجوب الوقوف على كلمة ريب","عدم جواز الوقوف","وجوب الوقوف على ريب وفيه","إذا وقف على إحداهما لا يقف عند الأخرى"], ans:3, type:"usul"},
+  {q:"الهمس مجموعة في حروف:", opts:["خص ضغط قظ","فحته شخص سكت","أجدك تطبق","يفترون"], ans:1, type:"usul"},
+  {q:"السورة المدنية هي كل سورة فيها :", opts:["كل سورة فيها ( كلا)","مجادلة أهل الكتاب","كل سورة مفتتحه بالحمد","كل سورة مبدوءة بقسم"], ans:1, type:"usul"},
+  {q:"ما ورد في القرآن غير مسمى باسمه الذي يعرف به غيره هو تعريف لـ:", opts:["المبهم","المجمل","المطلق","المشكل"], ans:0, type:"usul"},
+  {q:"لا يجوز نسخ:", opts:["القرآن بالسنة","القياس بالسنة","القرآن بالقرآن","السنة بالقرآن"], ans:0, type:"usul"},
+  {q:"قال تعالى: ( والليل إذا يغشى ، والنهار إذا تجلى ) الآية التي تليها", opts:["إن سعيكم لشتى","وما خلق الذكر والأنثى","ولسوف يعطيك ربك فترضى","والليل إذا سجى"], ans:1, type:"usul"},
+  {q:"ما يلزم من عدمه العدم، ولا يلزم من وجوده وجود ولا عدم لذاته", opts:["المانع","الشرط","الرخصة","السبب"], ans:1, type:"usul"},
+  {q:"قال تعالى : ( حتى يلج الجمل في سم الخياط ) الأسلوب في الآية هو :", opts:["التمثيل","التصوير الحسي","التجسيم","التشبيه"], ans:1, type:"usul"},
+  {q:"صوت رخيم يخرج من الخيشوم هو:", opts:["الاشمام","القلقلة","الغنة","المد"], ans:2, type:"usul"},
+  {q:"المد في كلمة الضالين ؟", opts:["حرفي مثقل","كلمي مخفف","كلمي مثقل","لازم حرفي مخفف"], ans:2, type:"usul"},
+  {q:"من قال أعوذ بالله من الشيطان الرجيم مع البسملة مع سورة من القرآن أي البيع أصح", opts:["وصل الاول والثاني وقطع الثالث","قطع الاول ووصل الثاني والثالث","وصل الاول والثاني والثالث","قطع الجميع"], ans:2, type:"usul"}, // Note: Added based on exact text formatting
+  {q:"قال تعالى : ( إن الله اشترى من المؤمنين أنفسهم وأموالهم ) نزلت على:", opts:["أنصار بدر","مؤمنين الفتح","أنصار العقبة","مؤمنين الحديبية"], ans:2, type:"usul"},
+  {q:"قال تعالى : ( وإذا البحار سجرت ) وقال تعالى : ( وإذا البحار فجرت ) ما السور التي وردت فيها هاتين الآيتين على الترتيب ؟", opts:["التكوير - الانفطار","الأعلى - التكوير","الانفطار - التكوير","الأعلى - الانفطار"], ans:0, type:"usul"},
+  {q:"قال تعالى: (إذا السماء انشقت، وأذنت لربها وحقت ) الآية التي تليها :", opts:["وإذا النجوم انكدرت","وإذا الجبال سيرت","وإذا الأرض مدت","وألقت ما فيها وتخلت"], ans:3, type:"usul"}
+];
+
+let questions = [];
+let currentIdx = 0;
+let score = 0;
+let wrongScore = 0;
+let answered = false;
+
+function toArabicNum(n) {
+  return n.toString().replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d]);
+}
+
+function shuffle(arr) {
+  for (let i = arr.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]] = [arr[j],arr[i]];
+  }
+  return arr;
+}
+
+function startQuiz() {
+  const qcount = document.querySelector('input[name="qcount"]:checked').value;
+  const qtype = document.querySelector('input[name="qtype"]:checked').value;
+
+  let pool = allQuestions;
+  if (qtype !== 'mix') pool = allQuestions.filter(q => q.type === qtype);
+  if (pool.length === 0) pool = allQuestions;
+
+  pool = shuffle([...pool]);
+  const count = qcount === 'all' ? pool.length : Math.min(parseInt(qcount), pool.length);
+  questions = pool.slice(0, count);
+
+  currentIdx = 0;
+  score = 0;
+  wrongScore = 0;
+
+  document.getElementById('settings-panel').style.display = 'none';
+  document.getElementById('quiz-panel').style.display = 'block';
+  document.getElementById('results-panel').style.display = 'none';
+
+  loadQuestion();
+}
+
+function loadQuestion() {
+  if (currentIdx >= questions.length) { showResults(); return; }
+  answered = false;
+
+  const q = questions[currentIdx];
+  const total = questions.length;
+  const num = currentIdx + 1;
+
+  document.getElementById('qCounter').textContent = `السؤال ${toArabicNum(num)} من ${toArabicNum(total)}`;
+  document.getElementById('scoreBadge').textContent = `النتيجة: ${toArabicNum(score)}`;
+  document.getElementById('progressFill').style.width = `${((num-1)/total)*100}%`;
+  document.getElementById('qNum').textContent = toArabicNum(num);
+  document.getElementById('questionText').innerHTML = q.q;
+  document.getElementById('nextBtn').style.display = 'none';
+
+  // Rebuild question card animation
+  const card = document.getElementById('questionCard');
+  card.style.animation = 'none';
+  requestAnimationFrame(() => { card.style.animation = ''; card.style.animation = 'cardIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)'; });
+
+  // Shuffle options with correct answer tracking
+  const opts = q.opts.map((o, i) => ({text: o, isCorrect: i === q.ans}));
+  shuffle(opts);
+
+  const grid = document.getElementById('optionsGrid');
+  grid.innerHTML = '';
+  opts.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.innerHTML = opt.text;
+    btn.dataset.correct = opt.isCorrect;
+    btn.onclick = () => selectAnswer(btn, opt.isCorrect, opt.text, opts);
+    grid.appendChild(btn);
+  });
+}
+
+function selectAnswer(btn, isCorrect, selectedText, opts) {
+  if (answered) return;
+  answered = true;
+
+  const allBtns = document.querySelectorAll('.option-btn');
+  allBtns.forEach(b => b.disabled = true);
+
+  // Find correct answer text
+  const correctText = opts.find(o => o.isCorrect).text;
+
+  if (isCorrect) {
+    btn.classList.add('correct');
+    score++;
+    showFeedback(true, correctText);
+    spawnParticles(true);
+  } else {
+    btn.classList.add('wrong');
+    wrongScore++;
+    // Reveal correct
+    allBtns.forEach(b => {
+      if (b.dataset.correct === 'true') b.classList.add('reveal');
+    });
+    showFeedback(false, correctText);
+  }
+
+  document.getElementById('scoreBadge').textContent = `النتيجة: ${toArabicNum(score)}`;
+
+  setTimeout(() => {
+    hideFeedback();
+    document.getElementById('nextBtn').style.display = 'block';
+    document.getElementById('nextBtn').textContent = currentIdx < questions.length - 1 ? 'السؤال التالي ◀' : '🏆 عرض النتيجة';
+  }, 1800);
+}
+
+function showFeedback(correct, correctAnswer) {
+  const overlay = document.getElementById('feedbackOverlay');
+  const box = document.getElementById('feedbackBox');
+  const emoji = document.getElementById('feedbackEmoji');
+  const title = document.getElementById('feedbackTitle');
+  const sub = document.getElementById('feedbackSubtitle');
+  const ans = document.getElementById('correctAnswerShow');
+
+  if (correct) {
+    box.className = 'feedback-box correct-box';
+    const emojis = ['🎉','✨','🌟','💫','🏅','👏'];
+    emoji.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+    title.textContent = 'ياسلام برافو عليك';
+    sub.textContent = 'إجابة صحيحة ورائعة!';
+    ans.style.display = 'none';
+  } else {
+    box.className = 'feedback-box wrong-box';
+    emoji.textContent = '💪';
+    title.textContent = 'حظ اوفر';
+    sub.textContent = 'الإجابة الصحيحة هي:';
+    ans.innerHTML = correctAnswer;
+    ans.style.display = 'block';
+  }
+
+  overlay.classList.add('show');
+}
+
+function hideFeedback() {
+  document.getElementById('feedbackOverlay').classList.remove('show');
+}
+
+function spawnParticles(correct) {
+  const container = document.getElementById('particleContainer');
+  const colors = correct
+    ? ['#c9a227','#e8c84a','#2ecc71','#f1c40f','#ffffff']
+    : ['#e74c3c','#c0392b','#ff7675'];
+
+  for (let i = 0; i < 20; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.cssText = `
+      left:${30+Math.random()*40}%;
+      top:${40+Math.random()*20}%;
+      background:${colors[Math.floor(Math.random()*colors.length)]};
+      animation-duration:${0.8+Math.random()*0.8}s;
+      animation-delay:${Math.random()*0.3}s;
+      width:${4+Math.random()*8}px;
+      height:${4+Math.random()*8}px;
+      border-radius:${Math.random()>0.5?'50%':'2px'};
+    `;
+    container.appendChild(p);
+    setTimeout(() => p.remove(), 2000);
+  }
+}
+
+function nextQuestion() {
+  currentIdx++;
+  loadQuestion();
+}
+
+function showResults() {
+  document.getElementById('quiz-panel').style.display = 'none';
+  document.getElementById('results-panel').style.display = 'block';
+
+  const total = questions.length;
+  const pct = Math.round((score/total)*100);
+
+  document.getElementById('scoreNum').textContent = toArabicNum(score);
+  document.getElementById('scoreTotal').textContent = `من ${toArabicNum(total)}`;
+  document.getElementById('correctCount').textContent = toArabicNum(score);
+  document.getElementById('wrongCount').textContent = toArabicNum(wrongScore);
+
+  document.getElementById('scoreCircle').style.setProperty('--pct', `${pct}%`);
+
+  let trophy, title, msg;
+  if (pct >= 90) { trophy='🏆'; title='امتياز تام!'; msg='ياسلام برافو عليك! مستوى مذهل 🎖️'; }
+  else if (pct >= 75) { trophy='🥇'; title='أداء ممتاز!'; msg='أحسنت! تمتلك معرفة واسعة، واصل التميز 💪'; }
+  else if (pct >= 60) { trophy='🥈'; title='جيد جداً'; msg='نتيجة جيدة، بقليل من المراجعة ستصل للقمة 📚'; }
+  else if (pct >= 50) { trophy='🥉'; title='لا بأس!'; msg='تحتاج إلى مزيد من المذاكرة، المثابرة مفتاح النجاح 🔑'; }
+  else { trophy='💡'; title='حظ اوفر'; msg='لا تيأس! راجع المادة وأعد الاختبار، ستنجح بإذن الله 🌟'; }
+
+  document.getElementById('trophyEmoji').textContent = trophy;
+  document.getElementById('resultsTitle').textContent = title;
+  document.getElementById('resultMsg').textContent = msg;
+
+  if (pct >= 75) launchConfetti();
+}
+
+function launchConfetti() {
+  const colors = ['#c9a227','#e8c84a','#2ecc71','#3498db','#e74c3c','#9b59b6','#ffffff'];
+  for (let i = 0; i < 80; i++) {
+    setTimeout(() => {
+      const c = document.createElement('div');
+      c.className = 'confetti-piece';
+      c.style.cssText = `
+        left:${Math.random()*100}%;
+        top:-10px;
+        background:${colors[Math.floor(Math.random()*colors.length)]};
+        width:${6+Math.random()*10}px;
+        height:${6+Math.random()*10}px;
+        border-radius:${Math.random()>0.5?'50%':'0'};
+        animation-duration:${2+Math.random()*2}s;
+        animation-name:confettiFall;
+      `;
+      document.body.appendChild(c);
+      setTimeout(() => c.remove(), 4000);
+    }, i*30);
+  }
+}
+
+function replayQuiz() {
+  startQuiz();
+}
+
+function goHome() {
+  document.getElementById('results-panel').style.display = 'none';
+  document.getElementById('settings-panel').style.display = 'block';
+}
+
+// Hide overlay on click
+document.getElementById('feedbackOverlay').addEventListener('click', hideFeedback);
+</script>
+</body>
+</html>
