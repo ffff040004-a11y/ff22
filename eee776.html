@@ -149,8 +149,8 @@ textarea:focus{border-color:#a855f7;box-shadow:0 0 0 5px rgba(168,85,247,.12)}
     </div>
 
     <div id="builder" class="tab" style="display:none">
-      <div class="toolbar"><h2 class="title">🧩 مُكوّن الجمل الشامل</h2><button class="btn alt" onclick="newBuilder()">جملة جديدة</button></div>
-      <div class="sample">تم توسيع مكوّن الجمل ليغطي جمل جميع الوحدات 5–8، مع اختيار الوحدة أو التدريب العشوائي الشامل.</div>
+      <div class="toolbar"><h2 class="title">🧩 مُكوّن الجمل الشامل</h2><div class="row"><button class="btn alt" onclick="newBuilder()">جملة جديدة</button><button class="btn alt" onclick="toggleBuilderList()">عرض بنك الجمل</button></div></div>
+      <div class="sample">تم إثراء مكوّن الجمل ليغطي عددًا كبيرًا من الجمل في جميع الوحدات 5–8، مع اختيار الوحدة أو التدريب العشوائي الشامل، حتى يكون التدريب أوسع والفائدة أكبر.</div>
       <div class="box" style="margin-top:14px">
         <h3>اختر نطاق التدريب</h3>
         <div class="row" style="margin-bottom:10px">
@@ -169,6 +169,11 @@ textarea:focus{border-color:#a855f7;box-shadow:0 0 0 5px rgba(168,85,247,.12)}
         <textarea id="builderAnswer" style="min-height:90px" placeholder="Click words in order..."></textarea>
         <div class="row"><button class="btn good" onclick="checkBuilder()">تحقق</button><button class="btn alt" onclick="clearBuilder()">مسح</button><button class="btn warn" onclick="showBuilderHint()">تلميح</button></div>
         <div class="feedback" id="builderFeedback"></div>
+      </div>
+      <div class="box" style="margin-top:14px" id="builderListBox">
+        <h3>📚 بنك جمل الوحدة الحالية</h3>
+        <div class="sample">لإظهار ثراء المحتوى بوضوح، هذه قائمة بجمل الوحدة الحالية ليستفيد منها الطالب في القراءة والمراجعة ثم يعيد تركيبها في النشاط.</div>
+        <div id="builderList" class="sample en" style="line-height:2"></div>
       </div>
     </div>
 
@@ -286,7 +291,21 @@ const builderBank={
     'The story is exciting.',
     'The characters are nice.',
     'I watch this movie at home.',
-    'I feel happy when I watch it.'
+    'I feel happy when I watch it.',
+    'My brother likes action movies.',
+    'My sister likes cartoon movies.',
+    'The movie has a happy ending.',
+    'The movie is full of adventure.',
+    'I watch my favorite movie on the weekend.',
+    'The hero helps other people.',
+    'The music in the movie is beautiful.',
+    'This movie makes me laugh.',
+    'The story is easy to understand.',
+    'I can watch this movie many times.',
+    'My favorite scene is very exciting.',
+    'The characters work together.',
+    'The movie teaches a good lesson.',
+    'I tell my friends about this movie.'
   ]},
   6:{title:'Unit 6 • Outdoor Safety',sentences:[
     'Outdoor safety is important.',
@@ -304,7 +323,21 @@ const builderBank={
     'I should not run in the street.',
     'It is important to follow safety rules.',
     'I play in a safe place.',
-    'I look carefully before I cross the road.'
+    'I look carefully before I cross the road.',
+    'I hold my mother hand in busy places.',
+    'I should stay with my family outside.',
+    'I should look at the traffic light.',
+    'I should wait for the green light.',
+    'I should keep away from dangerous places.',
+    'I should not play near the road.',
+    'I should ask for help from my parents.',
+    'I should tell an adult if I feel unsafe.',
+    'I wear my seat belt in the car.',
+    'I should not open the door to strangers.',
+    'I keep my phone number with me.',
+    'I know my home address.',
+    'I should be calm in an emergency.',
+    'Safe behavior protects me every day.'
   ]},
   7:{title:'Unit 7 • My Field Trip',sentences:[
     'I have planned a field trip.',
@@ -322,7 +355,21 @@ const builderBank={
     'I went with my classmates.',
     'We learned about sea animals.',
     'The trip was interesting.',
-    'I want to go there again.'
+    'I want to go there again.',
+    'We traveled by bus.',
+    'Our teacher was with us.',
+    'We took pictures on the trip.',
+    'I saw sharks and turtles.',
+    'The museum was big and beautiful.',
+    'The guide showed us many things.',
+    'I asked questions and got answers.',
+    'The field trip helped me learn.',
+    'We had lunch after the trip.',
+    'My favorite place was the aquarium.',
+    'I learned about the ocean.',
+    'The trip was useful and fun.',
+    'I shared my experience with my family.',
+    'I will remember this field trip for a long time.'
   ]},
   8:{title:'Unit 8 • My Favorite Outfit',sentences:[
     'My favorite outfit is a pink dress.',
@@ -340,7 +387,21 @@ const builderBank={
     'I put my clothes in the closet.',
     'I fold my clothes carefully.',
     'This outfit is comfortable.',
-    'I wear it when I go out.'
+    'I wear it when I go out.',
+    'My favorite T-shirt is blue.',
+    'I wear my outfit at school events.',
+    'My outfit looks beautiful.',
+    'I keep my clothes neat and clean.',
+    'I choose comfortable clothes.',
+    'My shoes match my outfit.',
+    'I wear a warm coat in winter.',
+    'I wear light clothes in summer.',
+    'My mother helps me choose my clothes.',
+    'I like outfits with bright colors.',
+    'My favorite outfit makes me happy.',
+    'I wash my clothes and keep them clean.',
+    'I like to wear a dress and nice shoes.',
+    'My outfit is perfect for going out.'
   ]}
 };
 let builderScope='all';
