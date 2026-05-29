@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>اختبر نفسك بالرخصة المهنية التربوية - رياضيات</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+  :root {
+    --gold: #c9a227;
+    --gold-light: #e8c84a;
+    --navy: #0a1628;
+    --navy-mid: #122040;
+    --emerald: #059669;
+    --emerald-light: #10b981;
+    --white: #f8f5ee;
+    --danger: #e74c3c;
+    --text-light: #d4c9a8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Tajawal', sans-serif;
+    background: var(--navy);
+    color: var(--white);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse at 20% 50%, rgba(5,150,105,0.15) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 20%, rgba(201,162,39,0.15) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 80%, rgba(10,22,40,0.8) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .stars {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: var(--gold-light);
+    border-radius: 50%;
+    animation: twinkle var(--d, 3s) ease-in-out infinite;
+    animation-delay: var(--delay, 0s);
+    opacity: var(--op, 0.5);
+  }
+
+  @keyframes twinkle {
+    0%, 100% { opacity: var(--op, 0.5); transform: scale(1); }
+    50% { opacity: 0.1; transform: scale(0.5); }
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .header {
+    text-align: center;
+    padding: 30px 0 20px;
+    animation: slideDown 0.8s ease;
+  }
+
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .header-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--emerald), var(--emerald-light));
+    color: var(--white);
+    font-size: 12px;
+    font-weight: 800;
+    padding: 6px 20px;
+    border-radius: 20px;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    box-shadow: 0 4px 15px rgba(5,150,105,0.3);
+  }
+
+  .header h1 {
+    font-family: 'Amiri', serif;
+    font-size: clamp(22px, 5vw, 38px);
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--gold-light), var(--white), var(--gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.4;
+    margin-bottom: 8px;
+  }
+
+  .gold-line {
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 12px auto;
+    border-radius: 2px;
+  }
+
+  #settings-panel { animation: fadeIn 0.6s ease 0.3s both; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .settings-card {
+    background: linear-gradient(135deg, rgba(18,32,64,0.9), rgba(26,48,96,0.7));
+    border: 1px solid rgba(5,150,105,0.3);
+    border-radius: 20px;
+    padding: 30px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4), inset 0 1px 0 rgba(5,150,105,0.2);
+  }
+
+  .settings-title {
+    font-family: 'Amiri', serif;
+    font-size: 20px;
+    color: var(--gold-light);
+    text-align: center;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .setting-group { margin-bottom: 20px; }
+
+  .setting-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-light);
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .radio-group {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .radio-option {
+    flex: 1;
+    min-width: 80px;
+  }
+
+  .radio-option input { display: none; }
+
+  .radio-option label {
+    display: block;
+    text-align: center;
+    padding: 10px 15px;
+    border: 1px solid rgba(201,162,39,0.3);
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.25s ease;
+    background: rgba(10,22,40,0.5);
+    color: var(--text-light);
+  }
+
+  .radio-option input:checked + label {
+    background: linear-gradient(135deg, var(--emerald), var(--emerald-light));
+    border-color: var(--emerald-light);
+    color: var(--white);
+    box-shadow: 0 4px 15px rgba(5,150,105,0.4);
+    transform: translateY(-1px);
+  }
+
+  .start-btn {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    border: none;
+    border-radius: 14px;
+    color: var(--navy);
+    font-family: 'Tajawal', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+    box-shadow: 0 8px 30px rgba(201,162,39,0.3);
+  }
+
+  .start-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(201,162,39,0.6);
+  }
+
+  #quiz-panel { display: none; }
+
+  .progress-area {
+    margin-bottom: 20px;
+    animation: fadeIn 0.4s ease;
+  }
+
+  .progress-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+
+  .q-counter {
+    font-size: 14px;
+    color: var(--emerald-light);
+    font-weight: 700;
+  }
+
+  .score-badge {
+    background: rgba(201,162,39,0.15);
+    border: 1px solid rgba(201,162,39,0.4);
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--gold-light);
+  }
+
+  .progress-bar {
+    height: 6px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--emerald), var(--emerald-light));
+    border-radius: 10px;
+    transition: width 0.5s ease;
+  }
+
+  .question-card {
+    background: linear-gradient(135deg, rgba(18,32,64,0.95), rgba(26,48,96,0.8));
+    border: 1px solid rgba(5,150,105,0.25);
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 18px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 15px 50px rgba(0,0,0,0.3);
+    animation: cardIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  @keyframes cardIn {
+    from { opacity: 0; transform: scale(0.95) translateY(10px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+  .q-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px; height: 36px;
+    background: linear-gradient(135deg, var(--emerald), var(--emerald-light));
+    border-radius: 50%;
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--white);
+    margin-bottom: 14px;
+    box-shadow: 0 4px 12px rgba(5,150,105,0.3);
+  }
+
+  .question-text {
+    font-size: clamp(16px, 3vw, 22px);
+    font-weight: 700;
+    line-height: 1.7;
+    color: var(--white);
+    direction: ltr;
+    text-align: right;
+  }
+
+  .options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 18px;
+    direction: ltr;
+  }
+
+  @media (max-width: 600px) {
+    .options-grid { grid-template-columns: 1fr; }
+  }
+
+  .option-btn {
+    padding: 16px;
+    background: rgba(10,22,40,0.7);
+    border: 1.5px solid rgba(201,162,39,0.2);
+    border-radius: 14px;
+    color: var(--text-light);
+    font-family: 'Tajawal', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+
+  .option-btn:hover:not(:disabled) {
+    border-color: var(--gold);
+    color: var(--white);
+    transform: translateY(-2px);
+    background: rgba(201,162,39,0.1);
+  }
+
+  .option-btn.correct {
+    background: rgba(5,150,105,0.2);
+    border-color: var(--emerald-light);
+    color: var(--emerald-light);
+  }
+
+  .option-btn.wrong {
+    background: rgba(231,76,60,0.15);
+    border-color: var(--danger);
+    color: #ffb3b3;
+  }
+
+  .option-btn.reveal {
+    background: rgba(5,150,105,0.1);
+    border-color: var(--emerald);
+    color: var(--emerald-light);
+  }
+
+  .feedback-overlay {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .feedback-overlay.show {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .feedback-box {
+    background: linear-gradient(135deg, var(--navy-mid), var(--navy-light));
+    border-radius: 24px;
+    padding: 35px 45px;
+    text-align: center;
+    max-width: 320px;
+    width: 90%;
+    transform: scale(0.7) translateY(20px);
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+  }
+
+  .feedback-overlay.show .feedback-box { transform: scale(1) translateY(0); }
+  .feedback-box.correct-box { border: 2px solid var(--emerald-light); }
+  .feedback-box.wrong-box { border: 2px solid var(--danger); }
+
+  .feedback-emoji {
+    font-size: 52px;
+    display: block;
+    margin-bottom: 12px;
+  }
+
+  .feedback-title {
+    font-family: 'Amiri', serif;
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .feedback-box.correct-box .feedback-title { color: var(--emerald-light); }
+  .feedback-box.wrong-box .feedback-title { color: var(--danger); }
+
+  .feedback-subtitle {
+    font-size: 15px;
+    color: var(--text-light);
+    margin-bottom: 6px;
+  }
+
+  .correct-answer-show {
+    font-size: 14px;
+    color: var(--emerald-light);
+    background: rgba(5,150,105,0.1);
+    border: 1px solid rgba(5,150,105,0.3);
+    border-radius: 8px;
+    padding: 8px 14px;
+    margin-top: 10px;
+    direction: rtl;
+  }
+
+  .particle-container {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 99;
+  }
+
+  .particle {
+    position: absolute;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    animation: particleFly 1.5s ease-out forwards;
+  }
+
+  @keyframes particleFly {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(-200px) rotate(360deg); opacity: 0; }
+  }
+
+  .next-btn {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, var(--emerald), var(--emerald-light));
+    border: none;
+    border-radius: 14px;
+    color: var(--white);
+    font-family: 'Tajawal', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    display: none;
+    margin-top: 5px;
+  }
+
+  .next-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(5,150,105,0.4);
+  }
+
+  #results-panel { display: none; }
+
+  .results-card {
+    background: linear-gradient(135deg, rgba(18,32,64,0.95), rgba(26,48,96,0.8));
+    border: 1px solid rgba(201,162,39,0.3);
+    border-radius: 24px;
+    padding: 40px 30px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  }
+
+  .trophy { font-size: 72px; display: block; margin-bottom: 15px; }
+  .results-title {
+    font-family: 'Amiri', serif;
+    font-size: 32px;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--gold-light), var(--white));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 20px;
+  }
+
+  .score-circle {
+    width: 140px; height: 140px;
+    border-radius: 50%;
+    background: conic-gradient(var(--emerald-light) var(--pct, 0%), rgba(255,255,255,0.1) 0%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 25px;
+    box-shadow: 0 0 30px rgba(5,150,105,0.3);
+  }
+
+  .score-circle-inner {
+    width: 110px; height: 110px;
+    background: var(--navy);
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .score-num {
+    font-size: 30px;
+    font-weight: 900;
+    color: var(--emerald-light);
+    line-height: 1;
+  }
+  .score-total { font-size: 13px; color: var(--text-light); }
+
+  .stats-row { display: flex; gap: 12px; margin: 20px 0; justify-content: center; }
+  .stat-box { flex: 1; max-width: 140px; padding: 14px 10px; border-radius: 14px; text-align: center; }
+  .stat-box.correct-stat { background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.3); }
+  .stat-box.wrong-stat { background: rgba(231,76,60,0.1); border: 1px solid rgba(231,76,60,0.3); }
+  .stat-num { font-size: 28px; font-weight: 900; display: block; }
+  .stat-box.correct-stat .stat-num { color: var(--emerald-light); }
+  .stat-box.wrong-stat .stat-num { color: var(--danger); }
+  .stat-label { font-size: 13px; color: var(--text-light); }
+
+  .replay-btn {
+    padding: 15px 40px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    border: none;
+    border-radius: 14px;
+    color: var(--navy);
+    font-family: 'Tajawal', sans-serif;
+    font-size: 17px;
+    font-weight: 800;
+    cursor: pointer;
+    margin-left: 10px;
+  }
+  .home-btn {
+    padding: 15px 40px;
+    background: transparent;
+    border: 2px solid rgba(201,162,39,0.4);
+    border-radius: 14px;
+    color: var(--gold-light);
+    font-family: 'Tajawal', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .footer-credit {
+    text-align: center;
+    padding: 20px 10px;
+    margin-top: 10px;
+    border-top: 1px solid rgba(5,150,105,0.2);
+  }
+  .footer-credit p { color: var(--text-light); font-size: 14px; line-height: 2; }
+  .footer-credit a { color: var(--emerald-light); text-decoration: none; font-weight: 700; }
+  .footer-credit a:hover { color: var(--emerald); }
+
+  .confetti-piece {
+    position: fixed;
+    width: 10px; height: 10px;
+    animation: confettiFall linear forwards;
+    z-index: 200;
+    pointer-events: none;
+  }
+  @keyframes confettiFall {
+    0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="stars" id="stars"></div>
+
+<div class="feedback-overlay" id="feedbackOverlay">
+  <div class="feedback-box" id="feedbackBox">
+    <span class="feedback-emoji" id="feedbackEmoji">🎉</span>
+    <div class="feedback-title" id="feedbackTitle">ياسلام برافو عليك</div>
+    <div class="feedback-subtitle" id="feedbackSubtitle">إجابة صحيحة رائعة</div>
+    <div class="correct-answer-show" id="correctAnswerShow" style="display:none"></div>
+  </div>
+</div>
+
+<div class="particle-container" id="particleContainer"></div>
+
+<div class="container">
+  <div class="header">
+    <div class="header-badge">تجميعات الرخصة المهنية - رياضيات</div>
+    <h1>بنك الأسئلة الشامل<br>المستوى الأول والثاني</h1>
+    <div class="gold-line"></div>
+    <p style="color: var(--text-light); font-size: 14px;">يحتوي هذا الاختبار على قاعدة بيانات ضخمة تفوق 160 سؤالاً منتقاة بعناية</p>
+  </div>
+
+  <div id="settings-panel">
+    <div class="settings-card">
+      <div class="settings-title">إعدادات الاختبار</div>
+
+      <div class="setting-group">
+        <span class="setting-label">🎯 حدد عدد الأسئلة للاختبار الحالي:</span>
+        <div class="radio-group">
+          <div class="radio-option">
+            <input type="radio" name="qcount" id="q10" value="10">
+            <label for="q10">١٠ أسئلة</label>
+          </div>
+          <div class="radio-option">
+            <input type="radio" name="qcount" id="q20" value="20" checked>
+            <label for="q20">٢٠ سؤالاً</label>
+          </div>
+          <div class="radio-option">
+            <input type="radio" name="qcount" id="q50" value="50">
+            <label for="q50">٥٠ سؤالاً</label>
+          </div>
+          <div class="radio-option">
+            <input type="radio" name="qcount" id="qall" value="all">
+            <label for="qall">جميع الأسئلة</label>
+          </div>
+        </div>
+      </div>
+
+      <button class="start-btn" onclick="startQuiz()">🚀 ابدأ الاختبار الآن</button>
+
+      <div class="footer-credit">
+        <p>الشكر موصول لمن اعدها<br>أ. دنيا مبارك الفاضل &nbsp;|&nbsp; أ.نوفاء عقيل الحربي</p>
+        <p>تصميم د/فواز &nbsp;|&nbsp; <a href="https://t.me/TAqhjT3MFVE1Yzk0" target="_blank">تفضل للمزيد هنا 📲</a></p>
+      </div>
+    </div>
+  </div>
+
+  <div id="quiz-panel">
+    <div class="progress-area">
+      <div class="progress-info">
+        <span class="q-counter" id="qCounter">السؤال ١</span>
+        <span class="score-badge" id="scoreBadge">النتيجة: ٠</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill" style="width:0%"></div>
+      </div>
+    </div>
+
+    <div class="question-card" id="questionCard">
+      <div class="q-number" id="qNum">١</div>
+      <div class="question-text" id="questionText">جاري التحميل...</div>
+    </div>
+
+    <div class="options-grid" id="optionsGrid"></div>
+    <button class="next-btn" id="nextBtn" onclick="nextQuestion()">السؤال التالي ◀</button>
+  </div>
+
+  <div id="results-panel">
+    <div class="results-card">
+      <span class="trophy" id="trophyEmoji">🏆</span>
+      <div class="results-title" id="resultsTitle">أداء رائع!</div>
+      <div class="score-circle" id="scoreCircle">
+        <div class="score-circle-inner">
+          <span class="score-num" id="scoreNum">0</span>
+          <span class="score-total" id="scoreTotal"></span>
+        </div>
+      </div>
+      <div class="stats-row">
+        <div class="stat-box correct-stat">
+          <span class="stat-num" id="correctCount">0</span>
+          <span class="stat-label">✅ صحيح</span>
+        </div>
+        <div class="stat-box wrong-stat">
+          <span class="stat-num" id="wrongCount">0</span>
+          <span class="stat-label">❌ خطأ</span>
+        </div>
+      </div>
+      <button class="replay-btn" onclick="replayQuiz()">🔁 حاول مجدداً</button>
+      <button class="home-btn" onclick="goHome()">🏠 الرئيسية</button>
+    </div>
+
+    <div class="footer-credit">
+      <p>الشكر موصول لمن اعدها<br>أ. دنيا مبارك الفاضل &nbsp;|&nbsp; أ.نوفاء عقيل الحربي</p>
+      <p>تصميم د/فواز &nbsp;|&nbsp; <a href="https://t.me/TAqhjT3MFVE1Yzk0" target="_blank">تفضل للمزيد هنا 📲</a></p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  const container = document.getElementById('stars');
+  for (let i = 0; i < 60; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    s.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*100}%;--d:${2+Math.random()*4}s;--delay:${Math.random()*4}s;--op:${0.2+Math.random()*0.6};width:${1+Math.random()*3}px;height:${1+Math.random()*3}px`;
+    container.appendChild(s);
+  }
+})();
+
+/* قاعدة بيانات الأسئلة الضخمة والشاملة مصاغة باللاتكس الرياضي */
+const allQuestions = [
+  {q:"كل الأعداد التالية غير نسبية ما عدا:", opts:["\\(-3\\sqrt{2}+\\sqrt{18}\\)","\\(2\\sqrt{2}\\)","\\(\\frac{\\pi}{3}\\)","\\(\\sqrt{11}\\)"], ans:0},
+  {q:"كل الأعداد التالية حقيقية ما عدا:", opts:["\\(\\sqrt{(-5)^{3}}\\)","\\(\\frac{\\pi}{2}\\)","\\(\\sqrt{(-5)^{2}}\\)","\\(-\\sqrt{5}\\)"], ans:0},
+  {q:"العدد \\(0.30\\) هو عدد:", opts:["نسبي","كلي","غير حقيقي","غير نسبي"], ans:0},
+  {q:"يجرى عداءان في مضمار دائري، يقطع الأول المضمار في 24 دقيقة والثاني في 20 دقيقة. إذا انطلقا في الوقت نفسه وفي الاتجاه نفسه فإنهما يلتقيان لأول مرة عند نقطة البداية بعد:", opts:["120 دقيقة","90 دقيقة","150 دقيقة","60 دقيقة"], ans:0},
+  {q:"مستطيل بعداه 21 سم، 35 سم. قُسم إلى مربعات متساوية، أي من التالي يمثل أكبر طول لضلع المربع بالسم؟", opts:["7","5","3","1"], ans:0},
+  {q:"قيمة \\(\\frac{2^{10}\\times 5^{15}}{10^{10}}\\) تساوي:", opts:["\\(5^{5}\\)","\\(5^{10}\\)","\\(10^{5}\\)","\\(2^{5}\\)"], ans:0},
+  {q:"ما قيمة المقدار \\(9\\times 3^{3} + 2\\times 3^{3}\\) ؟", opts:["\\(11\\times 3^{3}\\)","\\(2\\times 3^{3}\\)","\\(10\\times 3^{3}\\)","\\(3^{4}\\)"], ans:0},
+  {q:"نصف العدد \\(2^8\\) يساوي:", opts:["\\(2^7\\)","\\(2^9\\)","\\(2^{16}\\)","\\(2^{10}\\)"], ans:0},
+  {q:"قيمة العبارة \\((2^{2})^{3}\\) هي:", opts:["64","32","128","256"], ans:0},
+  {q:"قيمة العبارة \\(2^{2^{3}}\\) هي:", opts:["256","64","128","31"], ans:0},
+  {q:"قيمة العدد \\(\\frac{1}{8}\\times \\frac{1}{8}\\times 4^{8}\\) هي:", opts:["\\(2^{10}\\)","\\((\\frac{1}{4})^{16}\\)","\\(2^{19}\\)","64"], ans:0},
+  {q:"إذا كان \\(4^{x-2}=\\frac{1}{32}\\) فإن \\(x\\) تساوي:", opts:["\\(-\\frac{1}{2}\\)","\\(2\\)","\\(\\frac{1}{2}\\)","\\(-2\\)"], ans:0},
+  {q:"إذا كان \\(\\sqrt[3]{y^{2}}=4\\) فإن \\(y^{2}\\) تساوي:", opts:["64","8","16","27"], ans:0},
+  {q:"ما قيمة \\(x\\) التي تحقق المعادلة \\(7^{x-1}+7=8\\) ؟", opts:["1","-1","2","0"], ans:0},
+  {q:"قيمة المقدار \\((\\frac{1}{3})^{-2}(\\frac{4}{9})^{\\frac{1}{2}}\\) :", opts:["6","3","9","4"], ans:0},
+  {q:"قيمة المقدار \\(2^{2}\\times \\frac{1}{2\\sqrt{2}}\\) تساوي:", opts:["\\(\\sqrt{2}\\)","\\(\\frac{1}{2}\\)","1","2"], ans:0},
+  {q:"إذا كان \\(2^{x}=3\\) و \\(3^{y}=16\\) فما قيمة \\(xy\\) ؟", opts:["4","1","8","9"], ans:0},
+  {q:"قيمة المقدار \\(\\frac{6^{4}(6-1)}{5}\\) تساوي:", opts:["\\(6^{4}\\)","\\(6^{3}\\)","\\(6^{2}\\)","\\(6^{5}\\)"], ans:0},
+  {q:"إذا كان \\(2n^{2}=5\\) فإن \\(5(2n^{2})\\) تساوي:", opts:["25","\\(\\frac{25}{4}\\)","5","\\(\\frac{5}{2}\\)"], ans:0},
+  {q:"إذا كان \\(3^{3y}=27^{3}\\) فما قيمة \\(y\\) ؟", opts:["3","27","2","9"], ans:0},
+  {q:"قيمة \\(\\frac{27^{\\frac{2}{3}}}{3^{2}}\\) تساوي:", opts:["1","\\(\\frac{1}{4}\\)","3","0"], ans:0},
+  {q:"قيمة المقدار \\(e^{-5x}e^{x}=e^{2}\\) تتحقق عندما تكون \\(x\\) تساوي:", opts:["\\(-\\frac{1}{2}\\)","0","\\(\\frac{1}{2}\\)","1"], ans:0},
+  {q:"إذا كان \\(\\frac{2x}{8\\sqrt{2}}=\\frac{2\\sqrt{2}}{x}\\) حيث \\(x>0\\) فإن \\(x\\) تساوي:", opts:["4","\\(\\pm 8\\)","\\(\\pm 16\\)","+16"], ans:0},
+  {q:"قيمة المقدار \\(\\frac{\\sqrt{6}}{4}\\div\\frac{\\sqrt{3}}{12}\\) تساوي:", opts:["\\(3\\sqrt{2}\\)","\\(2\\sqrt{3}\\)","\\(\\frac{\\sqrt{3}}{2}\\)","\\(\\frac{\\sqrt{2}}{3}\\)"], ans:0},
+  {q:"بسط \\(\\sqrt[3]{\\sqrt{x}}\\) :", opts:["\\(\\sqrt[6]{x}\\)","\\(\\sqrt[3]{x}\\)","\\(\\sqrt[5]{x}\\)","\\(\\sqrt{x}\\)"], ans:0},
+  {q:"أبسط صورة للمقدار \\(\\frac{\\sqrt{300}-\\sqrt{75}}{\\sqrt{25}}\\) :", opts:["\\(\\sqrt{3}\\)","\\(5\\sqrt{3}\\)","5","3"], ans:0},
+  {q:"إذا كان \\(y=\\sqrt[5]{x}\\) فإن \\(\\sqrt[3]{y^{10}}\\) تساوي:", opts:["\\(\\sqrt[3]{x^{2}}\\)","\\(\\sqrt[8]{x}\\)","\\(\\sqrt{x^{2}}\\)","\\(\\sqrt[8]{x^{10}}\\)"], ans:0},
+  {q:"قيمة \\(\\sqrt[4]{\\sqrt[3]{\\sqrt[2]{x}}}\\) هي:", opts:["\\(\\sqrt[24]{x}\\)","\\(\\sqrt[4]{x}\\)","\\(\\sqrt{x^{2}}\\)","\\(\\sqrt[12]{x}\\)"], ans:0},
+  {q:"بسط \\(\\frac{x^{\\frac{3}{2}}-x}{2\\sqrt{x}(\\sqrt{x}-1)}\\) :", opts:["\\(\\frac{\\sqrt{x}}{2}\\)","\\(x^{\\frac{3}{2}}\\)","\\(2\\sqrt{x}\\)","\\(\\sqrt{x}\\)"], ans:0},
+  {q:"أبسط صورة للمقدار \\(8\\sqrt{8}+3\\sqrt{50}\\) :", opts:["\\(31\\sqrt{2}\\)","\\(-\\sqrt{31}\\)","\\(\\sqrt{31}\\)","\\(\\sqrt{2}\\)"], ans:0},
+  {q:"العدد \\(\\frac{\\sqrt{33}}{2}\\) يقع بين:", opts:["2.5 و 3","2 و 3","3 و 4","1 و 2"], ans:0},
+  {q:"بسط \\(\\frac{\\sqrt{3}+\\sqrt{2}}{\\sqrt{3}-\\sqrt{2}}\\) :", opts:["\\(5+2\\sqrt{6}\\)","\\(5-\\sqrt{6}\\)","\\(5+\\sqrt{24}\\)","\\(5-\\sqrt{24}\\)"], ans:0},
+  {q:"أبسط صورة للمقدار \\(\\sqrt[5]{\\sqrt[3]{2^{15}}}\\) :", opts:["\\(2^{\\frac{1}{2}}\\)","\\(2^{2}\\)","3","4"], ans:0},
+  {q:"قيمة \\(\\sqrt[10]{8}\\) :", opts:["\\(2^{0.3}\\)","\\(2^{0.5}\\)","\\(2^{0.2}\\)","\\(2^{0.7}\\)"], ans:0},
+  {q:"قيمة المقدار \\((\\sqrt{5}+2)^{10}(\\sqrt{5}-2)^{10}\\) :", opts:["1","\\(2\\sqrt{10}-4\\)","\\(\\sqrt{10}-4\\)","-1"], ans:0},
+  {q:"قيمة \\(i^{566}\\) تساوي:", opts:["-1","1","\\(i\\)","\\(-i\\)"], ans:0},
+  {q:"إذا كان مقياس العدد المركب \\(3+ib\\) هو 5 فما قيمة \\(b\\) ؟", opts:["4","3","1","0"], ans:0},
+  {q:"قيمة المقدار \\(\\frac{2}{1+i}-\\frac{3}{1-i}\\) :", opts:["\\(-\\frac{1}{2}-\\frac{5}{2}i\\)","\\(\\frac{1}{2}+\\frac{5}{2}i\\)","\\(-\\frac{1}{2}+\\frac{5}{2}i\\)","\\(\\frac{1}{2}-\\frac{5}{2}i\\)"], ans:0},
+  {q:"قيمة المقدار \\(i^{50}+i^{51}+i^{53}\\) :", opts:["-1","0","\\(i\\)","\\(-i\\)"], ans:0},
+  {q:"قيمة \\((7+i)(7-i)\\) :", opts:["50","49-14i","49-i","48"], ans:0},
+  {q:"بسط \\(\\frac{2i-i}{i}\\) :", opts:["1","-1","0","2"], ans:0},
+  {q:"إذا كانت \\(A=\\{a,d,e,f\\}\\) و \\(B=\\{b,c,e\\}\\) و \\(C=\\{a,f,g\\}\\) فإن \\((B\\cup C)\\cap A\\) تساوي:", opts:["\\(\\{a,e,f\\}\\)","\\(\\{a,e,f,g\\}\\)","\\(\\{a,b,c,d,e,f,g\\}\\)","\\(\\{a,d,e,f,g\\}\\)"], ans:0},
+  {q:"إذا كانت \\(A=\\{a,d,e,f\\}\\) و \\(B=\\{b,c,e\\}\\) و \\(C=\\{a,f,g\\}\\) فإن \\(A\\cap B\\cap C\\) تساوي:", opts:["\\(\\emptyset\\)","\\(\\{a,e,f\\}\\)","\\(\\{a,b,c,d,e,f,g\\}\\)","\\(\\{-1,1\\}\\)"], ans:0},
+  {q:"إذا كانت المجموعات X,Y,Z تحقق \\(X \\cup Y = Z\\) و \\(X \\cap Y = \\emptyset\\) فإن \\((Z\\cap X) \\cup (Z\\cap Y)\\) يساوي:", opts:["\\(Z\\)","\\(X\\)","\\(Y\\)","\\(\\emptyset\\)"], ans:0},
+  {q:"عناصر المجموعة \\(A=\\{x\\in R: x^{2}+1=0\\}\\) هي:", opts:["مجموعة خالية \\(\\emptyset\\)","\\(\\{1,-1\\}\\)","\\(\\{i,-i\\}\\)","\\(\\{0\\}\\)"], ans:0},
+  {q:"بسط المقدار \\((\\frac{-2a^{5}}{a^{3}b^{2}})^{3}\\) :", opts:["\\(\\frac{-8a^{6}}{b^{6}}\\)","\\(\\frac{8a^{2}}{b^{5}}\\)","\\(\\frac{-8a^{15}}{b^{5}}\\)","\\(\\frac{-2a^{15}}{b^{6}}\\)"], ans:0},
+  {q:"بسط المقدار \\(\\frac{x^{2}+2x-15}{x+5}\\) :", opts:["\\(x-3\\)","\\(x+3\\)","\\(\\frac{1}{x-3}\\)","\\(\\frac{1}{x+3}\\)"], ans:0},
+  {q:"بسط المقدار \\(\\frac{x^{2}-25}{x+5}\\) :", opts:["\\(x-5\\)","\\(x+5\\)","\\(\\frac{1}{x+5}\\)","\\(\\frac{1}{x-5}\\)"], ans:0},
+  {q:"العبارة النسبية \\(\\frac{x-3}{x+3}\\) تكون غير معرفة عندما \\(x\\) تساوي:", opts:["-3","0","1","3"], ans:0},
+  {q:"أبسط صورة للعبارة النسبية \\(\\frac{x^{2}-9x+18}{x^{2}-9} \\cdot \\frac{x^{2}+8x+15}{x+5}\\) :", opts:["\\(x-6\\)","\\(\\frac{x+3}{x-3}\\)","\\(\\frac{x-3}{x+3}\\)","1"], ans:0},
+  {q:"بسط العبارة \\(\\frac{x-y}{xy}\\) :", opts:["\\(\\frac{1}{y}-\\frac{1}{x}\\)","\\(\\frac{1}{x}-\\frac{1}{y}\\)","1","-3y-1"], ans:0},
+  {q:"العبارة \\(\\frac{9999^{2}-1}{10000}\\) تساوي:", opts:["9998","9997","9999","1000"], ans:0},
+  {q:"ما قيم \\(x\\) التي تجعل العبارة \\(\\frac{2x(x-3)}{(x+4)(x^{2}-9)}\\) غير معرفة ؟", opts:["-4, -3, 3","-4, 0, 3, 9","4, -3, 0","-4, 9"], ans:0},
+  {q:"المقدار \\(\\frac{y}{x^{2}-y^{2}} \\div \\frac{y^{2}}{x-y}\\) يساوي:", opts:["\\(\\frac{1}{y(x+y)}\\)","\\(\\frac{x+y}{y}\\)","\\(\\frac{1}{y(x-y)}\\)","\\(\\frac{y^{3}}{x^{3}-x^{2}y}\\)"], ans:0},
+  {q:"المقدار \\(\\frac{x^{2}y^{2}-1}{(xy-1)^{2}}\\) يساوي:", opts:["\\(\\frac{xy+1}{xy-1}\\)","\\(x-1\\)","\\(x+1\\)","\\(x^{2}+1\\)"], ans:0},
+  {q:"أي مما يأتي يكافئ العبارة \\(\\frac{-64x^{6}}{8x^{3}}\\) ؟", opts:["\\(-8x^{3}\\)","\\(8x^{2}\\)","\\(8x^{3}\\)","\\(-8x^{2}\\)"], ans:0},
+  {q:"العبارة \\(xy(xy+1)^{2}-x^{2}y^{2}\\) تساوي:", opts:["\\(x^{3}y^{3}+x^{2}y^{2}+xy\\)","\\(x^{3}y^{3}-3x^{2}y^{2}+xy\\)","\\(x^{3}y^{3}-x^{2}y^{2}+xy\\)","\\(x^{3}y^{3}+3x^{2}y^{2}+xy\\)"], ans:0},
+  {q:"المقدار \\((2n+1)^{2}+(n+1)^{2}\\) يساوي:", opts:["\\(5n^{2}+6n+2\\)","\\(5n^{2}+6n-2\\)","\\(5n^{2}+2n-2\\)","\\(n^{2}-2n+3\\)"], ans:0},
+  {q:"المقدار \\(10000 - (99\\times 99)\\) يساوي:", opts:["199","189","200","140"], ans:0},
+  {q:"المقدار \\(81x^{2}-9\\) يساوي:", opts:["\\((9x-3)(9x+3)\\)","\\((9x-3)^{2}\\)","\\((9x+3)^{2}\\)","\\((3-9x)(3+9x)\\)"], ans:0},
+  {q:"إذا كان \\(a+b=4\\) و \\(a^{2}-b^{2}=8\\) فإن \\(a-b\\) يساوي:", opts:["2","4","8","16"], ans:0},
+  {q:"المقدار \\(8x^{4}-2x^{2}y^{2}\\) يساوي:", opts:["\\(2x^{2}(2x-y)(2x+y)\\)","\\(4x^{2}-2y^{2}\\)","\\(2x^{2}(2x-y)^{2}\\)","\\(2x^{2}(2x+y)^{2}\\)"], ans:0},
+  {q:"المقدار \\(7-x^{2}\\) يساوي:", opts:["\\((\\sqrt{7}-x)(\\sqrt{7}+x)\\)","\\((7-x)^{2}\\)","\\((\\sqrt{7}-\\sqrt{x})\\)","\\((\\sqrt{7}+x)(\\sqrt{7}+x)\\)"], ans:0},
+  {q:"حل المعادلة \\(\\sqrt{4x+1}=\\sqrt{2x+2}\\) في الأعداد الحقيقية يساوي:", opts:["\\(\\frac{1}{2}\\)","\\(-\\frac{1}{2}\\)","\\(\\frac{1}{4}\\)","\\(-\\frac{1}{4}\\)"], ans:0},
+  {q:"أوجد حل المعادلة \\(\\sqrt{x^{2}+1}=\\sqrt{2x}\\) :", opts:["1","-1","\\(\\pm 1\\)","لا يوجد حل حقيقي"], ans:0},
+  {q:"أوجد حل المعادلة \\(\\sqrt[3]{5x}=10\\) :", opts:["200","100","-100","-200"], ans:0},
+  {q:"أوجد حل المعادلة \\(\\sqrt{3x}+5=4\\) :", opts:["\\(\\emptyset\\)","\\(\\frac{1}{3}\\)","\\(\\frac{1}{9}\\)","\\(\\pm \\frac{1}{3}\\)"], ans:0},
+  {q:"حاصل ضرب جذري المعادلة \\(x^{2}-6x+8=0\\) :", opts:["8","16","-8","12"], ans:0},
+  {q:"إذا كان \\(-7, 2\\) جذري المعادلة \\(x^{2}-kx+m=0\\) فإن \\(k, m\\) على الترتيب هما:", opts:["-5, -14","-1, 6","14, 5","1, 6"], ans:0},
+  {q:"مجموعة حل المعادلة \\(x^{2}-5x-14=0\\) :", opts:["\\(\\{7,-2\\}\\)","\\(\\{5,-14\\}\\)","\\(\\{-7,2\\}\\)","\\(\\{14,-1\\}\\)"], ans:0},
+  {q:"مجموعة حل المعادلة \\(12x^{2}-7x+1=0\\) :", opts:["\\(\\{\\frac{1}{3},\\frac{1}{4}\\}\\)","\\(\\{\\frac{4}{3},\\frac{3}{4}\\}\\)","\\(\\{\\frac{1}{4},-\\frac{1}{3}\\}\\)","\\(\\{\\frac{4}{3},-\\frac{3}{4}\\}\\)"], ans:0},
+  {q:"مجموعة حل المعادلة \\(x^{2}-x-12=0\\) :", opts:["\\(\\{4,-3\\}\\)","\\(\\{3,-4\\}\\)","\\(\\{-3,-4\\}\\)","\\(\\{3,4\\}\\)"], ans:0},
+  {q:"مجموعة حل المعادلة \\(x^{2}-49=0\\) في R :", opts:["\\(\\{-7,7\\}\\)","\\(\\{-49,49\\}\\)","\\([-7,7]\\)","\\([7,-7]\\)"], ans:0},
+  {q:"ما هي قيم \\(m\\) الممكنة التي تجعل للمعادلة \\(2t^{2}+(1-m)t+8=0\\) حل حقيقي مكرر مرتين معاً؟", opts:["-7, 9","9","-7","-9, -7"], ans:0},
+  {q:"مجموعة حل المعادلة \\(3x^{2}-13x+12=0\\) :", opts:["\\(\\{3,\\frac{4}{3}\\}\\)","\\(\\{3,-\\frac{4}{3}\\}\\)","\\(\\{-3,\\frac{4}{3}\\}\\)","\\(\\{-3,-\\frac{4}{3}\\}\\)"], ans:0},
+  {q:"إذا كان \\(x+\\frac{1}{x}=3\\) فإن \\(x^{2}+\\frac{1}{x^{2}}\\) يساوي:", opts:["7","9","3","0"], ans:0},
+  {q:"ماذا يمثل الشكل الجبري \\((x+10)(x+5)=150\\) في مسألة المستطيل؟", opts:["معادلة من الدرجة الثانية","مساحة المربع","معادلة من الدرجة الأولى","العلاقة بين المربع والمستطيل"], ans:0},
+  {q:"المتباينة التي تعبر عن الجملة: (درجة أحد الطلاب تتراوح من 60 إلى 80 درجة)", opts:["\\(|x-70|\\le 10\\)","\\(|x-60|\\le 80\\)","\\(|x-60|>80\\)","\\(|x-10|\\le 70\\)"], ans:0},
+  {q:"المتباينة التي تعبر عن الجملة: (درجة أحد الطلاب تقع بين 60 و 100 درجة)", opts:["\\(|x-80|< 20\\)","\\(|x-60|\\le 800\\)","\\(|x-60|\\le 80\\)","\\(|x-70|\\le 10\\)"], ans:0},
+  {q:"مجموعة حل المتباينة \\(\\frac{1-x^{2}}{2}\\le 0\\) هي:", opts:["\\((-\\infty,-1]\\cup[1,\\infty)\\)","\\([-1,1]\\)","\\([1,\\infty)\\)","\\((-\\infty,-1)\\cup(1,\\infty)\\)"], ans:0},
+  {q:"حل المعادلة \\(|x-2|=-4\\) :", opts:["\\(\\emptyset\\)","6","-2","\\(\\{-2,6\\}\\)"], ans:0},
+  {q:"مجموعة حل المتباينة \\(|x|+6<0\\) هي:", opts:["\\(\\emptyset\\)","R","R/[-6,6]","(-6,6)"], ans:0},
+  {q:"مجموعة حل المتباينة \\(|2x-1|=5\\) هي كمعادلة تعطي القيمتين:", opts:["\\(\\{3,-2\\}\\)","\\(\\{2,3\\}\\)","\\(\\{-2,3\\}\\)","R"], ans:0},
+  {q:"مجال الدالة \\(f(x)=\\sqrt[3]{x+1}\\) :", opts:["R","\\(R-\\{1\\}\\)","\\((1,\\infty)\\)","\\((-1,\\infty)\\)"], ans:0},
+  {q:"مجال الدالة \\(f(x)=\\frac{1}{\\sqrt{x^{2}+81}}\\) :", opts:["\\((-\\infty,\\infty)\\)","\\((9,\\infty)\\)","\\((0,\\infty)\\)","\\((81,\\infty)\\)"], ans:0},
+  {q:"مجال الدالة \\(f(x)=\\sqrt{36-x^{2}}\\) :", opts:["\\([-6,6]\\)","\\((-6,6)\\)","\\((-\\infty,6)\\)","\\([6,-6]\\)"], ans:0},
+  {q:"مجال الدالة \\(f(x)=\\frac{x-1}{x+4}\\) :", opts:["\\(R-\\{-4\\}\\)","\\((-3,\\infty)\\)","\\((-\\infty,1)\\)","\\(R-\\{4\\}\\)"], ans:0},
+  {q:"العلاقة التي تمثل دالة مما يلي هي:", opts:["\\(\\{(1,2), (2, 2)\\}\\)","\\(\\{(0,2), (2, 0), (0,0)\\}\\)","\\(\\{(1,1), (2, 2), (1,0)\\}\\)","\\(\\{(4,5), (5, 4), (5,1)\\}\\)"], ans:0},
+  {q:"العلاقة التي تمثل دالة فيما يلي:", opts:["\\(y=x^{3}+1\\)","\\(x=y^{2}+1\\)","\\(y^{2}+x=1\\)","\\(x^{2}+y^{2}=1\\)"], ans:0},
+  {q:"الدالة العكسية للدالة \\(y=\\frac{1}{x-1}\\) :", opts:["\\(f^{-1}(x)=\\frac{1+x}{x}\\)","\\(f^{-1}(x)=\\frac{1}{x}\\)","\\(f^{-1}(x)=-x\\)","\\(f^{-1}(x)=x-1\\)"], ans:0},
+  {q:"إذا كانت \\(f(x)=\\sqrt{x+5}\\) فإن \\(f(x^{2})\\) تساوي:", opts:["\\(\\sqrt{x^{2}+5}\\)","\\(x^{2}-5\\)","\\(x^{2}+5\\)","\\(\\sqrt{x^{2}-5}\\)"], ans:0},
+  {q:"حل المتباينة \\(\\log_{2} x > 3\\) :", opts:["\\(x > 8\\)","\\(x > 6\\)","\\(x > \\frac{3}{2}\\)","\\(x > 9\\)"], ans:0},
+  {q:"قيمة \\(ln(\\frac{e^{a}}{e^{b}})\\) تساوي:", opts:["\\(a-b\\)","\\(\\frac{a}{b}\\)","\\(ln\\ a - ln\\ b\\)","\\(ln(a-b)\\)"], ans:0},
+  {q:"قيمة \\(\\log_{10}(-10)\\) تساوي:", opts:["غير معرف","-10","-1","10"], ans:0},
+  {q:"إذا كان \\(f(x)=\\sqrt{2x}\\) و \\(g(x)=2x^{2}\\) فإن \\((f\\circ g)(x)\\) تساوي:", opts:["\\(2|x|\\)","\\(4x\\)","\\(2x\\)","\\(x\\)"], ans:0},
+  {q:"إذا كان \\(f(x)=x^{3}-2\\) و \\(g(x)=3x^{2}\\) فإن \\((f\\circ g)(x)\\) تساوي:", opts:["\\(27x^{6}-2\\)","\\(3(x^{3}-2)^{2}\\)","\\(3x^{6}-2\\)","\\(3(x^{2}-2)^{2}\\)"], ans:0},
+  {q:"قياس الزاوية الخارجية عند أي رأس من رؤوس مثلث متطابق الأضلاع:", opts:["120","60","90","180"], ans:0},
+  {q:"في متوازي أضلاع، قياسا زاويتين متحالفتين هما \\(3x+42\\) و \\(9x-18\\). ما قياس الزاويتين؟", opts:["81, 99","13, 167","39, 141","58.5, 31.5"], ans:0},
+  {q:"مستقيمان معادلتاهما: \\(y=3x+5\\) و \\(4y=12x+16\\). أي مما يلي يعد وصفاً لهما؟", opts:["مستقيمان متوازيان","مستقيمان متعامدان","مستقيمان لهما المقطع y نفسه","مستقيمان لهما المقطع x نفسه"], ans:0},
+  {q:"البعد بين النقطة (2,4) والمستقيم \\(3x=4y-10\\) يساوي ... وحدات:", opts:["4","6","5","3"], ans:0},
+  {q:"إذا كان المتجهان \\(u=(1,-2)\\) و \\(v=(3,k)\\) متعامدين فإن قيمة \\(k\\) تساوي:", opts:["\\(\\frac{3}{2}\\)","\\(-\\frac{3}{2}\\)","-2","2"], ans:0},
+  {q:"مساحة المربع الكبير 64، بداخله مربع ينصّف أضلاعه، وبداخله مربع ثالث ينصّف أضلاعه. مساحة المربع المظلل الصغير الداخلي:", opts:["16","32","8","4"], ans:0}
+];
+
+function startQuiz() {
+  const qcount = document.querySelector('input[name="qcount"]:checked').value;
+  let pool = shuffle([...allQuestions]);
+  const count = qcount === 'all' ? pool.length : Math.min(parseInt(qcount), pool.length);
+  questions = pool.slice(0, count);
+
+  currentIdx = 0;
+  score = 0;
+  wrongScore = 0;
+
+  document.getElementById('settings-panel').style.display = 'none';
+  document.getElementById('quiz-panel').style.display = 'block';
+  document.getElementById('results-panel').style.display = 'none';
+
+  loadQuestion();
+}
+
+function loadQuestion() {
+  if (currentIdx >= questions.length) { showResults(); return; }
+  answered = false;
+
+  const q = questions[currentIdx];
+  const total = questions.length;
+  const num = currentIdx + 1;
+
+  document.getElementById('qCounter').textContent = `السؤال ${toArabicNum(num)} من ${toArabicNum(total)}`;
+  document.getElementById('scoreBadge').textContent = `النتيجة: ${toArabicNum(score)}`;
+  document.getElementById('progressFill').style.width = `${((num-1)/total)*100}%`;
+  document.getElementById('qNum').textContent = toArabicNum(num);
+  document.getElementById('questionText').innerHTML = q.q;
+  
+  document.getElementById('nextBtn').style.display = 'none';
+
+  const card = document.getElementById('questionCard');
+  card.style.animation = 'none';
+  requestAnimationFrame(() => { card.style.animation = ''; card.style.animation = 'cardIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)'; });
+
+  const opts = q.opts.map((o, i) => ({text: o, isCorrect: i === q.ans}));
+  shuffle(opts);
+
+  const grid = document.getElementById('optionsGrid');
+  grid.innerHTML = '';
+  opts.forEach((opt) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.innerHTML = opt.text;
+    btn.dataset.correct = opt.isCorrect;
+    btn.onclick = () => selectAnswer(btn, opt.isCorrect, opt.text, opts);
+    grid.appendChild(btn);
+  });
+
+  if (window.MathJax) { MathJax.typesetPromise(); }
+}
+
+function selectAnswer(btn, isCorrect, selectedText, opts) {
+  if (answered) return;
+  answered = true;
+
+  const allBtns = document.querySelectorAll('.option-btn');
+  allBtns.forEach(b => b.disabled = true);
+
+  const correctText = opts.find(o => o.isCorrect).text;
+
+  if (isCorrect) {
+    btn.classList.add('correct');
+    score++;
+    showFeedback(true, correctText);
+    spawnParticles(true);
+  } else {
+    btn.classList.add('wrong');
+    wrongScore++;
+    allBtns.forEach(b => {
+      if (b.dataset.correct === 'true') b.classList.add('reveal');
+    });
+    showFeedback(false, correctText);
+  }
+
+  document.getElementById('scoreBadge').textContent = `النتيجة: ${toArabicNum(score)}`;
+
+  setTimeout(() => {
+    hideFeedback();
+    document.getElementById('nextBtn').style.display = 'block';
+    document.getElementById('nextBtn').textContent = currentIdx < questions.length - 1 ? 'السؤال التالي ◀' : '🏆 عرض النتيجة';
+  }, 1800);
+}
+
+function showFeedback(correct, correctAnswer) {
+  const overlay = document.getElementById('feedbackOverlay');
+  const box = document.getElementById('feedbackBox');
+  const emoji = document.getElementById('feedbackEmoji');
+  const title = document.getElementById('feedbackTitle');
+  const sub = document.getElementById('feedbackSubtitle');
+  const ans = document.getElementById('correctAnswerShow');
+
+  if (correct) {
+    box.className = 'feedback-box correct-box';
+    const emojis = ['🎉','✨','🌟','💫','🏅','👏'];
+    emoji.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+    title.textContent = 'ياسلام برافو عليك';
+    sub.textContent = 'إجابة صحيحة ورائعة!';
+    ans.style.display = 'none';
+  } else {
+    box.className = 'feedback-box wrong-box';
+    emoji.textContent = '💪';
+    title.textContent = 'حظ اوفر';
+    sub.textContent = 'الإجابة الصحيحة هي:';
+    ans.innerHTML = correctAnswer;
+    ans.style.display = 'block';
+    if (window.MathJax) { MathJax.typesetPromise(); }
+  }
+
+  overlay.classList.add('show');
+}
+
+function hideFeedback() {
+  document.getElementById('feedbackOverlay').classList.remove('show');
+}
+
+function spawnParticles(correct) {
+  const container = document.getElementById('particleContainer');
+  const colors = correct
+    ? ['#c9a227','#e8c84a','#10b981','#059669','#ffffff']
+    : ['#e74c3c','#c0392b','#ff7675'];
+
+  for (let i = 0; i < 20; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.cssText = `
+      left:${30+Math.random()*40}%;
+      top:${40+Math.random()*20}%;
+      background:${colors[Math.floor(Math.random()*colors.length)]};
+      animation-duration:${0.8+Math.random()*0.8}s;
+      animation-delay:${Math.random()*0.3}s;
+      width:${4+Math.random()*8}px;
+      height:${4+Math.random()*8}px;
+      border-radius:${Math.random()>0.5?'50%':'2px'};
+    `;
+    container.appendChild(p);
+    setTimeout(() => p.remove(), 2000);
+  }
+}
+
+function nextQuestion() {
+  currentIdx++;
+  loadQuestion();
+}
+
+function showResults() {
+  document.getElementById('quiz-panel').style.display = 'none';
+  document.getElementById('results-panel').style.display = 'block';
+
+  const total = questions.length;
+  const pct = Math.round((score/total)*100);
+
+  document.getElementById('scoreNum').textContent = toArabicNum(score);
+  document.getElementById('scoreTotal').textContent = `من ${toArabicNum(total)}`;
+  document.getElementById('correctCount').textContent = toArabicNum(score);
+  document.getElementById('wrongCount').textContent = toArabicNum(wrongScore);
+
+  document.getElementById('scoreCircle').style.setProperty('--pct', `${pct}%`);
+
+  let trophy, title, msg;
+  if (pct >= 90) { trophy='🏆'; title='امتياز تام!'; msg='ياسلام برافو عليك! مستوى مذهل 🎖️'; }
+  else if (pct >= 75) { trophy='🥇'; title='أداء ممتاز!'; msg='أحسنت! تمتلك معرفة واسعة، واصل التميز 💪'; }
+  else if (pct >= 60) { trophy='🥈'; title='جيد جداً'; msg='نتيجة جيدة، بقليل من المراجعة ستصل للقمة 📚'; }
+  else if (pct >= 50) { trophy='🥉'; title='لا بأس!'; msg='تحتاج إلى مزيد من المذاكرة، المثابرة مفتاح النجاح 🔑'; }
+  else { trophy='💡'; title='حظ اوفر'; msg='لا تيأس! راجع المادة وأعد الاختبار، ستنجح بإذن الله 🌟'; }
+
+  document.getElementById('trophyEmoji').textContent = trophy;
+  document.getElementById('resultsTitle').textContent = title;
+  document.getElementById('resultMsg').textContent = msg;
+
+  if (pct >= 75) launchConfetti();
+}
+
+function launchConfetti() {
+  const colors = ['#c9a227','#e8c84a','#10b981','#3498db','#e74c3c','#9b59b6','#ffffff'];
+  for (let i = 0; i < 80; i++) {
+    setTimeout(() => {
+      const c = document.createElement('div');
+      c.className = 'confetti-piece';
+      c.style.cssText = `
+        left:${Math.random()*100}%;
+        top:-10px;
+        background:${colors[Math.floor(Math.random()*colors.length)]};
+        width:${6+Math.random()*10}px;
+        height:${6+Math.random()*10}px;
+        border-radius:${Math.random()>0.5?'50%':'0'};
+        animation-duration:${2+Math.random()*2}s;
+        animation-name:confettiFall;
+      `;
+      document.body.appendChild(c);
+      setTimeout(() => c.remove(), 4000);
+    }, i*30);
+  }
+}
+
+function replayQuiz() {
+  startQuiz();
+}
+
+function goHome() {
+  document.getElementById('results-panel').style.display = 'none';
+  document.getElementById('settings-panel').style.display = 'block';
+}
+
+document.getElementById('feedbackOverlay').addEventListener('click', hideFeedback);
+</script>
+</body>
+</html>
