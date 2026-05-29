@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة الاختبارات التفاعلية - الفصل الثالث</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            direction: rtl;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+            animation: slideDown 0.6s ease;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        /* Grade Selection Screen */
+        .grade-selection {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .grade-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .grade-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .grade-card h3 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .grade-card p {
+            font-size: 0.9em;
+            opacity: 0.7;
+        }
+
+        /* Quiz Screen */
+        .quiz-container {
+            display: none;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            animation: fadeIn 0.5s ease;
+        }
+
+        .quiz-container.active {
+            display: block;
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .quiz-header h2 {
+            color: #333;
+            font-size: 1.5em;
+        }
+
+        .progress-bar {
+            width: 200px;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transition: width 0.3s ease;
+        }
+
+        .question-section {
+            margin-bottom: 30px;
+        }
+
+        .question-number {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+
+        .question-text {
+            font-size: 1.2em;
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .options {
+            display: grid;
+            gap: 12px;
+        }
+
+        .option {
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+            text-align: right;
+            position: relative;
+        }
+
+        .option:hover:not(.disabled) {
+            border-color: #667eea;
+            background: #f5f5ff;
+        }
+
+        .option.selected {
+            border-color: #667eea;
+            background: #f0f0ff;
+        }
+
+        .option.correct {
+            border-color: #4caf50;
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .option.incorrect {
+            border-color: #f44336;
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .option.disabled {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        /* Feedback Messages */
+        .feedback-container {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            animation: slideUp 0.4s ease;
+        }
+
+        .feedback-container.active {
+            display: block;
+        }
+
+        .feedback-correct {
+            background: #e8f5e9;
+            border: 2px solid #4caf50;
+            color: #2e7d32;
+        }
+
+        .feedback-incorrect {
+            background: #ffebee;
+            border: 2px solid #f44336;
+            color: #c62828;
+        }
+
+        .feedback-icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .feedback-message {
+            font-size: 1.1em;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .correct-answer-display {
+            margin-top: 10px;
+            padding: 10px;
+            background: rgba(0,0,0,0.05);
+            border-radius: 5px;
+            font-size: 0.95em;
+        }
+
+        /* Buttons */
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        /* Results Screen */
+        .results-container {
+            display: none;
+            text-align: center;
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            animation: fadeIn 0.5s ease;
+        }
+
+        .results-container.active {
+            display: block;
+        }
+
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            color: white;
+            font-size: 3em;
+            font-weight: bold;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .results-message {
+            font-size: 1.8em;
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .results-details {
+            font-size: 1.1em;
+            color: #666;
+            margin: 20px 0;
+        }
+
+        .performance-emoji {
+            font-size: 3em;
+            margin: 20px 0;
+        }
+
+        /* Animations */
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .pulse {
+            animation: pulse 0.6s ease;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        /* Footer Styles */
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 30px 20px;
+            color: rgba(255,255,255,0.9);
+            border-top: 2px solid rgba(255,255,255,0.2);
+            background: rgba(0,0,0,0.1);
+            border-radius: 10px;
+            animation: slideUp 0.6s ease;
+        }
+
+        .footer p {
+            font-size: 1em;
+            margin-bottom: 5px;
+        }
+
+        .designer-name {
+            color: #FFD700;
+            font-weight: bold;
+        }
+
+        .designer-link {
+            color: #FFD700;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .designer-link:hover {
+            transform: scale(1.1);
+            text-shadow: 0 0 10px rgba(255,215,0,0.5);
+        }
+
+        /* Encouragement Messages */
+        .encouragement-messages {
+            correct: [
+                "🎉 ممتاز جداً!",
+                "👏 إجابة صحيحة!",
+                "⭐ رائع جداً!",
+                "💪 أنت الأفضل!",
+                "🌟 عبقري!",
+                "👍 إجابة ذكية!",
+                "🚀 متقدم جداً!",
+                "😍 دقيق جداً!",
+                "✨ محترف!",
+                "🏆 بطل!"
+            ];
+            incorrect: [
+                "💪 لا تستسلم، حاول مرة أخرى",
+                "📚 تعلم جديد مهم",
+                "🎯 الإجابة الصحيحة مهمة",
+                "🔄 حاول من جديد"
+            ];
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .grade-selection {
+                grid-template-columns: 1fr;
+            }
+
+            .quiz-header {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+
+        .stats {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2em;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .stat-label {
+            color: #666;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🎓 منصة الاختبارات التفاعلية <span style="font-size: 0.7em; margin-right: 15px;">| دفعة 1 | انتظر 2</span></h1>
+            <p>اختبارات الفصل الدراسي الثالث - 1446 هـ</p>
+        </div>
+
+        <!-- Grade Selection Screen -->
+        <div id="gradeSelection" class="grade-selection">
+            <div class="grade-card" onclick="startQuiz('math3')">
+                <h3>🔢 رياضيات ثالث ابتدائي</h3>
+                <p>12 سؤال</p>
+            </div>
+            <div class="grade-card" onclick="startQuiz('math6')">
+                <h3>🔢 رياضيات سادس ابتدائي</h3>
+                <p>12 سؤال</p>
+            </div>
+            <div class="grade-card" onclick="startQuiz('english3')">
+                <h3>🌍 اللغة الإنجليزية - ثالث متوسط</h3>
+                <p>35 سؤال</p>
+            </div>
+        </div>
+
+        <!-- Quiz Container -->
+        <div id="quizContainer" class="quiz-container">
+            <div class="quiz-header">
+                <h2 id="gradeTitle">الاختبار</h2>
+                <div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-section">
+                <div class="question-number" id="questionNumber">السؤال 1 من 12</div>
+                <div class="question-text" id="questionText">السؤال سيظهر هنا</div>
+                <div class="options" id="optionsContainer"></div>
+                <div class="feedback-container" id="feedbackContainer">
+                    <div class="feedback-icon" id="feedbackIcon"></div>
+                    <div class="feedback-message" id="feedbackMessage"></div>
+                    <div class="correct-answer-display" id="correctAnswerDisplay"></div>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="btn btn-secondary" onclick="backToMenu()">العودة</button>
+                <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()" disabled>التالي</button>
+            </div>
+        </div>
+
+        <!-- Results Container -->
+        <div id="resultsContainer" class="results-container">
+            <div class="score-circle" id="scoreCircle">0%</div>
+            <div class="results-message" id="resultsMessage">أحسنت!</div>
+            <div class="performance-emoji" id="performanceEmoji">🌟</div>
+            <div class="results-details" id="resultsDetails">تفاصيل النتائج</div>
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number" id="correctCount">0</div>
+                    <div class="stat-label">إجابات صحيحة</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="totalCount">0</div>
+                    <div class="stat-label">إجمالي الأسئلة</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="percentScore">0%</div>
+                    <div class="stat-label">النسبة المئوية</div>
+                </div>
+            </div>
+            <div class="button-group">
+                <button class="btn btn-secondary" onclick="backToMenu()">قائمة البداية</button>
+                <button class="btn btn-primary" onclick="retakeQuiz()">إعادة الاختبار</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>
+            تصميم <span class="designer-name">د/فواز</span> 👨‍💼
+        </p>
+        <p>
+            <a href="https://t.me/TAqhjT3MFVE1Yzk0" target="_blank" class="designer-link">
+                👈 تفضل للمزيد هنا 📱
+            </a>
+        </p>
+    </div>
+
+    <script>
+        // Quiz Data
+        const quizzes = {
+            math3: {
+                title: 'رياضيات ثالث ابتدائي',
+                questions: [
+                    {
+                        question: 'أفضل تقدير للمسافة التي أقطعها بالقطار:',
+                        options: ['500 ملمترات', '500 سنتيمترات', '500 أمتار', '500 كيلومترات'],
+                        correct: 2
+                    },
+                    {
+                        question: 'التقدير الأنسب لكتلة سيارة:',
+                        options: ['900 ملغرام', '900 جرام', '900 كيلوجرام', '900 ملتر'],
+                        correct: 2
+                    },
+                    {
+                        question: 'الجسم الذي ليس له أوجه ولا أحرف ولا روؤس:',
+                        options: ['الأسطوانة', 'الكرة', 'المكعب', 'الهرم'],
+                        correct: 1
+                    },
+                    {
+                        question: 'اسم الشكل المستوى المجاور:',
+                        options: ['سداسي', 'خماسي', 'سباعي', 'ثماني'],
+                        correct: 1,
+                        image: '⬡'
+                    },
+                    {
+                        question: 'الوحدة الأنسب لقياس طول النملة:',
+                        options: ['الملمتر', 'السنتيمتر', 'المتر', 'الكيلومتر'],
+                        correct: 0
+                    },
+                    {
+                        question: 'طلب خالد من سعيد أن يختار كرة من صندوق فيه 10 كرات، واحدة منها فقط زرقاء. أصف احتمال اختياركرة زرقاء:',
+                        options: ['مستحيل', 'أقل احتمالاً', 'أكثر احتمالاً', 'مؤكد'],
+                        correct: 1
+                    },
+                    {
+                        question: 'سأل سعود أصدقاءه الخمسة عن عدد الساعات التي يقضونها في عمل مشروع. بحسب هذا المعدل بيانياً يقطع هذا المعدل الساعة الواحدة:',
+                        options: ['2', '3', '4', '5'],
+                        correct: 1
+                    },
+                    {
+                        question: 'مساحة الشكل المملث:',
+                        options: ['17 وحدة مربعة', '18 وحدة مربعة', '19 وحدة مربعة', '20 وحدة مربعة'],
+                        correct: 0
+                    },
+                    {
+                        question: 'التقدير الأنسب لسعة الاستحمام:',
+                        options: ['40 ملتر', '40 ملمتر', '40 لتر', '40 متر'],
+                        correct: 2
+                    },
+                    {
+                        question: 'قيمة س في الشكل الرياضي للقابل:',
+                        options: ['25°', '45°', '65°', '115°'],
+                        correct: 3
+                    },
+                    {
+                        question: 'محيط دائرة طولها 100 سم (ط ≈ 3.14):',
+                        options: ['214 سم', '21 سم', '31 سم', '2.2 سم'],
+                        correct: 0
+                    },
+                    {
+                        question: 'مساحة المشروع الرياضي للقابل:',
+                        options: ['142 سم²', '120 سم²', '71 سم²', '22 سم²'],
+                        correct: 0
+                    }
+                ]
+            },
+            math6: {
+                title: 'رياضيات سادس ابتدائي',
+                questions: [
+                    {
+                        question: 'الوحدة الأنسب لقياس طول الكتاب:',
+                        options: ['ملم', 'سم', 'م', 'كم'],
+                        correct: 1
+                    },
+                    {
+                        question: 'اكتب الكسر ⅕ في صورة نسبة مئوية:',
+                        options: ['15%', '25%', '50%', '75%'],
+                        correct: 1
+                    },
+                    {
+                        question: 'في البيان يقطع أحد القطارات 837 كيلومتراً في 3 ساعات، بحسب هذا المعدل يقطع هذا المعدل في الساعة الواحدة:',
+                        options: ['279 كم / س 1', '279 كم / س 3', '837 كم / س 1', '837 كم / س 3'],
+                        correct: 0
+                    },
+                    {
+                        question: 'مجموع قياسات ثلاث زوايا لمستطيل يساوي:',
+                        options: ['90°', '180°', '270°', '360°'],
+                        correct: 2
+                    },
+                    {
+                        question: 'إذا كان احتمال اختيار بطاقة معينة في لعبة يساوي ⅛، فإن احتمال عدم اختيار هذه البطاقة في صورة نسبة مئوية:',
+                        options: ['28%', '70%', '72%', '100%'],
+                        correct: 2
+                    },
+                    {
+                        question: 'تحتوي حديقة حيوانات على 6 خرافات وعلى 11 أرنباً و 4 غزلاناً. بتصنيف عدد الغزلان إلى العدد الكلي:',
+                        options: ['4:1', '5:1', '5:4', '16:4'],
+                        correct: 1
+                    },
+                    {
+                        question: 'من طلاب الصف السادس بتصرف ثابت ولايتهم شهر رجب. ما الكسر الاعتيادي الذي يمثل عدد الطلاب الموجودين في شهر رجبياً:',
+                        options: ['1/50', '1/5', '2/5', '1/4'],
+                        correct: 1
+                    },
+                    {
+                        question: 'يرغب سليمان أن يزرع شجيرات أزهار على الحدود الخارجية لحديقة مربعة الشكل. فإذا أراد زراعة 8 شجيرات على كل جانب، فما الحد الأدنى لعدد الشجيرات التي عليه زراعتها:',
+                        options: ['8', '16', '28', '30'],
+                        correct: 2
+                    },
+                    {
+                        question: 'يأخذ سامي قصاً خمس مرات كل 6 ذوان أثناء ممارسته تمارين الليقاتقى. بهذا المعدل عدد مرات القصات التي يأخذ فيها سامي نقصاً خلال 9 ليالٍ يساوي:',
+                        options: ['80 مرة', '96 مرة', '120 مرة', '160 مرة'],
+                        correct: 2
+                    },
+                    {
+                        question: 'يُصنف الشكل المجاور:',
+                        options: ['شبة منحرف', 'مربع', 'مريع', 'مستطيل'],
+                        correct: 0,
+                        image: '🏠'
+                    },
+                    {
+                        question: 'مساحة السطح الرياضي للمجاور:',
+                        options: ['142 سم²', '120 سم²', '71 سم²', '22 سم²'],
+                        correct: 0
+                    },
+                    {
+                        question: 'حصل سعيد على خصم بنسبة 18% من سعر مشترياته. فإذا كان ثمن القطعة 246 ريالاً، فما مقدار الخصم الذي يحصل عليه تقريباً:',
+                        options: ['250 ريال', '50 ريال', '200 ريال', '4 ريال'],
+                        correct: 1
+                    }
+                ]
+            },
+            english3: {
+                title: 'اللغة الإنجليزية - ثالث متوسط',
+                questions: [
+                    {
+                        question: 'A talkative person is someone who _______ speaks a lot.',
+                        options: ['which', 'while', 'who', 'when'],
+                        correct: 2
+                    },
+                    {
+                        question: 'He can\'t _______ waiting in line.',
+                        options: ['standing', 'stand', 'stands', 'stood'],
+                        correct: 1
+                    },
+                    {
+                        question: 'Amal couldn\'t sleep last night. She _______ be tired.',
+                        options: ['must', 'can\'t', 'so', 'such'],
+                        correct: 0
+                    },
+                    {
+                        question: 'If Ali gets the job, he _______ happy.',
+                        options: ['will be', 'won\'t be', 'ought to be', 'might be'],
+                        correct: 0
+                    },
+                    {
+                        question: '_______ is a good way to learn about other cultures.',
+                        options: ['Travel', 'Traveling', 'Travels', 'traveled'],
+                        correct: 1
+                    },
+                    {
+                        question: 'Have you _______ washed the clothes?',
+                        options: ['just', 'yet', 'already', 'never'],
+                        correct: 1
+                    },
+                    {
+                        question: 'That diamond is not real. It is _______.',
+                        options: ['thief', 'give direction', 'fake', 'steal'],
+                        correct: 2
+                    },
+                    {
+                        question: 'Some people are always _______. They don\'t have time to talk and relax.',
+                        options: ['pretend', 'in a hurry', 'steal', 'give direction'],
+                        correct: 1
+                    },
+                    {
+                        question: 'You use a toothbrush and _______ to brush your teeth.',
+                        options: ['toothpaste', 'hair dryer', 'shampoo', 'scissors'],
+                        correct: 0
+                    },
+                    {
+                        question: 'You use _______ to cut paper.',
+                        options: ['scissors', 'hair dryer', 'mirror', 'dishwashing liquid'],
+                        correct: 0
+                    },
+                    {
+                        question: 'You use _______ to dry your hair when it is wet.',
+                        options: ['shampoo', 'toothpaste', 'hairbrush', 'hair dryer'],
+                        correct: 3
+                    },
+                    {
+                        question: 'You use _______ to wash your hair.',
+                        options: ['toothpaste', 'shampoo', 'scissors', 'hairbrush'],
+                        correct: 1
+                    },
+                    {
+                        question: 'It will be to your _______ to arrive early.',
+                        options: ['farmer', 'choice', 'airshow', 'benefit'],
+                        correct: 3
+                    },
+                    {
+                        question: 'They went to a _______ in the mountains last summer.',
+                        options: ['route', 'resort', 'subject', 'choice'],
+                        correct: 1
+                    },
+                    {
+                        question: 'He won the _______ to Harvard University.',
+                        options: ['airshow', 'scholarship', 'subject', 'pollution'],
+                        correct: 1
+                    },
+                    {
+                        question: 'History is my favorite _______ at school.',
+                        options: ['subject', 'benefit', 'environment', 'farmer'],
+                        correct: 0
+                    },
+                    {
+                        question: 'Give yourself a _______ and get some rest.',
+                        options: ['host', 'break', 'chopstick', 'porter'],
+                        correct: 1
+                    },
+                    {
+                        question: 'I\'ll be fine after we _______ for a little bit.',
+                        options: ['allow', 'rest', 'expect', 'rush'],
+                        correct: 1
+                    },
+                    {
+                        question: 'The _______ helped her with her luggage.',
+                        options: ['painter', 'porter', 'writer', 'lawyer'],
+                        correct: 1
+                    },
+                    {
+                        question: 'Did you remember to _______ the taxi driver?',
+                        options: ['read', 'buy', 'tip', 'make'],
+                        correct: 2
+                    },
+                    {
+                        question: 'The _______ grows potatoes in this field.',
+                        options: ['farmer', 'policeman', 'student', 'doctor'],
+                        correct: 0
+                    },
+                    {
+                        question: 'Air _______ is a serious global problem.',
+                        options: ['graduation', 'conservationist', 'energy', 'pollution'],
+                        correct: 3
+                    },
+                    {
+                        question: 'Don\'t _______ water at your brother.',
+                        options: ['feed', 'splash', 'start', 'wear'],
+                        correct: 1
+                    },
+                    {
+                        question: 'The twins often _______ each other\'s clothes.',
+                        options: ['sell', 'drive', 'borrow', 'cut'],
+                        correct: 2
+                    },
+                    {
+                        question: 'It is a good _______ to fly with.',
+                        options: ['airline', 'flyer', 'gate', 'mask'],
+                        correct: 0
+                    },
+                    {
+                        question: 'She was the most helpful and _______ person to work with.',
+                        options: ['selfish', 'unkind', 'stupid', 'generous'],
+                        correct: 3
+                    },
+                    {
+                        question: 'Tom is ambitious and o_______ timistic. (o-a-p-u)',
+                        options: ['o-a-p-u', 'o-p-a-u', 'u-a-p-o', 'p-o-a-u'],
+                        correct: 0
+                    },
+                    {
+                        question: 'Hang on while I g___ab a cup of coffee. (c-r-t-m)',
+                        options: ['c-r-t-m', 'r-c-t-m', 'c-m-r-t', 't-r-c-m'],
+                        correct: 0
+                    },
+                    {
+                        question: 'He is the edit___r of a daily paper. (o-f-i-k)',
+                        options: ['o-f-i-k', 'f-i-o-k', 'i-o-f-k', 'o-i-f-k'],
+                        correct: 0
+                    },
+                    {
+                        question: 'He was h___rdworking and very intelligent. (f-a-n-u)',
+                        options: ['f-a-n-u', 'a-n-f-u', 'f-n-a-u', 'n-f-a-u'],
+                        correct: 0
+                    },
+                    {
+                        question: 'Will you please stop using my hairbr___sh? (i-d-k-u)',
+                        options: ['i-d-k-u', 'd-i-k-u', 'i-k-d-u', 'u-i-d-k'],
+                        correct: 0
+                    },
+                    {
+                        question: 'All my socks are dir___y. (v-f-t-k)',
+                        options: ['v-f-t-k', 'f-v-t-k', 'v-t-f-k', 't-v-f-k'],
+                        correct: 0
+                    },
+                    {
+                        question: 'A sponge absorbs liqui___s. (f-d-o-u)',
+                        options: ['f-d-o-u', 'd-f-o-u', 'f-o-d-u', 'u-d-f-o'],
+                        correct: 0
+                    },
+                    {
+                        question: 'He is always pol___te to everyone. (s-t-e-i)',
+                        options: ['s-t-e-i', 't-s-e-i', 's-e-t-i', 'e-s-t-i'],
+                        correct: 0
+                    }
+                ]
+            }
+        };
+
+        let currentQuiz = null;
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let answered = false;
+        let selectedOptionIndex = -1;
+
+        // Encouragement messages
+        const encouragementCorrect = [
+            "🎉 ممتاز جداً!",
+            "👏 إجابة صحيحة!",
+            "⭐ رائع جداً!",
+            "💪 أنت الأفضل!",
+            "🌟 عبقري!",
+            "👍 إجابة ذكية!",
+            "🚀 متقدم جداً!",
+            "😍 دقيق جداً!",
+            "✨ محترف!",
+            "🏆 بطل!"
+        ];
+
+        const encouragementIncorrect = [
+            "💪 لا تستسلم، حاول من جديد",
+            "📚 تعلم جديد مهم",
+            "🎯 الإجابة الصحيحة مهمة",
+            "🔄 حاول من جديد"
+        ];
+
+        function startQuiz(quizType) {
+            currentQuiz = quizzes[quizType];
+            currentQuestionIndex = 0;
+            score = 0;
+            answered = false;
+            selectedOptionIndex = -1;
+
+            document.getElementById('gradeSelection').style.display = 'none';
+            document.getElementById('quizContainer').classList.add('active');
+            document.getElementById('resultsContainer').classList.remove('active');
+
+            displayQuestion();
+        }
+
+        function displayQuestion() {
+            if (!currentQuiz) return;
+
+            const question = currentQuiz.questions[currentQuestionIndex];
+            const total = currentQuiz.questions.length;
+            const progress = ((currentQuestionIndex + 1) / total) * 100;
+
+            document.getElementById('gradeTitle').textContent = currentQuiz.title;
+            document.getElementById('questionNumber').textContent = `السؤال ${currentQuestionIndex + 1} من ${total}`;
+            document.getElementById('questionText').textContent = question.question;
+            document.getElementById('progressFill').style.width = progress + '%';
+
+            const optionsContainer = document.getElementById('optionsContainer');
+            optionsContainer.innerHTML = '';
+
+            question.options.forEach((option, index) => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'option';
+                optionDiv.textContent = option;
+                optionDiv.onclick = () => selectOption(index);
+                optionsContainer.appendChild(optionDiv);
+            });
+
+            document.getElementById('feedbackContainer').classList.remove('active');
+            document.getElementById('nextBtn').disabled = true;
+            answered = false;
+            selectedOptionIndex = -1;
+        }
+
+        function selectOption(index) {
+            if (answered) return;
+
+            selectedOptionIndex = index;
+            answered = true;
+
+            const question = currentQuiz.questions[currentQuestionIndex];
+            const options = document.querySelectorAll('.option');
+            const isCorrect = index === question.correct;
+
+            // Show all options
+            options.forEach((option, i) => {
+                option.classList.add('disabled');
+                if (i === question.correct) {
+                    option.classList.add('correct');
+                } else if (i === index && !isCorrect) {
+                    option.classList.add('incorrect');
+                }
+            });
+
+            // Show feedback
+            const feedbackContainer = document.getElementById('feedbackContainer');
+            feedbackContainer.classList.add('active');
+            feedbackContainer.classList.remove('feedback-incorrect', 'feedback-correct');
+
+            const feedbackIcon = document.getElementById('feedbackIcon');
+            const feedbackMessage = document.getElementById('feedbackMessage');
+            const correctAnswerDisplay = document.getElementById('correctAnswerDisplay');
+
+            if (isCorrect) {
+                score++;
+                feedbackContainer.classList.add('feedback-correct');
+                const randomMessage = encouragementCorrect[Math.floor(Math.random() * encouragementCorrect.length)];
+                feedbackIcon.textContent = '✅';
+                feedbackMessage.textContent = randomMessage;
+                correctAnswerDisplay.innerHTML = '';
+            } else {
+                feedbackContainer.classList.add('feedback-incorrect');
+                const randomMessage = encouragementIncorrect[Math.floor(Math.random() * encouragementIncorrect.length)];
+                feedbackIcon.textContent = '❌';
+                feedbackMessage.textContent = randomMessage;
+                correctAnswerDisplay.innerHTML = `<strong>الإجابة الصحيحة:</strong> ${question.options[question.correct]}`;
+            }
+
+            document.getElementById('nextBtn').disabled = false;
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+
+            if (currentQuestionIndex < currentQuiz.questions.length) {
+                displayQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            document.getElementById('quizContainer').classList.remove('active');
+            document.getElementById('resultsContainer').classList.add('active');
+
+            const total = currentQuiz.questions.length;
+            const percentage = Math.round((score / total) * 100);
+
+            document.getElementById('scoreCircle').textContent = percentage + '%';
+            document.getElementById('correctCount').textContent = score;
+            document.getElementById('totalCount').textContent = total;
+            document.getElementById('percentScore').textContent = percentage + '%';
+
+            let message = '';
+            let emoji = '';
+
+            if (percentage === 100) {
+                message = 'أحسنت! إجابات مثالية! 🌟';
+                emoji = '🏆';
+            } else if (percentage >= 90) {
+                message = 'ممتاز جداً! أداء استثنائي!';
+                emoji = '🌟';
+            } else if (percentage >= 80) {
+                message = 'بارك الله فيك! أداء جيد جداً!';
+                emoji = '👏';
+            } else if (percentage >= 70) {
+                message = 'حسناً! لكن يمكنك تحسن أكثر!';
+                emoji = '👍';
+            } else if (percentage >= 60) {
+                message = 'مقبول! استمر في المحاولة!';
+                emoji = '💪';
+            } else {
+                message = 'لا تستسلم! حاول من جديد!';
+                emoji = '🔄';
+            }
+
+            document.getElementById('resultsMessage').textContent = message;
+            document.getElementById('performanceEmoji').textContent = emoji;
+            document.getElementById('resultsDetails').textContent = `لقد أجبت بشكل صحيح على ${score} من ${total} أسئلة`;
+        }
+
+        function backToMenu() {
+            document.getElementById('quizContainer').classList.remove('active');
+            document.getElementById('resultsContainer').classList.remove('active');
+            document.getElementById('gradeSelection').style.display = 'grid';
+            currentQuiz = null;
+        }
+
+        function retakeQuiz() {
+            if (currentQuiz) {
+                const quizType = Object.keys(quizzes).find(key => quizzes[key].title === currentQuiz.title);
+                startQuiz(quizType);
+            }
+        }
+
+        // Initialize
+        window.onload = () => {
+            console.log('منصة الاختبارات التفاعلية جاهزة!');
+        };
+    </script>
+</body>
+</html>
