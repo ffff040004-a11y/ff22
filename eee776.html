@@ -143,18 +143,31 @@ textarea:focus{border-color:#a855f7;box-shadow:0 0 0 5px rgba(168,85,247,.12)}
     </div>
 
     <div id="quiz" class="tab" style="display:none">
-      <div class="toolbar"><h2 class="title">🏆 تحدي المفردات</h2><button class="btn" onclick="resetQuiz()">إعادة التحدي</button></div>
-      <div class="quiz-area" id="quizArea"></div>
+      <div class="toolbar"><h2 class="title">🏆 تحدي المفردات الشامل</h2><button class="btn" onclick="resetQuiz()">إعادة التحدي</button></div>
+      <div class="sample">يشمل التحدي مفردات جميع الوحدات من 5 إلى 8، مع خلط الأسئلة حتى لا يصير الحفظ مثل نسخ الواجب آخر الحصة.</div>
+      <div class="quiz-area" id="quizArea" style="margin-top:14px"></div>
     </div>
 
     <div id="builder" class="tab" style="display:none">
-      <div class="toolbar"><h2 class="title">🧩 مُكوّن الجمل</h2><button class="btn alt" onclick="newBuilder()">جملة جديدة</button></div>
-      <div class="box">
+      <div class="toolbar"><h2 class="title">🧩 مُكوّن الجمل الشامل</h2><button class="btn alt" onclick="newBuilder()">جملة جديدة</button></div>
+      <div class="sample">تم توسيع مكوّن الجمل ليغطي جمل جميع الوحدات 5–8، مع اختيار الوحدة أو التدريب العشوائي الشامل.</div>
+      <div class="box" style="margin-top:14px">
+        <h3>اختر نطاق التدريب</h3>
+        <div class="row" style="margin-bottom:10px">
+          <button class="btn alt" onclick="setBuilderUnit('all')">كل الوحدات</button>
+          <button class="btn alt" onclick="setBuilderUnit(5)">Unit 5</button>
+          <button class="btn alt" onclick="setBuilderUnit(6)">Unit 6</button>
+          <button class="btn alt" onclick="setBuilderUnit(7)">Unit 7</button>
+          <button class="btn alt" onclick="setBuilderUnit(8)">Unit 8</button>
+        </div>
+        <div class="sample" id="builderScope">النطاق الحالي: كل الوحدات</div>
+      </div>
+      <div class="box" style="margin-top:14px">
         <h3>رتّب الكلمات لتكوين جملة صحيحة</h3>
         <div class="sample en" id="builderTarget"></div>
         <div class="words" id="builderWords" style="margin:14px 0"></div>
         <textarea id="builderAnswer" style="min-height:90px" placeholder="Click words in order..."></textarea>
-        <div class="row"><button class="btn good" onclick="checkBuilder()">تحقق</button><button class="btn alt" onclick="clearBuilder()">مسح</button></div>
+        <div class="row"><button class="btn good" onclick="checkBuilder()">تحقق</button><button class="btn alt" onclick="clearBuilder()">مسح</button><button class="btn warn" onclick="showBuilderHint()">تلميح</button></div>
         <div class="feedback" id="builderFeedback"></div>
       </div>
     </div>
@@ -204,42 +217,176 @@ function checkWriting(){
 function insertStarter(){ $('writing').value += (units[current].starter); $('writing').focus();}
 function clearWriting(){ $('writing').value='';}
 const questions=[
- ['What does “favorite movie” mean?','الفيلم المفضل',['الفيلم المفضل','رحلة ميدانية','قميص أزرق'],0],
- ['Which word fits Outdoor Safety?','careful',['cotton','careful','aquarium'],1],
- ['Where can we see sea animals?','aquarium',['cinema','aquarium','road'],1],
- ['Which item is an outfit word?','jeans',['jeans','ocean','traffic light'],0],
- ['Which character quality is positive?','brave',['brave','stranger','wrong'],0],
- ['Complete: I should not talk to _____.','strangers',['dresses','strangers','movies'],1],
- ['Complete: My favorite outfit is a pink ____.','dress',['dress','road','ticket'],0],
- ['Complete: The directions are ____.','easy',['easy','blue','kind'],0]
+ // Unit 5: My Favorite Movie
+ ['Unit 5 • What does “favorite movie” mean?','الفيلم المفضل',['الفيلم المفضل','رحلة ميدانية','عبور الطريق'],0],
+ ['Unit 5 • What does “cartoon movie” mean?','فيلم كرتوني',['فيلم كرتوني','مركز العلوم','ملابس قطنية'],0],
+ ['Unit 5 • What does “character” mean?','شخصية',['شخصية','إشارة مرور','اتجاهات'],0],
+ ['Unit 5 • Choose the correct meaning of “interesting”.','ممتع / شيق',['ممتع / شيق','خطير','قطني'],0],
+ ['Unit 5 • Which word describes a good hero?','brave',['brave','road','dress'],0],
+ ['Unit 5 • Elsa is my favorite _____.','character',['character','outfit','aquarium'],0],
+ ['Unit 5 • I like it because it is _____.','exciting',['exciting','stranger','pants'],0],
+ ['Unit 5 • A kind person is _____.','nice and helpful',['nice and helpful','a place with fish','a traffic sign'],0],
+
+ // Unit 6: Outdoor Safety
+ ['Unit 6 • What does “Outdoor Safety” mean?','السلامة خارج المنزل',['السلامة خارج المنزل','الفيلم المفضل','ملابسي المفضلة'],0],
+ ['Unit 6 • Complete: While crossing the road, look _____.','right and left',['right and left','pink and blue','cotton and denim'],0],
+ ['Unit 6 • Which word fits safety?','careful',['careful','cinema','dress'],0],
+ ['Unit 6 • “safe” means _____.','آمن',['آمن','رحلة','قميص'],0],
+ ['Unit 6 • I should not talk to _____.','strangers',['strangers','families','movies'],0],
+ ['Unit 6 • What does “outside” mean?','خارج المنزل',['خارج المنزل','داخل الحقيبة','في السينما'],0],
+ ['Unit 6 • Safety is _____.','important',['important','pink','ocean'],0],
+ ['Unit 6 • Which picture would match “crossing road”?','a street/road',['a street/road','a pink dress','an aquarium'],0],
+
+ // Unit 7: My Field Trip
+ ['Unit 7 • What does “field trip” mean?','رحلة ميدانية',['رحلة ميدانية','فيلم كرتوني','ملابس مفضلة'],0],
+ ['Unit 7 • Where can we see sea animals?','aquarium',['aquarium','cinema','road'],0],
+ ['Unit 7 • What does “ocean” mean?','المحيط',['المحيط','معطف','شخصية'],0],
+ ['Unit 7 • A place to learn science is _____.','science center',['science center','pink dress','traffic light'],0],
+ ['Unit 7 • The directions are _____.','easy',['easy','kind','blue'],0],
+ ['Unit 7 • We can see many ____ there.','sea animals',['sea animals','strangers','pants'],0],
+ ['Unit 7 • In a field trip, we ____ new things.','learn',['learn','wear','cross'],0],
+ ['Unit 7 • The trip can be fun and _____.','interesting',['interesting','wrong','cotton'],0],
+
+ // Unit 8: My Favorite Outfit
+ ['Unit 8 • What does “outfit” mean?','ملابس / زي',['ملابس / زي','محيط','سلامة'],0],
+ ['Unit 8 • Which word is clothing?','dress',['dress','aquarium','road'],0],
+ ['Unit 8 • Which word is clothing?','pants',['pants','ocean','character'],0],
+ ['Unit 8 • Which word is clothing?','T-shirt',['T-shirt','ticket','traffic light'],0],
+ ['Unit 8 • What can you wear in cold weather?','coat',['coat','cinema','ocean'],0],
+ ['Unit 8 • What do you wear on your feet?','shoes',['shoes','animals','directions'],0],
+ ['Unit 8 • Complete: My favorite outfit is a pink _____.','dress',['dress','trip','road'],0],
+ ['Unit 8 • I take good care of _____.','it',['it','strangers','the road'],0]
 ];
+function shuffleQuestions(){
+ for(let i=questions.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[questions[i],questions[j]]=[questions[j],questions[i]];}
+}
 function renderQuiz(){
+ if(!window.quizShuffled){shuffleQuestions();window.quizShuffled=true;}
  $('quizArea').innerHTML=questions.map((q,i)=>`<div class="q"><div class="q-title">${i+1}) ${q[0]}</div><div class="opts">${q[2].map((o,j)=>`<button class="opt" onclick="answer(${i},${j},this)">${o}</button>`).join('')}</div></div>`).join('');
 }
 function answer(i,j,el){
  if(answered[i]) return; answered[i]=true; const ok=j===questions[i][3]; el.classList.add(ok?'correct':'wrong');
- if(ok){addScore();pop(true,'ممتاز! إجابتك صحيحة.')} else {pop(false,'ليست هذه الإجابة. راجع الكلمات المساعدة.'); el.parentElement.children[questions[i][3]].classList.add('correct');}
+ if(ok){addScore();pop(true,'ممتاز! إجابتك صحيحة.')} else {pop(false,'ليست هذه الإجابة. راجع كلمات الوحدة.'); el.parentElement.children[questions[i][3]].classList.add('correct');}
 }
-function resetQuiz(){answered={};renderQuiz();}
-const builderSentences=['My favorite movie is Frozen.','Outdoor safety is important.','I have planned a field trip.','My favorite outfit is a pink dress.','I should not talk to strangers.'];
+function resetQuiz(){answered={};window.quizShuffled=false;renderQuiz();}
+const builderBank={
+  5:{title:'Unit 5 • My Favorite Movie',sentences:[
+    'My favorite movie is Frozen.',
+    'It is a cartoon movie.',
+    'Elsa is my favorite character.',
+    'I like it because it is interesting.',
+    'My favorite movie is Moana.',
+    'Moana is an exciting movie.',
+    'Moana is brave and kind.',
+    'I like it because it teaches us to be strong.',
+    'The movie is fun to watch.',
+    'The main character is brave.',
+    'I enjoy watching cartoon movies.',
+    'My family likes this movie too.',
+    'The story is exciting.',
+    'The characters are nice.',
+    'I watch this movie at home.',
+    'I feel happy when I watch it.'
+  ]},
+  6:{title:'Unit 6 • Outdoor Safety',sentences:[
+    'Outdoor safety is important.',
+    'I should be careful outside.',
+    'I should not talk to strangers.',
+    'While crossing the road I looked right and left.',
+    'I cross the road with my family.',
+    'I stay safe outside.',
+    'I should use the crosswalk.',
+    'I should stop at the traffic light.',
+    'I should wear a helmet when I ride a bike.',
+    'I should wear a safety vest.',
+    'I should listen to my parents.',
+    'I should walk on the sidewalk.',
+    'I should not run in the street.',
+    'It is important to follow safety rules.',
+    'I play in a safe place.',
+    'I look carefully before I cross the road.'
+  ]},
+  7:{title:'Unit 7 • My Field Trip',sentences:[
+    'I have planned a field trip.',
+    'My field trip was to the aquarium.',
+    'We can see many sea animals there.',
+    'The directions are easy.',
+    'I went to the science center.',
+    'I learned many new things.',
+    'I have planned a field trip to the aquarium.',
+    'It has an ocean.',
+    'The aquarium has many fish.',
+    'The science center is fun.',
+    'We saw many new things there.',
+    'I enjoyed the field trip.',
+    'I went with my classmates.',
+    'We learned about sea animals.',
+    'The trip was interesting.',
+    'I want to go there again.'
+  ]},
+  8:{title:'Unit 8 • My Favorite Outfit',sentences:[
+    'My favorite outfit is a pink dress.',
+    'My favorite outfit is a hoodie and jeans.',
+    'It is made of cotton.',
+    'It is nice and soft.',
+    'I take good care of it.',
+    'I wear blue shoes.',
+    'I like my favorite outfit.',
+    'I wear a T-shirt and pants.',
+    'My dress is pink.',
+    'My jeans are blue.',
+    'My coat is warm.',
+    'My shoes are clean.',
+    'I put my clothes in the closet.',
+    'I fold my clothes carefully.',
+    'This outfit is comfortable.',
+    'I wear it when I go out.'
+  ]}
+};
+let builderScope='all';
+function getBuilderSentences(){
+  if(builderScope==='all') return Object.values(builderBank).flatMap(u=>u.sentences);
+  return builderBank[builderScope].sentences;
+}
+function setBuilderUnit(unit){
+  builderScope=unit;
+  const label=unit==='all'?'كل الوحدات':builderBank[unit].title;
+  $('builderScope').textContent='النطاق الحالي: '+label+' — عدد الجمل المتاحة: '+getBuilderSentences().length;
+  newBuilder();
+}
 let target='';
 function newBuilder(){
- target=builderSentences[Math.floor(Math.random()*builderSentences.length)];
- $('builderTarget').textContent='كوّن هذه الجملة بالترتيب الصحيح.';
- let arr=target.replace('.','').split(' ').sort(()=>Math.random()-.5);
- $('builderWords').innerHTML=arr.map(w=>`<button class="chip" onclick="pickWord('${w.replace(/'/g,"\\'")}')">${w}</button>`).join('');
- $('builderAnswer').value=''; $('builderFeedback').className='feedback';
+ const list=getBuilderSentences();
+ target=list[Math.floor(Math.random()*list.length)];
+ $('builderTarget').textContent='كوّن هذه الجملة بالترتيب الصحيح: '+target.replace(/[A-Za-z]/g,'_');
+ let arr=target.replace(/[.!?]/g,'').split(' ').filter(Boolean).sort(()=>Math.random()-.5);
+ $('builderWords').innerHTML=arr.map((w,i)=>`<button class="chip" data-word="${w.replace(/"/g,'&quot;')}" onclick="pickWord(this)">${w}</button>`).join('');
+ $('builderAnswer').value=''; $('builderFeedback').className='feedback'; $('builderFeedback').textContent='';
 }
-function pickWord(w){$('builderAnswer').value += ($('builderAnswer').value?' ':'')+w;}
-function clearBuilder(){ $('builderAnswer').value='';}
+function pickWord(btn){
+ const w=btn.dataset.word;
+ $('builderAnswer').value += ($('builderAnswer').value?' ':'')+w;
+ btn.disabled=true;
+ btn.style.opacity='.55';
+}
+function clearBuilder(){
+ $('builderAnswer').value='';
+ document.querySelectorAll('#builderWords .chip').forEach(b=>{b.disabled=false;b.style.opacity='1';});
+}
+function showBuilderHint(){
+ const words=target.replace(/[.!?]/g,'').split(' ');
+ $('builderFeedback').className='feedback note show';
+ $('builderFeedback').textContent='تلميح: أول كلمتين في الجملة: '+words.slice(0,2).join(' ');
+}
 function checkBuilder(){
- const ans=$('builderAnswer').value.trim().replace(/\s+/g,' ') + '.';
- const ok=ans.toLowerCase()===target.toLowerCase();
+ let ans=$('builderAnswer').value.trim().replace(/\s+/g,' ');
+ const cleanTarget=target.replace(/[.!?]/g,'').trim().toLowerCase();
+ const ok=ans.toLowerCase()===cleanTarget;
  $('builderFeedback').className='feedback show '+(ok?'good':'bad');
  $('builderFeedback').textContent=ok?'يا سلام برافو عليك! ترتيب الجملة صحيح.':'حظ أوفر. الترتيب الصحيح: '+target;
  if(ok){addScore();pop(true,'ترتيب بطل.')}
 }
-renderCards();loadUnit();renderQuiz();newBuilder();
+renderCards();loadUnit();renderQuiz();setBuilderUnit('all');
 </script>
 </body>
 </html>
