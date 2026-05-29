@@ -1,0 +1,1871 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>منصة المسابقات التعليمية التفاعلية | دفعة 1 - انتظر 2</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap');
+
+  :root {
+    --primary: #1a237e;
+    --secondary: #0d47a1;
+    --accent: #ffd600;
+    --success: #00c853;
+    --error: #d50000;
+    --bg: #0a0e27;
+    --card: #111433;
+    --text: #e8eaf6;
+    --gold: #ffd700;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Tajawal', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Stars background */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: 
+      radial-gradient(ellipse at 20% 50%, rgba(26,35,126,0.3) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 20%, rgba(13,71,161,0.2) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Animated particles */
+  .particles {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .particle {
+    position: absolute;
+    width: 3px; height: 3px;
+    background: rgba(255,214,0,0.6);
+    border-radius: 50%;
+    animation: float linear infinite;
+  }
+
+  @keyframes float {
+    0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { transform: translateY(-100px) rotate(720deg); opacity: 0; }
+  }
+
+  /* Header */
+  .header {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding: 30px 20px 20px;
+    background: linear-gradient(135deg, rgba(26,35,126,0.9), rgba(13,71,161,0.8));
+    border-bottom: 3px solid var(--gold);
+    box-shadow: 0 4px 30px rgba(255,215,0,0.2);
+  }
+
+  .header-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #ffd700, #ff8f00);
+    color: #1a237e;
+    padding: 6px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 800;
+    margin-bottom: 12px;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,215,0,0.4); }
+    50% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(255,215,0,0); }
+  }
+
+  .header h1 {
+    font-size: clamp(22px, 5vw, 38px);
+    font-weight: 900;
+    background: linear-gradient(135deg, #ffd700, #ffffff, #ffd700);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: none;
+    margin-bottom: 8px;
+  }
+
+  .header-sub {
+    font-size: 14px;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 5px;
+  }
+
+  /* Main container */
+  .container {
+    position: relative;
+    z-index: 5;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  /* Screen management */
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  /* Welcome screen */
+  .welcome-screen {
+    text-align: center;
+    padding: 40px 20px;
+  }
+
+  .welcome-title {
+    font-size: clamp(24px, 5vw, 42px);
+    font-weight: 900;
+    color: var(--gold);
+    margin-bottom: 15px;
+    animation: glow 2s ease-in-out infinite alternate;
+  }
+
+  @keyframes glow {
+    from { text-shadow: 0 0 10px rgba(255,215,0,0.3); }
+    to { text-shadow: 0 0 30px rgba(255,215,0,0.8), 0 0 60px rgba(255,215,0,0.4); }
+  }
+
+  .welcome-subtitle {
+    font-size: 18px;
+    color: rgba(255,255,255,0.8);
+    margin-bottom: 40px;
+  }
+
+  /* Grade cards */
+  .grades-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
+  }
+
+  .grade-card {
+    background: linear-gradient(135deg, var(--card), rgba(26,35,126,0.5));
+    border: 2px solid rgba(255,215,0,0.2);
+    border-radius: 20px;
+    padding: 30px 20px;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .grade-card::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(circle, rgba(255,215,0,0.1) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .grade-card:hover::before { opacity: 1; }
+
+  .grade-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    border-color: var(--gold);
+    box-shadow: 0 20px 60px rgba(255,215,0,0.3);
+  }
+
+  .grade-icon {
+    font-size: 50px;
+    margin-bottom: 15px;
+    display: block;
+  }
+
+  .grade-title {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+
+  .grade-desc {
+    font-size: 14px;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 15px;
+  }
+
+  .grade-subjects {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+
+  .subject-tag {
+    background: rgba(255,215,0,0.15);
+    border: 1px solid rgba(255,215,0,0.3);
+    color: var(--gold);
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .start-btn {
+    background: linear-gradient(135deg, #ffd700, #ff8f00);
+    color: #1a237e;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-family: 'Tajawal', sans-serif;
+    width: 100%;
+  }
+
+  .start-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(255,215,0,0.5);
+  }
+
+  /* Subject selection */
+  .subject-screen {
+    padding: 20px;
+  }
+
+  .back-btn {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 14px;
+    margin-bottom: 20px;
+    transition: all 0.3s;
+  }
+
+  .back-btn:hover { background: rgba(255,255,255,0.2); }
+
+  .section-title {
+    text-align: center;
+    font-size: clamp(20px, 4vw, 32px);
+    font-weight: 800;
+    color: var(--gold);
+    margin-bottom: 25px;
+  }
+
+  .subjects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+  }
+
+  .subject-card {
+    background: linear-gradient(135deg, var(--card), rgba(26,35,126,0.5));
+    border: 2px solid rgba(255,215,0,0.2);
+    border-radius: 15px;
+    padding: 25px 15px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: center;
+  }
+
+  .subject-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(255,215,0,0.2);
+  }
+
+  .subject-emoji { font-size: 40px; margin-bottom: 10px; display: block; }
+  .subject-name { font-size: 18px; font-weight: 700; color: var(--gold); margin-bottom: 5px; }
+  .subject-count { font-size: 13px; color: rgba(255,255,255,0.5); }
+
+  /* Quiz screen */
+  .quiz-screen { padding: 20px; }
+
+  .quiz-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .quiz-info {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .quiz-badge {
+    background: rgba(255,215,0,0.15);
+    border: 1px solid rgba(255,215,0,0.3);
+    color: var(--gold);
+    padding: 6px 15px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .score-display {
+    background: linear-gradient(135deg, rgba(0,200,83,0.2), rgba(0,200,83,0.1));
+    border: 1px solid rgba(0,200,83,0.4);
+    color: #69f0ae;
+    padding: 6px 15px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  /* Progress bar */
+  .progress-container {
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    height: 8px;
+    margin-bottom: 25px;
+    overflow: hidden;
+  }
+
+  .progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #ffd700, #ff8f00);
+    border-radius: 10px;
+    transition: width 0.5s ease;
+    position: relative;
+  }
+
+  .progress-bar::after {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 20px; height: 100%;
+    background: rgba(255,255,255,0.4);
+    border-radius: 10px;
+    animation: shimmer 1.5s infinite;
+  }
+
+  @keyframes shimmer {
+    0% { opacity: 0; }
+    50% { opacity: 1; }
+    100% { opacity: 0; }
+  }
+
+  /* Question card */
+  .question-card {
+    background: linear-gradient(135deg, var(--card), rgba(26,35,126,0.6));
+    border: 2px solid rgba(255,215,0,0.15);
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+    animation: slideIn 0.4s ease;
+  }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .question-number {
+    font-size: 13px;
+    color: rgba(255,215,0,0.7);
+    margin-bottom: 12px;
+    font-weight: 600;
+  }
+
+  .question-text {
+    font-size: clamp(16px, 3vw, 20px);
+    font-weight: 700;
+    color: white;
+    line-height: 1.7;
+    margin-bottom: 25px;
+  }
+
+  /* Answer options */
+  .options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  @media (max-width: 600px) {
+    .options-grid { grid-template-columns: 1fr; }
+  }
+
+  .option-btn {
+    background: rgba(255,255,255,0.05);
+    border: 2px solid rgba(255,255,255,0.15);
+    color: white;
+    padding: 15px 20px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    text-align: right;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .option-btn::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, rgba(255,215,0,0.1), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .option-btn:hover:not(:disabled)::before { opacity: 1; }
+  .option-btn:hover:not(:disabled) {
+    border-color: rgba(255,215,0,0.5);
+    transform: translateX(-3px);
+    box-shadow: 0 5px 20px rgba(255,215,0,0.15);
+  }
+
+  .option-letter {
+    background: rgba(255,215,0,0.2);
+    color: var(--gold);
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 800;
+    flex-shrink: 0;
+  }
+
+  .option-btn.correct {
+    background: linear-gradient(135deg, rgba(0,200,83,0.3), rgba(0,200,83,0.1));
+    border-color: #00c853;
+    animation: correctAnim 0.5s ease;
+  }
+
+  .option-btn.correct .option-letter {
+    background: #00c853;
+    color: white;
+  }
+
+  @keyframes correctAnim {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+  }
+
+  .option-btn.wrong {
+    background: linear-gradient(135deg, rgba(213,0,0,0.3), rgba(213,0,0,0.1));
+    border-color: #d50000;
+    animation: shake 0.5s ease;
+  }
+
+  .option-btn.wrong .option-letter {
+    background: #d50000;
+    color: white;
+  }
+
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-8px); }
+    40% { transform: translateX(8px); }
+    60% { transform: translateX(-5px); }
+    80% { transform: translateX(5px); }
+  }
+
+  .option-btn:disabled { cursor: not-allowed; }
+
+  /* Feedback popup */
+  .feedback-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.7);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+
+  .feedback-overlay.show {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .feedback-box {
+    background: linear-gradient(135deg, #1a237e, #0d47a1);
+    border-radius: 25px;
+    padding: 40px;
+    text-align: center;
+    max-width: 450px;
+    width: 90%;
+    transform: scale(0.7);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 3px solid transparent;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .feedback-overlay.show .feedback-box {
+    transform: scale(1);
+  }
+
+  .feedback-box.correct-box {
+    border-color: #00c853;
+    box-shadow: 0 0 60px rgba(0,200,83,0.4);
+  }
+
+  .feedback-box.wrong-box {
+    border-color: #d50000;
+    box-shadow: 0 0 60px rgba(213,0,0,0.4);
+  }
+
+  .feedback-emoji {
+    font-size: 70px;
+    margin-bottom: 15px;
+    display: block;
+    animation: bounceIn 0.6s ease;
+  }
+
+  @keyframes bounceIn {
+    0% { transform: scale(0); }
+    60% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+  }
+
+  .feedback-title {
+    font-size: 28px;
+    font-weight: 900;
+    margin-bottom: 10px;
+  }
+
+  .feedback-title.correct-title { color: #69f0ae; }
+  .feedback-title.wrong-title { color: #ff5252; }
+
+  .feedback-msg {
+    font-size: 16px;
+    color: rgba(255,255,255,0.8);
+    margin-bottom: 15px;
+    line-height: 1.6;
+  }
+
+  .correct-answer-box {
+    background: rgba(0,200,83,0.15);
+    border: 1px solid rgba(0,200,83,0.3);
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: #69f0ae;
+  }
+
+  .next-btn {
+    background: linear-gradient(135deg, #ffd700, #ff8f00);
+    color: #1a237e;
+    border: none;
+    padding: 14px 40px;
+    border-radius: 25px;
+    font-size: 17px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-family: 'Tajawal', sans-serif;
+  }
+
+  .next-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(255,215,0,0.5);
+  }
+
+  /* Confetti */
+  .confetti-container {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 999;
+    overflow: hidden;
+  }
+
+  .confetti-piece {
+    position: absolute;
+    width: 10px; height: 10px;
+    border-radius: 2px;
+    animation: confettiFall linear forwards;
+  }
+
+  @keyframes confettiFall {
+    0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+  }
+
+  /* Results screen */
+  .results-screen {
+    text-align: center;
+    padding: 40px 20px;
+  }
+
+  .results-trophy {
+    font-size: 80px;
+    margin-bottom: 20px;
+    animation: trophyAnim 1s ease;
+  }
+
+  @keyframes trophyAnim {
+    0% { transform: scale(0) rotate(-180deg); }
+    60% { transform: scale(1.2) rotate(10deg); }
+    100% { transform: scale(1) rotate(0deg); }
+  }
+
+  .results-title {
+    font-size: clamp(24px, 5vw, 40px);
+    font-weight: 900;
+    color: var(--gold);
+    margin-bottom: 15px;
+  }
+
+  .score-circle {
+    width: 150px; height: 150px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #1a237e, #0d47a1);
+    border: 5px solid var(--gold);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 25px auto;
+    box-shadow: 0 0 40px rgba(255,215,0,0.4);
+  }
+
+  .score-num {
+    font-size: 42px;
+    font-weight: 900;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .score-label {
+    font-size: 14px;
+    color: rgba(255,255,255,0.6);
+  }
+
+  .results-message {
+    font-size: 20px;
+    color: rgba(255,255,255,0.85);
+    margin-bottom: 30px;
+    line-height: 1.6;
+  }
+
+  .results-btns {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .retry-btn {
+    background: linear-gradient(135deg, #ffd700, #ff8f00);
+    color: #1a237e;
+    border: none;
+    padding: 14px 35px;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-family: 'Tajawal', sans-serif;
+  }
+
+  .home-btn {
+    background: rgba(255,255,255,0.1);
+    border: 2px solid rgba(255,255,255,0.3);
+    color: white;
+    padding: 14px 35px;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-family: 'Tajawal', sans-serif;
+  }
+
+  .retry-btn:hover, .home-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(255,215,0,0.3);
+  }
+
+  /* Footer */
+  .footer {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding: 20px;
+    border-top: 1px solid rgba(255,215,0,0.2);
+    margin-top: 40px;
+    background: rgba(0,0,0,0.3);
+  }
+
+  .footer-text {
+    font-size: 15px;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 8px;
+  }
+
+  .footer-link {
+    color: var(--gold);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 16px;
+    transition: all 0.3s;
+  }
+
+  .footer-link:hover {
+    color: white;
+    text-shadow: 0 0 15px rgba(255,215,0,0.8);
+  }
+
+  /* Fireworks */
+  @keyframes firework {
+    0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+    100% { transform: translate(-50%, -50%) scale(3); opacity: 0; }
+  }
+
+  .firework {
+    position: fixed;
+    pointer-events: none;
+    z-index: 998;
+  }
+
+  .firework::before, .firework::after {
+    content: '';
+    position: absolute;
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    animation: firework 0.8s ease-out forwards;
+  }
+
+  /* Timer */
+  .timer-bar {
+    height: 4px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 2px;
+    margin-bottom: 15px;
+    overflow: hidden;
+  }
+
+  .timer-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #00c853, #ffd700, #d50000);
+    border-radius: 2px;
+    transition: width 1s linear;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .quiz-header { flex-direction: column; }
+    .feedback-box { padding: 25px; }
+    .options-grid { grid-template-columns: 1fr; }
+  }
+
+  /* Stars animation */
+  .stars {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .star {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    animation: twinkle ease-in-out infinite;
+  }
+
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.2; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.5); }
+  }
+</style>
+</head>
+<body>
+
+<!-- Particles -->
+<div class="particles" id="particles"></div>
+<div class="stars" id="stars"></div>
+<div class="confetti-container" id="confetti"></div>
+
+<!-- Header -->
+<div class="header">
+  <div class="header-badge">🏆 دفعة 1 - انتظر 2</div>
+  <h1>🎓 منصة المسابقات التعليمية التفاعلية</h1>
+  <div class="header-sub">اختبر معلوماتك وتنافس مع الأفضل</div>
+</div>
+
+<!-- Main Container -->
+<div class="container">
+
+  <!-- Welcome Screen -->
+  <div class="screen active" id="welcomeScreen">
+    <div class="welcome-screen">
+      <div class="welcome-title">✨ اختر صفك الدراسي</div>
+      <div class="welcome-subtitle">كل صف يحتوي على أسئلة متنوعة من مواد مختلفة</div>
+      
+      <div class="grades-grid">
+        
+        <!-- ثالث ابتدائي -->
+        <div class="grade-card" onclick="selectGrade('grade3_primary')">
+          <span class="grade-icon">🌱</span>
+          <div class="grade-title">الصف الثالث الابتدائي</div>
+          <div class="grade-desc">اختبار مركزي شامل</div>
+          <div class="grade-subjects">
+            <span class="subject-tag">📖 قراءة</span>
+            <span class="subject-tag">🔢 رياضيات</span>
+            <span class="subject-tag">🔬 علوم</span>
+          </div>
+          <button class="start-btn">ابدأ المسابقة 🚀</button>
+        </div>
+
+        <!-- سادس ابتدائي -->
+        <div class="grade-card" onclick="selectGrade('grade6_primary')">
+          <span class="grade-icon">⭐</span>
+          <div class="grade-title">الصف السادس الابتدائي</div>
+          <div class="grade-desc">اختبارات الفصل الثالث</div>
+          <div class="grade-subjects">
+            <span class="subject-tag">📚 لغتي</span>
+            <span class="subject-tag">🔢 رياضيات</span>
+            <span class="subject-tag">🌍 إنجليزي</span>
+          </div>
+          <button class="start-btn">ابدأ المسابقة 🚀</button>
+        </div>
+
+        <!-- ثالث متوسط -->
+        <div class="grade-card" onclick="selectGrade('grade3_middle')">
+          <span class="grade-icon">🎯</span>
+          <div class="grade-title">الصف الثالث المتوسط</div>
+          <div class="grade-desc">اختبارات مركزية متنوعة</div>
+          <div class="grade-subjects">
+            <span class="subject-tag">📚 لغتي</span>
+            <span class="subject-tag">🔢 رياضيات</span>
+            <span class="subject-tag">🔬 علوم</span>
+            <span class="subject-tag">🌍 إنجليزي</span>
+          </div>
+          <button class="start-btn">ابدأ المسابقة 🚀</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Subject Selection Screen -->
+  <div class="screen" id="subjectScreen">
+    <div class="subject-screen">
+      <button class="back-btn" onclick="goHome()">← العودة للرئيسية</button>
+      <div class="section-title" id="gradeTitle">اختر المادة</div>
+      <div class="subjects-grid" id="subjectsGrid"></div>
+    </div>
+  </div>
+
+  <!-- Quiz Screen -->
+  <div class="screen" id="quizScreen">
+    <div class="quiz-screen">
+      <div class="quiz-header">
+        <button class="back-btn" onclick="goToSubjects()">← العودة</button>
+        <div class="quiz-info">
+          <div class="quiz-badge" id="quizBadge">📚 المادة</div>
+          <div class="score-display" id="scoreDisplay">النقاط: 0</div>
+        </div>
+      </div>
+      
+      <div class="timer-bar">
+        <div class="timer-fill" id="timerFill" style="width:100%"></div>
+      </div>
+      
+      <div class="progress-container">
+        <div class="progress-bar" id="progressBar" style="width:0%"></div>
+      </div>
+      
+      <div class="question-card" id="questionCard">
+        <div class="question-number" id="questionNumber">السؤال 1 من 10</div>
+        <div class="question-text" id="questionText"></div>
+        <div class="options-grid" id="optionsGrid"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Results Screen -->
+  <div class="screen" id="resultsScreen">
+    <div class="results-screen">
+      <div class="results-trophy" id="resultsTrophy">🏆</div>
+      <div class="results-title" id="resultsTitle">أحسنت!</div>
+      <div class="score-circle">
+        <div class="score-num" id="finalScore">0</div>
+        <div class="score-label">من <span id="totalQuestions">0</span></div>
+      </div>
+      <div class="results-message" id="resultsMessage"></div>
+      <div class="results-btns">
+        <button class="retry-btn" onclick="retryQuiz()">🔄 إعادة المحاولة</button>
+        <button class="home-btn" onclick="goHome()">🏠 الرئيسية</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  <div class="footer-text">تصميم د/فواز &nbsp;|&nbsp; تفضل للمزيد هنا</div>
+  <a href="https://t.me/TAqhjT3MFVE1Yzk0" target="_blank" class="footer-link">📱 قناة التيليجرام - اضغط هنا</a>
+</div>
+
+<!-- Feedback Overlay -->
+<div class="feedback-overlay" id="feedbackOverlay">
+  <div class="feedback-box" id="feedbackBox">
+    <span class="feedback-emoji" id="feedbackEmoji">✅</span>
+    <div class="feedback-title" id="feedbackTitle">إجابة صحيحة!</div>
+    <div class="feedback-msg" id="feedbackMsg"></div>
+    <div class="correct-answer-box" id="correctAnswerBox" style="display:none"></div>
+    <button class="next-btn" onclick="nextQuestion()">التالي ←</button>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// DATA - All Questions
+// ============================================================
+
+const quizData = {
+
+  // ==================== ثالث ابتدائي ====================
+  grade3_primary: {
+    name: "الصف الثالث الابتدائي",
+    icon: "🌱",
+    subjects: {
+      reading: {
+        name: "القراءة",
+        emoji: "📖",
+        questions: [
+          {
+            q: "في قصة صاحب الجنتين، ما القيمة التي حثّ عليها النص؟",
+            options: ["الصبر", "الصدقة", "الصلاة", "بر الوالدين"],
+            correct: 1
+          },
+          {
+            q: "ما مصدر الماء الذي يُسقى به البستانان في القصة؟",
+            options: ["البحيرة", "النهر", "البئر", "المطر"],
+            correct: 1
+          },
+          {
+            q: "لماذا عاقب الله الأخ الثاني في القصة؟",
+            options: ["أكل مال أخيه", "عاق لوالديه", "مسرف في ماله", "كفر بأنعم الله"],
+            correct: 3
+          },
+          {
+            q: "ما موقف الأخ الأول من أخيه في القصة؟",
+            options: ["النصح", "التأييد", "التجاهل", "القطيعة"],
+            correct: 0
+          },
+          {
+            q: "ما نوع الأسلوب المستخدم بين الأخوين في القصة؟",
+            options: ["استجوابي", "وصفي", "سردي", "حواري"],
+            correct: 3
+          },
+          {
+            q: "عبارة 'وأصبح يقلّب كفيه' تدل على:",
+            options: ["الفرح والسرور", "الغضب والانزعاج", "الندم والتحسر", "الاستبشار والتفاؤل"],
+            correct: 2
+          },
+          {
+            q: "عبارة 'خاوية على عروشها' تدل على:",
+            options: ["الاتساع", "الخراب", "الامتلاء", "الإنتاج"],
+            correct: 1
+          },
+          {
+            q: "ما سبب منع أحد الأخوين إعطاء الفقراء المال؟",
+            options: ["البخل", "الجحود", "التكبر", "العناد"],
+            correct: 2
+          },
+          {
+            q: "في نص الخطر المتربص على الطرقات، ما الذي يسعى الإنسان لتحقيقه في وسائل النقل؟",
+            options: ["الراحة والأمان", "السرعة فقط", "الترفيه", "الاقتصاد"],
+            correct: 0
+          },
+          {
+            q: "ما الخطر الذي تشكله وسائل النقل رغم فوائدها؟",
+            options: ["التلوث البيئي", "إزهاق الأرواح والإصابات", "ارتفاع التكاليف", "الازدحام"],
+            correct: 1
+          }
+        ]
+      },
+      math: {
+        name: "الرياضيات",
+        emoji: "🔢",
+        questions: [
+          {
+            q: "أفضل تقدير للمسافة التي أقطعها بالقطار:",
+            options: ["500 مليمتر", "500 سنتيمتر", "500 أمتار", "500 كيلومترات"],
+            correct: 3
+          },
+          {
+            q: "التقدير الأنسب لكتلة سيارة:",
+            options: ["900 ملجرام", "900 جرام", "900 كيلوجرام", "900 ملمتر"],
+            correct: 2
+          },
+          {
+            q: "الجسم الذي ليس له أوجه ولا أحرف ولا رؤوس:",
+            options: ["الأسطوانة", "الكرة", "المكعب", "الهرم"],
+            correct: 1
+          },
+          {
+            q: "الوحدة الأنسب لقياس طول النملة:",
+            options: ["الملمتر", "السنتيمتر", "المتر", "الكيلومتر"],
+            correct: 0
+          },
+          {
+            q: "طلب خالد من سعود أن يختار بطاقة من صندوق فيه 1 كرات وفقط 1 زرقاء، فإن احتمال اختيار كرة زرقاء:",
+            options: ["مستحيل", "أقل احتمالاً", "أكثر احتمالاً", "مؤكد"],
+            correct: 0
+          },
+          {
+            q: "سأل سعود أصدقاءه عن عدد الساعات التي يقضونها في عمل مشروع مدرسي، ما عدد الأعمدة التي ستلزم في تمثيل البيانات إذا جمعها في 5 أعمدة؟",
+            options: ["2", "3", "4", "5"],
+            correct: 3
+          },
+          {
+            q: "مساحة الشكل المظلل (مستطيل 4×5 وحدات):",
+            options: ["17 وحدة مربعة", "18 وحدة مربعة", "19 وحدة مربعة", "20 وحدة مربعة"],
+            correct: 3
+          },
+          {
+            q: "التقدير الأنسب لسعة حوض الاستحمام:",
+            options: ["40 ملتر", "40 لتر", "40 ملمتر", "40 متر"],
+            correct: 1
+          },
+          {
+            q: "الشكل السداسي المنتظم يُصنّف على أنه:",
+            options: ["شبه منحرف", "مربع", "معين", "مستطيل"],
+            correct: 0
+          },
+          {
+            q: "تُصنف الدائرة بأنها مضلع:",
+            options: ["صح", "خطأ", "أحياناً", "لا يمكن التحديد"],
+            correct: 1
+          }
+        ]
+      },
+      science: {
+        name: "العلوم",
+        emoji: "🔬",
+        questions: [
+          {
+            q: "ما اسم الشكل المستوي المجاور ذو الستة أضلاع المتساوية؟",
+            options: ["رباعي", "خماسي", "سداسي", "سباعي"],
+            correct: 2
+          },
+          {
+            q: "المستطيل له محور تماثل:",
+            options: ["صح", "خطأ", "أحياناً", "لا يمكن التحديد"],
+            correct: 0
+          },
+          {
+            q: "هذا الشكل يُسمى مخروط:",
+            options: ["صح", "خطأ", "أحياناً", "لا أعرف"],
+            correct: 0
+          },
+          {
+            q: "حجم المجسم المجاور (مكعب) 13 وحدة مكعبية:",
+            options: ["صح", "خطأ", "أحياناً", "لا يمكن التحديد"],
+            correct: 1
+          },
+          {
+            q: "يستطيع محمود أن يقفز 70 قفزة في دقيقتين، ويستطيع عثمان أن يقفز 150 قفزة في 5 دقائق، هذان المعدلان:",
+            options: ["متساويان", "محمود أسرع", "عثمان أسرع", "لا يمكن المقارنة"],
+            correct: 0
+          },
+          {
+            q: "باستعمال مبدأ العد الكلي فإن العدد الكلي لنتائج تدوير أرقام ومؤشر قرص تدوير مقسم 8 أجزاء هو 4 نتائج:",
+            options: ["صح", "خطأ", "أحياناً", "لا يمكن التحديد"],
+            correct: 1
+          },
+          {
+            q: "الاحتمال هو فرصة، وقوع حادثة معينة:",
+            options: ["صح", "خطأ", "أحياناً", "لا يمكن التحديد"],
+            correct: 0
+          },
+          {
+            q: "حل التناسب: 4/9 = 16/م هو م = 20:",
+            options: ["صح", "خطأ", "أحياناً", "لا يمكن التحديد"],
+            correct: 1
+          },
+          {
+            q: "يُكتب الكسر العشري 1.75 في صورة نسبة مئوية بالشكل:",
+            options: ["17.5%", "175%", "1.75%", "0.175%"],
+            correct: 1
+          },
+          {
+            q: "العددان التاليان في النمط: 40، 45، 50، ...",
+            options: ["55، 60", "54، 58", "56، 62", "53، 56"],
+            correct: 0
+          }
+        ]
+      }
+    }
+  },
+
+  // ==================== سادس ابتدائي ====================
+  grade6_primary: {
+    name: "الصف السادس الابتدائي",
+    icon: "⭐",
+    subjects: {
+      arabic: {
+        name: "لغتي الجميلة",
+        emoji: "📚",
+        questions: [
+          {
+            q: "كلمة 'النبال' الواردة في نص الرياضة تعني:",
+            options: ["الحجارة", "الصخور", "السهام", "العصي"],
+            correct: 2
+          },
+          {
+            q: "سبب اهتمام الفرس والرومان بالرياضة هو:",
+            options: ["تعليمي", "صحي", "عسكري", "عدواني"],
+            correct: 2
+          },
+          {
+            q: "اذكر فائدة من فوائد الرياضة المذكورة في النص:",
+            options: ["تبقي القلب في حالة نشاط دائم", "تزيد الوزن", "تقلل التركيز", "تضعف العضلات"],
+            correct: 0
+          },
+          {
+            q: "ما الذي يزداد كلما مارس الإنسان الرياضة؟",
+            options: ["الكسل", "ضخ الدم المحمل بالأكسجين", "الوزن", "الأمراض"],
+            correct: 1
+          },
+          {
+            q: "من أوائل الذين استخدموا الرياضة وسيلة علاجية:",
+            options: ["الهنود", "الفراعنة", "الصينيون القدماء", "الفرس"],
+            correct: 2
+          },
+          {
+            q: "اهتم الفراعنة بالرياضة لأنها:",
+            options: ["للترفيه فقط", "جزء من التعاليم الدينية", "للتنافس", "للعلاج فقط"],
+            correct: 1
+          },
+          {
+            q: "الرياضة تقوي العظام وتحمي من:",
+            options: ["السمنة", "هشاشتها", "الكسل", "الأمراض النفسية"],
+            correct: 1
+          },
+          {
+            q: "ما الرياضات التي اهتم بها الصحابة رضوان الله عليهم؟",
+            options: ["كرة القدم والسباحة", "الجري والسباحة وركوب الخيل ورمي النبال", "رفع الأثقال والمصارعة", "التزلج والجري"],
+            correct: 1
+          },
+          {
+            q: "يقول الحكماء: 'العقل السليم في ...'",
+            options: ["الجسم السليم", "البيت السليم", "الفكر السليم", "القلب السليم"],
+            correct: 0
+          },
+          {
+            q: "الرياضة تعمل على تأخير أعراض:",
+            options: ["الطفولة", "المراهقة", "الشيخوخة", "الشباب"],
+            correct: 2
+          }
+        ]
+      },
+      math: {
+        name: "الرياضيات",
+        emoji: "🔢",
+        questions: [
+          {
+            q: "قطار له 4 محركات و18 عربة، نسبة المحركات إلى عدد العربات:",
+            options: ["2/9", "4/9", "2/18", "9/2"],
+            correct: 0
+          },
+          {
+            q: "يُكتب الكسر 1/4 في صورة نسبة مئوية كالتالي:",
+            options: ["25%", "15%", "50%", "75%"],
+            correct: 0
+          },
+          {
+            q: "في اليابان يقطع أحد القطارات 837 كيلومتراً في 3 ساعات، بحسب هذا المعدل يقطع هذا القطار في الساعة الواحدة:",
+            options: ["279 كم", "837 كم", "279 كم", "837 كم"],
+            correct: 0
+          },
+          {
+            q: "مجموع قياسات زوايا المثلث يساوي:",
+            options: ["90°", "180°", "270°", "360°"],
+            correct: 1
+          },
+          {
+            q: "إذا كان احتمال اختيار بطاقة معينة في لعبة يساوي 28%، فإن احتمال المتممة في صورة نسبة مئوية:",
+            options: ["28%", "70%", "72%", "100%"],
+            correct: 2
+          },
+          {
+            q: "تحتوي حديقة حيوانات على 5 خراف و4 غزلان و11 أرنباً، نسبة عدد الغزلان إلى العدد الكلي:",
+            options: ["4:1", "5:1", "4:20", "1:5"],
+            correct: 2
+          },
+          {
+            q: "قيمة س° في الشكل الرباعي المقابل (مجموع زوايا الرباعي = 360°):",
+            options: ["25°", "45°", "65°", "115°"],
+            correct: 3
+          },
+          {
+            q: "20% من طلاب الصف السادس الابتدائي يصادف تاريخ ولادتهم شهر رجب، ما الكسر الذي يمثل عدد الطلاب المولودين في شهر رجب؟",
+            options: ["1/4", "1/5", "2/5", "1/2"],
+            correct: 1
+          },
+          {
+            q: "يرغب سليمان في أن يزرع أشجاراً على الحدود الخارجية لحديقة مربعة الشكل، إذا أراد زراعة 8 أشجار على كل جانب، فما الحد الأدنى لعدد الأشجار التي يمكن زراعتها؟",
+            options: ["8", "16", "28", "30"],
+            correct: 2
+          },
+          {
+            q: "يأخذ سامي نفسه 8 مرات كل 10 ثوانٍ أثناء ممارسته تمارين اللياقة، بهذا المعدل عدد المرات التي يأخذ فيها سامي نفسه خلال 2 دقيقة:",
+            options: ["80 مرة", "96 مرة", "120 مرة", "160 مرة"],
+            correct: 1
+          }
+        ]
+      },
+      english: {
+        name: "اللغة الإنجليزية",
+        emoji: "🌍",
+        questions: [
+          {
+            q: "Choose the correct answer: It is a _____ (picture shows a school bus)",
+            options: ["car", "train", "taxi", "school bus"],
+            correct: 3
+          },
+          {
+            q: "He stayed at home. He played computer games. He cleaned the room. He practiced on the trampoline. What did he do at home?",
+            options: ["He stayed at home", "He played computer games", "He cleaned the room", "He practiced on the trampoline"],
+            correct: 1
+          },
+          {
+            q: "Choose the correct answer for the grammar: My house __________ was quite small, was in Taif.",
+            options: ["who", "which", "why", "where"],
+            correct: 1
+          },
+          {
+            q: "Have you finished using scissors ___________ ?",
+            options: ["just", "yet", "already", "yesterday"],
+            correct: 1
+          },
+          {
+            q: "I have finished ____________",
+            options: ["work", "working", "worked", "works"],
+            correct: 1
+          },
+          {
+            q: "I have _______ homework that I can't go out tonight.",
+            options: ["so many", "so much", "such", "so"],
+            correct: 1
+          },
+          {
+            q: "That's impossible. It ________ be true.",
+            options: ["must", "mustn't", "can", "can't"],
+            correct: 3
+          },
+          {
+            q: "If you ______ egg in the microwave, it explodes.",
+            options: ["cook", "cooks", "cooked", "cooking"],
+            correct: 0
+          },
+          {
+            q: "The ______________ was sent to the prison by police.",
+            options: ["minister", "guard", "thief", "teacher"],
+            correct: 2
+          },
+          {
+            q: "____________________ is damaging our earth.",
+            options: ["Conservationist", "Environment", "Pollution", "Nature"],
+            correct: 2
+          }
+        ]
+      }
+    }
+  },
+
+  // ==================== ثالث متوسط ====================
+  grade3_middle: {
+    name: "الصف الثالث المتوسط",
+    icon: "🎯",
+    subjects: {
+      science: {
+        name: "العلوم",
+        emoji: "🔬",
+        questions: [
+          {
+            q: "سرعة الجسم التي تعتمد على اتجاه حركته هي:",
+            options: ["السرعة الثابتة", "السرعة المتجهة", "السرعة المتوسطة", "السرعة اللحظية"],
+            correct: 1
+          },
+          {
+            q: "كل هذه الحالات يحدث فيها تسارع ما عدا:",
+            options: ["سيارة تنخفض سرعتها لتتوقف", "طائرة في حالة إقلاع", "دراجة تنطلق في بداية السباق", "سيارة تسير بسرعة ثابتة"],
+            correct: 3
+          },
+          {
+            q: "عندما يرغب راكب الدراجة في التوقف فإنه يقلل من سرعتها، وهذا يعني أن تسارعها:",
+            options: ["موجب", "سالب", "ثابت", "متزايد"],
+            correct: 1
+          },
+          {
+            q: "الخاصية التي تمثل ميل الجسم لمقاومة إحداث أي تغيير في حالته الحركية تسمى:",
+            options: ["التصادم المرن", "القصور الذاتي", "كتلة الجسم", "حفظ الزخم"],
+            correct: 1
+          },
+          {
+            q: "القوى التي تلغي أثر بعضها البعض تسمى قوى:",
+            options: ["متزنة", "غير متزنة", "مختلفة", "ساكنة"],
+            correct: 0
+          },
+          {
+            q: "عندما يتحرك الجسم حركة دائرية فإن القوة المحصلة المؤثرة في الجسم تسمى القوة:",
+            options: ["الأفقية", "المركزية", "الرأسية", "الدائرية"],
+            correct: 1
+          },
+          {
+            q: "إذا سافرت بحافلة مسافة 200 كم واستغرقت الرحلة 2.5 ساعة فما متوسط سرعة الحافلة؟",
+            options: ["180 كم/س", "80 كم/س", "40 كم/س", "20 كم/س"],
+            correct: 1
+          },
+          {
+            q: "يمكن أن تؤثر مجموعة قوى على جسم ساكن بدون أن يتحرك:",
+            options: ["صح", "خطأ", "أحياناً", "لا يمكن التحديد"],
+            correct: 0
+          },
+          {
+            q: "يسمى حاصل ضرب الجهد الواصل للجهاز الكهربائي في شدة التيار الكهربائي المار فيه بـ:",
+            options: ["الطاقة الكهربائية", "القدرة الكهربائية", "المقاومة الكهربائية", "الشدة الكهربائية"],
+            correct: 1
+          },
+          {
+            q: "من الظواهر الضوئية الطبيعية التي تحدث بسبب المجال المغناطيسي للأرض:",
+            options: ["قوس قزح", "الشفق القطبي", "الكسوف", "الخسوف"],
+            correct: 1
+          }
+        ]
+      },
+      math: {
+        name: "الرياضيات",
+        emoji: "🔢",
+        questions: [
+          {
+            q: "رأس القطع المكافئ للتمثيل البياني للدالة ص = س² - 2س + 3 هو:",
+            options: ["(2، 1)", "(-2، 1)", "(1، 2)", "(-1، -2)"],
+            correct: 2
+          },
+          {
+            q: "معادلة محور التماثل للتمثيل البياني للدالة ص = س² - 2س + 3 هي:",
+            options: ["س = -1", "س = 1", "س = 2", "س = 3"],
+            correct: 1
+          },
+          {
+            q: "قيمة جـ التي تجعل س² + 8س + جـ مربعاً كاملاً:",
+            options: ["4", "8", "16", "64"],
+            correct: 2
+          },
+          {
+            q: "إذا كان حاصل ضرب عددين صحيحين متتاليين زوجيين = 224، فإن حاصل جمعهما يساوي:",
+            options: ["26", "30", "34", "36"],
+            correct: 1
+          },
+          {
+            q: "المجموعة التي تمثل ثلاثية فيثاغورس:",
+            options: ["20، 16، 12", "18، 12، 6", "16، 12، 8", "45، 25، 15"],
+            correct: 0
+          },
+          {
+            q: "إذا كانت ظا هـ = 0.70 فإن قياس الزاوية هـ يساوي تقريباً:",
+            options: ["35°", "45°", "70°", "80°"],
+            correct: 2
+          },
+          {
+            q: "يسجل خالد كل 10 دقائق ما يعرض على التلفاز من برامج، هذا التسجيل يمكن وصفه بالعينة العشوائية:",
+            options: ["البسيطة", "المنتظمة", "الطبقية", "المتحيزة"],
+            correct: 1
+          },
+          {
+            q: "في المستوى الإحداثي بعد النقطة (3، 4) عن نقطة الأصل يساوي:",
+            options: ["1", "3", "5", "7"],
+            correct: 2
+          },
+          {
+            q: "عدد الحلول الحقيقية للمعادلة 9س² - 30س + 25 = 0 يساوي:",
+            options: ["0", "1", "2", "ليس لها حل حقيقي"],
+            correct: 1
+          },
+          {
+            q: "الأطوال 9، 12، 15 تشكل أطوال أضلاع مثلث قائم الزاوية:",
+            options: ["صح", "خطأ", "أحياناً", "لا يمكن التحديد"],
+            correct: 0
+          }
+        ]
+      },
+      arabic: {
+        name: "لغتي الجميلة",
+        emoji: "📚",
+        questions: [
+          {
+            q: "في نص التدخين، ما التوجه الجديد لتوضيح خطر التدخين على صحة الفرد؟",
+            options: ["يعتمد على الكلمات فقط", "يعتمد على الصور أيضاً", "يعتمد على الأرقام فقط", "يعتمد على التجارب"],
+            correct: 1
+          },
+          {
+            q: "وفقاً لإحصاءات جمعية القلب السعودية، فإن السعوديين الذين يمارسون عادة التدخين تبلغ نسبتهم:",
+            options: ["5%", "30%", "50%", "80%"],
+            correct: 1
+          },
+          {
+            q: "تتراوح أعمار الشباب السعودي المدخن ما بين:",
+            options: ["10-9 أعوام", "17-12 عاماً", "40-17 عاماً", "85-70 عاماً"],
+            correct: 1
+          },
+          {
+            q: "يادي المتطوع إلى استقبال الحجاج مبادرة سريعة، ما تحته خط على وزن:",
+            options: ["فاعل مفاعلة", "فعل تفعلة", "فاعل فعالاً", "أفعل إفعالاً"],
+            correct: 0
+          },
+          {
+            q: "قال تعالى: (تؤور السماوات والأرض مثل نوركم كمشكاة) فيها مصباح اسم آلة على وزن:",
+            options: ["فاعلة", "مفعلة", "مفعال", "مفعل"],
+            correct: 2
+          },
+          {
+            q: "استخدم العرب قديماً الإبل للرجل، جاء المصدر (رحل) على وزن فعيل يدل على:",
+            options: ["حرفة", "لون", "عيب", "صفة"],
+            correct: 0
+          },
+          {
+            q: "الوظيفة النحوية: قال تعالى (وَلَعَلَّ الثَّلَاثَةَ الَّذِينَ خُلِّفُوا) ما تحته خط:",
+            options: ["اسم علم", "فعل", "جملة فعلية", "جملة اسمية"],
+            correct: 3
+          },
+          {
+            q: "الرأي الصادق أمانة، والرأي الكاذب خيانة. المعطوف عليه في الجملة هو:",
+            options: ["الرأي الصادق", "أمانة", "الرأي الكاذب", "خيانة"],
+            correct: 0
+          },
+          {
+            q: "ما معنى حرف العطف في الآية: (فَإِنَّكَ مِن تُرَابٍ ثُمَّ مِن نُّطْفَةٍ ثُمَّ جَعَلَكُمْ أَزْوَاجاً)؟",
+            options: ["الترتيب والتعقيب", "الترتيب والتراخي", "الغاية", "الجمع والتسوية"],
+            correct: 1
+          },
+          {
+            q: "ما أشد ضرر التدخين؟",
+            options: ["للتدخين أضرار عديدة لا تحصى", "لأنه أسلوب تعجب", "سرطان الرئة", "الشيخوخة المبكرة"],
+            correct: 0
+          }
+        ]
+      },
+      english: {
+        name: "اللغة الإنجليزية",
+        emoji: "🌍",
+        questions: [
+          {
+            q: "Where does Khaled live?",
+            options: ["Abha", "Jeddah", "Taif", "Riyadh"],
+            correct: 1
+          },
+          {
+            q: "Why did Khaled go to Abha?",
+            options: ["For work", "To see his friend Omar", "For study", "For vacation"],
+            correct: 1
+          },
+          {
+            q: "Khaled swam a lot when he got cold. (True or False?)",
+            options: ["True", "False", "Maybe", "Not mentioned"],
+            correct: 1
+          },
+          {
+            q: "Omar lives in Jeddah. (True or False?)",
+            options: ["True", "False", "Maybe", "Not mentioned"],
+            correct: 1
+          },
+          {
+            q: "The main idea of the passage about Khaled and Omar is:",
+            options: ["Types of food", "The camping trip", "The moon is great", "The family"],
+            correct: 1
+          },
+          {
+            q: "Their favourite campsite was in the _____",
+            options: ["mountain", "valley", "hill", "river"],
+            correct: 0
+          },
+          {
+            q: "Khaled is _____ years old.",
+            options: ["18", "15", "17", "16"],
+            correct: 2
+          },
+          {
+            q: "My house __________ was quite small, was in Taif.",
+            options: ["who", "which", "why", "where"],
+            correct: 1
+          },
+          {
+            q: "I dislike people _________ behavior is rude.",
+            options: ["who", "whose", "which", "that"],
+            correct: 1
+          },
+          {
+            q: "I expected _________ a lot of money for hotels.",
+            options: ["pay", "paid", "to pay", "paying"],
+            correct: 2
+          }
+        ]
+      }
+    }
+  }
+
+};
+
+// ============================================================
+// Encouraging messages
+// ============================================================
+const correctMessages = [
+  "🌟 رائع جداً! إجابة صحيحة مئة بالمئة!",
+  "🎉 ممتاز! أنت نجم حقيقي!",
+  "🏆 أحسنت! استمر في هذا التألق!",
+  "⭐ إجابة صحيحة! أنت ذكي جداً!",
+  "🚀 رائع! معلوماتك قوية جداً!",
+  "💪 أحسنت! هذا هو الطريق الصحيح!",
+  "🎯 إصابة في الهدف! إجابة صحيحة!",
+  "✨ برافو! أنت تتفوق على الجميع!",
+  "🌈 ممتاز! إجابة صحيحة تماماً!",
+  "👑 أنت بطل! إجابة صحيحة!"
+];
+
+const wrongMessages = [
+  "💡 لا بأس! الخطأ طريق التعلم، حاول مرة أخرى!",
+  "🔄 لا تيأس! كل خطأ يقربك من الصواب!",
+  "📚 حاول مرة أخرى! المعرفة تأتي بالمحاولة!",
+  "🌱 لا بأس! المهم أن تتعلم من أخطائك!",
+  "💪 استمر! الأبطال لا يستسلمون!",
+  "🎯 قريب جداً! راجع المعلومة وحاول مجدداً!",
+  "⚡ لا تحزن! المرة القادمة ستكون أفضل!",
+  "🌟 كل محاولة تجعلك أقوى! استمر!"
+];
+
+// ============================================================
+// State
+// ============================================================
+let currentGrade = null;
+let currentSubject = null;
+let currentQuestions = [];
+let currentQuestionIndex = 0;
+let score = 0;
+let timerInterval = null;
+let timeLeft = 20;
+
+// ============================================================
+// Navigation
+// ============================================================
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function selectGrade(gradeKey) {
+  currentGrade = gradeKey;
+  const grade = quizData[gradeKey];
+  document.getElementById('gradeTitle').textContent = `📚 ${grade.name} - اختر المادة`;
+  
+  const grid = document.getElementById('subjectsGrid');
+  grid.innerHTML = '';
+  
+  Object.entries(grade.subjects).forEach(([key, subject]) => {
+    const card = document.createElement('div');
+    card.className = 'subject-card';
+    card.innerHTML = `
+      <span class="subject-emoji">${subject.emoji}</span>
+      <div class="subject-name">${subject.name}</div>
+      <div class="subject-count">${subject.questions.length} سؤال</div>
+    `;
+    card.onclick = () => startQuiz(key);
+    grid.appendChild(card);
+  });
+  
+  showScreen('subjectScreen');
+}
+
+function goHome() {
+  clearInterval(timerInterval);
+  showScreen('welcomeScreen');
+}
+
+function goToSubjects() {
+  clearInterval(timerInterval);
+  showScreen('subjectScreen');
+}
+
+function startQuiz(subjectKey) {
+  currentSubject = subjectKey;
+  const grade = quizData[currentGrade];
+  const subject = grade.subjects[subjectKey];
+  
+  currentQuestions = [...subject.questions].sort(() => Math.random() - 0.5);
+  currentQuestionIndex = 0;
+  score = 0;
+  
+  document.getElementById('quizBadge').textContent = `${subject.emoji} ${subject.name}`;
+  document.getElementById('scoreDisplay').textContent = 'النقاط: 0';
+  
+  showScreen('quizScreen');
+  showQuestion();
+}
+
+// ============================================================
+// Quiz Logic
+// ============================================================
+function showQuestion() {
+  const q = currentQuestions[currentQuestionIndex];
+  const total = currentQuestions.length;
+  
+  document.getElementById('questionNumber').textContent = `السؤال ${currentQuestionIndex + 1} من ${total}`;
+  document.getElementById('questionText').textContent = q.q;
+  
+  const progress = ((currentQuestionIndex) / total) * 100;
+  document.getElementById('progressBar').style.width = progress + '%';
+  
+  const grid = document.getElementById('optionsGrid');
+  grid.innerHTML = '';
+  
+  const letters = ['أ', 'ب', 'ج', 'د'];
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.innerHTML = `<span class="option-letter">${letters[i]}</span>${opt}`;
+    btn.onclick = () => selectAnswer(i, q.correct, opt, q.options[q.correct]);
+    grid.appendChild(btn);
+  });
+  
+  // Start timer
+  startTimer();
+}
+
+function startTimer() {
+  clearInterval(timerInterval);
+  timeLeft = 20;
+  document.getElementById('timerFill').style.width = '100%';
+  
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    const pct = (timeLeft / 20) * 100;
+    document.getElementById('timerFill').style.width = pct + '%';
+    
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      // Auto-wrong on timeout
+      const q = currentQuestions[currentQuestionIndex];
+      showFeedback(false, q.options[q.correct]);
+    }
+  }, 1000);
+}
+
+function selectAnswer(selected, correct, selectedText, correctText) {
+  clearInterval(timerInterval);
+  
+  const btns = document.querySelectorAll('.option-btn');
+  btns.forEach(b => b.disabled = true);
+  
+  const isCorrect = selected === correct;
+  
+  btns[selected].classList.add(isCorrect ? 'correct' : 'wrong');
+  if (!isCorrect) {
+    btns[correct].classList.add('correct');
+  }
+  
+  if (isCorrect) {
+    score++;
+    document.getElementById('scoreDisplay').textContent = `النقاط: ${score}`;
+  }
+  
+  setTimeout(() => {
+    showFeedback(isCorrect, correctText);
+  }, 600);
+}
+
+function showFeedback(isCorrect, correctAnswer) {
+  const overlay = document.getElementById('feedbackOverlay');
+  const box = document.getElementById('feedbackBox');
+  const emoji = document.getElementById('feedbackEmoji');
+  const title = document.getElementById('feedbackTitle');
+  const msg = document.getElementById('feedbackMsg');
+  const correctBox = document.getElementById('correctAnswerBox');
+  
+  if (isCorrect) {
+    box.className = 'feedback-box correct-box';
+    emoji.textContent = ['🎉','⭐','🏆','🌟','✅','💯','🎯','🚀'][Math.floor(Math.random()*8)];
+    title.className = 'feedback-title correct-title';
+    title.textContent = 'إجابة صحيحة! ✅';
+    msg.textContent = correctMessages[Math.floor(Math.random() * correctMessages.length)];
+    correctBox.style.display = 'none';
+    launchConfetti();
+  } else {
+    box.className = 'feedback-box wrong-box';
+    emoji.textContent = ['❌','😔','💡','🔄','📚'][Math.floor(Math.random()*5)];
+    title.className = 'feedback-title wrong-title';
+    title.textContent = 'إجابة خاطئة ❌';
+    msg.textContent = wrongMessages[Math.floor(Math.random() * wrongMessages.length)];
+    correctBox.style.display = 'block';
+    correctBox.textContent = `✅ الإجابة الصحيحة: ${correctAnswer}`;
+  }
+  
+  overlay.classList.add('show');
+}
+
+function nextQuestion() {
+  document.getElementById('feedbackOverlay').classList.remove('show');
+  currentQuestionIndex++;
+  
+  if (currentQuestionIndex >= currentQuestions.length) {
+    showResults();
+  } else {
+    showQuestion();
+  }
+}
+
+function showResults() {
+  const total = currentQuestions.length;
+  const pct = Math.round((score / total) * 100);
+  
+  document.getElementById('finalScore').textContent = score;
+  document.getElementById('totalQuestions').textContent = total;
+  
+  let trophy, title, message;
+  
+  if (pct >= 90) {
+    trophy = '🏆';
+    title = 'ممتاز! أنت بطل حقيقي!';
+    message = `حصلت على ${score} من ${total} (${pct}%) 🌟\nأداء رائع جداً! أنت نجم المسابقة!`;
+  } else if (pct >= 75) {
+    trophy = '🥇';
+    title = 'أحسنت! نتيجة رائعة!';
+    message = `حصلت على ${score} من ${total} (${pct}%) ⭐\nأداء جيد جداً! استمر في التفوق!`;
+  } else if (pct >= 60) {
+    trophy = '🥈';
+    title = 'جيد! يمكنك التحسين!';
+    message = `حصلت على ${score} من ${total} (${pct}%) 💪\nأداء جيد! راجع الدروس وحاول مرة أخرى!`;
+  } else if (pct >= 50) {
+    trophy = '🥉';
+    title = 'لا بأس! حاول مرة أخرى!';
+    message = `حصلت على ${score} من ${total} (${pct}%) 📚\nراجع المادة وستحقق نتيجة أفضل!`;
+  } else {
+    trophy = '💡';
+    title = 'لا تيأس! المحاولة تكسب!';
+    message = `حصلت على ${score} من ${total} (${pct}%) 🌱\nلا تستسلم! راجع الدروس وحاول مجدداً!`;
+  }
+  
+  document.getElementById('resultsTrophy').textContent = trophy;
+  document.getElementById('resultsTitle').textContent = title;
+  document.getElementById('resultsMessage').textContent = message;
+  
+  if (pct >= 75) launchConfetti();
+  
+  showScreen('resultsScreen');
+}
+
+function retryQuiz() {
+  startQuiz(currentSubject);
+}
+
+// ============================================================
+// Visual Effects
+// ============================================================
+function launchConfetti() {
+  const container = document.getElementById('confetti');
+  const colors = ['#ffd700', '#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#ffeaa7', '#dda0dd', '#98fb98'];
+  
+  for (let i = 0; i < 80; i++) {
+    setTimeout(() => {
+      const piece = document.createElement('div');
+      piece.className = 'confetti-piece';
+      piece.style.cssText = `
+        left: ${Math.random() * 100}%;
+        background: ${colors[Math.floor(Math.random() * colors.length)]};
+        width: ${Math.random() * 10 + 5}px;
+        height: ${Math.random() * 10 + 5}px;
+        border-radius: ${Math.random() > 0.5 ? '50%' : '0'};
+        animation-duration: ${Math.random() * 2 + 1.5}s;
+        animation-delay: ${Math.random() * 0.5}s;
+      `;
+      container.appendChild(piece);
+      setTimeout(() => piece.remove(), 3000);
+    }, i * 20);
+  }
+}
+
+// Create particles
+function createParticles() {
+  const container = document.getElementById('particles');
+  for (let i = 0; i < 30; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.cssText = `
+      left: ${Math.random() * 100}%;
+      width: ${Math.random() * 4 + 1}px;
+      height: ${Math.random() * 4 + 1}px;
+      animation-duration: ${Math.random() * 15 + 10}s;
+      animation-delay: ${Math.random() * 10}s;
+      opacity: ${Math.random() * 0.5 + 0.2};
+    `;
+    container.appendChild(p);
+  }
+}
+
+// Create stars
+function createStars() {
+  const container = document.getElementById('stars');
+  for (let i = 0; i < 100; i++) {
+    const star = document.createElement('div');
+    star.className = 'star';
+    const size = Math.random() * 3 + 1;
+    star.style.cssText = `
+      left: ${Math.random() * 100}%;
+      top: ${Math.random() * 100}%;
+      width: ${size}px;
+      height: ${size}px;
+      animation-duration: ${Math.random() * 3 + 2}s;
+      animation-delay: ${Math.random() * 3}s;
+    `;
+    container.appendChild(star);
+  }
+}
+
+// Init
+createParticles();
+createStars();
+</script>
+</body>
+</html>
