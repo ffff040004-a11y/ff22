@@ -1,0 +1,1806 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>منصة الرخصة المهنية – رياضيات</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #1a1a2e;
+    --secondary: #16213e;
+    --accent: #e94560;
+    --gold: #f5a623;
+    --teal: #0f9b8e;
+    --light: #f0f4ff;
+    --correct: #00c896;
+    --wrong: #ff4757;
+    --card-bg: rgba(255,255,255,0.06);
+    --border: rgba(255,255,255,0.1);
+    --text: #e8eaf6;
+    --text-dim: #9aa0c8;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family: 'Cairo', sans-serif;
+    background: var(--primary);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Animated background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 20% 20%, rgba(233,69,96,0.15) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 80% 80%, rgba(15,155,142,0.15) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 60% at 50% 50%, rgba(245,166,35,0.05) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Math floating symbols */
+  .math-bg {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .math-bg span {
+    position: absolute;
+    font-size: 1.5rem;
+    color: rgba(255,255,255,0.04);
+    font-family: 'Tajawal', sans-serif;
+    animation: floatUp 20s linear infinite;
+  }
+  @keyframes floatUp {
+    0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+  }
+
+  /* Header */
+  .header {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding: 2.5rem 1rem 1.5rem;
+    background: linear-gradient(180deg, rgba(26,26,46,0.95) 0%, transparent 100%);
+  }
+
+  .header-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(233,69,96,0.15);
+    border: 1px solid rgba(233,69,96,0.4);
+    border-radius: 2rem;
+    padding: 0.35rem 1.2rem;
+    font-size: 0.8rem;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    letter-spacing: 0.05em;
+  }
+
+  .header h1 {
+    font-family: 'Tajawal', sans-serif;
+    font-weight: 900;
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    background: linear-gradient(135deg, #fff 0%, var(--gold) 50%, var(--accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+
+  .header p {
+    color: var(--text-dim);
+    font-size: 0.95rem;
+  }
+
+  /* Stats bar */
+  .stats-bar {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .stat-chip {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    padding: 0.5rem 1.2rem;
+    font-size: 0.9rem;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s;
+  }
+
+  .stat-chip .icon { font-size: 1.1rem; }
+  .stat-chip .val {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--gold);
+  }
+  .stat-chip.correct-stat .val { color: var(--correct); }
+  .stat-chip.wrong-stat .val { color: var(--wrong); }
+
+  /* Progress bar */
+  .progress-wrap {
+    position: relative;
+    z-index: 10;
+    max-width: 700px;
+    margin: 0 auto 1.5rem;
+    padding: 0 1.5rem;
+  }
+
+  .progress-bar {
+    height: 6px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--teal), var(--gold), var(--accent));
+    border-radius: 3px;
+    transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+  }
+  .progress-text {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    margin-top: 0.4rem;
+  }
+
+  /* Category tabs */
+  .category-tabs {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    gap: 0.8rem;
+    padding: 0 1rem 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .cat-tab {
+    padding: 0.5rem 1.5rem;
+    border-radius: 2rem;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-dim);
+    cursor: pointer;
+    font-family: 'Cairo', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.3s;
+  }
+  .cat-tab:hover { border-color: var(--gold); color: var(--gold); }
+  .cat-tab.active {
+    background: linear-gradient(135deg, var(--accent), var(--gold));
+    border-color: transparent;
+    color: #fff;
+    box-shadow: 0 4px 20px rgba(233,69,96,0.4);
+  }
+
+  /* Main quiz area */
+  .quiz-container {
+    position: relative;
+    z-index: 10;
+    max-width: 750px;
+    margin: 0 auto;
+    padding: 0 1rem 3rem;
+  }
+
+  /* Question card */
+  .question-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 1.5rem;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    backdrop-filter: blur(20px);
+    position: relative;
+    overflow: hidden;
+    animation: slideIn 0.4s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(20px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .question-card::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(245,166,35,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .q-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .q-num {
+    background: linear-gradient(135deg, var(--accent), #c23152);
+    color: #fff;
+    font-weight: 900;
+    font-size: 0.85rem;
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(233,69,96,0.4);
+  }
+
+  .q-cat-badge {
+    background: rgba(15,155,142,0.15);
+    border: 1px solid rgba(15,155,142,0.3);
+    color: var(--teal);
+    border-radius: 1rem;
+    padding: 0.2rem 0.8rem;
+    font-size: 0.75rem;
+  }
+
+  .question-text {
+    font-family: 'Tajawal', sans-serif;
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+    font-weight: 700;
+    line-height: 1.7;
+    color: #fff;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Options */
+  .options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  @media (max-width: 500px) {
+    .options-grid { grid-template-columns: 1fr; }
+  }
+
+  .option-btn {
+    background: rgba(255,255,255,0.04);
+    border: 1.5px solid rgba(255,255,255,0.1);
+    border-radius: 1rem;
+    padding: 0.9rem 1.2rem;
+    cursor: pointer;
+    font-family: 'Cairo', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text);
+    text-align: right;
+    transition: all 0.25s;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .option-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(245,166,35,0.1), transparent);
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+
+  .option-btn:hover:not(:disabled) {
+    border-color: var(--gold);
+    color: var(--gold);
+    transform: translateX(-3px);
+  }
+  .option-btn:hover:not(:disabled)::before { opacity: 1; }
+
+  .option-badge {
+    width: 1.8rem;
+    height: 1.8rem;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+    border: 1.5px solid rgba(255,255,255,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    flex-shrink: 0;
+    color: var(--text-dim);
+    transition: all 0.25s;
+  }
+
+  .option-btn:hover:not(:disabled) .option-badge {
+    background: rgba(245,166,35,0.2);
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+
+  .option-btn.correct {
+    background: rgba(0,200,150,0.15);
+    border-color: var(--correct);
+    color: var(--correct);
+    animation: correctPulse 0.4s ease;
+  }
+  .option-btn.correct .option-badge {
+    background: var(--correct);
+    border-color: var(--correct);
+    color: #fff;
+  }
+
+  .option-btn.wrong {
+    background: rgba(255,71,87,0.15);
+    border-color: var(--wrong);
+    color: var(--wrong);
+    animation: wrongShake 0.4s ease;
+  }
+  .option-btn.wrong .option-badge {
+    background: var(--wrong);
+    border-color: var(--wrong);
+    color: #fff;
+  }
+
+  .option-btn.reveal-correct {
+    background: rgba(0,200,150,0.1);
+    border-color: rgba(0,200,150,0.5);
+    color: var(--correct);
+  }
+
+  .option-btn:disabled { cursor: default; transform: none !important; }
+
+  @keyframes correctPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.03); }
+    100% { transform: scale(1); }
+  }
+
+  @keyframes wrongShake {
+    0%,100% { transform: translateX(0); }
+    20% { transform: translateX(-6px); }
+    60% { transform: translateX(6px); }
+  }
+
+  /* Feedback */
+  .feedback-box {
+    margin-top: 1.2rem;
+    padding: 1rem 1.2rem;
+    border-radius: 1rem;
+    font-size: 0.9rem;
+    line-height: 1.7;
+    display: none;
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity:0; transform: translateY(5px); }
+    to { opacity:1; transform: translateY(0); }
+  }
+
+  .feedback-box.show { display: block; }
+
+  .feedback-box.correct-fb {
+    background: rgba(0,200,150,0.1);
+    border: 1px solid rgba(0,200,150,0.3);
+    color: #a8f5e0;
+  }
+
+  .feedback-box.wrong-fb {
+    background: rgba(255,71,87,0.1);
+    border: 1px solid rgba(255,71,87,0.3);
+    color: #ffbcc3;
+  }
+
+  .feedback-title {
+    font-family: 'Tajawal', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 800;
+    margin-bottom: 0.4rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  /* Navigation */
+  .nav-buttons {
+    display: flex;
+    gap: 0.8rem;
+    justify-content: center;
+    margin-top: 1.5rem;
+  }
+
+  .nav-btn {
+    padding: 0.75rem 2rem;
+    border-radius: 1rem;
+    border: none;
+    cursor: pointer;
+    font-family: 'Cairo', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    transition: all 0.25s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .nav-btn.primary {
+    background: linear-gradient(135deg, var(--accent), #c23152);
+    color: #fff;
+    box-shadow: 0 4px 20px rgba(233,69,96,0.4);
+  }
+  .nav-btn.primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(233,69,96,0.5); }
+
+  .nav-btn.secondary {
+    background: rgba(255,255,255,0.07);
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+  }
+  .nav-btn.secondary:hover { background: rgba(255,255,255,0.12); color: var(--text); }
+
+  .nav-btn.teal {
+    background: linear-gradient(135deg, var(--teal), #0a7a6e);
+    color: #fff;
+    box-shadow: 0 4px 20px rgba(15,155,142,0.4);
+  }
+  .nav-btn.teal:hover { transform: translateY(-2px); }
+
+  /* Result screen */
+  .result-screen {
+    display: none;
+    text-align: center;
+    padding: 2rem;
+    animation: slideIn 0.5s ease;
+  }
+
+  .result-screen.show { display: block; }
+
+  .result-trophy {
+    font-size: 5rem;
+    margin-bottom: 1rem;
+    animation: bounce 1s ease infinite;
+  }
+
+  @keyframes bounce {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  .result-score {
+    font-family: 'Tajawal', sans-serif;
+    font-size: 5rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--gold), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1;
+  }
+
+  .result-total {
+    color: var(--text-dim);
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
+
+  .result-msg {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+  }
+
+  .result-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .result-stat {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    padding: 1.2rem;
+    backdrop-filter: blur(10px);
+  }
+
+  .result-stat .rs-val {
+    font-size: 2rem;
+    font-weight: 900;
+    margin-bottom: 0.2rem;
+  }
+
+  .result-stat .rs-label {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+  }
+
+  /* Confetti particles */
+  .confetti-wrap {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 100;
+    overflow: hidden;
+  }
+
+  .conf-particle {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 2px;
+    animation: confettiFall linear forwards;
+  }
+
+  @keyframes confettiFall {
+    0% { top: -10px; opacity: 1; transform: rotate(0deg) translateX(0); }
+    100% { top: 110vh; opacity: 0; transform: rotate(720deg) translateX(var(--drift)); }
+  }
+
+  /* Toast */
+  .toast {
+    position: fixed;
+    top: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(-100px);
+    z-index: 1000;
+    padding: 1rem 2rem;
+    border-radius: 1rem;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 800;
+    text-align: center;
+    transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+    min-width: 280px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+  }
+
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  .toast.correct-toast {
+    background: linear-gradient(135deg, #00c896, #00a57a);
+    color: #fff;
+  }
+
+  .toast.wrong-toast {
+    background: linear-gradient(135deg, #ff4757, #c0392b);
+    color: #fff;
+  }
+
+  /* Footer */
+  .footer {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding: 2rem 1rem;
+    border-top: 1px solid var(--border);
+    margin-top: 2rem;
+  }
+
+  .footer-content {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .footer-thanks {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    line-height: 1.8;
+  }
+
+  .footer-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.8rem;
+    background: linear-gradient(135deg, rgba(15,155,142,0.2), rgba(15,155,142,0.05));
+    border: 1px solid rgba(15,155,142,0.3);
+    border-radius: 2rem;
+    padding: 0.5rem 1.5rem;
+    color: var(--teal);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+  }
+
+  .footer-link:hover {
+    background: rgba(15,155,142,0.25);
+    box-shadow: 0 4px 20px rgba(15,155,142,0.3);
+  }
+
+  /* Question counter dots */
+  .q-dots {
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+    padding: 0.5rem 1rem;
+    flex-wrap: wrap;
+    max-width: 600px;
+    margin: 0 auto 1rem;
+  }
+
+  .q-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.12);
+    transition: all 0.3s;
+  }
+  .q-dot.current { background: var(--gold); transform: scale(1.4); }
+  .q-dot.answered-c { background: var(--correct); }
+  .q-dot.answered-w { background: var(--wrong); }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    .question-card { padding: 1.5rem; }
+    .options-grid { grid-template-columns: 1fr; }
+    .result-grid { grid-template-columns: 1fr; }
+    .nav-buttons { flex-wrap: wrap; }
+    .nav-btn { flex: 1; justify-content: center; }
+  }
+
+  /* Loader / start screen */
+  .start-screen {
+    position: relative;
+    z-index: 10;
+    max-width: 650px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    text-align: center;
+  }
+
+  .start-hero {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 2rem;
+    padding: 3rem 2rem;
+    backdrop-filter: blur(20px);
+    margin-bottom: 1.5rem;
+  }
+
+  .start-icon { font-size: 4rem; margin-bottom: 1rem; }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+    margin: 1.5rem 0 2rem;
+  }
+
+  .feature-item {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    padding: 1rem;
+    text-align: center;
+  }
+
+  .feature-item .fi-icon { font-size: 1.5rem; margin-bottom: 0.4rem; }
+  .feature-item .fi-label { font-size: 0.8rem; color: var(--text-dim); }
+  .feature-item .fi-val { font-weight: 700; font-size: 1.1rem; color: var(--gold); }
+
+  .start-btn {
+    width: 100%;
+    padding: 1.1rem;
+    border-radius: 1.2rem;
+    border: none;
+    background: linear-gradient(135deg, var(--accent), #c23152);
+    color: #fff;
+    font-family: 'Cairo', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 6px 30px rgba(233,69,96,0.5);
+    transition: all 0.3s;
+    letter-spacing: 0.03em;
+  }
+  .start-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 40px rgba(233,69,96,0.6); }
+
+</style>
+</head>
+<body>
+
+<!-- Floating math symbols -->
+<div class="math-bg" id="mathBg"></div>
+
+<!-- Toast notification -->
+<div class="toast" id="toast"></div>
+
+<!-- Confetti container -->
+<div class="confetti-wrap" id="confettiWrap"></div>
+
+<!-- Header -->
+<div class="header">
+  <div class="header-badge">🎓 اختبار الرخصة المهنية</div>
+  <h1>رياضيات ✦ تحدّي المعرفة</h1>
+  <p>اختبر نفسك في أسئلة الأعداد والقياس</p>
+</div>
+
+<!-- Start Screen -->
+<div class="start-screen" id="startScreen">
+  <div class="start-hero">
+    <div class="start-icon">🧮</div>
+    <h2 style="font-family:'Tajawal',sans-serif; font-size:1.6rem; font-weight:900; margin-bottom:0.5rem;">منصة المسابقات التفاعلية</h2>
+    <p style="color:var(--text-dim); font-size:0.9rem; line-height:1.7;">اختبار شامل لأسئلة الرخصة المهنية في تخصص الرياضيات<br>يشمل الأعداد والعمليات عليها • القياس ووحداته</p>
+
+    <div class="features-grid">
+      <div class="feature-item">
+        <div class="fi-icon">📚</div>
+        <div class="fi-val">150</div>
+        <div class="fi-label">سؤالاً شاملاً</div>
+      </div>
+      <div class="feature-item">
+        <div class="fi-icon">🏆</div>
+        <div class="fi-val">4</div>
+        <div class="fi-label">خيارات لكل سؤال</div>
+      </div>
+      <div class="feature-item">
+        <div class="fi-icon">💡</div>
+        <div class="fi-val">فوري</div>
+        <div class="fi-label">تصحيح وشرح</div>
+      </div>
+      <div class="feature-item">
+        <div class="fi-icon">🎯</div>
+        <div class="fi-val">2</div>
+        <div class="fi-label">أقسام متنوعة</div>
+      </div>
+    </div>
+
+    <button class="start-btn" onclick="startQuiz()">🚀 ابدأ الاختبار الآن</button>
+  </div>
+</div>
+
+<!-- Quiz Area -->
+<div id="quizArea" style="display:none">
+  <!-- Stats -->
+  <div class="stats-bar">
+    <div class="stat-chip">
+      <span class="icon">📋</span>
+      <span>السؤال</span>
+      <span class="val" id="statCurrent">1</span>
+      <span style="color:var(--text-dim)">من</span>
+      <span class="val" id="statTotal">150</span>
+    </div>
+    <div class="stat-chip correct-stat">
+      <span class="icon">✅</span>
+      <span>صحيح</span>
+      <span class="val" id="statCorrect">0</span>
+    </div>
+    <div class="stat-chip wrong-stat">
+      <span class="icon">❌</span>
+      <span>خطأ</span>
+      <span class="val" id="statWrong">0</span>
+    </div>
+    <div class="stat-chip">
+      <span class="icon">⭐</span>
+      <span>النقاط</span>
+      <span class="val" id="statScore">0</span>
+    </div>
+  </div>
+
+  <!-- Progress -->
+  <div class="progress-wrap">
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill" style="width:0%"></div>
+    </div>
+    <div class="progress-text">
+      <span id="progressPct">0%</span>
+      <span id="progressLabel">لم تبدأ بعد</span>
+    </div>
+  </div>
+
+  <!-- Category tabs -->
+  <div class="category-tabs">
+    <button class="cat-tab active" id="tabAll" onclick="filterCat('all')">📚 جميع الأسئلة</button>
+    <button class="cat-tab" id="tabNum" onclick="filterCat('numbers')">🔢 الأعداد والعمليات</button>
+    <button class="cat-tab" id="tabMeas" onclick="filterCat('measurement')">📐 القياس ووحداته</button>
+  </div>
+
+  <!-- Q Dots -->
+  <div class="q-dots" id="qDots"></div>
+
+  <!-- Quiz Container -->
+  <div class="quiz-container">
+    <div class="question-card" id="questionCard">
+      <div class="q-meta">
+        <div class="q-num" id="qNum">1</div>
+        <div class="q-cat-badge" id="qCat">الأعداد</div>
+      </div>
+      <div class="question-text" id="questionText">...</div>
+      <div class="options-grid" id="optionsGrid"></div>
+      <div class="feedback-box" id="feedbackBox"></div>
+    </div>
+
+    <div class="nav-buttons">
+      <button class="nav-btn secondary" id="prevBtn" onclick="prevQ()">◀ السابق</button>
+      <button class="nav-btn teal" id="skipBtn" onclick="skipQ()">⏭ تخطى</button>
+      <button class="nav-btn primary" id="nextBtn" onclick="nextQ()">التالي ▶</button>
+    </div>
+  </div>
+
+  <!-- Result Screen -->
+  <div class="result-screen quiz-container" id="resultScreen">
+    <div class="result-trophy" id="resultTrophy">🏆</div>
+    <div class="result-score" id="resultScore">0</div>
+    <div class="result-total" id="resultTotal">من 150 سؤال</div>
+    <div class="result-msg" id="resultMsg">عمل رائع!</div>
+
+    <div class="result-grid">
+      <div class="result-stat">
+        <div class="rs-val" style="color:var(--correct)" id="resCorrect">0</div>
+        <div class="rs-label">✅ إجابات صحيحة</div>
+      </div>
+      <div class="result-stat">
+        <div class="rs-val" style="color:var(--wrong)" id="resWrong">0</div>
+        <div class="rs-label">❌ إجابات خاطئة</div>
+      </div>
+      <div class="result-stat">
+        <div class="rs-val" style="color:var(--gold)" id="resPct">0%</div>
+        <div class="rs-label">📊 نسبة النجاح</div>
+      </div>
+    </div>
+
+    <div class="nav-buttons">
+      <button class="nav-btn primary" onclick="restartQuiz()">🔄 إعادة المحاولة</button>
+      <button class="nav-btn teal" onclick="reviewWrong()">🔍 مراجعة الأخطاء</button>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  <div class="footer-content">
+    <div class="footer-thanks">
+      الشكر موصول لمُعِدّها<br>
+      <strong style="color:var(--gold)">الأستاذ عبدالعزيز اليزيدي</strong>
+      &nbsp;•&nbsp;
+      تصميم: <strong style="color:var(--accent)">د/فواز</strong>
+    </div>
+    <a href="https://t.me/TAqhjT3MFVE1Yzk0" target="_blank" class="footer-link">
+      ✈️ تفضّل للمزيد هنا
+    </a>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// DATA – 150 Questions
+// ============================================================
+const allQuestions = [
+  // ======= SECTION 1: الأعداد والعمليات (75 questions) =======
+  { id:1, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'العدد "0.2323232323" ينتمي إلى مجموعة الأعداد:',
+    opts:['مجموعة الأعداد النسبية','مجموعة الأعداد الغير نسبية','مجموعة الأعداد الكلية','مجموعة الأعداد الطبيعية'],
+    ans:0, exp:'مجموعة الأعداد النسبية تتضمن الأعداد العشرية التي لها نهاية أو دورية.' },
+  { id:2, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'العدد π التي تكون القيمة التقريبية له 3.14 ينتمي إلى مجموعة الأعداد:',
+    opts:['مجموعة الأعداد الكلية','مجموعة الأعداد الصحيحة','مجموعة الأعداد الغير نسبية','مجموعة الأعداد الطبيعية'],
+    ans:2, exp:'π عدد غير نسبي لأن 3.14 ليست قيمته الأصلية وإنما أقرب قيمة تقريبية.' },
+  { id:3, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'العدد 3.14 - π يعبر عن عدد:',
+    opts:['عدد حقيقي','عدد نسبي','عدد غير نسبي','عدد طبيعي'],
+    ans:0, exp:'3.14 ليست قيمة π وإنما هي "أقرب قيمة حقيقية لها".' },
+  { id:4, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'العدد صفر يعبر عن كل مما يأتي عدا أنه:',
+    opts:['عدد حقيقي','عدد نسبي','عدد كلي','عدد طبيعي'],
+    ans:3, exp:'لا يعبر عن عدد طبيعي؛ لأن الأعداد الطبيعية لا تتضمن سوى الأعداد الموجبة دون الصفر.' },
+  { id:5, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'العدد ³√√x هو (x) عدد نسبي عندما x =',
+    opts:['4','16','64','8'],
+    ans:2, exp:'√64 = 8، ثم ³√8 = 2 وهو عدد نسبي.' },
+  { id:6, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'إذا كان (7n−3) هو عدد زوجي و n تنتمي إلى مجموعة الأعداد الطبيعية فإن العدد (7n−3)²:',
+    opts:['عدد فردي أولي','عدد زوجي أولي','عدد فردي مؤلف','عدد زوجي مؤلف'],
+    ans:3, exp:'(7n-3)=4 وهو زوجي، فـ 4²=16 وهو عدد زوجي مؤلف.' },
+  { id:7, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'العددان 81 , 27 يكونان:',
+    opts:['العددان مربعان كاملان','الأول مكعب كامل والثاني مربع كامل','الأول مربع كامل والثاني مكعب كامل','كلاهما مكعبان كاملان'],
+    ans:2, exp:'√81=9 مربع كامل، و ³√27=3 مكعب كامل.' },
+  { id:8, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'عدد يجب إضافته إلى 41 حتى يصبح الناتج عدداً أولياً:',
+    opts:['عدد أولي زوجي','عدد مربع كامل','عدد فردي','عدد مؤلف'],
+    ans:0, exp:'41+2=43 وهو عدد أولي، والعدد 2 هو العدد الزوجي الأولي الوحيد.' },
+  { id:9, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'العدد n³ عدد ..... حيث n عدد ينتمي إلى مجموعة الأعداد الطبيعية.',
+    opts:['عدد مربع كامل','عدد مكعب كامل','عدد زوجي أولي','عدد فردي مؤلف'],
+    ans:1, exp:'n³ = n×n×n وهو مكعب كامل بالتعريف.' },
+  { id:10, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'لأي قيمة لـ x يكون x²−5x تساوي العنصر المحايد الجمعي؟',
+    opts:['2','4','7','5'],
+    ans:3, exp:'5²−5×5=25−25=0 وهو العنصر المحايد الجمعي.' },
+  { id:11, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'إذا كانت x = 7−(3×2)، وكانت قيمة y=3 فأوجد قيمة (y+x−2)/(x−y)',
+    opts:['8','4','-1','1'],
+    ans:2, exp:'x=1, y=3 → (3+1−2)/(1−3) = 2/(−2) = −1' },
+  { id:12, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'إذا كانت A مجموعة عناصر مضاعفات 3 و B مجموعة قواسم العدد 81 فإن A∩B:',
+    opts:['4 أعداد','7 أعداد','5 أعداد','3 أعداد'],
+    ans:3, exp:'المشترك بين مضاعفات 3 وقواسم 81 هو {3,9,27} = 3 أعداد.' },
+  { id:13, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'أوجد الحد السابع في المتتابعة: 7، 5، 3، 1، .....',
+    opts:['-1','-5','-7','18'],
+    ans:1, exp:'الفرق المشترك −2، الحد السابع = 1+(3×(−2)) = −5' },
+  { id:14, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'5/√5 − 2√20 ، ما هو ناتج هذه المعادلة؟',
+    opts:['5√5','2√5','−3√5','−5√5'],
+    ans:2, exp:'5/√5 = √5، و 2√20 = 4√5، إذاً √5 − 4√5 = −3√5' },
+  { id:15, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'(√2+1)⁵ × (√2−1)⁵ قيمة المقدار تساوي:',
+    opts:['1','−2/3','−1/3','-1'],
+    ans:0, exp:'(√2+1)(√2−1) = 2−1 = 1، ورفع الواحد لأي أس = 1' },
+  { id:16, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'الفرق بين عدد وجذره التربيعي 72، فإن هذا العدد هو:',
+    opts:['9','8','64','81'],
+    ans:3, exp:'81 − √81 = 81 − 9 = 72 ✓' },
+  { id:17, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'أوجد الجذر العاشر لـ 3⁹',
+    opts:['3⁰·³','3⁰·⁷','3⁰·⁹','3⁰·¹'],
+    ans:2, exp:'¹⁰√3⁹ = 3^(9/10) = 3⁰·⁹' },
+  { id:18, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'إذا كان |x| = 8 فإن |x+2| يمكن أن تكون:',
+    opts:['(6−, 10)','10','(8, 8−)','(6, 10)'],
+    ans:3, exp:'x=8 → |10|=10، x=−8 → |−6|=6، إذاً يمكن أن تكون 6 أو 10' },
+  { id:19, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'(√2/3) ÷ (8/√7) ، أوجد قيمة هذه المعادلة.',
+    opts:['√24/38','14/28','√14/24','√14/√24'],
+    ans:2, exp:'(√2/3) × (√7/8) = √14/24' },
+  { id:20, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'لأي قيم n يمكن أن يكون العدد n²+2n+5 عدداً مؤلفاً؟',
+    opts:['2','4','5','6'],
+    ans:2, exp:'عند n=5: 25+10+5=40 وهو عدد مؤلف (يقبل القسمة).' },
+  { id:21, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'جهاز كهربائي سعره 250 ريالاً، إذا تم تخفيض سعره 24%؛ فكم يكون سعره بعد التخفيض؟',
+    opts:['225','84','60','190'],
+    ans:3, exp:'التخفيض = 24/100 × 250 = 60، السعر = 250 − 60 = 190 ريال' },
+  { id:22, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'(ت − 7)(ت + 7)، أوجد قيمة المعادلة.',
+    opts:['49','51','50','14'],
+    ans:2, exp:'(ت)²−49 وعند ت=1: 1−49=−48... الجواب 50 حسب حل الكتاب.' },
+  { id:23, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'رتب المجموعة الآتية ترتيباً تصاعدياً { 2, √2, e, π, 3 }',
+    opts:['3, π, e, 2, √2','3, e, π, 2, √2','3, π, e, 2, √2','π, 3, e, 2, √2'],
+    ans:3, exp:'√2≈1.41 < 2 < e≈2.72 < π≈3.14 < 3 → الترتيب: √2, 2, e, π, 3' },
+  { id:24, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'كيف يمكن تصنيف 2(−1/2) على أفضل وجه؟',
+    opts:['عدد نسبي','عدد نسبي، عدد حقيقي','عدد غير نسبي، عدد حقيقي','عدد حقيقي فقط'],
+    ans:1, exp:'−5/2 كسر، إذاً هو عدد نسبي وبالتالي عدد حقيقي أيضاً.' },
+  { id:25, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'أوجد قيمة المقدار: (8/27)^(−3/2)',
+    opts:['−2/3','2/3','4/9','9/4'],
+    ans:3, exp:'(27/8)^(3/2) = (³√(27/8))² = (3/2)² = 9/4' },
+  { id:26, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'y² + 4x² = 4xy ، فإن قيمة y تتناسب مع x تناسب:',
+    opts:['طردي','عكسي','مشترك','مركب'],
+    ans:0, exp:'y=2x وهو تناسب طردي.' },
+  { id:27, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'الشكل يمثل استبياناً على 220 طالب، كم طالب يفضل العلوم؟ (الإنجليزي 35%، رياضيات 30%، عربي 15%)',
+    opts:['44 طالب','22 طالب','11 طالب','23 طالب'],
+    ans:0, exp:'العلوم = 100 − (35+30+15) = 20%، 20/100 × 220 = 44 طالب' },
+  { id:28, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'خمسة موظفين: اثنان يتقاضان 50 ريالاً، وموظف 80 ريالاً، وموظف 100 ريالاً، وموظف 120 ريالاً. أوجد الوسيط.',
+    opts:['100','50','80','240'],
+    ans:2, exp:'ترتيب: 50,50,80,100,120 → الوسيط هو القيمة الوسطى = 80' },
+  { id:29, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'مرافق العدد 5 + 3i هو:',
+    opts:['3i + 5','3i × 5','−3i − 5','3i − 5'],
+    ans:3, exp:'مرافق العدد المركب يتغير فيه إشارة الجزء التخيلي فقط: 5 − 3i' },
+  { id:30, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'أي نقطة بخط الأعداد هي الأفضل تمثيلاً للعدد √8؟ (b, c, d موجودة بين 2 و3)',
+    opts:['b','c','d','c & d'],
+    ans:2, exp:'√8 = 2√2 ≈ 2.83، أقرب نقطة هي d بين 2.8 و 3' },
+  { id:31, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'قيمة المقدار (10⁶+10⁶+10⁶)/10⁶ هو:',
+    opts:['-3','3','−1/6','−2/5'],
+    ans:1, exp:'(3×10⁶)/10⁶ = 3' },
+  { id:32, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'إذا كان a عدداً حقيقياً، فإن a² ≥ a؛ أي التالي يعد مثالاً مضاداً؟',
+    opts:['a = 0','a = −2','a = 1/2','A = 2'],
+    ans:2, exp:'عند a=1/2: (1/2)²=1/4 وهو أقل من 1/2، إذاً هو مثال مضاد.' },
+  { id:33, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'قطع مسافة 9 km من طريق طوله 30 km، فإن النسبة المئوية للجزء المقطوع:',
+    opts:['%20','%30','%33','%40'],
+    ans:1, exp:'9/30 × 100 = 30%' },
+  { id:34, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'إذا كان القاسم المشترك الأكبر للعددين 14 , x يساوي 7 والمضاعف المشترك الأصغر = 42 ، فإن x تساوي:',
+    opts:['81','21','14','28'],
+    ans:1, exp:'حاصل ضرب العددين = ق.م.أ × م.م.أ → 14×x = 7×42 → x = 21' },
+  { id:35, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'مصنع طاولات له 6 خطوط إنتاج كل منها ينتج 30 طاولة في الساعة، في كم ساعة يتم إنتاج y طاولة؟',
+    opts:['y/30','y/180','180/y','30/6y'],
+    ans:1, exp:'عدد الطاولات في الساعة = 6×30=180، الزمن = y/180' },
+  { id:36, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'ما العدد الذي يقبل القسمة على 6؟',
+    opts:['3002','3003','3012','3016'],
+    ans:2, exp:'3012: الآحاد 2 (زوجي)، مجموع الأرقام 6 (يقبل القسمة على 3)' },
+  { id:37, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'أحد الأعداد يقبل القسمة على 4 هو:',
+    opts:['10048','10066','10053','10042'],
+    ans:0, exp:'48 ÷ 4 = 12 بلا باقٍ، إذاً 10048 يقبل القسمة على 4.' },
+  { id:38, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'إذا كان A عدد يقبل القسمة على 3، فإن 3 − 12A:',
+    opts:['3','4','7','12'],
+    ans:0, exp:'لو A=3: 3−12×3=3−36=−33 يقبل القسمة على 3.' },
+  { id:39, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'إذا كان Y = −2/3 فاحسب قيمة 1(1/3) − |2y + 1|.',
+    opts:['1','1-','1/3','−1/3'],
+    ans:0, exp:'بالتعويض: 1(1/3) − |2×(−2/3)+1| = 4/3 − 1/3 = 1' },
+  { id:40, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'(a+b)/(2a−b) كسر فعلي، فأي مما يأتي صحيح؟',
+    opts:['a < 2b','a > 2b','a ≤ 2b','a ≥ 2b'],
+    ans:1, exp:'الكسر فعلي إذا كان البسط أقل من المقام: a+b < 2a−b → 2b < a → a > 2b' },
+  { id:41, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'النسبة بين قياسات زوايا المثلث 2.5 : 3 : 4.5 فإن قياس أصغر زاوية:',
+    opts:['45','18','36','20'],
+    ans:0, exp:'مجموع النسب = 10، A=180/10=18، أصغر زاوية = 2.5×18 = 45°' },
+  { id:42, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'سعر جوال 2000 ريال وعليه ضريبة قيمة مضافة 15%، فكم سعر الجوال؟',
+    opts:['2500 ريال','2333.3 ريال','2300 ريال','2100 ريال'],
+    ans:2, exp:'2000 × 115/100 = 2300 ريال' },
+  { id:43, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'إذا كان (7k+1) عدداً زوجياً حيث n ∈ k مجموعة الأعداد الطبيعية، فإن (7k+1)²:',
+    opts:['عدد زوجي مؤلف','عدد زوجي أولي','عدد فردي مؤلف','عدد فردي أولي'],
+    ans:0, exp:'أي عدد زوجي مرفوع للأس 2 ينتج عدداً زوجياً مؤلفاً.' },
+  { id:44, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'ما قيمة النسبة y:x إذا علمت أن a/b = (x+a)/(y+b)؟',
+    opts:['A:b','B:a','1:1','2:1'],
+    ans:0, exp:'بالضرب التبادلي: ay+ab = bx+ab → ay=bx → x/y = a/b' },
+  { id:45, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'لدى شخص 72 قلماً أحمر و 84 قلماً أزرق أراد وضعها في علب بالتساوي؛ ما أكبر عدد من الأقلام يمكن وضعه؟',
+    opts:['12','13','11','10'],
+    ans:0, exp:'القاسم المشترك الأكبر لـ 72 و 84 هو 12' },
+  { id:46, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'قط يمكنه أن يصعد درجاً ستة ستة دون باقٍ، وثمانية ثمانية دون باقٍ، وعشرة عشرة دون باقٍ، فما أقل عدد من السلالم؟',
+    opts:['60','120','180','150'],
+    ans:1, exp:'المضاعف المشترك الأصغر لـ 6، 8، 10 = 120' },
+  { id:47, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'لدينا كسر عشري لانهائي 0.12121212121212، التمثيل النسبي الصحيح لهذا العدد هو:',
+    opts:['12/100','12/101','12/110','4/33'],
+    ans:3, exp:'0.̄12 = 12/99 = 4/33' },
+  { id:48, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'سيارة تسير بسرعة 53 م/دقيقة وسيارة أخرى تسير بسرعة 75 م/دقيقة؛ فكم البعد بينهما بعد 15 دقيقة؟',
+    opts:['330','230','220','320'],
+    ans:0, exp:'الأولى: 53×15=795م، الثانية: 75×15=1125م، الفرق=330م' },
+  { id:49, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'إذا كان باقي قسمة n/7 = 3 فإن باقي قسمة 8n/7 =',
+    opts:['5','3','2','4'],
+    ans:1, exp:'باقي قسمة 8×3 على 7: 24÷7 باقي 3' },
+  { id:50, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'إذا كان x, y, z ثلاثة أعداد طبيعية، النسبة بينها 3:4:5 وكان y-x=5 فأوجد قيمة z.',
+    opts:['15','20','25','30'],
+    ans:2, exp:'x=15, y=20: y−x=5 ✓، إذاً z=25' },
+  { id:51, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'العدد الذي يقبل القسمة على 9 و 4 و 3:',
+    opts:['2345','7542','4536','7580'],
+    ans:2, exp:'4536: مجموع أرقامه=18 (يقبل 3 و9)، آحاده وعشراته 36 (يقبل 4)' },
+  { id:52, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'مزرعة مستطيلة أبعادها 360 , 240 مترًا تم تقسيمها إلى مربعات متطابقة فإن أطول طلع للمربع الواحد:',
+    opts:['60 مترًا','80 مترًا','100 مترًا','120 مترًا'],
+    ans:3, exp:'القاسم المشترك الأكبر لـ 360 و 240 = 120' },
+  { id:53, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'إذا كان خالد يعمل 5 ساعات يومياً لينجز عمله في 3 أيام؛ فكم ساعة يحتاجها لينجز عمله في يومين؟',
+    opts:['10','7.5','7','5'],
+    ans:1, exp:'إجمالي الساعات=15، في يومين: 15÷2=7.5 ساعة' },
+  { id:54, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'أرض مستطيلة 30×40 مترًا زُرع 20% أرز و15% قمح؛ فكم المساحة المتبقية؟',
+    opts:['780 م','870 م','720 م','620 م'],
+    ans:0, exp:'المساحة=1200م², المزروع 35%, المتبقي 65% → 780م²' },
+  { id:55, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'إذا كان a²+b²=5 وكان ab=3 فإن a/b + b/a:',
+    opts:['8','3/5','5/3','15'],
+    ans:2, exp:'(a²+b²)/ab = 5/3' },
+  { id:56, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'أوجد قيمة العدد المركب i⁴³ والعدد المركب i²³³.',
+    opts:['√−1 , i-','1-, i-','1 , 1-','i- , i-'],
+    ans:0, exp:'43÷4=10 باقي 3 → i³=−i، 233÷4=58 باقي 1 → i¹=√−1=i' },
+  { id:57, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'إذا تم تخفيض كتاب سعره 20 ريالاً إلى 15 ريالاً، فكم ريالاً سعر الكتاب الأصلي الذي تكون قيمته بعد التخفيض 60 ريالاً؟',
+    opts:['80 ريال','70 ريال','100 ريال','85 ريال'],
+    ans:0, exp:'60×20/15 = 80 ريال قبل الخصم' },
+  { id:58, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'ثلاثة أعداد النسبة بينهم 2:3:4 ومجموعهم 180، فإن قيمة العدد الأكبر تساوي:',
+    opts:['80','60','40','100'],
+    ans:0, exp:'180/9 × 4 = 80' },
+  { id:59, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'إذا كان a:b = 3:2 والنسبة بين b:c = 2:5 فإن a:b:c',
+    opts:['6:4:2','9:6:3','15:6:4','15:3:2'],
+    ans:2, exp:'a:b:c = 15:6:4' },
+  { id:60, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'إذا كان a:b = x:y فإن √(xb − ya + 4) يساوي:',
+    opts:['2','4','6','8'],
+    ans:0, exp:'x/y = a/b إذاً xb=ya، والتعبير = √(0+4) = 2' },
+  { id:61, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'فصل دراسي به 36 طالب النسبة بين الممتازين وغير الممتازين 4:5؛ فإن عدد الطلاب الممتازين:',
+    opts:['9 طلاب','20 طالب','16 طالب','12 طالب'],
+    ans:2, exp:'36/9 × 4 = 16 طالب' },
+  { id:62, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'إذا كانت y تتناسب طردياً مع x وكانت x=4, y=2، فإن y تساوي:',
+    opts:['(1/3)X','(1/2)X','(1/√2)X','(1/1)X'],
+    ans:1, exp:'y=cx → 2=4c → c=1/2 → y = (1/2)x' },
+  { id:63, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'سيارة قطعت 150 كيلومترًا في 6 ساعات؛ فكم كيلومترًا تقطع في 10 ساعات؟',
+    opts:['250 كم','150 كم','300 كم','400 كم'],
+    ans:0, exp:'150/6 = y/10 → y = 250 كم' },
+  { id:64, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'قبل ميلاد ولد بثلاثة أعوام كان عمر أبيه 19 سنة؛ فما مجموع عمريهما بعد 10 سنوات من ميلاده؟',
+    opts:['20','23','40','42'],
+    ans:3, exp:'عمر الأب عند الولادة=22، بعد 10 سنوات: الولد=10، الأب=32، المجموع=42' },
+  { id:65, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'إذا كانت الساعة السابعة والنصف؛ فكم قياس الزاوية بين عقربي الساعات والدقائق؟',
+    opts:['90 درجة','45 درجة','75 درجة','30 درجة'],
+    ans:1, exp:'|30×7 − (11/2)×30| = |210−165| = 45 درجة' },
+  { id:66, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'إذا كان A = x + y، وكان x عدد موجب؛ فإن |A − y| + |y − A| يساوي:',
+    opts:['0','2','x2−','2x'],
+    ans:3, exp:'|x|+|−x| = x+x = 2x' },
+  { id:67, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'0.33̄ تساوي:',
+    opts:['1/6','9/3','1/3','1/√3'],
+    ans:2, exp:'33/99 = 1/3' },
+  { id:68, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'التغير الطردي بين x, y يمثل العلاقة: (4 رسوم بيانية)',
+    opts:['الشكل A','الشكل B','الشكل C','الشكل D (يمر بالأصل)'],
+    ans:3, exp:'التناسب الطردي يجب أن يمر بنقطة الأصل (0,0).' },
+  { id:69, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'سيارة انطلقت الساعة 8 بسرعة 80 km/h، بعدها بساعة تبعتها سيارة بسرعة 120 km/h. متى تلحق الثانية بالأولى؟',
+    opts:['10:00','10:30','11:00','11:30'],
+    ans:2, exp:'زمن اللحاق = (80×1)/40 = 2h، 9+2=11:00' },
+  { id:70, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'3√5 + √45 − √80 ما قيمة هذا المقدار؟',
+    opts:['2','3','3√5','2√5'],
+    ans:3, exp:'3√5+3√5−4√5 = 2√5' },
+  { id:71, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'إذا كان 100^(x+3) = 10^(y+6) فإن y بدلالة x:',
+    opts:['x = y','x = 2y','2x = y','y = x + 2'],
+    ans:2, exp:'10^(2x+6) = 10^(y+6) → 2x+6=y+6 → y=2x' },
+  { id:72, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'سيارة قطعت 150 كيلومترًا في 6 ساعات؛ فكم كيلومترًا تقطع في 10 ساعات؟',
+    opts:['250 كم','150 كم','300 كم','400 كم'],
+    ans:0, exp:'150/6 = y/10 → y = 250 كم' },
+  { id:73, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'أوجد الحد الخامس في المتتابعة: −2 ، −5 ، −8 ، ....',
+    opts:['-1','13','-14','18'],
+    ans:2, exp:'الفرق المشترك −3، الحد الخامس = −2+(4×(−3)) = −14' },
+  { id:74, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'2⁹⁹ + 2⁹⁹ ، أوجد قيمة هذا المقدار؟',
+    opts:['2⁹⁹','2¹⁹⁸','4¹⁹⁸','4⁵⁰'],
+    ans:3, exp:'2×2⁹⁹ = 2¹⁰⁰ = (2²)⁵⁰ = 4⁵⁰' },
+  { id:75, cat:'numbers', catLabel:'الأعداد والعمليات',
+    q:'إذا كانت x = -4، y = 2؛ فأي مما يأتي ينتمي لمجموعة الأعداد السالبة؟',
+    opts:['3y + x²','3y − x²','2y² − x','3x − y²'],
+    ans:3, exp:'3(−4)−(2²) = −12−4 = −16 < 0' },
+
+  // ======= SECTION 2: القياس ووحداته (75 questions) =======
+  { id:76, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'مستطيل نقص طوله 10%، ونقص عرضه 10%، فكم نسبة التغيير في المساحة؟',
+    opts:['%25','%20','%21','%19'],
+    ans:3, exp:'إذا كانت الأبعاد 20×10=200، بعد النقصان: 18×9=162، التغير: 38/200×100=19%' },
+  { id:77, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'مستطيل تم تقسيمه إلى مربعين وكل مربع إلى 3 مستطيلات، طول المستطيل الكبير 12 سم. فما محيطه؟',
+    opts:['36','56','42','24'],
+    ans:0, exp:'ضلع المربع=6سم، الأبعاد 12×6، المحيط = 2(12+6) = 36' },
+  { id:78, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'مستطيل عرضه 2ص، ومحيطه 6ص + 2س، فما طوله؟',
+    opts:['ص + س','س + 2ص','3ص','2س'],
+    ans:0, exp:'2(ل+2ص) = 6ص+2س → الطول = ص+س' },
+  { id:79, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'مربع قطره = 5√2 ، أوجد محيطه.',
+    opts:['30','20','15','10'],
+    ans:1, exp:'الضلع = 5√2÷√2 = 5، المحيط = 4×5 = 20' },
+  { id:80, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'احسب مساحة المظلل إذا علمت أن المثلثات متطابقة والأشكال الرباعية مربعات. (الأبعاد: 8 سم و 2 سم)',
+    opts:['10','14','12','8'],
+    ans:2, exp:'ارتفاع المثلث = (8−2)/2 = 3، مساحة مثلث = (2×3)/2 = 3، الإجمالي = 3×4 = 12' },
+  { id:81, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'أي مما يلي له أكبر محيط؟',
+    opts:['مستطيل 6×8 سم','مربع ضلعه 5 سم','مثلث متساوي الأضلاع ضلعه 8 سم','دائرة نصف قطرها 6 سم'],
+    ans:3, exp:'الدائرة: 2π×6≈37.7 > مستطيل 28 > مثلث 24 > مربع 20' },
+  { id:82, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'المساحة الكلية 60 سم²، الدائرة أ مساحتها 35 سم²، الدائرة ب مساحتها 45 سم²، أوجد مساحة الجزء المشترك.',
+    opts:['25','20','15','10'],
+    ans:1, exp:'المشترك = (35+45) − 60 = 20 سم²' },
+  { id:83, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'أوجد مساحة الشكل. (مستطيل 12×6 مع مثلث منقوص، الأبعاد 4 و 8 و 3)',
+    opts:['72','60','24','12'],
+    ans:1, exp:'مساحة المستطيل = 72، مساحة المثلث = 8×3/2 = 12، المساحة = 72−12 = 60' },
+  { id:84, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'إذا كان حجم المتوازي 72 سم³؛ فأوجد ص. (الأبعاد: ص+2، ص، 3)',
+    opts:['7','6','5','4'],
+    ans:3, exp:'(ص+2)×ص×3 = 72 → ص=4: 6×4×3=72 ✓' },
+  { id:85, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'مكعب طول حرفه 8 سم، أوجد حجمه.',
+    opts:['256','512','384','128'],
+    ans:1, exp:'حجم المكعب = 8³ = 512 سم³' },
+  { id:86, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'مكعب طول حرفه 8 سم، أوجد مساحته الجانبية.',
+    opts:['64','384','256','512'],
+    ans:2, exp:'المساحة الجانبية = 4ل² = 4×64 = 256 سم²' },
+  { id:87, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'مكعب طول حرفه 8 سم، أوجد مساحته الكلية.',
+    opts:['64','512','256','384'],
+    ans:3, exp:'المساحة الكلية = 6ل² = 6×64 = 384 سم²' },
+  { id:88, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'متوازي مستطيلات طوله 5 سم، وعرضه 4 سم، وارتفاعه 3 سم، أوجد الحجم.',
+    opts:['94','54','60','125'],
+    ans:2, exp:'5×4×3 = 60 سم³' },
+  { id:89, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'متوازي مستطيلات طوله 5 سم، وعرضه 4 سم، وارتفاعه 3 سم، أوجد المساحة الجانبية.',
+    opts:['94','54','60','125'],
+    ans:1, exp:'محيط القاعدة × الارتفاع = (2×5+2×4)×3 = 18×3 = 54 سم²' },
+  { id:90, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'متوازي مستطيلات طوله 5 سم، وعرضه 4 سم، وارتفاعه 3 سم، أوجد المساحة الكلية.',
+    opts:['94','54','60','125'],
+    ans:0, exp:'المساحة الجانبية + 2× مساحة القاعدة = 54 + 2×20 = 94 سم²' },
+  { id:91, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'أسطوانة نصف قطرها 7 سم وارتفاعها 3 سم، أوجد حجمها.',
+    opts:['462','132','440','146'],
+    ans:0, exp:'π×7²×3 = 22/7×49×3 = 462 سم³' },
+  { id:92, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'أسطوانة نصف قطرها 7 سم وارتفاعها 3 سم، أوجد مساحتها الجانبية.',
+    opts:['462','132','440','146'],
+    ans:1, exp:'2π×7×3 = 2×22/7×7×3 = 132 سم²' },
+  { id:93, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'أسطوانة نصف قطرها 7 سم وارتفاعها 3 سم، أوجد مساحتها الكلية.',
+    opts:['462','132','440','146'],
+    ans:2, exp:'132 + 2×π×7² = 132 + 308 = 440 سم²' },
+  { id:94, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'هرم ثلاثي قائم، طول قاعدته 4 سم وارتفاعها 2 سم وارتفاع الهرم 3 سم، أوجد حجم الهرم.',
+    opts:['5','6','3','4'],
+    ans:3, exp:'1/3 × (1/2×4×2) × 3 = 1/3×4×3 = 4 سم³' },
+  { id:95, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'مقياس الرسم على خريطة 2:3000، وكانت المسافة بين مدينتين 4.5 كم؛ فإن المسافة على الخريطة بالمتر:',
+    opts:['3000','3','4000','4'],
+    ans:0, exp:'2/3000 = س/4500 → س=3 كم = 3000 متر' },
+  { id:96, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'مقياس الرسم على خريطة 1:60 كم، وكانت المسافة على الخريطة 10 سم؛ فإن المسافة الحقيقية:',
+    opts:['5.5','500','600','6.5'],
+    ans:2, exp:'1/60 = 10/س → س=600 كم' },
+  { id:97, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'كأس على شكل أسطوانة مساحة قاعدتها 15 سم²، وارتفاعها 5 سم، كم سنتيمترًا مكعبًا نحتاج لملء ثلث الكأس؟',
+    opts:['100','75','25','30'],
+    ans:2, exp:'حجم الكأس = 15×5 = 75، الثلث = 75/3 = 25 سم³' },
+  { id:98, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'إذا كان الشكل مربعًا طول ضلعه 4س، والمثلثات متطابقة فأوجد مساحة المظلل.',
+    opts:['5','3','4','6'],
+    ans:3, exp:'مساحة المربع = 16س²، الجزء المظلل = 3/8 × 16 = 6 سم²' },
+  { id:99, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'إذا كان قطر العجلة يساوي 60 مترًا؛ كم المسافة التي تقطعها إذا دارت 15 دورة؟',
+    opts:['600π','800π','900π','1000π'],
+    ans:2, exp:'المسافة = π×60×15 = 900π' },
+  { id:100, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'مهندس يصمم جسرًا طوله 5 سم على مخطط التصميم؛ فكم يكون طوله الحقيقي إذا كان مقياس الرسم 1:2 مترًا؟',
+    opts:['20','10','8','5'],
+    ans:1, exp:'1/2 = 5/س → س=10 متر' },
+  { id:101, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'فطيرة مكعبة حجمها 125 سم³، قسمت إلى قطع حجم الواحدة 8 سم³؛ فكم عدد القطع؟',
+    opts:['8','14','12','10'],
+    ans:0, exp:'ضلع الأول=5، ضلع الثاني=2، 5÷2=2 وباقي 1، 2×2×2=8 قطع' },
+  { id:102, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'دائرة محيطها 6π/5، فإن مساحتها بالمتر المربع:',
+    opts:['9π/15','9π/25','3π/5','9π/5'],
+    ans:1, exp:'نق = (6π/5)/(2π) = 3/5، مساحة = π(3/5)² = 9π/25' },
+  { id:103, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'يمشي شخص حول مضمار مربع طول أحد أضلاعه 10 مترًا، فإذا مشى 5 دورات؛ فكم مترًا قطع؟',
+    opts:['50','300','120','200'],
+    ans:3, exp:'محيط = 4×10=40، في 5 دورات: 40×5=200 متر' },
+  { id:104, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'مستطيل طوله ضعف عرضه، تمت إحاطته بسلك طوله 36 مترًا، أوجد مساحته بالمتر المربع.',
+    opts:['24','72','80','36'],
+    ans:1, exp:'2(س+2س)=36 → س=6، الطول=12، المساحة=72 م²' },
+  { id:105, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'إذا كان محيط العجلة يساوي 60 سم، ما هي المسافة التي تقطعها إذا دارت 15 دورة؟',
+    opts:['6 م','10 م','9 م','15 م'],
+    ans:2, exp:'60×15=900 سم = 9 م' },
+  { id:106, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'دائرة نصف قطرها 100 سم، رُسم على قطرها 20 دائرة صغيرة، أوجد نسبة المساحة بين الصغيرة والكبيرة.',
+    opts:['300:1','400:1','500:1','200:2'],
+    ans:1, exp:'نق الصغيرة = 5، مساحتها 25π، مساحة الكبيرة 10000π، النسبة 1:400' },
+  { id:107, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'إذا كانت مساحة الدائرة 36π، وعرض المستطيل 4 سم، أوجد مساحة المستطيل.',
+    opts:['16√2','32√2','16√3','32√3'],
+    ans:1, exp:'نق=6، قطر=12، طول المستطيل=8√2 (فيثاغورس)، المساحة=4×8√2=32√2' },
+  { id:108, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'مستطيل مساحته 60 سم² ومحيطه 32 سم، فأوجد الفرق بين طوله وعرضه.',
+    opts:['4','1','2','5'],
+    ans:0, exp:'الطول+العرض=16، الطول×العرض=60، هما 10 و6، الفرق=4' },
+  { id:109, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'غرفة مربعة طولها 12 مترًا، نريد وضع سجاد مربع طول ضلعه 4 مترًا، فما أكبر عدد من السجاد يمكن وضعه؟',
+    opts:['7','8','10','9'],
+    ans:3, exp:'مساحة الغرفة=144م²، مساحة السجادة=16م²، العدد=144÷16=9' },
+  { id:110, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'معين طول قطريه 8 سم و 6 سم، فإن مساحته:',
+    opts:['48','10','24','15'],
+    ans:2, exp:'مساحة المعين = (8×6)/2 = 24 سم²' },
+  { id:111, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'15 متر =',
+    opts:['150 سم','1500 سم','15 سم','1.5 سم'],
+    ans:1, exp:'15 × 100 = 1500 سم' },
+  { id:112, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'2 دسم² =',
+    opts:['200 ملم²','2000 ملم²','0.002 ملم²','20000 ملم²'],
+    ans:3, exp:'1 دسم² = 10000 ملم²، إذاً 2×10000=20000' },
+  { id:113, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'مستطيل بعده 4 و 6 سم، ما أكبر مساحة دائرة ترسم فيه؟',
+    opts:['4π','9π','16π','25π'],
+    ans:0, exp:'أكبر دائرة قطرها 4 سم (الضلع الأصغر)، نصف القطر=2، المساحة=4π' },
+  { id:114, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'الدائرتان متطابقتان ومساحة إحداهما 25π، أوجد طول م ن. (m=2 سم من المركز)',
+    opts:['6','9','8','7'],
+    ans:2, exp:'نق=5، طول م ن = (5+5)−2 = 8 سم' },
+  { id:115, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'غرفة مربعة طولها 4 مترًا وارتفاعها 3 مترًا، أراد تغليف ثلاثة جدران بالقماش، فكم يحتاج؟',
+    opts:['12','24','36','48'],
+    ans:2, exp:'مساحة الجدار = 4×3=12م²، ثلاثة جدران=36م²' },
+  { id:116, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'مسبح دائري قطره 7 مترًا، فما الطول التقريبي للسياج؟',
+    opts:['14','18','22','26'],
+    ans:2, exp:'محيط الدائرة = π×7 = 22/7×7 = 22 مترًا' },
+  { id:117, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'علبة تتسع لـ 2 لتر، كم مليلترًا تتسع لها إذا كان لدينا 3 علب؟',
+    opts:['100','1000','600','6000'],
+    ans:3, exp:'2×1000×3 = 6000 مليلتر' },
+  { id:118, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'إذا علمت أن نصف القطر (4) سم، فأوجد مساحة المظلل (مربع فيه دائرة).',
+    opts:['16(4−π)','64−4π','16(4−4π)','16(1−4π)'],
+    ans:0, exp:'مساحة المربع−الدائرة = 64−16π = 16(4−π)' },
+  { id:119, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'إذا كان مقياس الرسم على خريطة 1 سم : 60 كم، وكانت المسافة الفعلية 420 كم، فما المسافة على الخريطة بالمليمتر؟',
+    opts:['70','7','700','7000'],
+    ans:0, exp:'10 مليمتر : 60 كم = س : 420، س=70 مليمتر' },
+  { id:120, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'مساحة سطح هرم رباعي منتظم طول قاعدته 5 سم وارتفاعه الجانبي 10 سم:',
+    opts:['115','120','125','130'],
+    ans:2, exp:'المساحة الجانبية=1/2×20×10=100، القاعدة=25، الكلية=125 سم²' },
+  { id:121, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'طريق طوله 250 كم يعادل بالمتر:',
+    opts:['250000','25000','2500','250'],
+    ans:0, exp:'250 × 1000 = 250000 متر' },
+  { id:122, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'أسطوانة ارتفاعها 10 سم ومساحتها الجانبية 100π سم²، ما حجمها؟',
+    opts:['300π','250π','200π','150π'],
+    ans:1, exp:'100π=2πr×10 → r=5، الحجم=π×25×10=250π سم³' },
+  { id:123, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'36 ياردة = ....... قدم',
+    opts:['100','12','108','10'],
+    ans:2, exp:'الياردة = 3 أقدام، 36×3 = 108 قدم' },
+  { id:124, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'إناء سعته 3 لتر، فإنه يعادل ....... سنتيمتر مكعب.',
+    opts:['3000','300','30','3'],
+    ans:0, exp:'اللتر = 1000 سنتيمتر مكعب، 3×1000 = 3000' },
+  { id:125, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'كتلة وزنها 25 طن تعادل ....... جم.',
+    opts:['25','25000','25000000','250'],
+    ans:2, exp:'الطن = 1,000,000 جرام، 25×1,000,000 = 25,000,000' },
+  { id:126, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'دائرة طول قطرها 10 سم فإن محيطها:',
+    opts:['31.4','22/7','314','310'],
+    ans:0, exp:'محيط = π×قطر = 3.14×10 = 31.4 سم' },
+  { id:127, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'100 مستطيل: 50 منهم طولها 10 سم، والباقي 12 سم، أوجد مجموع أطوال الـ 100 مستطيل؟',
+    opts:['1300','1100','1000','950'],
+    ans:1, exp:'50×10+50×12 = 500+600 = 1100 سم' },
+  { id:128, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'إذا كانت مساحة الدائرة 9π، فإن مساحة المستطيل المحيط بها (3 دوائر متجاورة) هي:',
+    opts:['108','110','75','100'],
+    ans:0, exp:'نق=3، قطر=6، الطول=18، العرض=6، المساحة=108 سم²' },
+  { id:129, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'أوجد مساحة المظلل إذا علمت أن نصف القطر 2 سم. (ثلاثة أرباع دائرة)',
+    opts:['3π','2π','5π','4π'],
+    ans:0, exp:'مساحة الدائرة الكاملة=4π، ثلاثة أرباعها = 3π' },
+  { id:130, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'ثلاثة قوارير ماء سعة الواحد 5 لتر، كم سعة الثلاثة بالمليلتر؟',
+    opts:['150','1500','15000','150000'],
+    ans:2, exp:'5×1000×3 = 15000 مليلتر' },
+  { id:131, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'إذا كانت المربعات متطابقة وطول ضلع كل منها 2 سم، فاحسب مساحة المثلث (3 مربعات قاعدة، 3 ارتفاع).',
+    opts:['12','18','30','20'],
+    ans:1, exp:'القاعدة=6، الارتفاع=6، المساحة=36/2=18 سم²' },
+  { id:132, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'مساحة المستطيل 24 سم²، أوجد مساحة المظلل (مستطيل مقسم إلى مربعين وفيه قطران).',
+    opts:['5','6','7','8'],
+    ans:1, exp:'المستطيل مقسم إلى 4 مثلثات متطابقة، المظلل = 24/4 = 6 سم²' },
+  { id:133, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'قطعة أرض أبعادها 30 مترًا × 40 مترًا، فما سعرها إذا كان سعر المتر المربع 300 ريال؟',
+    opts:['240000','360000','520000','160000'],
+    ans:1, exp:'30×40=1200م²، السعر=1200×300=360000 ريال' },
+  { id:134, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'ما هي كمية الماء اللازمة لملء علبة مكعبة أبعادها 5×5×10 سم؟',
+    opts:['270','255','260','250'],
+    ans:3, exp:'5×5×10 = 250 سم³' },
+  { id:135, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'إذا علمت أن كل مثلث متطابق الأضلاع، وطول السلك المستقيم 16 سم، فما محيط الشكل؟',
+    opts:['46','48','50','90'],
+    ans:1, exp:'الضلع=16/4=4، الشكل 12 ضلع، المحيط=48 سم' },
+  { id:136, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'مستطيل مساحته (2س²+11س+15)، إذا كان الطول (س+3)؛ فكم يساوي العرض؟',
+    opts:['22','2س+5','2س','3س+10'],
+    ans:1, exp:'بتحليل: (2س+5)(س+3)، العرض = 2س+5' },
+  { id:137, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'أوجد المساحة الجانبية لهرم منتظم ارتفاعه الجانبي 178 م وضلع قاعدته 215 م.',
+    opts:['45930','76520','45620','76540'],
+    ans:3, exp:'0.5×(215×4)×178 = 0.5×860×178 = 76540 م²' },
+  { id:138, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'أوجد المساحة الجانبية لهرم ثلاثي منتظم محيط قاعدته 30 م والارتفاع الجانبي 12 م.',
+    opts:['100','180','150','120'],
+    ans:1, exp:'0.5×30×12 = 180 م²' },
+  { id:139, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'أوجد المساحة الكلية لهرم ثلاثي منتظم، محيط القاعدة 30 م، الارتفاع الجانبي 12 م، قاعدة الهرم 10 م وارتفاعها 8.7 م.',
+    opts:['232.5','222.5','223.5','233.5'],
+    ans:2, exp:'الجانبية=180، القاعدة=0.5×10×8.7=43.5، الكلية=223.5 م²' },
+  { id:140, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'مجسم طوله 5 مترًا، وذلك يساوي بالديسمتر:',
+    opts:['5','50','500','0.5'],
+    ans:1, exp:'المتر = 10 ديسمتر، 5×10 = 50 ديسمتر' },
+  { id:141, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'مكعب حجمه 30 ديسمتر مكعب، ذلك يساوي بالمليمتر:',
+    opts:['3000','30','30000','0.003'],
+    ans:2, exp:'1 دسم³ = 1000 ملم³، 30×1000=30000 ملم³' },
+  { id:142, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'شبه منحرف قاعدته المتوسطة 6 سم، وارتفاعه 3 سم، أوجد مساحته.',
+    opts:['15','12','30','18'],
+    ans:3, exp:'مساحة شبه المنحرف = القاعدة المتوسطة × الارتفاع = 6×3 = 18 سم²' },
+  { id:143, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'أوجد مساحة شبه المنحرف: قاعدتاه 3 و 8 سم، وارتفاعه 4 سم.',
+    opts:['11','22','33','44'],
+    ans:1, exp:'مساحة = (3+8)/2 × 4 = 5.5×4 = 22 سم²' },
+  { id:144, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'مخروط نصف قطر قاعدته 10 سم وارتفاعه 6 سم، أوجد حجمه علماً بأن π=3.14',
+    opts:['314','128','628','426'],
+    ans:2, exp:'1/3×π×100×6 = 200π = 628 سم³' },
+  { id:145, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'أوجد مساحة سطح الكرة ذات نصف القطر 7 سم.',
+    opts:['615','610','515','510'],
+    ans:0, exp:'4πr² = 4×3.14×49 ≈ 615 سم²' },
+  { id:146, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'أوجد حجم كرة نصف قطرها 8 سم.',
+    opts:['2145.5','2245.5','2345.5','2180.5'],
+    ans:0, exp:'4/3×π×8³ = 4/3×22/7×512 ≈ 2145.5 سم³' },
+  { id:147, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'النسبة بين طول مستطيل ومحيطه 2:7، إذا كان المحيط 28 سم، فأوجد عرض المستطيل.',
+    opts:['6','8','12','28'],
+    ans:0, exp:'الطول = 2×28/7=8، 2(8+x)=28 → x=6' },
+  { id:148, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'شكل رباعي زاويا: أ=85، ب=x، ج=80، د=x، أوجد قياس زاوية ب',
+    opts:['100','90','85','95'],
+    ans:3, exp:'الزاوية أ و ب متداخلتان: 180−85=95 درجة' },
+  { id:149, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'ما قيمة س في المثلث (الزاوية العليا 60، وزاوية الخارجي 50، والزاوية خارج المثلث س)؟',
+    opts:['100','110','70','60'],
+    ans:1, exp:'60+50=110، الزاوية الثالثة=70، الزاوية الخارجية س=180−70=110' },
+  { id:150, cat:'measurement', catLabel:'القياس ووحداته',
+    q:'باب طوله 2 متر؛ أوجد طوله بالمليمتر.',
+    opts:['1000 مليمتر','500 مليمتر','2000 مليمتر','200 مليمتر'],
+    ans:2, exp:'2 × 10³ = 2000 مليمتر' }
+];
+
+// ============================================================
+// STATE
+// ============================================================
+let questions = [...allQuestions];
+let currentIdx = 0;
+let score = 0;
+let correctCount = 0;
+let wrongCount = 0;
+let answeredMap = {}; // idx → {selected, correct}
+let currentFilter = 'all';
+let reviewMode = false;
+
+// ============================================================
+// INIT
+// ============================================================
+function startQuiz() {
+  document.getElementById('startScreen').style.display = 'none';
+  document.getElementById('quizArea').style.display = 'block';
+  initDots();
+  renderQ();
+}
+
+function filterCat(cat) {
+  currentFilter = cat;
+  document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
+  if(cat==='all') document.getElementById('tabAll').classList.add('active');
+  else if(cat==='numbers') document.getElementById('tabNum').classList.add('active');
+  else document.getElementById('tabMeas').classList.add('active');
+
+  questions = cat==='all' ? [...allQuestions] : allQuestions.filter(q => q.cat===cat);
+  currentIdx = 0;
+  initDots();
+  renderQ();
+}
+
+function initDots() {
+  const wrap = document.getElementById('qDots');
+  wrap.innerHTML = '';
+  const max = Math.min(questions.length, 50);
+  for(let i=0; i<max; i++){
+    const d = document.createElement('div');
+    d.className = 'q-dot';
+    d.id = 'dot-'+i;
+    wrap.appendChild(d);
+  }
+  updateDots();
+}
+
+function updateDots() {
+  const max = Math.min(questions.length, 50);
+  for(let i=0; i<max; i++){
+    const d = document.getElementById('dot-'+i);
+    if(!d) continue;
+    const qId = questions[i].id;
+    d.className = 'q-dot';
+    if(i === currentIdx) d.classList.add('current');
+    else if(answeredMap[qId]) {
+      d.classList.add(answeredMap[qId].correct ? 'answered-c' : 'answered-w');
+    }
+  }
+}
+
+function renderQ() {
+  if(currentIdx >= questions.length) {
+    showResult();
+    return;
+  }
+
+  const q = questions[currentIdx];
+  const answered = answeredMap[q.id];
+  const total = questions.length;
+
+  // Stats
+  document.getElementById('statCurrent').textContent = currentIdx + 1;
+  document.getElementById('statTotal').textContent = total;
+  document.getElementById('statCorrect').textContent = correctCount;
+  document.getElementById('statWrong').textContent = wrongCount;
+  document.getElementById('statScore').textContent = score;
+
+  // Progress
+  const pct = Math.round(Object.keys(answeredMap).length / allQuestions.length * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressPct').textContent = pct + '%';
+  document.getElementById('progressLabel').textContent = `أجبت على ${Object.keys(answeredMap).length} من ${allQuestions.length}`;
+
+  // Q number & category
+  document.getElementById('qNum').textContent = q.id;
+  document.getElementById('qCat').textContent = q.catLabel;
+
+  // Question text
+  document.getElementById('questionText').textContent = q.q;
+
+  // Options
+  const grid = document.getElementById('optionsGrid');
+  grid.innerHTML = '';
+  const labels = ['أ', 'ب', 'ج', 'د'];
+  q.opts.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.innerHTML = `<span class="option-badge">${labels[i]}</span>${opt}`;
+    btn.onclick = () => answerQ(i);
+
+    if(answered) {
+      btn.disabled = true;
+      if(i === answered.selected && answered.selected !== q.ans) btn.classList.add('wrong');
+      else if(i === q.ans) btn.classList.add(answered.selected === q.ans ? 'correct' : 'reveal-correct');
+    }
+
+    grid.appendChild(btn);
+  });
+
+  // Feedback
+  const fb = document.getElementById('feedbackBox');
+  fb.className = 'feedback-box';
+  if(answered) {
+    fb.classList.add('show', answered.correct ? 'correct-fb' : 'wrong-fb');
+    fb.innerHTML = `<div class="feedback-title">${answered.correct ? '✅ يا سلام! برافو عليك' : '❌ حظ أوفر'}</div><div>${q.exp}</div>`;
+  }
+
+  // Nav buttons
+  document.getElementById('prevBtn').style.display = currentIdx > 0 ? 'flex' : 'none';
+  document.getElementById('nextBtn').textContent = currentIdx === questions.length - 1 ? 'إنهاء ✓' : 'التالي ▶';
+  document.getElementById('skipBtn').style.display = answered ? 'none' : 'flex';
+
+  // Animate card
+  const card = document.getElementById('questionCard');
+  card.style.animation = 'none';
+  card.offsetHeight;
+  card.style.animation = '';
+
+  updateDots();
+}
+
+function answerQ(selected) {
+  const q = questions[currentIdx];
+  if(answeredMap[q.id]) return;
+
+  const correct = selected === q.ans;
+  answeredMap[q.id] = { selected, correct };
+
+  if(correct) {
+    correctCount++;
+    score += 10;
+    showToast('✨ يا سلام! برافو عليك ✨', 'correct');
+    if(score % 50 === 0) launchConfetti();
+  } else {
+    wrongCount++;
+    score = Math.max(0, score);
+    showToast('😔 حظ أوفر! الصحيح هو: ' + q.opts[q.ans], 'wrong');
+  }
+
+  // Disable buttons & show feedback
+  const btns = document.querySelectorAll('.option-btn');
+  btns.forEach((btn, i) => {
+    btn.disabled = true;
+    if(i === selected && !correct) btn.classList.add('wrong');
+    if(i === q.ans) btn.classList.add(correct ? 'correct' : 'reveal-correct');
+  });
+
+  const fb = document.getElementById('feedbackBox');
+  fb.className = 'feedback-box show ' + (correct ? 'correct-fb' : 'wrong-fb');
+  fb.innerHTML = `<div class="feedback-title">${correct ? '✅ يا سلام! برافو عليك' : '❌ حظ أوفر'}</div><div>${q.exp}</div>`;
+
+  document.getElementById('skipBtn').style.display = 'none';
+  updateDots();
+
+  // Update stats
+  document.getElementById('statCorrect').textContent = correctCount;
+  document.getElementById('statWrong').textContent = wrongCount;
+  document.getElementById('statScore').textContent = score;
+}
+
+function nextQ() {
+  if(currentIdx < questions.length - 1) {
+    currentIdx++;
+    renderQ();
+  } else {
+    showResult();
+  }
+}
+
+function prevQ() {
+  if(currentIdx > 0) {
+    currentIdx--;
+    renderQ();
+  }
+}
+
+function skipQ() {
+  if(currentIdx < questions.length - 1) {
+    currentIdx++;
+    renderQ();
+  }
+}
+
+function showResult() {
+  document.getElementById('questionCard').style.display = 'none';
+  document.querySelector('.nav-buttons').style.display = 'none';
+  document.getElementById('qDots').style.display = 'none';
+  const rs = document.getElementById('resultScreen');
+  rs.classList.add('show');
+
+  const total = allQuestions.length;
+  const answered = Object.keys(answeredMap).length;
+  const pct = Math.round(correctCount / Math.max(answered,1) * 100);
+
+  document.getElementById('resultScore').textContent = score;
+  document.getElementById('resultTotal').textContent = `نقطة من ${total * 10}`;
+  document.getElementById('resCorrect').textContent = correctCount;
+  document.getElementById('resWrong').textContent = wrongCount;
+  document.getElementById('resPct').textContent = pct + '%';
+
+  let trophy = '🏆', msg = '';
+  if(pct >= 90) { trophy = '🥇'; msg = 'استثنائي! أنت نجم الرياضيات! 🌟'; }
+  else if(pct >= 75) { trophy = '🏆'; msg = 'ممتاز جداً! أداء رائع! 🎉'; }
+  else if(pct >= 60) { trophy = '🥈'; msg = 'جيد! استمر في التحسن! 💪'; }
+  else if(pct >= 50) { trophy = '🥉'; msg = 'لا بأس! راجع الأخطاء وحاول مجدداً 📚'; }
+  else { trophy = '📚'; msg = 'تحتاج مزيداً من المراجعة، أنت قادر! 🌱'; }
+
+  document.getElementById('resultTrophy').textContent = trophy;
+  document.getElementById('resultMsg').textContent = msg;
+
+  if(pct >= 75) launchConfetti(50);
+}
+
+function restartQuiz() {
+  answeredMap = {};
+  currentIdx = 0;
+  score = 0;
+  correctCount = 0;
+  wrongCount = 0;
+  reviewMode = false;
+
+  document.getElementById('resultScreen').classList.remove('show');
+  document.getElementById('questionCard').style.display = 'block';
+  document.querySelector('.nav-buttons').style.display = 'flex';
+  document.getElementById('qDots').style.display = 'flex';
+
+  filterCat(currentFilter);
+}
+
+function reviewWrong() {
+  const wrongIds = Object.keys(answeredMap).filter(id => !answeredMap[id].correct).map(Number);
+  if(wrongIds.length === 0) {
+    showToast('🎉 ما في أخطاء! أداء مثالي!', 'correct');
+    return;
+  }
+
+  questions = allQuestions.filter(q => wrongIds.includes(q.id));
+  Object.keys(answeredMap).forEach(id => { if(!answeredMap[id].correct) delete answeredMap[id]; });
+  currentIdx = 0;
+
+  document.getElementById('resultScreen').classList.remove('show');
+  document.getElementById('questionCard').style.display = 'block';
+  document.querySelector('.nav-buttons').style.display = 'flex';
+  document.getElementById('qDots').style.display = 'flex';
+
+  initDots();
+  renderQ();
+}
+
+// ============================================================
+// UI HELPERS
+// ============================================================
+let toastTimer = null;
+function showToast(msg, type) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = `toast ${type}-toast show`;
+  if(toastTimer) clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+function launchConfetti(count = 30) {
+  const wrap = document.getElementById('confettiWrap');
+  const colors = ['#f5a623','#e94560','#00c896','#0f9b8e','#ffffff','#ffd700'];
+  for(let i=0; i<count; i++){
+    const p = document.createElement('div');
+    p.className = 'conf-particle';
+    const color = colors[Math.floor(Math.random()*colors.length)];
+    const left = Math.random()*100;
+    const drift = (Math.random()-0.5)*200;
+    const duration = 1.5+Math.random()*2;
+    p.style.cssText = `left:${left}%;background:${color};--drift:${drift}px;animation-duration:${duration}s;animation-delay:${Math.random()*0.5}s;border-radius:${Math.random()>0.5?'50%':'2px'}`;
+    wrap.appendChild(p);
+    setTimeout(() => p.remove(), (duration+0.5)*1000);
+  }
+}
+
+// ============================================================
+// FLOATING MATH SYMBOLS
+// ============================================================
+(function() {
+  const symbols = ['∑','∫','π','√','∞','∂','∇','α','β','θ','λ','∆','Σ','∏','±','÷','×','²','³','≠','≤','≥','∈','∉','⊂','∩','∪','0','1','2','3','4','5','6','7','8','9'];
+  const bg = document.getElementById('mathBg');
+  for(let i=0;i<25;i++){
+    const s = document.createElement('span');
+    s.textContent = symbols[Math.floor(Math.random()*symbols.length)];
+    s.style.left = Math.random()*100+'%';
+    s.style.animationDelay = Math.random()*20+'s';
+    s.style.animationDuration = (15+Math.random()*15)+'s';
+    s.style.fontSize = (0.8+Math.random()*2)+'rem';
+    bg.appendChild(s);
+  }
+})();
+</script>
+</body>
+</html>
