@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة المسابقة التفاعلية - د/فواز</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Tajawal', 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.3);
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #4ade80;
+            transition: width 0.3s ease;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .quiz-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            background: #f3f4f6;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .score-box {
+            text-align: center;
+            flex: 1;
+        }
+
+        .score-box h3 {
+            color: #667eea;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .score-box .number {
+            font-size: 28px;
+            font-weight: bold;
+            color: #764ba2;
+        }
+
+        .question-number {
+            text-align: center;
+            flex: 1;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .question-container {
+            margin-bottom: 30px;
+        }
+
+        .question-text {
+            background: #f9fafb;
+            padding: 20px;
+            border-right: 4px solid #667eea;
+            margin-bottom: 25px;
+            border-radius: 5px;
+            font-size: 18px;
+            font-weight: 500;
+            color: #1f2937;
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        .option {
+            padding: 15px 20px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+            font-size: 16px;
+            color: #374151;
+        }
+
+        .option:hover {
+            border-color: #667eea;
+            background: #f0f4ff;
+            transform: translateX(-5px);
+        }
+
+        .option.selected {
+            border-color: #667eea;
+            background: #e0e7ff;
+        }
+
+        .option.correct {
+            border-color: #4ade80;
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .option.incorrect {
+            border-color: #ef4444;
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .feedback {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+
+        .feedback.show {
+            display: block;
+        }
+
+        .feedback.success {
+            background: #dcfce7;
+            border-left: 4px solid #4ade80;
+            color: #166534;
+        }
+
+        .feedback.error {
+            background: #fee2e2;
+            border-left: 4px solid #ef4444;
+            color: #991b1b;
+        }
+
+        .feedback-message {
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .correct-answer {
+            font-size: 14px;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .emojis {
+            font-size: 40px;
+            margin-bottom: 10px;
+            animation: bounce 0.6s ease;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .button-container {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            justify-content: center;
+        }
+
+        button {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-next {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-next:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-next:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-restart {
+            background: #4ade80;
+            color: white;
+        }
+
+        .btn-restart:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(74, 222, 128, 0.4);
+        }
+
+        .finish-message {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .finish-message h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 28px;
+        }
+
+        .final-score {
+            font-size: 48px;
+            font-weight: bold;
+            color: #764ba2;
+            margin: 20px 0;
+        }
+
+        .score-detail {
+            font-size: 18px;
+            color: #6b7280;
+            margin-bottom: 30px;
+        }
+
+        .settings-footer {
+            background: #f3f4f6;
+            padding: 25px;
+            text-align: center;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .settings-footer p {
+            color: #6b7280;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .designer-link {
+            display: inline-block;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 10px 5px;
+            transition: all 0.3s ease;
+            padding: 8px 15px;
+            border-radius: 5px;
+        }
+
+        .designer-link:hover {
+            background: #e0e7ff;
+            color: #764ba2;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .stat {
+            background: #f9fafb;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-label {
+            color: #6b7280;
+            font-size: 13px;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .quiz-info {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .button-container {
+                flex-direction: column;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 منصة المسابقة التفاعلية</h1>
+            <p>اختبر معلوماتك في العلوم والرياضيات</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+
+        <div class="content" id="quizContent">
+            <div class="quiz-info">
+                <div class="score-box">
+                    <h3>النقاط</h3>
+                    <div class="number" id="scoreDisplay">0</div>
+                </div>
+                <div class="question-number" id="questionCounter">السؤال 1 من 50</div>
+                <div class="score-box">
+                    <h3>الإجابات الصحيحة</h3>
+                    <div class="number" id="correctCounter">0</div>
+                </div>
+            </div>
+
+            <div class="question-container" id="questionContainer"></div>
+
+            <div class="button-container">
+                <button class="btn-next" id="nextBtn" disabled>السؤال التالي →</button>
+            </div>
+        </div>
+
+        <div class="settings-footer">
+            <p>✨ تم إعداد هذه المنصة بعناية</p>
+            <p style="font-size: 16px; font-weight: bold;">
+                <a href="https://t.me/TAqhjT3MFVE1Yzk0" class="designer-link" target="_blank">
+                    📌 تصميم د/فواز - للمزيد اضغط هنا
+                </a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        const quizData = [
+            {
+                question: "سرعة الجسم التي تعتمد على اتجاه حركته هي:",
+                options: ["السرعة المتجهة", "السرعة المتوسطة", "السرعة اللحظية", "السرعة الثابتة"],
+                correct: 0,
+                category: "العلوم"
+            },
+            {
+                question: "كل هذه الحالات يحدث فيها تسارع ما عدا:",
+                options: ["طائرة في حالة إقلاع", "سيارة تنخفض سرعتها لتتوقف", "دراجة تنطلق في بداية السباق", "سيارة تسير بسرعة ثابتة"],
+                correct: 3,
+                category: "العلوم"
+            },
+            {
+                question: "عندما يرغب راكب الدراجة في التوقف فإنه يقلل من سرعتها، وهذا يعني أن تسارعها:",
+                options: ["موجب", "سالب", "ثابت", "متزايد"],
+                correct: 1,
+                category: "العلوم"
+            },
+            {
+                question: "الخاصية التي تمثل ميل الجسم لمقاومة إحداث أي تغيير في حالته الحركية تسمى:",
+                options: ["التصادم المرن", "كتلة الجسم", "القصور الذاتي", "حفظ الزخم"],
+                correct: 2,
+                category: "العلوم"
+            },
+            {
+                question: "القوى التي تلغي أثر بعضها البعض تسمى قوى:",
+                options: ["متزنة", "غير متزنة", "مختلفة", "ساكنة"],
+                correct: 0,
+                category: "العلوم"
+            },
+            {
+                question: "عندما يتحرك الجسم حركة دائرية فإن القوة المحصلة المؤثرة في الجسم تسمى القوة:",
+                options: ["الأفقية", "المركزية", "الرأسية", "الدائرية"],
+                correct: 1,
+                category: "العلوم"
+            },
+            {
+                question: "إذا سافرت بحافلة من مدينة إلى أخرى تبعد عنها مسافة 200 كم، واستغرقت الرحلة 2.5 ساعة فما متوسط سرعة الحافلة؟",
+                options: ["180 كم/س", "80 كم/س", "40 كم/س", "20 كم/س"],
+                correct: 1,
+                category: "العلوم"
+            },
+            {
+                question: "عندما ينطفئ أحد المصابيح في دائرة كهربائية، وتبقى الأخرى مضاءة، فهي:",
+                options: ["دائرة مفتوحة", "دائرة مختلطة", "موصلة على التوازي", "التوالي"],
+                correct: 2,
+                category: "العلوم"
+            },
+            {
+                question: "إذا قمت بكسر المغناطيس إلى نصفين، فماذا يحدث لقطبي هذا المغناطيس؟",
+                options: ["أحدهما يكون قطب شمالي والآخر جنوبي", "كال النصفين يحصلان على القطب الشمالي", "كال النصفين يحصلان على القطب الجنوبي", "كال النصفين لهما قطب شمالي وقطب جنوبي"],
+                correct: 3,
+                category: "العلوم"
+            },
+            {
+                question: "يطلق على المواد التي تتصرف بعض الأحيان كعازل للكهرباء وبعض الأحيان كموصل:",
+                options: ["موصلات", "أشباه موصلات", "عوازل", "فائقة التوصيل"],
+                correct: 1,
+                category: "العلوم"
+            },
+            {
+                question: "الخاصية التي تزداد في سلك عندما تقل مساحة مقطعه العرضي هي:",
+                options: ["المقاومة", "التيار", "الجهد", "الشحنة"],
+                correct: 0,
+                category: "العلوم"
+            },
+            {
+                question: "يسمى الجهاز الذي يحول الطاقة الحركية إلى طاقة كهربائية:",
+                options: ["المحرك الكهربائي", "المولد الكهربائي", "التيار المستمر", "التيار المتردد"],
+                correct: 1,
+                category: "العلوم"
+            },
+            {
+                question: "عندما يقوم شخص بنفخ بالونة بالهواء ثم يطلقها، يعد ذلك مثال على قانون:",
+                options: ["نيوتن الأول", "نيوتن الثاني", "نيوتن الثالث", "أوم"],
+                correct: 2,
+                category: "العلوم"
+            },
+            {
+                question: "عندما يكون الجسم في الفضاء الخارجي، فأي العبارات التالية صحيحة:",
+                options: ["يختلف وزنه وكتلته عما هو عليه في الأرض", "تختلف كتلته عما هو عليه في الأرض ويبقى وزنه ثابت", "يختلف وزنه عما هو عليه في الأرض وتبقى كتلته ثابته", "لا يختلف وزنه وكتلته"],
+                correct: 2,
+                category: "العلوم"
+            },
+            {
+                question: "ما المخاطر التي يمكن تفاديها عند إغلاق الغاز في حالة حدوث زلزال؟",
+                options: ["التصدع", "التمزق", "اندلاع النيران", "انهيار المبنى"],
+                correct: 2,
+                category: "العلوم"
+            },
+            {
+                question: "الخاصية المشتركة بين الحالتين السائلة والغازية:",
+                options: ["الحجم غير ثابت", "البعد بين الجزيئات صغير جداً", "قوة التماسك كبيرة جداً", "تأخذ شكل الإناء الموضوعة فيه"],
+                correct: 3,
+                category: "العلوم"
+            },
+            {
+                question: "إلى أي المحاليل يصنف الفولاذ المقاوم للصدأ (ستانلس ستيل)؟",
+                options: ["محلول ممزوج من مواد صلبة", "محلول ممزوج من مواد صلبة وسائلة", "محلول ممزوج من مواد غازية وسائلة", "محلول ممزوج من مواد صلبة وغازية"],
+                correct: 0,
+                category: "العلوم"
+            },
+            {
+                question: "ما الحد الأقصى لعدد الالكترونات في المستوى الرئيسي الثالث M؟",
+                options: ["14", "16", "18", "20"],
+                correct: 2,
+                category: "العلوم"
+            },
+            {
+                question: "أي الخاليا التي تهاجم مسببات المرض؟",
+                options: ["كريات الدم الحمراء", "الصفائح الدموية", "الخاليا اللمفاوية", "كريات الدم البيضاء"],
+                correct: 3,
+                category: "العلوم"
+            },
+            {
+                question: "أيًا من الأعضاء التالية يعد من الأعضاء الملحقة بالجهاز الهضمي؟",
+                options: ["الكبد", "المعدة", "المريء", "الأمعاء الغليظة"],
+                correct: 0,
+                category: "العلوم"
+            },
+            {
+                question: "تحليل وحيدة الحد 12 س ص =",
+                options: ["2 × 2 × 3 × س × ص", "2 × 2 × س × ص × 2", "2 × س × ص × س × ص × 2", "2 × س × ص × س × 2 × 2"],
+                correct: 0,
+                category: "الرياضيات"
+            },
+            {
+                question: "حل المعادلة (ن + 2)² = 25 هو:",
+                options: ["3 ، -7", "1 ، 0", "2 ، 0", "-2 ، -1"],
+                correct: 0,
+                category: "الرياضيات"
+            },
+            {
+                question: "تحليل كثيرة الحدود س² - 10 س + 24 =",
+                options: ["(س - 4)(س - 6)", "(س + 4)(س + 6)", "(س + 4)(س - 6)", "(س - 6)(س - 4)"],
+                correct: 0,
+                category: "الرياضيات"
+            },
+            {
+                question: "المعامل الرئيس لكثيرة الحدود س² - 10 س + 24 =",
+                options: ["1", "6", "-6", "10"],
+                correct: 0,
+                category: "الرياضيات"
+            },
+            {
+                question: "مربع (أ + ب) هو مثال حاصل ضرب يساوي إليه مربع ب",
+                options: ["(أ - ب) × (أ + ب)", "(أ - ب) - (أ + ب)", "(أ - 1)", "(أ + ب)(أ + ب)"],
+                correct: 0,
+                category: "الرياضيات"
+            },
+            {
+                question: "ناتج الطرح (8 - ⁴ن)(3 - ⁵ن - ⁰ن²) =",
+                options: ["18 + 57 - ⁵ن² - ⁰ن", "18 + 51 - ⁰ن² - ⁰ن", "18 + 57 - ⁵ن² - ⁰ن", "18 - 51 + ⁰ن² - ⁰ن"],
+                correct: 0,
+                category: "الرياضيات"
+            },
+            {
+                question: "تبسيط العبارة (ب + 1)² - ب² =",
+                options: ["2ب + 1", "2ب", "1 + ب", "1 - ب"],
+                correct: 0,
+                category: "الرياضيات"
+            },
+            {
+                question: "أي ثلاثية حدود تمثل مربعاً كاملاً؟",
+                options: ["9 + س - ¹ س", "9 + س 7 - ¹ س", "3 + س - ¹ س", "12 - س + ¹ س"],
+                correct: 0,
+                category: "الرياضيات"
+            },
+            {
+                question: "القيمة التي حث عليها النص (نص أدبي):",
+                options: ["الصبر", "الصدقة", "الصلاة", "بر الوالدين"],
+                correct: 1,
+                category: "اللغة العربية"
+            },
+            {
+                question: "مصدر الماء الذي يسقى به البستانان:",
+                options: ["البحيرة", "النهر", "البئر", "المطر"],
+                correct: 1,
+                category: "اللغة العربية"
+            },
+            {
+                question: "سبب اھتمام الفرس والرومان بالرياضة ھو:",
+                options: ["تعليمي", "صحي", "عسكري", "عدواني"],
+                correct: 2,
+                category: "اللغة العربية"
+            },
+            {
+                question: "معنى كلمة (نبال) هو:",
+                options: ["الأثقال", "الحجارة", "السهام", "العصي"],
+                correct: 2,
+                category: "اللغة العربية"
+            },
+            {
+                question: "الفكرة في الفقرة الثالثة (حول أنواع الرياضة):",
+                options: ["قلة أنواع الرياضة المناسبة", "إمكانية انتقاء أنواع الرياضة", "الرياضة تخص عمراً وقدرات محددة", "كثرة أنواع الرياضة يصعب الاختيار"],
+                correct: 1,
+                category: "اللغة العربية"
+            },
+            {
+                question: "موقف الأخ الأول من أخيه (من النص الأدبي):",
+                options: ["النصح", "التأييد", "التجاهل", "القطيعة"],
+                correct: 0,
+                category: "اللغة العربية"
+            },
+            {
+                question: "نوع الأسلوب المستخدم بين الأخوين:",
+                options: ["استجوابي", "وصفي", "سردي", "حواري"],
+                correct: 3,
+                category: "اللغة العربية"
+            },
+            {
+                question: "ما السبب في قلة الحشائش في الغابات المتشابكة الكثيفة؟",
+                options: ["قلة الضوء الذي يصل إليها", "قلة الماء في الغابة", "قلة الأملاح في التربة", "الاحتطاب الجائر"],
+                correct: 0,
+                category: "العلوم"
+            },
+            {
+                question: "ما سبب تغير شكل القمر بصورة منتظمة في كل شهر؟",
+                options: ["الأرض تدور حول محورها", "القمر يدور حول محوره", "القمر يدور حول الأرض", "السحاب يغطي القمر"],
+                correct: 2,
+                category: "العلوم"
+            },
+            {
+                question: "كيف يعتمد توهج كل مصباح في الدائرة على العدد الكلي للمصابيح الموصولة؟",
+                options: ["عند زيادة العدد يقل التوهج", "يبدأ التوهج بالتناقص التدريجي إلى أن ينعدم مع الوقت", "كلما زاد عدد المصابيح الموصولة زاد التوهج", "لا يتغير توهج أي مصباح مهما زاد العدد"],
+                correct: 0,
+                category: "العلوم"
+            },
+            {
+                question: "تسمى الدائرة الكهربائية التي لها مجال مغناطيسي:",
+                options: ["المغناطيس الكهربائي", "المولد الكهربائي", "الكهرباء الساكنة", "الرفع المغناطيسي"],
+                correct: 0,
+                category: "العلوم"
+            },
+            {
+                question: "ما نوع المادة المتكونة من تفاعل غاز الكلور مع فلز الصوديوم؟",
+                options: ["عنصر", "مركب", "مخلوط", "محلول"],
+                correct: 1,
+                category: "العلوم"
+            },
+            {
+                question: "أي مما يلي لا يعد نوعاً من الطفرات؟",
+                options: ["استبدال القاعدة", "تداخل RNA", "القواعد النيتروجينية", "انتقال الجينات"],
+                correct: 2,
+                category: "العلوم"
+            },
+            {
+                question: "بماذا تمتاز التوائم المتماثلة؟",
+                options: ["تنشأ من بويضة واحدة", "تنشأ من عدة بويضات", "لها مادة وراثية مختلفة", "تختلف في نوع الجنس"],
+                correct: 0,
+                category: "العلوم"
+            },
+            {
+                question: "مما يميز النبات وجود بلاستيدات خضراء، ما العملية الحيوية التي تقوم بها؟",
+                options: ["التنفس الخلوي", "التخمر", "البناء الضوئي", "النقل النشط"],
+                correct: 2,
+                category: "العلوم"
+            },
+            {
+                question: "عند إضافة محلول من كلوريد الباريوم إلى محلول من كبريتات الصوديوم تحول اللون إلى الأبيض، ما نوع التغير؟",
+                options: ["تغير كيميائي", "تغير حيوكيميائي", "تغير حيوي", "تغير فيزيائي"],
+                correct: 0,
+                category: "العلوم"
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let correctAnswers = 0;
+        let answered = false;
+
+        function initQuiz() {
+            displayQuestion();
+        }
+
+        function displayQuestion() {
+            const question = quizData[currentQuestion];
+            const container = document.getElementById('questionContainer');
+            
+            let html = `<div class="question-text">السؤال: ${question.question}</div>`;
+            html += '<div class="options">';
+            
+            question.options.forEach((option, index) => {
+                html += `<div class="option" data-index="${index}">${String.fromCharCode(1575 + index)}. ${option}</div>`;
+            });
+            
+            html += '</div><div class="feedback" id="feedback"></div>';
+            container.innerHTML = html;
+            
+            document.querySelectorAll('.option').forEach(option => {
+                option.addEventListener('click', selectOption);
+            });
+            
+            updateProgress();
+            answered = false;
+            document.getElementById('nextBtn').disabled = true;
+        }
+
+        function selectOption(e) {
+            if (answered) return;
+            
+            const selectedIndex = parseInt(e.target.dataset.index);
+            const correct = selectedIndex === quizData[currentQuestion].correct;
+            answered = true;
+            
+            document.querySelectorAll('.option').forEach((opt, index) => {
+                opt.style.pointerEvents = 'none';
+                if (index === quizData[currentQuestion].correct) {
+                    opt.classList.add('correct');
+                }
+                if (index === selectedIndex && !correct) {
+                    opt.classList.add('incorrect');
+                }
+            });
+            
+            const feedback = document.getElementById('feedback');
+            feedback.classList.add('show');
+            
+            if (correct) {
+                score += 10;
+                correctAnswers++;
+                feedback.classList.add('success');
+                const messages = ['🎉 إجابة صحيحة!', '👏 ممتاز!', '⭐ رائع جداً!', '🌟 عبقري!'];
+                feedback.innerHTML = `<div class="emojis">🎉</div><div class="feedback-message">${messages[Math.floor(Math.random() * messages.length)]}</div>`;
+            } else {
+                feedback.classList.add('error');
+                feedback.innerHTML = `<div class="emojis">😔</div><div class="feedback-message">الإجابة غير صحيحة، حاول مرة أخرى!</div><div class="correct-answer">✓ الإجابة الصحيحة: ${String.fromCharCode(1575 + quizData[currentQuestion].correct)}. ${quizData[currentQuestion].options[quizData[currentQuestion].correct]}</div>`;
+            }
+            
+            updateScore();
+            document.getElementById('nextBtn').disabled = false;
+        }
+
+        function updateScore() {
+            document.getElementById('scoreDisplay').textContent = score;
+            document.getElementById('correctCounter').textContent = correctAnswers;
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestion + 1) / quizData.length) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('questionCounter').textContent = `السؤال ${currentQuestion + 1} من ${quizData.length}`;
+        }
+
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            currentQuestion++;
+            if (currentQuestion < quizData.length) {
+                displayQuestion();
+            } else {
+                showResults();
+            }
+        });
+
+        function showResults() {
+            const percentage = (correctAnswers / quizData.length) * 100;
+            const message = percentage === 100 ? '🏆 درجة كاملة! أنت عبقري!' : 
+                           percentage >= 80 ? '🌟 ممتاز جداً!' :
+                           percentage >= 60 ? '👍 جيد!' :
+                           percentage >= 40 ? '📚 يمكنك أن تحاول مرة أخرى' :
+                           '💪 تابع المحاولة!';
+            
+            document.getElementById('quizContent').innerHTML = `
+                <div class="finish-message">
+                    <h2>${message}</h2>
+                    <div class="final-score">${score}/${quizData.length * 10}</div>
+                    <div class="score-detail">نسبة النجاح: ${percentage.toFixed(1)}%</div>
+                    <div class="stats">
+                        <div class="stat">
+                            <div class="stat-label">عدد الأسئلة</div>
+                            <div class="stat-value">${quizData.length}</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-label">الإجابات الصحيحة</div>
+                            <div class="stat-value">${correctAnswers}</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-label">الإجابات الخاطئة</div>
+                            <div class="stat-value">${quizData.length - correctAnswers}</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-label">النقاط النهائية</div>
+                            <div class="stat-value">${score}</div>
+                        </div>
+                    </div>
+                    <div class="button-container">
+                        <button class="btn-restart" onclick="location.reload()">🔄 إعادة المسابقة</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Initialize quiz
+        initQuiz();
+    </script>
+</body>
+</html>
