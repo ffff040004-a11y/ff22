@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مسابقة الرخصة المهنية | القسم اللفظي (التربوي العام)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Reem+Kufi:wght@500;600;700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg1:#072e2b; --bg2:#0a3d46; --bg3:#06222b;
+  --gold:#e8c468; --gold-deep:#caa23e; --gold-soft:#f3dea0;
+  --teal:#27c4b0; --teal-deep:#129a8a;
+  --ink:#06201f; --paper:#fbf7ec;
+  --green:#2ecc71; --green-d:#1e9e57;
+  --red:#ff6b6b; --red-d:#d84848;
+  --glass:rgba(255,255,255,.08);
+  --glass-line:rgba(255,255,255,.16);
+  --shadow:0 22px 60px rgba(0,0,0,.45);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{
+  font-family:'Tajawal',sans-serif;color:var(--paper);
+  background:radial-gradient(1200px 700px at 80% -10%,#0e5560 0%,transparent 55%),
+             radial-gradient(900px 600px at 0% 110%,#0c4a44 0%,transparent 50%),
+             linear-gradient(160deg,var(--bg2),var(--bg1) 55%,var(--bg3));
+  min-height:100%;overflow-x:hidden;position:relative;
+}
+/* decorative pattern */
+body::before{content:"";position:fixed;inset:0;opacity:.05;pointer-events:none;
+  background-image:radial-gradient(circle at 25% 25%,var(--gold) 1.2px,transparent 1.3px);
+  background-size:34px 34px;}
+.wrap{max-width:780px;margin:0 auto;padding:22px 16px 120px;position:relative;z-index:2}
+
+/* ===== Top bar ===== */
+.brandbar{display:flex;align-items:center;justify-content:center;gap:12px;margin:10px 0 22px}
+.crest{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;
+  background:linear-gradient(145deg,var(--gold),var(--gold-deep));color:var(--ink);
+  font-family:'Reem Kufi';font-weight:700;font-size:1.4rem;box-shadow:0 8px 22px rgba(232,196,104,.35)}
+.brandbar h1{font-family:'Reem Kufi';font-weight:700;font-size:1.18rem;letter-spacing:.3px}
+.brandbar h1 span{color:var(--gold)}
+
+/* ===== Card ===== */
+.card{background:var(--glass);border:1px solid var(--glass-line);border-radius:26px;
+  padding:30px 26px;backdrop-filter:blur(14px);box-shadow:var(--shadow);position:relative;overflow:hidden}
+.card::after{content:"";position:absolute;top:0;right:0;left:0;height:4px;
+  background:linear-gradient(90deg,var(--teal),var(--gold),var(--teal))}
+
+/* ===== Start screen ===== */
+.hero{text-align:center}
+.hero .badge{display:inline-block;font-family:'Cairo';font-weight:700;font-size:.82rem;
+  color:var(--gold-soft);border:1px solid var(--gold-deep);border-radius:999px;padding:6px 16px;margin-bottom:18px;
+  background:rgba(232,196,104,.08)}
+.hero h2{font-family:'Reem Kufi';font-weight:700;font-size:2.05rem;line-height:1.35;margin-bottom:10px}
+.hero h2 b{color:var(--gold)}
+.hero p{color:#cfe7e3;font-size:1.02rem;line-height:1.9;max-width:560px;margin:0 auto 22px}
+.statline{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:0 0 26px}
+.chip{background:rgba(39,196,176,.12);border:1px solid rgba(39,196,176,.4);border-radius:14px;
+  padding:12px 18px;min-width:120px}
+.chip b{display:block;font-family:'Cairo';font-weight:800;font-size:1.5rem;color:var(--teal)}
+.chip span{font-size:.82rem;color:#bfe0db}
+
+.opts-row{margin:0 0 8px;text-align:right}
+.opts-row .lbl{font-family:'Cairo';font-weight:700;font-size:.95rem;color:var(--gold-soft);margin-bottom:10px;display:block}
+.seg{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.seg button{flex:1;min-width:64px;font-family:'Cairo';font-weight:700;font-size:.95rem;
+  background:rgba(255,255,255,.06);border:1px solid var(--glass-line);color:var(--paper);
+  padding:12px 8px;border-radius:14px;cursor:pointer;transition:.2s}
+.seg button.on{background:linear-gradient(145deg,var(--teal),var(--teal-deep));border-color:transparent;
+  box-shadow:0 8px 20px rgba(39,196,176,.35);color:#04221f}
+.seg button:hover{transform:translateY(-2px)}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;width:100%;
+  font-family:'Cairo';font-weight:800;font-size:1.18rem;color:var(--ink);cursor:pointer;border:none;
+  background:linear-gradient(145deg,var(--gold-soft),var(--gold) 45%,var(--gold-deep));
+  padding:17px;border-radius:18px;box-shadow:0 14px 30px rgba(232,196,104,.4);transition:.2s}
+.btn:hover{transform:translateY(-3px);box-shadow:0 18px 38px rgba(232,196,104,.5)}
+.btn:active{transform:translateY(0)}
+.btn.ghost{background:transparent;border:1.5px solid var(--glass-line);color:var(--paper);box-shadow:none}
+.btn.ghost:hover{border-color:var(--gold);color:var(--gold)}
+.btn.teal{background:linear-gradient(145deg,var(--teal),var(--teal-deep));color:#04221f;box-shadow:0 14px 30px rgba(39,196,176,.4)}
+
+/* ===== HUD ===== */
+.hud{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.hud .meta{display:flex;gap:8px;flex:1}
+.pill{background:var(--glass);border:1px solid var(--glass-line);border-radius:12px;padding:8px 13px;
+  font-family:'Cairo';font-weight:700;font-size:.9rem;display:flex;align-items:center;gap:6px}
+.pill .ic{font-size:1rem}
+.pill.score b{color:var(--gold)}
+.pill.streak b{color:var(--teal)}
+.progress{height:10px;border-radius:999px;background:rgba(255,255,255,.1);overflow:hidden;margin-bottom:22px}
+.progress>i{display:block;height:100%;width:0;border-radius:999px;
+  background:linear-gradient(90deg,var(--teal),var(--gold));transition:width .4s ease}
+
+.qno{font-family:'Cairo';font-weight:700;color:var(--gold-soft);font-size:.9rem;margin-bottom:8px}
+.qtext{font-size:1.28rem;font-weight:700;line-height:2;margin-bottom:24px}
+
+.choices{display:flex;flex-direction:column;gap:13px}
+.choice{display:flex;align-items:center;gap:14px;text-align:right;cursor:pointer;
+  background:rgba(255,255,255,.05);border:1.5px solid var(--glass-line);border-radius:16px;
+  padding:15px 16px;font-size:1.06rem;font-weight:500;line-height:1.8;transition:.18s;position:relative}
+.choice:hover{border-color:var(--teal);background:rgba(39,196,176,.08);transform:translateX(-4px)}
+.choice .key{flex:none;width:34px;height:34px;border-radius:10px;display:grid;place-items:center;
+  font-family:'Cairo';font-weight:800;background:rgba(255,255,255,.1);color:var(--gold-soft);font-size:1rem}
+.choice.correct{border-color:var(--green);background:rgba(46,204,113,.16)}
+.choice.correct .key{background:var(--green);color:#05210f}
+.choice.wrong{border-color:var(--red);background:rgba(255,107,107,.14)}
+.choice.wrong .key{background:var(--red);color:#2a0707}
+.choice.locked{pointer-events:none}
+.choice.dim{opacity:.5}
+.choice .mark{margin-right:auto;font-size:1.3rem;opacity:0;transform:scale(.5);transition:.25s}
+.choice.correct .mark,.choice.wrong .mark{opacity:1;transform:scale(1)}
+
+.feedback{margin-top:20px;text-align:center;min-height:30px}
+.feedback .fb{font-family:'Cairo';font-weight:800;font-size:1.45rem;display:inline-block;
+  animation:pop .45s cubic-bezier(.18,1.5,.4,1)}
+.feedback .fb.good{color:var(--green)}
+.feedback .fb.bad{color:var(--gold)}
+.feedback small{display:block;color:#bcd8d3;font-size:.92rem;margin-top:6px;font-weight:500}
+@keyframes pop{0%{opacity:0;transform:scale(.4) translateY(8px)}100%{opacity:1;transform:scale(1) translateY(0)}}
+.nextbtn{margin-top:18px;display:none}
+.nextbtn.show{display:block;animation:pop .35s ease}
+
+/* ===== Result ===== */
+.result{text-align:center}
+.ring{width:170px;height:170px;margin:6px auto 18px;position:relative}
+.ring svg{transform:rotate(-90deg)}
+.ring .pct{position:absolute;inset:0;display:grid;place-content:center;text-align:center}
+.ring .pct b{font-family:'Cairo';font-weight:900;font-size:2.4rem;color:var(--gold)}
+.ring .pct span{font-size:.85rem;color:#bcd8d3}
+.result h2{font-family:'Reem Kufi';font-size:1.7rem;margin-bottom:6px}
+.result .verdict{color:#cfe7e3;font-size:1.05rem;margin-bottom:20px;line-height:1.8}
+.scoregrid{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:24px}
+.btnrow{display:flex;gap:12px;flex-wrap:wrap}
+.btnrow .btn{flex:1;min-width:150px}
+
+/* ===== Review ===== */
+.review{margin-top:8px}
+.rev-item{background:rgba(255,255,255,.04);border:1px solid var(--glass-line);border-radius:16px;
+  padding:16px;margin-bottom:12px;text-align:right}
+.rev-item .rq{font-weight:700;line-height:1.8;margin-bottom:10px}
+.rev-line{font-size:.96rem;line-height:1.7;padding:7px 12px;border-radius:10px;margin-bottom:6px}
+.rev-line.ok{background:rgba(46,204,113,.14);border-right:3px solid var(--green)}
+.rev-line.no{background:rgba(255,107,107,.13);border-right:3px solid var(--red)}
+.rev-line b{font-family:'Cairo'}
+
+/* ===== Celebration overlay ===== */
+#burst{position:fixed;inset:0;pointer-events:none;z-index:50}
+.cheer{position:fixed;top:38%;left:50%;transform:translate(-50%,-50%) scale(.4);z-index:60;
+  font-family:'Reem Kufi';font-weight:700;font-size:3.2rem;color:var(--gold);pointer-events:none;
+  opacity:0;text-shadow:0 6px 30px rgba(232,196,104,.6);white-space:nowrap}
+.cheer.show{animation:cheer 1.1s cubic-bezier(.2,1.4,.3,1) forwards}
+@keyframes cheer{0%{opacity:0;transform:translate(-50%,-50%) scale(.3)}
+  20%{opacity:1;transform:translate(-50%,-50%) scale(1.1)}
+  75%{opacity:1;transform:translate(-50%,-60%) scale(1)}
+  100%{opacity:0;transform:translate(-50%,-90%) scale(.95)}}
+
+/* ===== Footer credit ===== */
+.credit{text-align:center;margin-top:34px;color:#a9cfca;font-size:.92rem}
+.credit .sig{font-family:'Reem Kufi';font-weight:700;color:var(--gold);font-size:1.05rem}
+.credit a{display:inline-flex;align-items:center;gap:7px;margin-top:10px;text-decoration:none;
+  color:#04221f;font-family:'Cairo';font-weight:700;font-size:.9rem;
+  background:linear-gradient(145deg,#34b3e0,#1f8fc9);padding:9px 18px;border-radius:999px;
+  box-shadow:0 8px 20px rgba(31,143,201,.35);transition:.2s}
+.credit a:hover{transform:translateY(-2px)}
+
+.hidden{display:none!important}
+.fade{animation:fade .45s ease}
+@keyframes fade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.shake{animation:shake .4s}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
+@media(max-width:520px){
+  .hero h2{font-size:1.6rem}.qtext{font-size:1.12rem}.brandbar h1{font-size:1rem}
+  .card{padding:24px 18px;border-radius:22px}.cheer{font-size:2.3rem}
+}
+.snd{position:fixed;top:14px;left:14px;z-index:30;background:var(--glass);border:1px solid var(--glass-line);
+  width:42px;height:42px;border-radius:12px;cursor:pointer;font-size:1.2rem;color:var(--paper);display:grid;place-items:center}
+</style>
+</head>
+<body>
+<canvas id="burst"></canvas>
+<div class="cheer" id="cheer"></div>
+<button class="snd" id="sndBtn" title="الصوت">🔊</button>
+
+<div class="wrap">
+  <div class="brandbar">
+    <div class="crest">رخ</div>
+    <h1>مسابقة <span>القسم اللفظي</span></h1>
+  </div>
+
+  <!-- START -->
+  <section id="screenStart" class="card hero fade">
+    <span class="badge">التربوي العام · القسم اللفظي (اللغة العربية)</span>
+    <h2>اختبر معرفتك في <b>القسم اللفظي للتربوي العام</b></h2>
+    <p>تجميعات القسم اللفظي (نحو · إملاء · معاني · ترقيم · أنواع القراءة والكتابة). أجب بذكاء، اجمع النقاط، وحافظ على سلسلة إجاباتك الصحيحة!</p>
+    <div class="statline">
+      <div class="chip"><b id="totalQ">120</b><span>سؤال متاح</span></div>
+      <div class="chip"><b id="bestShow">0</b><span>أفضل نتيجة</span></div>
+      <div class="chip"><b>4</b><span>خيارات لكل سؤال</span></div>
+    </div>
+    <div class="opts-row">
+      <span class="lbl">عدد الأسئلة في الجولة</span>
+      <div class="seg" id="segCount">
+        <button data-n="10">10</button>
+        <button data-n="20" class="on">20</button>
+        <button data-n="50">50</button>
+        <button data-n="0">الكل</button>
+      </div>
+    </div>
+    <div class="opts-row">
+      <span class="lbl">ترتيب الأسئلة</span>
+      <div class="seg" id="segOrder">
+        <button data-s="1" class="on">عشوائي</button>
+        <button data-s="0">بالترتيب</button>
+      </div>
+    </div>
+    <button class="btn" id="startBtn">🚀 ابدأ المسابقة</button>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="screenQuiz" class="card hidden">
+    <div class="hud">
+      <div class="meta">
+        <span class="pill score"><span class="ic">⭐</span> <b id="scoreNow">0</b></span>
+        <span class="pill streak"><span class="ic">🔥</span> <b id="streakNow">0</b></span>
+      </div>
+      <span class="pill"><span class="ic">📋</span> <span id="counter">1 / 20</span></span>
+    </div>
+    <div class="progress"><i id="bar"></i></div>
+    <div class="qno" id="qno">السؤال 1</div>
+    <div class="qtext" id="qtext">—</div>
+    <div class="choices" id="choices"></div>
+    <div class="feedback" id="feedback"></div>
+    <button class="btn teal nextbtn" id="nextBtn">التالي ←</button>
+  </section>
+
+  <!-- RESULT -->
+  <section id="screenResult" class="card result hidden">
+    <div class="ring">
+      <svg width="170" height="170"><circle cx="85" cy="85" r="74" stroke="rgba(255,255,255,.12)" stroke-width="14" fill="none"/>
+      <circle id="ringFill" cx="85" cy="85" r="74" stroke="url(#g)" stroke-width="14" fill="none" stroke-linecap="round" stroke-dasharray="465" stroke-dashoffset="465"/>
+      <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#27c4b0"/><stop offset="1" stop-color="#e8c468"/></linearGradient></defs></svg>
+      <div class="pct"><b id="pctNum">0%</b><span id="rightCount">0 صحيحة</span></div>
+    </div>
+    <h2 id="resTitle">انتهت المسابقة!</h2>
+    <p class="verdict" id="verdict">—</p>
+    <div class="scoregrid">
+      <div class="chip"><b id="finalScore">0</b><span>إجمالي النقاط</span></div>
+      <div class="chip"><b id="bestStreak">0</b><span>أطول سلسلة 🔥</span></div>
+    </div>
+    <div class="btnrow">
+      <button class="btn ghost" id="reviewBtn">📝 مراجعة الإجابات</button>
+      <button class="btn" id="againBtn">🔁 جولة جديدة</button>
+    </div>
+    <div class="review hidden" id="reviewBox"></div>
+  </section>
+
+  <div class="credit">
+    <div class="sig">تصميم د/ فواز</div>
+    <div>مسابقة القسم اللفظي · اختبار الرخصة المهنية للمعلمين</div>
+    <a href="https://t.me/TAqhjT3MFVE1Yzk0" target="_blank" rel="noopener">✈️ قناة التصاميم على تيليجرام</a>
+  </div>
+</div>
+
+<script>
+const QUESTIONS = [{"id": 1, "q": "رأيت ............ طائرةً.", "options": ["أربعًا وعشرين", "أربعةً وعشرين", "أربعًا وعشرون", "أربعةً وعشرون"], "answer": 0}, {"id": 2, "q": "............ تنظر؟", "options": ["إلى ما", "إلامَا", "إلامَ", "إلى مَ"], "answer": 2}, {"id": 3, "q": "يُعد الإمام أحمد أحد أبرز ............ الحديث.", "options": ["روات", "رواة", "رواه", "رواتي"], "answer": 1}, {"id": 4, "q": "كتابة القصة من موضوعات التعبير ...........", "options": ["الإبداعي", "الوظيفي الإبداعي", "الوظيفي", "الوظيفي التقريري"], "answer": 0}, {"id": 5, "q": "جمع كلمة ( صغرى ):", "options": ["صُغَر", "صُغُرات", "صُغْرَوات", "صُغْرَيات"], "answer": 3}, {"id": 6, "q": "مصدر الفعل ( استوفى ):", "options": ["وفاء", "استوفاء", "استفاء", "استيفاء"], "answer": 3}, {"id": 7, "q": "أي الأنواع التالية ليست من الكتابة الإبداعية؟", "options": ["الإرشادات", "القصص", "المسرح", "الروايات"], "answer": 0}, {"id": 8, "q": "سوف ........... المذنب جزاءه.", "options": ["يلقا", "يلقى", "يلقَ", "يلقي"], "answer": 1}, {"id": 9, "q": "حضر طالبٌ ( ... ) وأدّى واجبه ( ... ). علامتا الترقيم المناسبة للفراغين:", "options": ["( ؛ ) ثم ( . )", "( : ) ثم ( . )", "( ، ) ثم ( . )", "( - ) ثم ( . )"], "answer": 2}, {"id": 10, "q": "أثار خالد حفيظة أخيه. ( حفيظة ) تعني:", "options": ["غضب", "دهشة", "حزن", "حب"], "answer": 0}, {"id": 11, "q": "........... شأن المعلم.", "options": ["يعلوا", "علا", "علاء", "على"], "answer": 1}, {"id": 12, "q": "جميع الكلمات التالية بنفس المعنى، عدا:", "options": ["تبجيل", "اعتبار", "تمجيد", "احتقار"], "answer": 3}, {"id": 13, "q": "مضاد كلمة ( وفاء ):", "options": ["كرم", "شوق", "غدر", "حب"], "answer": 2}, {"id": 14, "q": "( انتفِض بهمة، واعمل بجد ). الهمزتان في العبارة السابقة:", "options": ["وصل – قطع", "وصل – وصل", "قطع – وصل", "قطع – قطع"], "answer": 1}, {"id": 15, "q": "ألم تسافر إلى مكة اليوم؟ عند الإجابة بالإثبات، نقول:", "options": ["بلى، سافرت.", "نعم، سافرت.", "بلى، لم أسافر.", "نعم، ما سافرت."], "answer": 0}, {"id": 16, "q": "كان عمر ......... الخطاب – رضي الله عنه – إمامًا عادلًا.", "options": ["بن", "ابن", "إبنو", "إبن"], "answer": 0}, {"id": 17, "q": "الجملة الصحيحة كتابيًا:", "options": ["حضر معلموا المدرسة.", "حضر معلمين المدرسة.", "حضر معلمو المدرسة.", "حضر معلمون المدرسة."], "answer": 2}, {"id": 18, "q": "نجح ............ طلاب.", "options": ["ستة", "تسع", "أربعًا وعشرون", "خمسة عشر"], "answer": 0}, {"id": 19, "q": "( منذ أن خلق الله الإنسان، وفرض عليه أن يأكل خبزه بعرق جبينه، غرس في فؤاده حب الأمل؛ ليتروّح نسيمه، ويستهدي بضيائه، ويكون له نِعم العزاء في ليالي الخيبة والإخفاق ). العنوان المناسب للنص السابق:", "options": ["خلق الإنسان", "العزاء", "الأمل", "الرزق"], "answer": 2}, {"id": 20, "q": "قال العقاد: «لا أحب الكتب لأنني زاهد في الحياة، ولكني أحب الكتب؛ لأن حياة واحدة لا تكفيني... ومهما يأكل الإنسان فإنه لن يأكل بأكثر من معدة واحدة، ومهما يلبس لن يلبس على غير جسد واحد... ولكنه بزاد الفكر والشعور والخيال يستطيع أن يجمع الحيوات في عمر واحد...». الفكرة العامة في النص السابق:", "options": ["رأي العقاد في الحياة", "الزهد في الدنيا", "دور القراءة في الحياة", "الانتفاع بتجارب الآخرين"], "answer": 2}, {"id": 21, "q": "( الصالح لا يخادن رفيق سوء ). معنى ( يخادن ):", "options": ["يصادق", "يعادي", "يخالف", "يخادع"], "answer": 0}, {"id": 22, "q": "ضد ( اتَّسعَ ):", "options": ["تمدد", "ضاق", "ازداد", "توسّع"], "answer": 1}, {"id": 23, "q": "( الشمس على نعش الأصيل ). معنى ( الأصيل ):", "options": ["شروق الشمس", "منتصف الليل", "منتصف النهار", "قبل الغروب"], "answer": 3}, {"id": 24, "q": "كل مما يأتي مترادفات، ما عدا:", "options": ["وشائج، روابط", "عالٍ، سامق", "شامخ، حافل", "ضيق، شظف"], "answer": 2}, {"id": 25, "q": "ضد كلمة ( وفاء ):", "options": ["كرم", "شوق", "غدر", "حب"], "answer": 2}, {"id": 26, "q": "الكلمة المختلفة في المعنى:", "options": ["ازدراء", "احتفاء", "تبجيل", "تمجيد"], "answer": 0}, {"id": 27, "q": "كل ما يأتي بمعنى ( الجاه )، ما عدا:", "options": ["القدر", "المسؤولية", "المنزلة", "المكانة"], "answer": 1}, {"id": 28, "q": "( أحمد وبدر سُئلا عن رأيهما في اللغة العربية، فأجاب أحمد: هي أكثر اللغات من حيث المفردات، وأجاب بدر: هي أكثر اللغات انتشارًا في العالم ).", "options": ["أحمد متحيز، بدر محايد", "كلاهما محايدان", "أحمد محايد، بدر متحيز", "كلاهما متحيزان"], "answer": 2}, {"id": 29, "q": "العبارة التي فيها معنى كلمة ( تُؤَدة ):", "options": ["في التأني السلامة، وفي العجلة الندامة", "لكل جواد كبوة", "إن كنت ريحًا فقد لاقيت إعصارًا", "الصيف ضيّعت اللبن"], "answer": 0}, {"id": 30, "q": "«العين بعد فراقها الوطن ** لا ساكنًا ألِفت ولا سكنا». مرادف كلمة ( ألِفت ):", "options": ["عرفت", "أحبت", "وجدت", "هجرت"], "answer": 1}, {"id": 31, "q": "( مرّ عظيم من عظماء هذه المدينة بزُقاق من أزقة الأحياء الوطنية في ليلةٍ من ليالي الشتاء ضرير نجمها، حالك ظلامها ). معنى كلمة ( ضرير ) في العبارة السابقة:", "options": ["لا يُرى في الليل", "أعمى", "أفل", "مظلم"], "answer": 2}, {"id": 32, "q": "جميع ما يلي بنفس المعنى، ما عدا:", "options": ["الإقالة", "التغاضي", "الصفح", "الإيثار"], "answer": 3}, {"id": 33, "q": "معنى ( ثقافة ضحلة ):", "options": ["غريبة", "كثيرة وجمَة", "محدودة وسطحية", "ملوّثة"], "answer": 2}, {"id": 34, "q": "قال الله تعالى: {وَإِذَا الْجَنَّةُ أُزْلِفَتْ}. معنى ( أُزلفت ):", "options": ["دنت وقرّبت", "عظمت", "بعُدت وتأخرت", "ارتفعت"], "answer": 0}, {"id": 35, "q": "معنى ( الوَصمَة ):", "options": ["الذكر الطيب", "الأخلاق الحسنة", "العيب والدنية", "الكلام الكثير"], "answer": 2}, {"id": 36, "q": "( أسبغ الله علينا نِعمه ). معنى ( أسبغ ):", "options": ["أتم وأكمل", "أخذ", "اختار", "أعطى"], "answer": 0}, {"id": 37, "q": "( الخط العربي من أبرز فنوننا الجميلة التي تميزت بها ثقافتنا العربية والإسلامية، وأصبح فنًا أصيلًا له قيمته بين الفنون. والخط الجميل ينبئ عن ذوق صاحبه، ويشهد على موهبته ). العنوان المناسب للنص السابق:", "options": ["موهبة الخط العربي", "الفن الأصيل", "الفنون الجميلة", "أهمية الخط العربي"], "answer": 3}, {"id": 38, "q": "( اطلب العلم من المهد إلى اللحد ). في العبارة السابقة علاقة:", "options": ["تضاد بين المهد واللحد", "ترادف بين العلم واللحد", "تضاد بين العلم واللحد", "ترادف بين المهد واللحد"], "answer": 0}, {"id": 39, "q": "( زرتُ صعيد مصر ). معنى ( صعيد ):", "options": ["المكان العميق من الأرض", "المكان المرتفع من الأرض", "المكان المنخفض من الأرض", "الأرض الواسعة"], "answer": 1}, {"id": 40, "q": "( الوقاحة أن تُحادثني وتبتسم لي وقد أكلت من لحمي حتى جف ). معنى ( أكلت لحمي ):", "options": ["مدحتني", "ضربتني", "سببتني", "اغتبتني"], "answer": 3}, {"id": 41, "q": "( يُسرف بعض الشباب في تناول الأطعمة سريعة التحضير، رغم أن البحث العلمي أثبت أن الاستهلاك المفرط لهذه الأطعمة ضار بصحته، ومن أكبر مشكلاته، أليس داء السكري أحد نتائج ذلك؟ ). الغرض من الاستفهام في العبارة السابقة:", "options": ["الإنكار", "التعجب", "التوبيخ", "التقرير"], "answer": 3}, {"id": 42, "q": "( يريد فيصل تقديم درس نموذجي يوضح كيفية ربط المحتوى بقضايا المجتمع المحلي، واختار درس ( أثر الغذاء في صحة الإنسان )، ثم استشار زملاءه حول قضية تهم المجتمع السعودي وترتبط بموضوع الدرس ). أي مما يلي هو الموضوع الأنسب؟", "options": ["دور الوجبات السريعة في ارتفاع عدد المصابين بمرض السكري", "العلاقة بين انتشار مطاعم الوجبات السريعة والأندية الرياضية", "ممارسة رياضة المشي وأثرها في صحة الإنسان", "تراجع دور ربة المنزل في متابعة صحة أبنائها"], "answer": 0}, {"id": 43, "q": "( قرأتُ عبارةً منمَّقة ). معنى ( منمَّقة ):", "options": ["مزخرفة", "ناقصة", "خاطئة", "سيئة"], "answer": 0}, {"id": 44, "q": "جميع ما يلي مصادر، ما عدا:", "options": ["استغفار", "استفاق", "استعانة", "انتقال"], "answer": 1}, {"id": 45, "q": "( دنيا – آخرة ) بينهما:", "options": ["مشترك لفظي", "تورية", "ترادف", "طباق"], "answer": 3}, {"id": 46, "q": "( دخل أعرابي على هشام بن عبدالملك، فقال: يا أمير المؤمنين، أتت علينا ثلاثة أعوام: فعام أذاب الشحم، وعام أكل اللحم، وعام انتقى العظم. وعندكم أموال، فإن كانت لله ففيثوها في عباد الله، وإن تكن للناس فلماذا تُحجب عنهم؟ وإن كانت لكم فتصدقوا بها، {إنَّ الله يحب المتصدقين} ). الفكرة الرئيسة في النص: شكوى الأعرابي من ...........", "options": ["كثرة أموال الخليفة", "عدم وصول مستحقاتهم لثلاث سنين", "ظلم الحاكم", "الجدب والقحط"], "answer": 3}, {"id": 47, "q": "كل ما يأتي من خصائص الكتابة الوظيفية، ما عدا:", "options": ["الاعتماد على الخيال", "سهولة العبارة", "اختفاء شخصية الكاتب", "الاستشهاد بالحقائق"], "answer": 0}, {"id": 48, "q": "( أبعث لكم بأوراق الموظف لدينا ). يُصنف النص السابق بأنه:", "options": ["خاطرة", "مقالة", "قصة قصيرة", "رسالة إدارية"], "answer": 3}, {"id": 49, "q": "يتكون التقرير من: مقدمة، و .............", "options": ["قرارات وتوصيات", "تلخيص ونتائج", "عرض وخاتمة", "تلخيص وقرارات"], "answer": 2}, {"id": 50, "q": "يُسمّى كاتب المحضر:", "options": ["مقرر", "كاتب", "صحفي", "مُعدّ"], "answer": 0}, {"id": 51, "q": "( الوطن هو المكان الذي يُسعد القلب ويشعره بالأمان، وهو المكان الذي يمسح الحزن من القلب بسهولة ). الضمير ( الهاء ) في ( يشعره ) يعود على:", "options": ["المكان", "القلب", "الوطن", "الأمان"], "answer": 1}, {"id": 52, "q": "جميع ما يلي من خصائص النص الأدبي، ما عدا:", "options": ["يحرك العواطف ولا يقدم حقائق جديدة", "التفخيم والتعميم", "مظهر من مظاهر العقل", "يخضع للعاطفة"], "answer": 2}, {"id": 53, "q": "تعبئة استمارة لدخول نادٍ. الإجراء السابق يندرج تحت الكتابة ...........", "options": ["الإبداعية الوظيفية", "الفنية", "الوظيفية العملية", "الإبداعية"], "answer": 2}, {"id": 54, "q": "( من مهام الشؤون البلدية العناية بالطرقات، لذا هي تؤدي عملها على أكمل وجه ). العبارتان السابقتان على التوالي:", "options": ["حقيقة – حقيقة", "حقيقة – رأي", "رأي – رأي", "رأي – حقيقة"], "answer": 1}, {"id": 55, "q": "( الإسلام لا يُعارض العلم الصحيح، ولا الفن النافع، ولا الحضارة الخيّرة، وإنه دين سهل رحب مرن، ومناسب لكل الأزمان ). الضمير ( الهاء ) في ( إنه ) يعود على:", "options": ["العلم الصحيح", "الفن النافع", "الحضارة", "الإسلام"], "answer": 3}, {"id": 56, "q": "( التلخيص – التعليمات – السيرة الذاتية ) تصنف على التوالي:", "options": ["وظيفية – وظيفية – وظيفية", "وظيفية – إبداعية – وظيفية", "إبداعية – وظيفية – وظيفية", "وظيفية – وظيفية – إبداعية"], "answer": 0}, {"id": 57, "q": "حصل المعلم على ............ جائزةً.", "options": ["تسع عشر", "تسعة عشر", "تسع عشرة", "تسعة عشرة"], "answer": 2}, {"id": 58, "q": "........... الأجير أجره يا محمد.", "options": ["أعطي", "أعطِ", "اعطي", "اعطِ"], "answer": 1}, {"id": 59, "q": "........... سيستمر الخلاف بينكما؟", "options": ["إلامي", "إلامَا", "إلى ما", "إلامَ"], "answer": 3}, {"id": 60, "q": "الكلمة التي وُصلت بشكل صحيح مما يأتي:", "options": ["لكيلا", "ما شاء الله", "فيما تفكر؟", "كيلا"], "answer": 0}, {"id": 61, "q": "أحبُّ كل شيء ........ يحبه أعدائي.", "options": ["حتاما", "حتى مَ", "حتامَ", "حتى مَا"], "answer": 3}, {"id": 62, "q": "فتح محمد الفاتح القسطنطينية، وكانت ........... عاصمة البيزنطيين.", "options": ["حين إذٍ", "حينباذٍ", "حينئذٍ", "حيننذٍ"], "answer": 2}, {"id": 63, "q": "........ أخذت العلم؟", "options": ["مِنْ مَنْ", "مِن ما", "مِمَّن", "مِمَّا"], "answer": 2}, {"id": 64, "q": "أي الجمل الآتية اشتملت على كلمتين اتصلتا معًا إملائيًا اتصالًا غير صحيح؟", "options": ["احذر أن تقترب من رفقاء السوء.", "إلّا تتقدم للمسابقة فقد تخسر الكثير.", "ستنطلق حينئذٍ إلى مشروع جديد.", "لِمَا تشتكي وتتذمر، وأنت بصحة جيدة؟"], "answer": 3}, {"id": 65, "q": "الكلمة التي كُتبت فيها الهمزة خطأً:", "options": ["موقع الإستقبال جميل.", "التفاؤل محمود.", "اسمي محمد.", "كل شيء جميل."], "answer": 0}, {"id": 66, "q": "الكلمة الصحيحة:", "options": ["الصَّلات", "الحياة", "الصلواة", "الرُماه"], "answer": 1}, {"id": 67, "q": "الكلمة المكتوبة بصورة خاطئة:", "options": ["خطى", "غُلا", "فتى", "عصا"], "answer": 0}, {"id": 68, "q": "لا تعمل عملًا ......... إليك.", "options": ["يُسيئ", "يُسيء", "يُسِيءُ", "يُسئي"], "answer": 2}, {"id": 69, "q": "سأل صديق صديقه ( ) مَنْ هم الفائزون ( ) أجاب: المقربون ( ). علامات الترقيم المناسبة للفراغات:", "options": ["( : ) ( . ) ( . )", "( : ) ( ؟ ) ( . )", "( : ) ( ! ) ( . )", "( : ) ( ، ) ( . )"], "answer": 1}, {"id": 70, "q": "الكلمة المكتوبة بصورة صحيحة:", "options": ["ضمير", "ظعيف", "نِضام", "ظمان"], "answer": 0}, {"id": 71, "q": "مثنى كلمة ( حمراء ):", "options": ["حمراوان", "حمران", "حمراءان", "حمراوات"], "answer": 0}, {"id": 72, "q": "مثنى كلمة ( ابتداء ):", "options": ["ابتداوان", "ابتداءان", "ابتدآن", "ابتدوان"], "answer": 1}, {"id": 73, "q": "علامة الترقيم ( النقطتان الرأسيتان : ) تُوضع ...........", "options": ["بين أقسام الشيء", "بعد القول وشبهه", "نهاية الجملة التامة", "بين السبب والنتيجة"], "answer": 1}, {"id": 74, "q": "الخط الذي يُكتب بدون حركات، ويكون مطموسًا:", "options": ["الرقعة", "الديواني", "النسخ", "الكوفي"], "answer": 0}, {"id": 75, "q": "علامة الترقيم التي تُوضع بعد أحرف الجواب ( نعم – لا – بلى ... ):", "options": ["النقطتان الرأسيتان", "الفاصلة المنقوطة", "النقطة", "الفاصلة"], "answer": 3}, {"id": 76, "q": "حصلتُ على ............ درجةً.", "options": ["خمسٍ وسبعين", "خمسةٍ وسبعين", "خمسٍ وسبعون", "خمسةٍ وسبعون"], "answer": 0}, {"id": 77, "q": "بلغ عدد الطلاب ............ طالبًا.", "options": ["خمسة وأربعون", "خمسٌ وأربعون", "خمسًا وأربعين", "خمسةً وأربعين"], "answer": 3}, {"id": 78, "q": "انتظرت ......... أخلف وعدي.", "options": ["كي لا", "كيلا", "كيلى", "جميع ما سبق صحيح"], "answer": 0}, {"id": 79, "q": "......... القلق؟", "options": ["علامَا", "على مَا", "علامَ", "على مَ"], "answer": 2}, {"id": 80, "q": "الجملة الصحيحة إملائيًا:", "options": ["شجرة التوت رائعة", "شجرت التوت رائعة", "شجرة التوة رائعة", "شجره التوت رائعة"], "answer": 2}, {"id": 81, "q": "( كلما كان الأمر صعبًا وضخمًا، كان الاختلاف بين الآراء بيّنًا ). العلاقة بين العبارتين:", "options": ["كلية", "عكسية", "شرطية", "تبادلية"], "answer": 2}, {"id": 82, "q": "قرأتُ الجزء .............", "options": ["السابع عشرة", "السابع عشر", "السابعة عشر", "السابعة عشرة"], "answer": 1}, {"id": 83, "q": "عند دخول ( الباء ) على كلمة ( العلم )، تكون الكتابة الصحيحة:", "options": ["بِالعِلْم", "بِلعلم", "بالألعلم", "بالعلم"], "answer": 3}, {"id": 84, "q": "يا سعادُ، ........... الدرسَ.", "options": ["اكتبي", "اكتبِ", "اكتبين", "أكبتبي"], "answer": 0}, {"id": 85, "q": "المصدر الصريح من الفعل ( تعلَّم ):", "options": ["تعليم", "تعلّم", "عِلمًا", "علومًا"], "answer": 1}, {"id": 86, "q": "أنواع القراءة من حيث الأداء:", "options": ["جهرية – صامتة", "ناقدة – سريعة", "جهرية – ناقدة", "صامتة – فاحصة"], "answer": 0}, {"id": 87, "q": "جميع الهمزات المتطرفة كُتبت بصورة صحيحة، ما عدا:", "options": ["قاريء", "التباطؤ", "يملأ", "عبء"], "answer": 0}, {"id": 88, "q": "ادرس بجد ☐ كي تنجح.", "options": [":", "؛", "،", "."], "answer": 1}, {"id": 89, "q": "من أنواع القراءة، وتساعد على اكتشاف عيوب النطق، هي القراءة ...........", "options": ["الجهرية", "المتأنية", "الصامتة", "السريعة"], "answer": 0}, {"id": 90, "q": "من عيوبها: انصراف الذهن فيها إلى اللفظ أكثر من المعنى. هي القراءة ...........", "options": ["الجهرية", "المتأنية", "الصامتة", "السريعة"], "answer": 0}, {"id": 91, "q": "القراءة التي فيها تمثيل للمعنى، وتُشجع على مواجهة الجمهور، هي القراءة ...........", "options": ["الجهرية", "المتأنية", "الصامتة", "السريعة"], "answer": 0}, {"id": 92, "q": "من إستراتيجيات تسريع القراءة:", "options": ["مشية الكنغر", "القصة القصيرة", "التلخيص", "طرح الأسئلة"], "answer": 0}, {"id": 93, "q": "القراءة التي تعتمد على التمييز بين الواقع والخيال:", "options": ["قراءة صامتة", "قراءة جهرية", "قراءة تفسيرية", "قراءة ناقدة"], "answer": 3}, {"id": 94, "q": "جميع ما يلي من صفات المتحدث الجيد، ما عدا:", "options": ["تقليد الآخرين", "التواصل البصري مع المستمعين", "احترام الآخرين", "لغة الجسد"], "answer": 0}, {"id": 95, "q": "جميع ما يلي مصادر، ما عدا:", "options": ["استعظام", "انطلاق", "استعان", "استمرار"], "answer": 2}, {"id": 96, "q": "إبراز مواطن الضعف والقوة من مميزات القراءة ...........", "options": ["الفاحصة", "الجهرية", "الصامتة", "الناقدة"], "answer": 3}, {"id": 97, "q": "من مهارات القراءة الجهرية التي تتميز بها عن القراءة الصامتة:", "options": ["الضبط السليم", "الطلاقة", "تحريك الشفتين", "إدراك رسم العبارة"], "answer": 2}, {"id": 98, "q": "أسرع أنواع القراءة:", "options": ["الجهرية", "الانتقائية", "الصامتة", "الناقدة"], "answer": 2}, {"id": 99, "q": "المصدر الصريح من الفعل ( كلَّم ):", "options": ["كلامًا", "مكالمة", "تكليم", "تكلَّم"], "answer": 2}, {"id": 100, "q": "عمل كتابي وظيفي يتضمن تسجيلًا منظمًا ودقيقًا لكل ما يدور في الجلسات والاجتماعات من مناقشات...", "options": ["الخاطرة", "القصة", "المحضر", "التقرير"], "answer": 2}, {"id": 101, "q": "قال عبدالله لابنه محمد: يجب أن تحترم آراء الآخرين. من خلال العبارة السابقة يجب أن نضع النقطتين الرأسيتين ( : ) بعد:", "options": ["قال", "عبدالله", "لابنه", "محمد"], "answer": 3}, {"id": 102, "q": "......... طالب العلم إلى المجد، و ........... إلى فعل الخير.", "options": ["سمى – سعى", "سما – سعى", "سما – سعا", "سمى – سعا"], "answer": 1}, {"id": 103, "q": "مصدر الفعل ( استوفى ):", "options": ["وفاءً", "إيفاء", "استوفاء", "استيفاء"], "answer": 3}, {"id": 104, "q": "مصدر الفعل ( أجلَّ ):", "options": ["تأجيل", "إجلال", "جلال", "توجيل"], "answer": 1}, {"id": 105, "q": "مصدر الفعل ( أجَّل ):", "options": ["تأجيل", "إجلال", "جلّال", "توجيل"], "answer": 0}, {"id": 106, "q": "أي الأنواع التالية ليست من الكتابة الإبداعية؟", "options": ["الخاطرة", "المسرحية", "الإرشادات", "القصة"], "answer": 2}, {"id": 107, "q": "خلاصة وصفوة أفكار التقرير تكون في ...........", "options": ["المقدمة", "العرض", "المحتوى", "الخاتمة"], "answer": 3}, {"id": 108, "q": "اللهم ارزقني ......... خاشعًا.", "options": ["فؤاد", "فؤادن", "فؤادًا", "فؤدن"], "answer": 2}, {"id": 109, "q": "كل ما يأتي من خصائص الكتابة الوظيفية، ما عدا:", "options": ["اختفاء شخصية الكاتب", "الاعتماد على الخيال", "سهولة العبارة", "الاستشهاد بالحقائق"], "answer": 1}, {"id": 110, "q": "لا ............ عن خلق وتأتي مثله.", "options": ["تنهى", "تنها", "تنهي", "تنهَ"], "answer": 3}, {"id": 111, "q": "رحم الله امرأً فعل الخير و ......... إليه.", "options": ["دعي", "دعا", "دعى", "دعاء"], "answer": 1}, {"id": 112, "q": "جمع ( منشأة ):", "options": ["منشاءت", "منشآة", "منشأت", "منشآت"], "answer": 3}, {"id": 113, "q": "الكلمة المكتوبة بصورة خاطئة:", "options": ["فضيله", "نباتات", "زهرة", "حميدة"], "answer": 0}, {"id": 114, "q": "أحسنَ ........... المدرسة تعليم الطلاب.", "options": ["معلموا", "معلمون", "معلمي", "معلمو"], "answer": 3}, {"id": 115, "q": "نوع الهمزة في ( انتفِض – اعمل ):", "options": ["وصل – وصل", "وصل – قطع", "قطع – وصل", "قطع – قطع"], "answer": 0}, {"id": 116, "q": "عُرِفَ عن العرب منذ القدم بأنهم يظعنون. معنى ( يظعنون ):", "options": ["يركبون الخيل", "يقاتلون بكثرة", "يرحلون", "يتزوجون من أقاربهم فقط"], "answer": 2}, {"id": 117, "q": "«وتضيق دنيانا فنحسب أننا ** سنموت يأسًا أو نموت تحيا». البيت السابق يدعم فكرة:", "options": ["التفاؤل", "الاستسلام", "التشاؤم", "لا شيء مما سبق"], "answer": 0}, {"id": 118, "q": "( أفاض الشيخ في حديثه ). معنى ( أفاض ):", "options": ["أوجز واختصر", "تحدّث بفخر", "خلط صدقًا بالكذب", "أطال وأكثر"], "answer": 3}, {"id": 119, "q": "الجملة المكتوبة بصورة صحيحة:", "options": ["أستلم أحمد أوراق اعتماده.", "استلم أحمد أوراق اعتماده.", "استلم أحمد أوراق اعتمادة.", "استلم احمد أوراق اعتماده."], "answer": 1}, {"id": 120, "q": "الجملة الصحيحة:", "options": ["حضر الضيف صلاة الظهر", "حظر الضيف صلاة الظهر", "حضر الظيف صلاة الظهر", "حضر الضيف صلاة الضهر"], "answer": 0}, {"id": 121, "q": "مرادف ( استبيان ):", "options": ["الشمول", "الدقة", "التورية", "الإيضاح"], "answer": 3}, {"id": 122, "q": "كثيرٌ ما يخلط الناس بين الطموح وأحلام اليقظة، وبين التِّيه والثقة بالنفس. الاسم المضاد لكلمة ( التيه ):", "options": ["التواضع", "الضياع", "الثقة", "التكبر"], "answer": 0}, {"id": 123, "q": "في القصة: الشاعر يطلب ( الصِّلة ) لا ( الصلاة )، فالمراد:", "options": ["الصَّلاة هي الصَّلاةُ", "الصَّلاة هي الصِّلاةُ", "الصَّلاتُ هي الصِّلاةُ", "الصَّلاتُ هي الصِّلاتُ"], "answer": 1}, {"id": 124, "q": "مثنى ( غطاء ):", "options": ["غطاءان – غطاوان", "غطاءن – غطاون", "غطاوان – غطاون", "غطاءان"], "answer": 0}, {"id": 125, "q": "هي عبارة عن ملخص للخبرة المهنية لمقدم طلب العمل وخلفيته التعليمية إلى جانب بعض المعلومات الأخرى ذات الصلة، كما تُعرف بأنها سرد موجز لتعليم الشخص ومؤهلاته. المفهوم السابق يخص:", "options": ["الرسائل الإدارية", "التقرير", "المحضر", "السيرة الذاتية"], "answer": 3}, {"id": 126, "q": "( كان هارون بن زياد مؤدب الواثق بالله، فلما تولى الواثق الخلافة دخل عليه هارون، فبالغ في إكرامه... فلما قيل له: يا أمير المؤمنين أعزك الله، من هذا الذي أهلته لكل هذا الإجلال؟ فقال: هو أول من فتق لساني، وأدناني من رحمة الله ). النص السابق:", "options": ["نص وصفي", "نص عملي", "نص أدبي", "نص علمي"], "answer": 2}, {"id": 127, "q": "تسود الصحاري الجافة أجزاء كبيرة من المملكة، غير أن هذه الصحاري تضم في باطنها كنوزًا من الذهب الأسود والمعادن النفيسة. علاقة ( غير أن ) بالجملة السابقة هي علاقة:", "options": ["استثناء", "توكيد", "استدراك", "تعليل"], "answer": 2}, {"id": 128, "q": "الجملة الاسمية في الجمل التالية:", "options": ["اتق الله حيثما كنت", "الظلم مرتعه وخيم", "خالق الناس بخلق حسن", "ينعم المحسنون في الجنة"], "answer": 1}, {"id": 129, "q": "يتنافس المتسابقون .... تنافسهم شريف، فالكل يريد الفوز .... الفوز مشروع للجميع، .... الجائزة تُعطى لمن يستعد طويلًا .... يؤدي جيدًا. أدوات الربط المناسبة على الترتيب هي:", "options": ["ثم، لكن، لأن، و", "لكن، لأن، و، ثم", "لأن، ثم، و، لكن", "لكن، ثم، لأن، و"], "answer": 1}, {"id": 130, "q": "( أنزل الله القرآن تبيانًا لكل شيء ). المصدر ( تبيان ) من الفعل:", "options": ["أبان", "استبين", "استبيان", "بيَّن"], "answer": 3}, {"id": 131, "q": "( اتَّسمت المملكة بأنها صحراء واسعة، غير أنَّ هذه الصحراء مليئة بالمعادن والنفط ). ( غير أنَّ ) تدل على:", "options": ["التعليل", "التذكير", "الاستدراك", "الاستثناء"], "answer": 2}, {"id": 132, "q": "( الصراخ يكون عاليًا على حسب نوعه، ........... صراخ الطفل عند الحاجة للطعام يكون مرتفعًا ). أداة الربط المناسبة:", "options": ["إلا أنه", "على سبيل المثال", "غير أنَّ", "مع ذلك"], "answer": 1}, {"id": 133, "q": "( لا أحب الكذب بل الصدق ). ( بل ) في الجملة السابقة تدل على:", "options": ["الإضراب", "التمثيل", "التعليل", "التفسير"], "answer": 0}, {"id": 134, "q": "( ... بينما ... ). ( بينما ) في العبارة السابقة تدل على:", "options": ["الاستدراك", "الاقتران", "التعليل", "التزامن"], "answer": 3}, {"id": 135, "q": "تكون القرارات في ........... المحضر.", "options": ["مقدمة", "خاتمة", "عرض", "محتوى"], "answer": 1}, {"id": 136, "q": "تُستخدم النقاط الثلاث الأفقية [ ... ] في باب علامات الترقيم للدلالة على:", "options": ["الترقيم", "التأثر", "الحذف", "التمثيل"], "answer": 2}, {"id": 137, "q": "كان علي ☐ رضي الله عنه ☐ من كُتّاب الوحي. علامتا الترقيم المناسبة:", "options": ["، ،", "( )", "[ ]", "- -"], "answer": 3}, {"id": 138, "q": "من الأقوال المشهورة ☐ من جدَّ وجد، ومن زرع حصد. علامة الترقيم المناسبة:", "options": ["،", "؛", ":", "-"], "answer": 2}, {"id": 139, "q": "أي الجمل التالية رأي وليست حقيقة؟", "options": ["تتفاوت درجة الحرارة من مدينة لأخرى", "التسامح أفضل السمات الشخصية", "نزل القرآن الكريم باللغة العربية", "القراءة تنمي القدرات العقلية والمعرفية"], "answer": 1}, {"id": 140, "q": "( المسلمون يرجون ربهم ). عند تحويل الجملة الاسمية السابقة إلى جملة فعلية، نقول:", "options": ["يرجُ المسلمون ربهم", "يرجون المسلمون ربهم", "يرجوا المسلمون ربهم", "يرجو المسلمون ربهم"], "answer": 3}, {"id": 141, "q": "( هؤلاء المعلمون يعملون بإخلاص ). عند تحويل الجملة الاسمية السابقة إلى جملة فعلية، نقول:", "options": ["يعملوا هؤلاء المعلمون بإخلاص", "يعمل هؤلاء المعلمون بإخلاص", "يعملون هؤلاء المعلمون بإخلاص", "يعملو هؤلاء المعلمون بإخلاص"], "answer": 1}, {"id": 142, "q": "رأيت ( 12 ) معلمًا. الكتابة الصحيحة للرقم بين القوسين:", "options": ["اثني عشر", "اثنا عشر", "اثني عشرة", "اثنا عشرة"], "answer": 0}, {"id": 143, "q": "الجملة المكتوبة بصورة صحيحة:", "options": ["اتقي الله، ولا ترجوا غيره", "اتق الله، ولا ترجو غيره", "اتق الله، ولا ترجُ غيره", "اتقي الله، ولا ترجو غره"], "answer": 2}, {"id": 144, "q": "لا ............ عندما تسمع ذكر النبي – صلى الله عليه وسلم – أن تقول: اللهم ......... وسلم على نبينا محمد.", "options": ["تنسى – صلَّ", "تنس – صلي", "تنس – صلَّ", "تنسى – صلي"], "answer": 2}, {"id": 145, "q": "النار النار ☐", "options": [".", "!", ":", "-"], "answer": 1}, {"id": 146, "q": "أي الكلمات الآتية ليس فيها حرف محذوف:", "options": ["هؤلاء", "ذلك", "هذا", "تلك"], "answer": 3}, {"id": 147, "q": "المصدر القياسي من الفعل ( ساهم ):", "options": ["إسهام", "سهمًا", "مساهمة", "تسهيم"], "answer": 2}, {"id": 148, "q": "المدة ( آ ) حرفان، فما الكلمة التي تُكتب معها فيما يأتي:", "options": ["الإصرار", "امالنا", "الأعمال", "الأخلاق"], "answer": 1}, {"id": 149, "q": "( من أكبر صدماتي المعرفية يوم اتضح لي بشكل لا يقبل الشك أن غالب سلوكياتنا مع الطعام هي سلوكيات انفعالية، لا علاقة لها بالجوع، وأننا نتعامل مع الطعام كتسلية وتهدئة وتنفيس وتخفيف للتوتر والضغط والقلق! ). تُصنَّف الفقرة السابقة بأنها:", "options": ["تلخيص", "استقراء", "تحليل", "قصة"], "answer": 2}, {"id": 150, "q": "( يا أخي إسأل الله إذا أردت رضاه ). همزة القطع التي كُتبت خطأً:", "options": ["أخي", "إسأل", "إذا", "أردت"], "answer": 1}, {"id": 151, "q": "يتطلب استنتاج الأفكار الفرعية من النص:", "options": ["تقسيم النص إلى وحدات", "تفسير المفردات غير الواضحة", "وضع عنوان مناسب للنص", "تحديد نوع النص"], "answer": 0}, {"id": 152, "q": "( فصل الشتاء بالمملكة ممطر )، ( وفصل الشتاء أفضل وممتع من فصل الصيف ). العبارتان السابقتان:", "options": ["حقيقة – رأي", "حقيقة – حقيقة", "رأي – حقيقة", "رأي – رأي"], "answer": 0}, {"id": 153, "q": "( الرأي قبل شجاعة الشجعان ). المثل الذي يوافق هذه العبارة:", "options": ["الحياة ليست للجبناء", "أول الحزم المشورة", "السيف أصدق إنباء من الكتب", "استقبال الموت خير من استدباره"], "answer": 1}, {"id": 154, "q": "( وتحمل أسى الأيام في نظرة... ويمكن للعين أن تتكلم دون ألفاظ ينطق بها اللسان... إن الإنسان يتركز كله في العين... ولذلك أنا أحب العيون وأخاف العيون ). لماذا يحب الكاتب العيون ويخاف منها؟", "options": ["لأنها تبين ألم الأيام وأساها", "لأنها تتكلم مثل اللسان ولكن دون ألفاظ", "لأنها تختزل الإنسان وتختصر أفكاره ومشاعره", "لأنها تجمع طاقة القلب في نظرة واحدة"], "answer": 2}, {"id": 155, "q": "الجامع المشترك بين أنواع النصوص المختلفة:", "options": ["ذكر الغرض من النص في بدايته", "توضيح الفئة المستهدفة من النص", "الالتزام بقواعد اللغة والنحو", "الاعتماد على المصطلحات المتعارف عليها"], "answer": 2}, {"id": 156, "q": "درج الناس على استعمال: «وضربت أخماس بأسداس». المراد من العبارة السابقة:", "options": ["ناضل من أجل شيء", "اختلف مع غيره", "أراد الأمر كله", "احتار في أمر ما"], "answer": 3}, {"id": 157, "q": "كلمتا ( الدنيا والآخرة ) بينهما:", "options": ["ترادف", "تضاد لغوي", "أ و ب صحيحة", "جميعها خاطئة"], "answer": 1}, {"id": 158, "q": "( المواطن الصالح هو من يرغب في كل ما يحقق الازدهار لوطنه، وفي الوقت ذاته تجده يرغب عن كل ما يهدد أمن الوطن وسلامته ). بين ( يرغب في ) و ( يرغب عن ) علاقة:", "options": ["تضاد", "تكامل", "تناسب", "ترادف"], "answer": 0}, {"id": 159, "q": "( الرياضة مهمة جدًا، فهل يفطن الناس لذلك؛ لكيلا تزيد الأمراض ). ما نوع نبرة القائل في العبارة السابقة؟", "options": ["التحسر", "التعجب", "التمني", "الاستهزاء"], "answer": 2}, {"id": 160, "q": "( العلم نافع ). عند دخول همزة الاستفهام على العبارة السابقة، تكون الكتابة:", "options": ["ألعلم نافع؟", "أءلعلم نافع؟", "آلعلم نافع؟", "اآلعلم نافع؟"], "answer": 2}];
+const KEYS = ["أ","ب","ج","د"];
+const GOOD = ["يا سلام! 🌟","أحسنت! 👏","ممتاز جداً!","إبداع ✨","بطل! 🏆","ما شاء الله!","رائع!","إجابة ذكية! 💡","تمام التمام!","عاش! 🎉"];
+const GOOD_SUB = ["إجابة موفقة، واصل التألق.","معلومة في محلها تماماً.","استمر على هذا المستوى!","سلسلتك تكبر، لا توقفها!","معرفة قوية بالنظريات."];
+const BAD = ["حظ أوفر 🍀","لا بأس، التالي لك 💪","قريبة جداً!","للأسف ليست الصحيحة","ركّز معنا في القادم","لا تستسلم!"];
+const BAD_SUB = ["راجع الإجابة الصحيحة بالأسفل.","كل خطأ خطوة نحو الإتقان.","المهم أنك تتعلم 👌","التالي فرصة جديدة."];
+
+let state = {pool:[], idx:0, score:0, streak:0, bestStreak:0, right:0, log:[], answered:false, count:20, shuffle:true, sound:true};
+
+const $=id=>document.getElementById(id);
+function show(id){["screenStart","screenQuiz","screenResult"].forEach(s=>$(s).classList.add("hidden"));$(id).classList.remove("hidden");$(id).classList.add("fade");window.scrollTo({top:0,behavior:"smooth"});}
+
+/* best score */
+function getBest(){try{return +localStorage.getItem("rukhsa_lafzi_best")||0}catch(e){return 0}}
+function setBest(v){try{localStorage.setItem("rukhsa_lafzi_best",v)}catch(e){}}
+$("bestShow").textContent=getBest();
+$("totalQ").textContent=QUESTIONS.length;
+
+/* segmented controls */
+$("segCount").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;[...$("segCount").children].forEach(x=>x.classList.remove("on"));b.classList.add("on");state.count=+b.dataset.n;});
+$("segOrder").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;[...$("segOrder").children].forEach(x=>x.classList.remove("on"));b.classList.add("on");state.shuffle=b.dataset.s==="1";});
+
+/* sound */
+let actx=null;
+$("sndBtn").addEventListener("click",()=>{state.sound=!state.sound;$("sndBtn").textContent=state.sound?"🔊":"🔇";});
+function beep(type){
+  if(!state.sound)return;
+  try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();
+  if(type==="good"){[0,.12,.24].forEach((t,i)=>tone([523,659,784][i],actx.currentTime+t,.16,.18));}
+  else{tone(196,actx.currentTime,.18,.16);tone(165,actx.currentTime+.14,.22,.16);}
+  }catch(e){}
+}
+function tone(f,t,d,v){const o=actx.createOscillator(),g=actx.createGain();o.type="triangle";o.frequency.value=f;
+  o.connect(g);g.connect(actx.destination);g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(v,t+.02);
+  g.gain.exponentialRampToValueAtTime(.0001,t+d);o.start(t);o.stop(t+d+.02);}
+
+/* start */
+function start(){
+  let arr=QUESTIONS.map((q,i)=>({...q,_i:i}));
+  if(state.shuffle)arr=shuffle(arr);
+  let n=state.count===0?arr.length:Math.min(state.count,arr.length);
+  state.pool=arr.slice(0,n);
+  state.idx=0;state.score=0;state.streak=0;state.bestStreak=0;state.right=0;state.log=[];
+  show("screenQuiz");render();
+}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function render(){
+  state.answered=false;
+  const q=state.pool[state.idx];
+  $("counter").textContent=`${state.idx+1} / ${state.pool.length}`;
+  $("bar").style.width=`${(state.idx/state.pool.length)*100}%`;
+  $("qno").textContent=`السؤال ${state.idx+1}`;
+  $("qtext").textContent=q.q;
+  $("scoreNow").textContent=state.score;
+  $("streakNow").textContent=state.streak;
+  $("feedback").innerHTML="";
+  $("nextBtn").classList.remove("show");
+  const ch=$("choices");ch.innerHTML="";
+  q.options.forEach((opt,i)=>{
+    const d=document.createElement("button");
+    d.className="choice";d.innerHTML=`<span class="key">${KEYS[i]}</span><span class="ctxt">${opt}</span><span class="mark"></span>`;
+    d.addEventListener("click",()=>pick(i,d));
+    ch.appendChild(d);
+  });
+}
+
+function pick(i,el){
+  if(state.answered)return;
+  state.answered=true;
+  const q=state.pool[state.idx];
+  const correct=q.answer;
+  const nodes=[...$("choices").children];
+  nodes.forEach((n,j)=>{n.classList.add("locked");
+    if(j===correct){n.classList.add("correct");n.querySelector(".mark").textContent="✓";}
+    else if(j===i){n.classList.add("wrong");n.querySelector(".mark").textContent="✕";}
+    else n.classList.add("dim");
+  });
+  const ok=i===correct;
+  state.log.push({q:q.q,options:q.options,answer:correct,chosen:i,ok});
+  const fb=$("feedback");
+  if(ok){
+    state.right++;state.streak++;state.bestStreak=Math.max(state.bestStreak,state.streak);
+    let pts=10+Math.min(state.streak-1,5)*2; // streak bonus
+    state.score+=pts;
+    fb.innerHTML=`<div class="fb good">${pick1(GOOD)}</div><small>+${pts} نقطة &nbsp;·&nbsp; ${pick1(GOOD_SUB)}</small>`;
+    beep("good");cheer(pick1(GOOD));confetti();
+  }else{
+    state.streak=0;
+    fb.innerHTML=`<div class="fb bad">${pick1(BAD)}</div><small>الإجابة الصحيحة: <b style="color:var(--green)">${KEYS[correct]}) ${q.options[correct]}</b><br>${pick1(BAD_SUB)}</small>`;
+    beep("bad");el.classList.add("shake");
+  }
+  $("scoreNow").textContent=state.score;
+  $("streakNow").textContent=state.streak;
+  $("nextBtn").textContent=state.idx+1>=state.pool.length?"إنهاء وعرض النتيجة 🏁":"التالي ←";
+  $("nextBtn").classList.add("show");
+}
+function pick1(a){return a[Math.floor(Math.random()*a.length)];}
+
+$("nextBtn").addEventListener("click",()=>{
+  if(state.idx+1>=state.pool.length){finish();}
+  else{state.idx++;render();}
+});
+
+function finish(){
+  $("bar").style.width="100%";
+  const total=state.pool.length;
+  const pct=Math.round(state.right/total*100);
+  show("screenResult");
+  // ring
+  const circ=465, off=circ-(pct/100)*circ;
+  setTimeout(()=>{$("ringFill").style.transition="stroke-dashoffset 1s ease";$("ringFill").style.strokeDashoffset=off;},120);
+  let cur=0;const t=setInterval(()=>{cur+=Math.ceil(pct/30)||1;if(cur>=pct){cur=pct;clearInterval(t);}$("pctNum").textContent=cur+"%";},28);
+  $("rightCount").textContent=`${state.right} من ${total} صحيحة`;
+  $("finalScore").textContent=state.score;
+  $("bestStreak").textContent=state.bestStreak;
+  let title,verd;
+  if(pct>=90){title="أداء أسطوري! 🏆";verd="ما شاء الله! إتقان عالٍ للقسم اللفظي. أنت جاهز للاختبار بثقة.";confetti();confetti();}
+  else if(pct>=75){title="ممتاز! 🌟";verd="نتيجة قوية جداً. مراجعة بسيطة للأسئلة التي أخطأت فيها وستصل للكمال.";confetti();}
+  else if(pct>=60){title="جيد جداً 👍";verd="أساس متين! ركّز على مراجعة الإجابات الصحيحة لرفع مستواك أكثر.";}
+  else if(pct>=40){title="على الطريق 💪";verd="بداية جيدة، تحتاج مزيداً من المراجعة. لا تيأس، التكرار يصنع الإتقان.";}
+  else{title="حظ أوفر 🍀";verd="لا بأس أبداً! راجع الأسئلة جيداً وأعد المحاولة، التحسن قادم بإذن الله.";}
+  $("resTitle").textContent=title;$("verdict").textContent=verd;
+  if(state.score>getBest()){setBest(state.score);$("bestShow").textContent=state.score;}
+  // build review
+  const box=$("reviewBox");box.innerHTML="";box.classList.add("hidden");
+  state.log.forEach((l,k)=>{
+    const div=document.createElement("div");div.className="rev-item";
+    let html=`<div class="rq">${k+1}. ${l.q}</div>`;
+    html+=`<div class="rev-line ok"><b>الإجابة الصحيحة:</b> ${KEYS[l.answer]}) ${l.options[l.answer]}</div>`;
+    if(!l.ok)html+=`<div class="rev-line no"><b>إجابتك:</b> ${KEYS[l.chosen]}) ${l.options[l.chosen]}</div>`;
+    div.innerHTML=html;box.appendChild(div);
+  });
+}
+$("reviewBtn").addEventListener("click",()=>{const b=$("reviewBox");b.classList.toggle("hidden");$("reviewBtn").textContent=b.classList.contains("hidden")?"📝 مراجعة الإجابات":"إخفاء المراجعة ▲";if(!b.classList.contains("hidden"))b.scrollIntoView({behavior:"smooth"});});
+$("againBtn").addEventListener("click",()=>show("screenStart"));
+$("startBtn").addEventListener("click",start);
+
+/* cheer text */
+function cheer(txt){const c=$("cheer");c.textContent=txt;c.classList.remove("show");void c.offsetWidth;c.classList.add("show");}
+
+/* confetti */
+const cv=$("burst"),cx=cv.getContext("2d");let parts=[];
+function resize(){cv.width=innerWidth;cv.height=innerHeight;}resize();addEventListener("resize",resize);
+const COLORS=["#e8c468","#27c4b0","#2ecc71","#f3dea0","#34b3e0","#ffffff"];
+function confetti(){for(let i=0;i<70;i++){parts.push({x:innerWidth/2+(Math.random()-.5)*120,y:innerHeight*.4,
+  vx:(Math.random()-.5)*9,vy:Math.random()*-11-4,g:.32,s:Math.random()*7+4,
+  c:COLORS[Math.floor(Math.random()*COLORS.length)],r:Math.random()*6,vr:(Math.random()-.5)*.4,life:90});}
+  if(!raf)loop();}
+let raf=null;
+function loop(){cx.clearRect(0,0,cv.width,cv.height);
+  parts.forEach(p=>{p.vy+=p.g;p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;p.life--;
+    cx.save();cx.translate(p.x,p.y);cx.rotate(p.r);cx.fillStyle=p.c;cx.globalAlpha=Math.max(0,p.life/90);
+    cx.fillRect(-p.s/2,-p.s/2,p.s,p.s*.6);cx.restore();});
+  parts=parts.filter(p=>p.life>0&&p.y<cv.height+30);
+  if(parts.length){raf=requestAnimationFrame(loop);}else{cx.clearRect(0,0,cv.width,cv.height);raf=null;}}
+</script>
+</body>
+</html>
