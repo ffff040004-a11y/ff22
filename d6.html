@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مسابقة العلوم - ثالث متوسط ف3</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Tajawal', 'Amiri', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .header .subtitle {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.3);
+            margin-top: 15px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #45a049);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .content {
+            padding: 40px;
+            min-height: 500px;
+        }
+
+        .quiz-start {
+            text-align: center;
+        }
+
+        .quiz-start h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border-right: 5px solid #667eea;
+            text-align: right;
+        }
+
+        .info-box p {
+            color: #333;
+            margin: 10px 0;
+            font-size: 1.05em;
+        }
+
+        .start-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 50px;
+            font-size: 1.2em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 30px;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .start-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.5);
+        }
+
+        .question-container {
+            display: none;
+        }
+
+        .question-container.active {
+            display: block;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .question-number {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1em;
+        }
+
+        .question-text {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 25px;
+            color: #333;
+            line-height: 1.8;
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .options {
+            display: grid;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .option {
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: #f9f9f9;
+            font-size: 1.05em;
+        }
+
+        .option:hover {
+            border-color: #667eea;
+            background: #e8f4f8;
+            transform: translateX(-5px);
+        }
+
+        .option input[type="radio"] {
+            margin-left: 10px;
+        }
+
+        .option label {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.1em;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.5;
+        }
+
+        .feedback {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            display: none;
+            animation: slideIn 0.5s ease;
+            font-size: 1.05em;
+        }
+
+        .feedback.success {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            border: 2px solid #28a745;
+            color: #155724;
+        }
+
+        .feedback.error {
+            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+            border: 2px solid #dc3545;
+            color: #721c24;
+        }
+
+        .feedback-msg {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.15em;
+        }
+
+        .correct-answer {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid currentColor;
+        }
+
+        .results {
+            text-align: center;
+            display: none;
+        }
+
+        .results.active {
+            display: block;
+        }
+
+        .score-circle {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 20px auto;
+            font-size: 3em;
+            font-weight: bold;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            border: 5px solid #4CAF50;
+        }
+
+        .results h2 {
+            color: #667eea;
+            margin-bottom: 30px;
+            font-size: 2.2em;
+        }
+
+        .results-details {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 25px 0;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-item {
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-top: 4px solid #667eea;
+        }
+
+        .stat-value {
+            font-size: 2.5em;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .stat-label {
+            color: #666;
+            margin-top: 8px;
+        }
+
+        .restart-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.1em;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        .restart-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .footer {
+            background: #333;
+            padding: 25px;
+            text-align: center;
+            color: white;
+            font-size: 0.95em;
+        }
+
+        .footer p {
+            margin: 8px 0;
+        }
+
+        .footer a {
+            color: #4CAF50;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .question-text {
+                font-size: 1.1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⚛️ مسابقة العلوم الشاملة</h1>
+            <div class="subtitle">الصف الثالث متوسط - الفصل الدراسي الثالث</div>
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+        </div>
+
+        <div class="content">
+            <!-- صفحة البداية -->
+            <div class="quiz-start">
+                <h2>🎓 أهلاً بك في مسابقة العلوم</h2>
+                <div class="info-box">
+                    <p>📊 عدد الأسئلة: 45 سؤالاً متنوعاً</p>
+                    <p>🔬 المواضيع: الحركة، القوى، الكهرباء، المغناطيس، الطاقة</p>
+                    <p>⏱️ الوقت: بدون حد زمني</p>
+                    <p>✅ نوع الأسئلة: اختيار من متعدد</p>
+                </div>
+                <p style="color: #666; font-size: 1.1em; margin: 20px 0;">
+                    اختبر معلوماتك في مادة العلوم واتابع تقدمك الفوري
+                </p>
+                <button class="start-btn" onclick="startQuiz()">ابدأ المسابقة 🚀</button>
+            </div>
+
+            <!-- الأسئلة -->
+            <div id="questionsContainer"></div>
+
+            <!-- النتائج -->
+            <div class="results" id="resultsContainer">
+                <h2>🎉 تم إكمال المسابقة!</h2>
+                <div class="score-circle">
+                    <span id="finalScore">0</span>
+                    <span style="font-size: 0.4em; margin-top: 5px;">من 45</span>
+                </div>
+                <div id="resultMessage" style="font-size: 1.5em; margin: 20px 0; font-weight: bold;"></div>
+                <div class="results-details">
+                    <div class="stats">
+                        <div class="stat-item">
+                            <div class="stat-value" id="correctCount">0</div>
+                            <div class="stat-label">✅ إجابات صحيحة</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="wrongCount">0</div>
+                            <div class="stat-label">❌ إجابات خاطئة</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="percentage">0%</div>
+                            <div class="stat-label">📊 النسبة المئوية</div>
+                        </div>
+                    </div>
+                </div>
+                <button class="restart-btn" onclick="restartQuiz()">إعادة المسابقة 🔄</button>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p style="font-size: 1.1em; color: #4CAF50; font-weight: bold;">📱 تصميم د/فواز</p>
+            <p>للمزيد من الأدوات والمشاريع التعليمية</p>
+            <p><a href="https://t.me/TAqhjT3MFVE1Yzk0" target="_blank">👉 انضم للقناة الرسمية</a></p>
+            <p style="margin-top: 15px; color: #ccc; font-size: 0.9em;">جميع الحقوق محفوظة © 2025 | اختبارات العلوم الشاملة</p>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "سرعة الجسم التي تعتمد على اتجاه حركته هي:",
+                options: ["السرعة المتجهة", "السرعة المتوسطة", "السرعة اللحظية", "السرعة الثابتة"],
+                correct: 0,
+                explanation: "السرعة المتجهة هي التي تعتمد على الاتجاه وتشمل الاتجاه مع المقدار"
+            },
+            {
+                question: "كل هذه الحالات يحدث فيها تسارع ما عدا:",
+                options: ["طائرة في حالة إقلاع", "سيارة تنخفض سرعتها لتتوقف", "دراجة تنطلق في بداية السباق", "سيارة تسير بسرعة ثابتة"],
+                correct: 3,
+                explanation: "السيارة التي تسير بسرعة ثابتة لا يحدث فيها تسارع"
+            },
+            {
+                question: "عندما يرغب راكب الدراجة في التوقف فإن تسارعها يكون:",
+                options: ["موجب", "سالب", "ثابت", "متزايد"],
+                correct: 1,
+                explanation: "التسارع سالب لأن السرعة تتناقص"
+            },
+            {
+                question: "الخاصية التي تمثل ميل الجسم لمقاومة أي تغيير في حالته الحركية تسمى:",
+                options: ["التصادم المرن", "كتلة الجسم", "القصور الذاتي", "حفظ الزخم"],
+                correct: 2,
+                explanation: "القصور الذاتي هو ميل الجسم للمقاومة والممانعة"
+            },
+            {
+                question: "القوى التي تلغي أثر بعضها البعض تسمى قوى:",
+                options: ["متزنة", "غير متزنة", "مختلفة", "ساكنة"],
+                correct: 0,
+                explanation: "القوى المتزنة هي التي تلغي أثر بعضها البعض"
+            },
+            {
+                question: "عندما يتحرك الجسم حركة دائرية فإن القوة المحصلة المؤثرة فيه تسمى:",
+                options: ["القوة الأفقية", "القوة المركزية", "القوة الرأسية", "القوة الدائرية"],
+                correct: 1,
+                explanation: "القوة المركزية هي التي توجه الجسم نحو مركز الدائرة"
+            },
+            {
+                question: "إذا سافرت بحافلة 200 كم واستغرقت الرحلة 2.5 ساعة فما متوسط سرعة الحافلة؟",
+                options: ["160 كم/س", "120 كم/س", "80 كم/س", "100 كم/س"],
+                correct: 2,
+                explanation: "السرعة = المسافة ÷ الزمن = 200 ÷ 2.5 = 80 كم/س"
+            },
+            {
+                question: "عندما ينطفئ أحد المصابيح في دائرة كهربائية وتبقى الأخرى مضاءة، فهي:",
+                options: ["دائرة مفتوحة", "دائرة مختلطة", "موصلة على التوالي", "موصلة على التوازي"],
+                correct: 3,
+                explanation: "في التوازي إذا انقطع أحد المصابيح تستمر الأخرى"
+            },
+            {
+                question: "إذا قمت بكسر المغناطيس إلى نصفين، فماذا يحدث لقطبي المغناطيس؟",
+                options: ["أحدهما شمالي والآخر جنوبي", "يحصل كل نصف على قطب شمالي", "يحصل كل نصف على قطب جنوبي", "كل نصف له قطب شمالي وجنوبي"],
+                correct: 3,
+                explanation: "كل نصف من المغناطيس يحتوي على قطب شمالي وقطب جنوبي"
+            },
+            {
+                question: "يطلق على المواد التي تتصرف بعض الأحيان كعازل وأحياناً كموصل:",
+                options: ["موصلات", "أشباه موصلات", "عوازل", "فائقة التوصيل"],
+                correct: 1,
+                explanation: "أشباه الموصلات هي مواد نصف ناقلة"
+            },
+            {
+                question: "الخاصية التي تزداد في سلك عندما تقل مساحة مقطعه العرضي هي:",
+                options: ["المقاومة", "التيار", "الجهد", "الشحنة"],
+                correct: 0,
+                explanation: "المقاومة تزداد عندما تقل مساحة المقطع العرضي"
+            },
+            {
+                question: "يسمى الجهاز الذي يحول الطاقة الحركية إلى طاقة كهربائية:",
+                options: ["المحرك الكهربائي", "المولد الكهربائي", "التيار المستمر", "التيار المتردد"],
+                correct: 1,
+                explanation: "المولد الكهربائي يحول الطاقة الحركية إلى كهربائية"
+            },
+            {
+                question: "عندما يقوم شخص بنفخ بالونة ثم يطلقها يعد ذلك مثالاً على قانون:",
+                options: ["نيوتن الأول", "نيوتن الثاني", "نيوتن الثالث", "أوم"],
+                correct: 2,
+                explanation: "قانون نيوتن الثالث: لكل فعل رد فعل مساوٍ ومعاكس"
+            },
+            {
+                question: "عندما يكون الجسم في الفضاء الخارجي، أي العبارات التالية صحيحة:",
+                options: ["يختلف وزنه وكتلته", "تختلف كتلته ويبقى وزنه", "يختلف وزنه وتبقى كتلته", "لا يختلف وزنه وكتلته"],
+                correct: 2,
+                explanation: "الكتلة ثابتة في أي مكان لكن الوزن يختلف"
+            },
+            {
+                question: "ما سبب اندفاع راكب السيارة للأمام عند التوقف المفاجئ؟",
+                options: ["الاحتكاك", "التسارع", "القصور الذاتي", "الإزاحة"],
+                correct: 2,
+                explanation: "القصور الذاتي يجعل الجسم يميل للاستمرار في الحركة"
+            },
+            {
+                question: "ماذا تقيس كاميرات ساهر المروية على جانبي الطرق؟",
+                options: ["السرعة المتوسطة", "السرعة اللحظية", "التسارع", "الزخم"],
+                correct: 1,
+                explanation: "تقيس السرعة اللحظية للسيارة في لحظة معينة"
+            },
+            {
+                question: "ما مقدار تسارع سيارة تغيرت سرعتها من 10 م/ث إلى 25 م/ث خلال 3 ثوان؟",
+                options: ["45 م/ث²", "18 م/ث²", "5 م/ث²", "15 م/ث²"],
+                correct: 2,
+                explanation: "التسارع = (السرعة النهائية - السرعة الابتدائية) ÷ الزمن = (25-10)/3 = 5"
+            },
+            {
+                question: "ما الذي يحدث للتيار إذا زادت المقاومة الكهربائية؟",
+                options: ["يزداد التيار", "ينقص التيار", "يبقى التيار ثابتاً", "يتضاعف التيار"],
+                correct: 1,
+                explanation: "العلاقة عكسية: زيادة المقاومة تقلل التيار"
+            },
+            {
+                question: "الخاصية التي تزداد في السلك إذا كان طويلاً هي:",
+                options: ["التوصيل", "التيار", "المقاومة الكهربائية", "الجهد"],
+                correct: 2,
+                explanation: "المقاومة تزداد مع زيادة طول السلك"
+            },
+            {
+                question: "أي من المواد التالية تنجذب للمغناطيس؟",
+                options: ["البلاستيك", "النحاس", "الحديد", "الخشب"],
+                correct: 2,
+                explanation: "الحديد من المواد التي تنجذب بقوة للمغناطيس"
+            },
+            {
+                question: "ما سبب وضع عجالت صغيرة أسفل بعض الثلاجات؟",
+                options: ["تثبيت الثلاجة", "زيادة التوازن", "تقليل الاحتكاك", "زيادة الاحتكاك"],
+                correct: 2,
+                explanation: "تقليل الاحتكاك يسهل تحريك الثلاجة"
+            },
+            {
+                question: "عند دلك البالون بالشعر فإن كليهما سيكون مشحوناً كهربائياً. ما الذي ينتقل؟",
+                options: ["النيوترونات", "البروتونات", "النواة", "الإلكترونات"],
+                correct: 3,
+                explanation: "الإلكترونات هي التي تنتقل بين الأجسام"
+            },
+            {
+                question: "ما المادة التي يمكن أن تكمل الدائرة الكهربائية لتضيء المصباح؟",
+                options: ["المطاط", "الحديد", "البلاستيك", "الخشب"],
+                correct: 1,
+                explanation: "الحديد موصل كهربائي جيد"
+            },
+            {
+                question: "عند إزالة أحد المصابيح من دائرة توالي ما الذي يحدث؟",
+                options: ["تتوقف جميع المصابيح", "تستمر المصابيح بالعمل", "تضيء أكثر", "لا شيء يحدث"],
+                correct: 0,
+                explanation: "في التوالي إذا انقطع أحد المصابيح تتوقف جميعها"
+            },
+            {
+                question: "أي من الأسلاك الكهربائية يمثل الأكثر مقاومة حسب الجدول؟",
+                options: ["السلك س (30 سم)", "السلك ص (40 سم)", "السلك ع (50 سم)", "السلك ل (60 سم)"],
+                correct: 3,
+                explanation: "الأسلاك الأطول لها مقاومة أكبر"
+            },
+            {
+                question: "وضعت ثلاثة قطع مغناطيسية وأحدثت تنافراً. ما نوع القطب الذي يمثل الموضع 6؟",
+                options: ["قطب شمالي", "قطب جنوبي", "قطب شمالي جنوبي", "قطب جنوبي شمالي"],
+                correct: 0,
+                explanation: "الأقطاب المتشابهة تتنافر مع بعضها"
+            },
+            {
+                question: "المنطقة التي تحمي الأرض من الجسيمات المتأينة من الشمس:",
+                options: ["اللب الداخلي", "الغالف المغناطيسي", "القطب الشمالي", "القطب الجنوبي"],
+                correct: 1,
+                explanation: "الغالف المغناطيسي يحمي الأرض من الإشعاعات الشمسية"
+            },
+            {
+                question: "عندما يتحرك جسم في مسار دائري فإن الإزاحة تساوي:",
+                options: ["المسافة المقطوعة", "القطر مضروباً في 2", "صفر", "نصف المسافة"],
+                correct: 2,
+                explanation: "الإزاحة صفر لأن نقطة البداية والنهاية متطابقة"
+            },
+            {
+                question: "القوة المسؤولة عن توقف حركة الأجسام هي قوة:",
+                options: ["الجاذبية", "الاحتكاك", "التأثير", "الضغط"],
+                correct: 1,
+                explanation: "قوة الاحتكاك هي التي تعارض الحركة وتوقفها"
+            },
+            {
+                question: "يسمى حاصل ضرب الجهد الواصل للجهاز في شدة التيار المار به:",
+                options: ["الطاقة", "القدرة الكهربائية", "المقاومة", "التدفق"],
+                correct: 1,
+                explanation: "القدرة الكهربائية = الجهد × التيار"
+            },
+            {
+                question: "من الظواهر الضوئية الطبيعية الناتجة عن المجال المغناطيسي للأرض:",
+                options: ["الغروب", "الشفق القطبي", "قوس قزح", "الغيوم"],
+                correct: 1,
+                explanation: "الشفق القطبي ناتج عن تفاعل الجسيمات مع المجال المغناطيسي"
+            },
+            {
+                question: "تؤثر القوة المغناطيسية ضمن منطقة تحيط بالمغناطيس تسمى:",
+                options: ["الحقل", "المجال المغناطيسي", "الفراغ", "الدائرة"],
+                correct: 1,
+                explanation: "المجال المغناطيسي هو منطقة التأثير المغناطيسي"
+            },
+            {
+                question: "توصل أغلب الأجهزة الكهربائية في المنازل على:",
+                options: ["التوالي", "التوازي", "المخلوط", "الدائرة المفتوحة"],
+                correct: 1,
+                explanation: "التوصيل على التوازي يضمن استمرار العمل"
+            },
+            {
+                question: "يعتمد الزخم (كمية الحركة) على:",
+                options: ["السرعة فقط", "الكتلة فقط", "السرعة المتجهة والكتلة", "الوقت"],
+                correct: 2,
+                explanation: "الزخم = الكتلة × السرعة المتجهة"
+            },
+            {
+                question: "يمكن أن تؤثر مجموعة قوى على جسم ساكن دون أن يتحرك إذا كانت:",
+                options: ["متضادة", "متساوية", "متزنة", "مختلفة"],
+                correct: 2,
+                explanation: "القوى المتزنة لا تحدث تغييراً في الحركة"
+            },
+            {
+                question: "يزداد انحدار منحنى (المسافة-الزمن) بـ:",
+                options: ["انخفاض السرعة", "زيادة السرعة", "ثبات الحركة", "توقف الجسم"],
+                correct: 1,
+                explanation: "الانحدار الأكبر يعني سرعة أكبر"
+            },
+            {
+                question: "يبقى الزخم الكلي لمجموعة من الأجسام ثابتاً طالما:",
+                options: ["لا توجد قوى خارجية", "الأجسام في حركة", "الأجسام متباعدة", "الحرارة ثابتة"],
+                correct: 0,
+                explanation: "قانون حفظ الزخم يتطلب عدم وجود قوى خارجية"
+            },
+            {
+                question: "يعد كل من البرق والصاعقة أمثلة على:",
+                options: ["التوصيل الكهربائي", "التفريغ الكهربائي", "التيار المستمر", "المقاومة"],
+                correct: 1,
+                explanation: "البرق والصاعقة هي تفريغ كهربائي طبيعي"
+            },
+            {
+                question: "قانون نيوتن الأول ينص على أن الجسم يبقى على حالته:",
+                options: ["إذا أثرت عليه قوة", "مالم تؤثر قوة خارجية", "دائماً", "إذا كان ساكناً فقط"],
+                correct: 1,
+                explanation: "الجسم يحتفظ بحالته مالم تؤثر قوة خارجية"
+            },
+            {
+                question: "تؤثر قوة محصلة 200 نيوتن على كتلة 10 كجم. ما التسارع؟",
+                options: ["0.05 م/ث²", "5 م/ث²", "20 م/ث²", "10 م/ث²"],
+                correct: 1,
+                explanation: "التسارع = القوة ÷ الكتلة = 200 ÷ 10 = 20 م/ث²"
+            },
+            {
+                question: "في جملة أو منطقة ما يحدث فيها انتقال الشحنات تسمى:",
+                options: ["المقاومة", "التيار", "الجهد", "الطاقة"],
+                correct: 1,
+                explanation: "التيار الكهربائي هو حركة الشحنات"
+            },
+            {
+                question: "المحول الكهربائي الذي يزود المنازل بالجهد هو:",
+                options: ["محول خافض", "محول رافع", "محول متوازن", "محول ثابت"],
+                correct: 0,
+                explanation: "المحول الخافض ينقل الجهد العالي إلى جهد منخفض آمن"
+            },
+            {
+                question: "ما الذي يحدث للملف عند توصيل الدائرة الكهربائية؟",
+                options: ["يبقى ساكناً", "يلتصق بالقطب الشمالي", "يدور", "ينقطع"],
+                correct: 2,
+                explanation: "الملف يدور عندما يمر فيه تيار في مجال مغناطيسي"
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let selectedAnswer = null;
+
+        function startQuiz() {
+            document.querySelector('.quiz-start').style.display = 'none';
+            document.getElementById('questionsContainer').style.display = 'block';
+            generateQuestions();
+            showQuestion(0);
+        }
+
+        function generateQuestions() {
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+            questions.forEach((q, index) => {
+                const div = document.createElement('div');
+                div.className = 'question-container';
+                div.id = `question-${index}`;
+                
+                let optionsHTML = q.options.map((option, optIndex) => `
+                    <label class="option">
+                        <input type="radio" name="answer-${index}" value="${optIndex}" 
+                               onchange="selectAnswer(${optIndex})">
+                        ${option}
+                    </label>
+                `).join('');
+
+                div.innerHTML = `
+                    <div class="question-header">
+                        <div class="question-number">السؤال ${index + 1} من ${questions.length}</div>
+                    </div>
+                    <div class="question-text">${q.question}</div>
+                    <div class="options">${optionsHTML}</div>
+                    <button class="submit-btn" onclick="submitAnswer(${index})">
+                        ${index === questions.length - 1 ? '✓ انهي المسابقة' : '→ التالي'}
+                    </button>
+                    <div class="feedback" id="feedback-${index}"></div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function selectAnswer(value) {
+            selectedAnswer = value;
+        }
+
+        function showQuestion(index) {
+            document.querySelectorAll('.question-container').forEach(el => {
+                el.classList.remove('active');
+            });
+            document.getElementById(`question-${index}`).classList.add('active');
+            updateProgressBar(index);
+            selectedAnswer = null;
+        }
+
+        function submitAnswer(index) {
+            if (selectedAnswer === null) {
+                alert('الرجاء اختيار إجابة!');
+                return;
+            }
+
+            const feedback = document.getElementById(`feedback-${index}`);
+            const isCorrect = selectedAnswer === questions[index].correct;
+
+            if (isCorrect) {
+                score++;
+                feedback.className = 'feedback success';
+                feedback.innerHTML = `
+                    <div class="feedback-msg">✨ ممتاز! إجابة صحيحة</div>
+                `;
+            } else {
+                feedback.className = 'feedback error';
+                feedback.innerHTML = `
+                    <div class="feedback-msg">💡 الإجابة غير صحيحة</div>
+                    <div class="correct-answer">
+                        <strong>✓ الإجابة الصحيحة:</strong> ${questions[index].options[questions[index].correct]}
+                        <br><strong>📚 التوضيح:</strong> ${questions[index].explanation}
+                    </div>
+                `;
+            }
+            feedback.style.display = 'block';
+
+            setTimeout(() => {
+                if (index < questions.length - 1) {
+                    currentQuestion = index + 1;
+                    showQuestion(currentQuestion);
+                } else {
+                    showResults();
+                }
+            }, 3000);
+        }
+
+        function updateProgressBar(index) {
+            const progress = ((index + 1) / questions.length) * 100;
+            document.querySelector('.progress-fill').style.width = progress + '%';
+        }
+
+        function showResults() {
+            document.getElementById('questionsContainer').style.display = 'none';
+            document.getElementById('resultsContainer').classList.add('active');
+            
+            const percentage = Math.round((score / questions.length) * 100);
+            document.getElementById('finalScore').textContent = score;
+            document.getElementById('correctCount').textContent = score;
+            document.getElementById('wrongCount').textContent = questions.length - score;
+            document.getElementById('percentage').textContent = percentage + '%';
+
+            let message = '';
+            if (percentage >= 90) {
+                message = '🏆 أداء متفوق جداً - نجم مشرق!';
+            } else if (percentage >= 80) {
+                message = '🎉 أداء ممتاز - عمل رائع جداً!';
+            } else if (percentage >= 70) {
+                message = '👍 أداء جيد جداً - استمر في التحسن!';
+            } else if (percentage >= 60) {
+                message = '📚 أداء جيد - حاول مرة أخرى!';
+            } else if (percentage >= 50) {
+                message = '✍️ أداء مقبول - راجع الدروس!';
+            } else {
+                message = '💪 لا تيأس - استذكر جيداً وحاول مرة أخرى!';
+            }
+            
+            document.getElementById('resultMessage').textContent = message;
+            document.querySelector('.progress-fill').style.width = '100%';
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            selectedAnswer = null;
+            document.querySelector('.quiz-start').style.display = 'block';
+            document.getElementById('questionsContainer').style.display = 'none';
+            document.getElementById('resultsContainer').classList.remove('active');
+            document.querySelector('.progress-fill').style.width = '0%';
+        }
+    </script>
+</body>
+</html>
