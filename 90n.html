@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مسابقة لغتي | الصف الثالث الابتدائي – الفصل الثاني</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Reem+Kufi:wght@500;600;700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg1:#072e2b; --bg2:#0a3d46; --bg3:#06222b;
+  --gold:#e8c468; --gold-deep:#caa23e; --gold-soft:#f3dea0;
+  --teal:#27c4b0; --teal-deep:#129a8a;
+  --ink:#06201f; --paper:#fbf7ec;
+  --green:#2ecc71; --green-d:#1e9e57;
+  --red:#ff6b6b; --red-d:#d84848;
+  --glass:rgba(255,255,255,.08);
+  --glass-line:rgba(255,255,255,.16);
+  --shadow:0 22px 60px rgba(0,0,0,.45);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{
+  font-family:'Tajawal',sans-serif;color:var(--paper);
+  background:radial-gradient(1200px 700px at 80% -10%,#0e5560 0%,transparent 55%),
+             radial-gradient(900px 600px at 0% 110%,#0c4a44 0%,transparent 50%),
+             linear-gradient(160deg,var(--bg2),var(--bg1) 55%,var(--bg3));
+  min-height:100%;overflow-x:hidden;position:relative;
+}
+/* decorative pattern */
+body::before{content:"";position:fixed;inset:0;opacity:.05;pointer-events:none;
+  background-image:radial-gradient(circle at 25% 25%,var(--gold) 1.2px,transparent 1.3px);
+  background-size:34px 34px;}
+.wrap{max-width:780px;margin:0 auto;padding:22px 16px 120px;position:relative;z-index:2}
+
+/* ===== Top bar ===== */
+.brandbar{display:flex;align-items:center;justify-content:center;gap:12px;margin:10px 0 22px}
+.crest{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;
+  background:linear-gradient(145deg,var(--gold),var(--gold-deep));color:var(--ink);
+  font-family:'Reem Kufi';font-weight:700;font-size:1.4rem;box-shadow:0 8px 22px rgba(232,196,104,.35)}
+.brandbar h1{font-family:'Reem Kufi';font-weight:700;font-size:1.18rem;letter-spacing:.3px}
+.brandbar h1 span{color:var(--gold)}
+
+/* ===== Card ===== */
+.card{background:var(--glass);border:1px solid var(--glass-line);border-radius:26px;
+  padding:30px 26px;backdrop-filter:blur(14px);box-shadow:var(--shadow);position:relative;overflow:hidden}
+.card::after{content:"";position:absolute;top:0;right:0;left:0;height:4px;
+  background:linear-gradient(90deg,var(--teal),var(--gold),var(--teal))}
+
+/* ===== Start screen ===== */
+.hero{text-align:center}
+.hero .badge{display:inline-block;font-family:'Cairo';font-weight:700;font-size:.82rem;
+  color:var(--gold-soft);border:1px solid var(--gold-deep);border-radius:999px;padding:6px 16px;margin-bottom:18px;
+  background:rgba(232,196,104,.08)}
+.hero h2{font-family:'Reem Kufi';font-weight:700;font-size:2.05rem;line-height:1.35;margin-bottom:10px}
+.hero h2 b{color:var(--gold)}
+.hero p{color:#cfe7e3;font-size:1.02rem;line-height:1.9;max-width:560px;margin:0 auto 22px}
+.statline{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:0 0 26px}
+.chip{background:rgba(39,196,176,.12);border:1px solid rgba(39,196,176,.4);border-radius:14px;
+  padding:12px 18px;min-width:120px}
+.chip b{display:block;font-family:'Cairo';font-weight:800;font-size:1.5rem;color:var(--teal)}
+.chip span{font-size:.82rem;color:#bfe0db}
+
+.opts-row{margin:0 0 8px;text-align:right}
+.opts-row .lbl{font-family:'Cairo';font-weight:700;font-size:.95rem;color:var(--gold-soft);margin-bottom:10px;display:block}
+.seg{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.seg button{flex:1;min-width:64px;font-family:'Cairo';font-weight:700;font-size:.95rem;
+  background:rgba(255,255,255,.06);border:1px solid var(--glass-line);color:var(--paper);
+  padding:12px 8px;border-radius:14px;cursor:pointer;transition:.2s}
+.seg button.on{background:linear-gradient(145deg,var(--teal),var(--teal-deep));border-color:transparent;
+  box-shadow:0 8px 20px rgba(39,196,176,.35);color:#04221f}
+.seg button:hover{transform:translateY(-2px)}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;width:100%;
+  font-family:'Cairo';font-weight:800;font-size:1.18rem;color:var(--ink);cursor:pointer;border:none;
+  background:linear-gradient(145deg,var(--gold-soft),var(--gold) 45%,var(--gold-deep));
+  padding:17px;border-radius:18px;box-shadow:0 14px 30px rgba(232,196,104,.4);transition:.2s}
+.btn:hover{transform:translateY(-3px);box-shadow:0 18px 38px rgba(232,196,104,.5)}
+.btn:active{transform:translateY(0)}
+.btn.ghost{background:transparent;border:1.5px solid var(--glass-line);color:var(--paper);box-shadow:none}
+.btn.ghost:hover{border-color:var(--gold);color:var(--gold)}
+.btn.teal{background:linear-gradient(145deg,var(--teal),var(--teal-deep));color:#04221f;box-shadow:0 14px 30px rgba(39,196,176,.4)}
+
+/* ===== HUD ===== */
+.hud{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.hud .meta{display:flex;gap:8px;flex:1}
+.pill{background:var(--glass);border:1px solid var(--glass-line);border-radius:12px;padding:8px 13px;
+  font-family:'Cairo';font-weight:700;font-size:.9rem;display:flex;align-items:center;gap:6px}
+.pill .ic{font-size:1rem}
+.pill.score b{color:var(--gold)}
+.pill.streak b{color:var(--teal)}
+.progress{height:10px;border-radius:999px;background:rgba(255,255,255,.1);overflow:hidden;margin-bottom:22px}
+.progress>i{display:block;height:100%;width:0;border-radius:999px;
+  background:linear-gradient(90deg,var(--teal),var(--gold));transition:width .4s ease}
+
+.qno{font-family:'Cairo';font-weight:700;color:var(--gold-soft);font-size:.9rem;margin-bottom:8px}
+.qtext{font-size:1.28rem;font-weight:700;line-height:2;margin-bottom:24px}
+.passage{background:rgba(232,196,104,.08);border:1px solid rgba(232,196,104,.3);border-right:4px solid var(--gold);border-radius:14px;padding:14px 16px;margin-bottom:18px;font-size:1rem;line-height:2.05;color:#eef6f4;max-height:240px;overflow:auto}
+.passage .ptag{display:block;font-family:'Cairo';font-weight:700;color:var(--gold-soft);font-size:.82rem;margin-bottom:6px}
+.catbadge{display:inline-block;font-family:'Cairo';font-weight:700;font-size:.75rem;color:var(--teal);background:rgba(39,196,176,.12);border:1px solid rgba(39,196,176,.35);border-radius:999px;padding:3px 12px;margin-bottom:10px}
+
+.choices{display:flex;flex-direction:column;gap:13px}
+.choice{display:flex;align-items:center;gap:14px;text-align:right;cursor:pointer;
+  background:rgba(255,255,255,.05);border:1.5px solid var(--glass-line);border-radius:16px;
+  padding:15px 16px;font-size:1.06rem;font-weight:500;line-height:1.8;transition:.18s;position:relative}
+.choice:hover{border-color:var(--teal);background:rgba(39,196,176,.08);transform:translateX(-4px)}
+.choice .key{flex:none;width:34px;height:34px;border-radius:10px;display:grid;place-items:center;
+  font-family:'Cairo';font-weight:800;background:rgba(255,255,255,.1);color:var(--gold-soft);font-size:1rem}
+.choice.correct{border-color:var(--green);background:rgba(46,204,113,.16)}
+.choice.correct .key{background:var(--green);color:#05210f}
+.choice.wrong{border-color:var(--red);background:rgba(255,107,107,.14)}
+.choice.wrong .key{background:var(--red);color:#2a0707}
+.choice.locked{pointer-events:none}
+.choice.dim{opacity:.5}
+.choice .mark{margin-right:auto;font-size:1.3rem;opacity:0;transform:scale(.5);transition:.25s}
+.choice.correct .mark,.choice.wrong .mark{opacity:1;transform:scale(1)}
+
+.feedback{margin-top:20px;text-align:center;min-height:30px}
+.feedback .fb{font-family:'Cairo';font-weight:800;font-size:1.45rem;display:inline-block;
+  animation:pop .45s cubic-bezier(.18,1.5,.4,1)}
+.feedback .fb.good{color:var(--green)}
+.feedback .fb.bad{color:var(--gold)}
+.feedback small{display:block;color:#bcd8d3;font-size:.92rem;margin-top:6px;font-weight:500}
+@keyframes pop{0%{opacity:0;transform:scale(.4) translateY(8px)}100%{opacity:1;transform:scale(1) translateY(0)}}
+.nextbtn{margin-top:18px;display:none}
+.nextbtn.show{display:block;animation:pop .35s ease}
+
+/* ===== Result ===== */
+.result{text-align:center}
+.ring{width:170px;height:170px;margin:6px auto 18px;position:relative}
+.ring svg{transform:rotate(-90deg)}
+.ring .pct{position:absolute;inset:0;display:grid;place-content:center;text-align:center}
+.ring .pct b{font-family:'Cairo';font-weight:900;font-size:2.4rem;color:var(--gold)}
+.ring .pct span{font-size:.85rem;color:#bcd8d3}
+.result h2{font-family:'Reem Kufi';font-size:1.7rem;margin-bottom:6px}
+.result .verdict{color:#cfe7e3;font-size:1.05rem;margin-bottom:20px;line-height:1.8}
+.scoregrid{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:24px}
+.btnrow{display:flex;gap:12px;flex-wrap:wrap}
+.btnrow .btn{flex:1;min-width:150px}
+
+/* ===== Review ===== */
+.review{margin-top:8px}
+.rev-item{background:rgba(255,255,255,.04);border:1px solid var(--glass-line);border-radius:16px;
+  padding:16px;margin-bottom:12px;text-align:right}
+.rev-item .rq{font-weight:700;line-height:1.8;margin-bottom:10px}
+.rev-line{font-size:.96rem;line-height:1.7;padding:7px 12px;border-radius:10px;margin-bottom:6px}
+.rev-line.ok{background:rgba(46,204,113,.14);border-right:3px solid var(--green)}
+.rev-line.no{background:rgba(255,107,107,.13);border-right:3px solid var(--red)}
+.rev-line b{font-family:'Cairo'}
+
+/* ===== Celebration overlay ===== */
+#burst{position:fixed;inset:0;pointer-events:none;z-index:50}
+.cheer{position:fixed;top:38%;left:50%;transform:translate(-50%,-50%) scale(.4);z-index:60;
+  font-family:'Reem Kufi';font-weight:700;font-size:3.2rem;color:var(--gold);pointer-events:none;
+  opacity:0;text-shadow:0 6px 30px rgba(232,196,104,.6);white-space:nowrap}
+.cheer.show{animation:cheer 1.1s cubic-bezier(.2,1.4,.3,1) forwards}
+@keyframes cheer{0%{opacity:0;transform:translate(-50%,-50%) scale(.3)}
+  20%{opacity:1;transform:translate(-50%,-50%) scale(1.1)}
+  75%{opacity:1;transform:translate(-50%,-60%) scale(1)}
+  100%{opacity:0;transform:translate(-50%,-90%) scale(.95)}}
+
+/* ===== Footer credit ===== */
+.credit{text-align:center;margin-top:34px;color:#a9cfca;font-size:.92rem}
+.credit .sig{font-family:'Reem Kufi';font-weight:700;color:var(--gold);font-size:1.05rem}
+.credit a{display:inline-flex;align-items:center;gap:7px;margin-top:10px;text-decoration:none;
+  color:#04221f;font-family:'Cairo';font-weight:700;font-size:.9rem;
+  background:linear-gradient(145deg,#34b3e0,#1f8fc9);padding:9px 18px;border-radius:999px;
+  box-shadow:0 8px 20px rgba(31,143,201,.35);transition:.2s}
+.credit a:hover{transform:translateY(-2px)}
+
+.hidden{display:none!important}
+.fade{animation:fade .45s ease}
+@keyframes fade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.shake{animation:shake .4s}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
+@media(max-width:520px){
+  .hero h2{font-size:1.6rem}.qtext{font-size:1.12rem}.brandbar h1{font-size:1rem}
+  .card{padding:24px 18px;border-radius:22px}.cheer{font-size:2.3rem}
+}
+.snd{position:fixed;top:14px;left:14px;z-index:30;background:var(--glass);border:1px solid var(--glass-line);
+  width:42px;height:42px;border-radius:12px;cursor:pointer;font-size:1.2rem;color:var(--paper);display:grid;place-items:center}
+</style>
+</head>
+<body>
+<canvas id="burst"></canvas>
+<div class="cheer" id="cheer"></div>
+<button class="snd" id="sndBtn" title="الصوت">🔊</button>
+
+<div class="wrap">
+  <div class="brandbar">
+    <div class="crest">لغ</div>
+    <h1>مسابقة <span>لغتي</span> · ثالث ابتدائي</h1>
+  </div>
+
+  <!-- START -->
+  <section id="screenStart" class="card hero fade">
+    <span class="badge">لغتي · الصف الثالث الابتدائي · الفصل الدراسي الثاني</span>
+    <h2>تحدَّ نفسك في <b>لغتي للصف الثالث الابتدائي</b></h2>
+    <p>أسئلة محاكية للاختبارات المركزية والنهائية: فهم قرائي، مفردات، اللام الشمسية والقمرية، الهمزة المتوسطة، وتراكيب لغوية. اقرأ النص بتمعّن، أجب بذكاء، واجمع النقاط! 🌟</p>
+    <div class="statline">
+      <div class="chip"><b id="totalQ">120</b><span>سؤال متاح</span></div>
+      <div class="chip"><b id="bestShow">0</b><span>أفضل نتيجة</span></div>
+      <div class="chip"><b>4</b><span>خيارات لكل سؤال</span></div>
+    </div>
+    <div class="opts-row">
+      <span class="lbl">عدد الأسئلة في الجولة</span>
+      <div class="seg" id="segCount">
+        <button data-n="10">10</button>
+        <button data-n="20" class="on">20</button>
+        <button data-n="50">50</button>
+        <button data-n="0">الكل</button>
+      </div>
+    </div>
+    <div class="opts-row">
+      <span class="lbl">ترتيب الأسئلة</span>
+      <div class="seg" id="segOrder">
+        <button data-s="1" class="on">عشوائي</button>
+        <button data-s="0">بالترتيب</button>
+      </div>
+    </div>
+    <button class="btn" id="startBtn">🚀 ابدأ المسابقة</button>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="screenQuiz" class="card hidden">
+    <div class="hud">
+      <div class="meta">
+        <span class="pill score"><span class="ic">⭐</span> <b id="scoreNow">0</b></span>
+        <span class="pill streak"><span class="ic">🔥</span> <b id="streakNow">0</b></span>
+      </div>
+      <span class="pill"><span class="ic">📋</span> <span id="counter">1 / 20</span></span>
+    </div>
+    <div class="progress"><i id="bar"></i></div>
+    <div class="qno" id="qno">السؤال 1</div>
+    <span class="catbadge" id="catbadge"></span>
+    <div class="passage" id="passage" style="display:none"></div>
+    <div class="qtext" id="qtext">—</div>
+    <div class="choices" id="choices"></div>
+    <div class="feedback" id="feedback"></div>
+    <button class="btn teal nextbtn" id="nextBtn">التالي ←</button>
+  </section>
+
+  <!-- RESULT -->
+  <section id="screenResult" class="card result hidden">
+    <div class="ring">
+      <svg width="170" height="170"><circle cx="85" cy="85" r="74" stroke="rgba(255,255,255,.12)" stroke-width="14" fill="none"/>
+      <circle id="ringFill" cx="85" cy="85" r="74" stroke="url(#g)" stroke-width="14" fill="none" stroke-linecap="round" stroke-dasharray="465" stroke-dashoffset="465"/>
+      <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#27c4b0"/><stop offset="1" stop-color="#e8c468"/></linearGradient></defs></svg>
+      <div class="pct"><b id="pctNum">0%</b><span id="rightCount">0 صحيحة</span></div>
+    </div>
+    <h2 id="resTitle">انتهت المسابقة!</h2>
+    <p class="verdict" id="verdict">—</p>
+    <div class="scoregrid">
+      <div class="chip"><b id="finalScore">0</b><span>إجمالي النقاط</span></div>
+      <div class="chip"><b id="bestStreak">0</b><span>أطول سلسلة 🔥</span></div>
+    </div>
+    <div class="btnrow">
+      <button class="btn ghost" id="reviewBtn">📝 مراجعة الإجابات</button>
+      <button class="btn" id="againBtn">🔁 جولة جديدة</button>
+    </div>
+    <div class="review hidden" id="reviewBox"></div>
+  </section>
+
+  <div class="credit">
+    <div class="sig">تصميم د/ فواز</div>
+    <div>مسابقة لغتي · ثالث ابتدائي · محاكية للاختبارات المركزية</div>
+    <a href="https://t.me/TAqhjT3MFVE1Yzk0" target="_blank" rel="noopener">✈️ قناة التصاميم على تيليجرام</a>
+  </div>
+</div>
+
+<script>
+const QUESTIONS = [{"id": 1, "q": "من الذي تألَّم من كلام المرأة؟", "options": ["أبو بكر", "عمر بن الخطاب", "عثمان بن عفان", "علي بن أبي طالب"], "answer": 1, "cat": "الفهم القرائي", "passage": "نص قرائي: تألَّم الخليفة عمر – رضي الله عنه – من كلام المرأة ومنظر الأولاد، وأسرع هو وخادمه نحو مخزن بيت المال، وأخرج كيسًا كبيرًا من الدقيق، وقال لخادمه: احملْه عليَّ. فقال الخادم: والله لأحملنّه عنك. ووضع الخادم كيس الدقيق فوق ظهره، وحمل بعض الزيت، ثم أسرعا إلى مكان المرأة. أنزل الخليفة الدقيق والزيت، وجلس قريبًا من النار، ووضعهما في القِدر، وانتظر حتى نضج الطعام، ثم وضعه في طبق، وقال للمرأة: نادي أولادك. اجتمع الأولاد حول الطبق يأكلون، ووقف عمر بعيدًا ينظر إليهم حتى أكلوا وشبعوا وناموا."}, {"id": 2, "q": "إلى أين ذهب عمر وخادمه؟", "options": ["إلى السوق", "إلى المسجد", "إلى مخزن بيت المال", "إلى بيت المرأة مباشرة"], "answer": 2, "cat": "الفهم القرائي", "passage": "نص قرائي: تألَّم الخليفة عمر – رضي الله عنه – من كلام المرأة ومنظر الأولاد، وأسرع هو وخادمه نحو مخزن بيت المال، وأخرج كيسًا كبيرًا من الدقيق، وقال لخادمه: احملْه عليَّ. فقال الخادم: والله لأحملنّه عنك. ووضع الخادم كيس الدقيق فوق ظهره، وحمل بعض الزيت، ثم أسرعا إلى مكان المرأة. أنزل الخليفة الدقيق والزيت، وجلس قريبًا من النار، ووضعهما في القِدر، وانتظر حتى نضج الطعام، ثم وضعه في طبق، وقال للمرأة: نادي أولادك. اجتمع الأولاد حول الطبق يأكلون، ووقف عمر بعيدًا ينظر إليهم حتى أكلوا وشبعوا وناموا."}, {"id": 3, "q": "ماذا أخذ عمر من المخزن؟", "options": ["تمرًا", "كيسًا من الدقيق", "خبزًا", "ماءً"], "answer": 1, "cat": "الفهم القرائي", "passage": "نص قرائي: تألَّم الخليفة عمر – رضي الله عنه – من كلام المرأة ومنظر الأولاد، وأسرع هو وخادمه نحو مخزن بيت المال، وأخرج كيسًا كبيرًا من الدقيق، وقال لخادمه: احملْه عليَّ. فقال الخادم: والله لأحملنّه عنك. ووضع الخادم كيس الدقيق فوق ظهره، وحمل بعض الزيت، ثم أسرعا إلى مكان المرأة. أنزل الخليفة الدقيق والزيت، وجلس قريبًا من النار، ووضعهما في القِدر، وانتظر حتى نضج الطعام، ثم وضعه في طبق، وقال للمرأة: نادي أولادك. اجتمع الأولاد حول الطبق يأكلون، ووقف عمر بعيدًا ينظر إليهم حتى أكلوا وشبعوا وناموا."}, {"id": 4, "q": "ماذا حمل الخادم؟", "options": ["الدقيق", "الماء", "الزيت", "الخبز"], "answer": 2, "cat": "الفهم القرائي", "passage": "نص قرائي: تألَّم الخليفة عمر – رضي الله عنه – من كلام المرأة ومنظر الأولاد، وأسرع هو وخادمه نحو مخزن بيت المال، وأخرج كيسًا كبيرًا من الدقيق، وقال لخادمه: احملْه عليَّ. فقال الخادم: والله لأحملنّه عنك. ووضع الخادم كيس الدقيق فوق ظهره، وحمل بعض الزيت، ثم أسرعا إلى مكان المرأة. أنزل الخليفة الدقيق والزيت، وجلس قريبًا من النار، ووضعهما في القِدر، وانتظر حتى نضج الطعام، ثم وضعه في طبق، وقال للمرأة: نادي أولادك. اجتمع الأولاد حول الطبق يأكلون، ووقف عمر بعيدًا ينظر إليهم حتى أكلوا وشبعوا وناموا."}, {"id": 5, "q": "ماذا فعل عمر عندما وصل إلى المرأة؟", "options": ["طبخ الطعام للأولاد", "نام", "عاد إلى البيت", "أعطى المال فقط"], "answer": 0, "cat": "الفهم القرائي", "passage": "نص قرائي: تألَّم الخليفة عمر – رضي الله عنه – من كلام المرأة ومنظر الأولاد، وأسرع هو وخادمه نحو مخزن بيت المال، وأخرج كيسًا كبيرًا من الدقيق، وقال لخادمه: احملْه عليَّ. فقال الخادم: والله لأحملنّه عنك. ووضع الخادم كيس الدقيق فوق ظهره، وحمل بعض الزيت، ثم أسرعا إلى مكان المرأة. أنزل الخليفة الدقيق والزيت، وجلس قريبًا من النار، ووضعهما في القِدر، وانتظر حتى نضج الطعام، ثم وضعه في طبق، وقال للمرأة: نادي أولادك. اجتمع الأولاد حول الطبق يأكلون، ووقف عمر بعيدًا ينظر إليهم حتى أكلوا وشبعوا وناموا."}, {"id": 6, "q": "معنى كلمة ( الخليفة ):", "options": ["السلطان", "الرعية", "الجندي", "الوزير"], "answer": 0, "cat": "المفردات والمعاني"}, {"id": 7, "q": "مضاد كلمة ( الخليفة ):", "options": ["السلطان", "الرعية", "الأمير", "الحاكم"], "answer": 1, "cat": "المفردات والمعاني"}, {"id": 8, "q": "معنى كلمة ( ينضج ):", "options": ["يستوي (يصبح صالحًا للأكل)", "نيِّء (غير مطبوخ)", "يحترق", "يبرد"], "answer": 0, "cat": "المفردات والمعاني"}, {"id": 9, "q": "مضاد كلمة ( ينضج ):", "options": ["يستوي", "نيِّء (غير مطبوخ)", "يطبخ", "يسخن"], "answer": 1, "cat": "المفردات والمعاني"}, {"id": 10, "q": "معنى كلمة ( الجوع ):", "options": ["الرغبة في الطعام", "الشبع", "العطش", "النوم"], "answer": 0, "cat": "المفردات والمعاني"}, {"id": 11, "q": "مضاد كلمة ( الجوع ):", "options": ["الرغبة في الطعام", "الشبع", "العطش", "التعب"], "answer": 1, "cat": "المفردات والمعاني"}, {"id": 12, "q": "معنى كلمة ( تألَّم ):", "options": ["توجع أو حزن", "فرح أو سُرّ", "نام", "ضحك"], "answer": 0, "cat": "المفردات والمعاني"}, {"id": 13, "q": "مضاد كلمة ( تألَّم ):", "options": ["توجع أو حزن", "فرح أو سُرّ", "بكى", "تعب"], "answer": 1, "cat": "المفردات والمعاني"}, {"id": 14, "q": "معنى كلمة ( ناموا ):", "options": ["غطُّوا في النوم", "استيقظوا", "قاموا", "جلسوا"], "answer": 0, "cat": "المفردات والمعاني"}, {"id": 15, "q": "مضاد كلمة ( ناموا ):", "options": ["غطُّوا في النوم", "استيقظوا", "ناموا", "تعبوا"], "answer": 1, "cat": "المفردات والمعاني"}, {"id": 16, "q": "معنى كلمة ( حمل ):", "options": ["رفع", "وضع", "ترك", "أنزل"], "answer": 0, "cat": "المفردات والمعاني"}, {"id": 17, "q": "مضاد كلمة ( حمل ):", "options": ["رفع", "وضع", "أخذ", "شال"], "answer": 1, "cat": "المفردات والمعاني"}, {"id": 18, "q": "أكمل: وضع الخادم كيس الدقيق فوق ظهر ............", "options": ["المرأة", "الخليفة", "الخادم", "الولد"], "answer": 1, "cat": "الفهم القرائي", "passage": "نص قرائي: تألَّم الخليفة عمر – رضي الله عنه – من كلام المرأة ومنظر الأولاد، وأسرع هو وخادمه نحو مخزن بيت المال، وأخرج كيسًا كبيرًا من الدقيق، وقال لخادمه: احملْه عليَّ. فقال الخادم: والله لأحملنّه عنك. ووضع الخادم كيس الدقيق فوق ظهره، وحمل بعض الزيت، ثم أسرعا إلى مكان المرأة. أنزل الخليفة الدقيق والزيت، وجلس قريبًا من النار، ووضعهما في القِدر، وانتظر حتى نضج الطعام، ثم وضعه في طبق، وقال للمرأة: نادي أولادك. اجتمع الأولاد حول الطبق يأكلون، ووقف عمر بعيدًا ينظر إليهم حتى أكلوا وشبعوا وناموا."}, {"id": 19, "q": "أكمل: قال عمر للمرأة: نادي ............", "options": ["أولادك", "جيرانك", "زوجك", "ضيوفك"], "answer": 0, "cat": "الفهم القرائي", "passage": "نص قرائي: تألَّم الخليفة عمر – رضي الله عنه – من كلام المرأة ومنظر الأولاد، وأسرع هو وخادمه نحو مخزن بيت المال، وأخرج كيسًا كبيرًا من الدقيق، وقال لخادمه: احملْه عليَّ. فقال الخادم: والله لأحملنّه عنك. ووضع الخادم كيس الدقيق فوق ظهره، وحمل بعض الزيت، ثم أسرعا إلى مكان المرأة. أنزل الخليفة الدقيق والزيت، وجلس قريبًا من النار، ووضعهما في القِدر، وانتظر حتى نضج الطعام، ثم وضعه في طبق، وقال للمرأة: نادي أولادك. اجتمع الأولاد حول الطبق يأكلون، ووقف عمر بعيدًا ينظر إليهم حتى أكلوا وشبعوا وناموا."}, {"id": 20, "q": "صح أو خطأ: وضع عمر الدقيق والزيت في القِدر.", "options": ["صح", "خطأ"], "answer": 0, "cat": "صح أو خطأ", "passage": "نص قرائي: تألَّم الخليفة عمر – رضي الله عنه – من كلام المرأة ومنظر الأولاد، وأسرع هو وخادمه نحو مخزن بيت المال، وأخرج كيسًا كبيرًا من الدقيق، وقال لخادمه: احملْه عليَّ. فقال الخادم: والله لأحملنّه عنك. ووضع الخادم كيس الدقيق فوق ظهره، وحمل بعض الزيت، ثم أسرعا إلى مكان المرأة. أنزل الخليفة الدقيق والزيت، وجلس قريبًا من النار، ووضعهما في القِدر، وانتظر حتى نضج الطعام، ثم وضعه في طبق، وقال للمرأة: نادي أولادك. اجتمع الأولاد حول الطبق يأكلون، ووقف عمر بعيدًا ينظر إليهم حتى أكلوا وشبعوا وناموا."}, {"id": 21, "q": "صح أو خطأ: ذهب عمر قبل أن يأكل الأولاد.", "options": ["صح", "خطأ"], "answer": 1, "cat": "صح أو خطأ", "passage": "نص قرائي: تألَّم الخليفة عمر – رضي الله عنه – من كلام المرأة ومنظر الأولاد، وأسرع هو وخادمه نحو مخزن بيت المال، وأخرج كيسًا كبيرًا من الدقيق، وقال لخادمه: احملْه عليَّ. فقال الخادم: والله لأحملنّه عنك. ووضع الخادم كيس الدقيق فوق ظهره، وحمل بعض الزيت، ثم أسرعا إلى مكان المرأة. أنزل الخليفة الدقيق والزيت، وجلس قريبًا من النار، ووضعهما في القِدر، وانتظر حتى نضج الطعام، ثم وضعه في طبق، وقال للمرأة: نادي أولادك. اجتمع الأولاد حول الطبق يأكلون، ووقف عمر بعيدًا ينظر إليهم حتى أكلوا وشبعوا وناموا."}, {"id": 22, "q": "ما هي الحاجات التي تشعر بها الحيوانات مثل الإنسان، كما ورد في النص؟", "options": ["اللعب والمرح", "الجوع والعطش والألم", "مشاهدة التلفزيون", "قراءة الكتب والقصص"], "answer": 1, "cat": "الفهم القرائي", "passage": "نص قرائي: علينا جميعًا أن نتذكر دائمًا أن الحيوانات التي تعيش حولنا في كوكب الأرض، صغيرةً كانت أو كبيرة، مستأنسة في المنزل أو حيوانات برية في الغابات والشوارع، تشعر مثلنا بالجوع والعطش والخوف والألم. لذلك مسؤوليتنا الكبيرة كأشخاص طيبين هي أن نتعامل معها بالرحمة والرفق في كل وقت. وعند تربية حيوان أليف يلزم أن نقدم له الطعام الصحي والماء النظيف في أوقات محددة، وأن نجهز له مكانًا مريحًا دافئًا نظيفًا يشعر فيه بالأمان، ونأخذه إلى الطبيب البيطري عندما يمرض. ويجب ألا نحاول إزعاجها أو رمي الأشياء الصلبة عليها؛ لأن هذا يسبب لها الخوف والألم الشديد. فالرفق بالحيوان واجب يدل على قلب طيب وأخلاق حسنة، ونحن مسؤولون عن حماية المخلوقات الضعيفة في مجتمعنا."}, {"id": 23, "q": "عند تربية حيوان أليف، فإن من واجبنا تجاهه أن نقدم له:", "options": ["الطعام الفاسد والماء الساخن", "مكانًا مفتوحًا في الخارج فقط", "الطعام الصحي والماء النظيف بانتظام", "الكثير من الحلوى الملونة"], "answer": 2, "cat": "الفهم القرائي", "passage": "نص قرائي: علينا جميعًا أن نتذكر دائمًا أن الحيوانات التي تعيش حولنا في كوكب الأرض، صغيرةً كانت أو كبيرة، مستأنسة في المنزل أو حيوانات برية في الغابات والشوارع، تشعر مثلنا بالجوع والعطش والخوف والألم. لذلك مسؤوليتنا الكبيرة كأشخاص طيبين هي أن نتعامل معها بالرحمة والرفق في كل وقت. وعند تربية حيوان أليف يلزم أن نقدم له الطعام الصحي والماء النظيف في أوقات محددة، وأن نجهز له مكانًا مريحًا دافئًا نظيفًا يشعر فيه بالأمان، ونأخذه إلى الطبيب البيطري عندما يمرض. ويجب ألا نحاول إزعاجها أو رمي الأشياء الصلبة عليها؛ لأن هذا يسبب لها الخوف والألم الشديد. فالرفق بالحيوان واجب يدل على قلب طيب وأخلاق حسنة، ونحن مسؤولون عن حماية المخلوقات الضعيفة في مجتمعنا."}, {"id": 24, "q": "لماذا يجب ألا نحاول إزعاج الحيوانات أو رمي الأشياء الصلبة عليها؟", "options": ["لأنها تحب اللعب معنا", "لأن هذا الفعل يسبب لها الخوف والألم الشديد", "لأنها تستطيع الطيران بعيدًا", "لكي تنام في الشارع بهدوء"], "answer": 1, "cat": "الفهم القرائي", "passage": "نص قرائي: علينا جميعًا أن نتذكر دائمًا أن الحيوانات التي تعيش حولنا في كوكب الأرض، صغيرةً كانت أو كبيرة، مستأنسة في المنزل أو حيوانات برية في الغابات والشوارع، تشعر مثلنا بالجوع والعطش والخوف والألم. لذلك مسؤوليتنا الكبيرة كأشخاص طيبين هي أن نتعامل معها بالرحمة والرفق في كل وقت. وعند تربية حيوان أليف يلزم أن نقدم له الطعام الصحي والماء النظيف في أوقات محددة، وأن نجهز له مكانًا مريحًا دافئًا نظيفًا يشعر فيه بالأمان، ونأخذه إلى الطبيب البيطري عندما يمرض. ويجب ألا نحاول إزعاجها أو رمي الأشياء الصلبة عليها؛ لأن هذا يسبب لها الخوف والألم الشديد. فالرفق بالحيوان واجب يدل على قلب طيب وأخلاق حسنة، ونحن مسؤولون عن حماية المخلوقات الضعيفة في مجتمعنا."}, {"id": 25, "q": "عندما يمرض الحيوان الأليف، فإلى أين يجب أن نأخذه؟", "options": ["إلى المدرسة", "إلى الطبيب البيطري", "إلى محل بيع الألعاب", "إلى أقرب حديقة"], "answer": 1, "cat": "الفهم القرائي", "passage": "نص قرائي: علينا جميعًا أن نتذكر دائمًا أن الحيوانات التي تعيش حولنا في كوكب الأرض، صغيرةً كانت أو كبيرة، مستأنسة في المنزل أو حيوانات برية في الغابات والشوارع، تشعر مثلنا بالجوع والعطش والخوف والألم. لذلك مسؤوليتنا الكبيرة كأشخاص طيبين هي أن نتعامل معها بالرحمة والرفق في كل وقت. وعند تربية حيوان أليف يلزم أن نقدم له الطعام الصحي والماء النظيف في أوقات محددة، وأن نجهز له مكانًا مريحًا دافئًا نظيفًا يشعر فيه بالأمان، ونأخذه إلى الطبيب البيطري عندما يمرض. ويجب ألا نحاول إزعاجها أو رمي الأشياء الصلبة عليها؛ لأن هذا يسبب لها الخوف والألم الشديد. فالرفق بالحيوان واجب يدل على قلب طيب وأخلاق حسنة، ونحن مسؤولون عن حماية المخلوقات الضعيفة في مجتمعنا."}, {"id": 26, "q": "الكلمة التي تبدأ بـ اللام الشمسية هي:", "options": ["القمر", "المدرسة", "النهر", "الكتاب"], "answer": 2, "cat": "اللام الشمسية والقمرية"}, {"id": 27, "q": "الكلمة التي تبدأ بـ اللام القمرية هي:", "options": ["الشجرة", "البيت", "النمر", "الزهرة"], "answer": 1, "cat": "اللام الشمسية والقمرية"}, {"id": 28, "q": "اختر الكلمة التي تُنطق فيها ( الـ ) نطقًا واضحًا:", "options": ["النَّجم", "الشَّجرة", "البحر", "الطَّالب"], "answer": 2, "cat": "اللام الشمسية والقمرية"}, {"id": 29, "q": "اللام الشمسية هي اللام التي:", "options": ["تُنطق بوضوح", "تأتي في آخر الكلمة", "تأتي في الأفعال", "لا تُنطق ويأتي بعدها حرف مشدد"], "answer": 3, "cat": "اللام الشمسية والقمرية"}, {"id": 30, "q": "اختر الكلمتين اللتين تحتويان على لام قمرية:", "options": ["القمر – الكتاب", "الطريق – الطالب", "الشمس – السماء", "الدرس – النجم"], "answer": 0, "cat": "اللام الشمسية والقمرية"}, {"id": 31, "q": "صح أو خطأ: في كلمة ( القلم ) اللام شمسية.", "options": ["صح", "خطأ"], "answer": 1, "cat": "اللام الشمسية والقمرية"}, {"id": 32, "q": "صح أو خطأ: نُنطق اللام في كلمة ( الشَّمس ).", "options": ["صح", "خطأ"], "answer": 1, "cat": "اللام الشمسية والقمرية"}, {"id": 33, "q": "صح أو خطأ: تُنطق اللام في الكلمات التي تبدأ بلام قمرية.", "options": ["صح", "خطأ"], "answer": 0, "cat": "اللام الشمسية والقمرية"}, {"id": 34, "q": "صح أو خطأ: اللام في كلمة ( الزرافة ) شمسية.", "options": ["صح", "خطأ"], "answer": 0, "cat": "اللام الشمسية والقمرية"}, {"id": 35, "q": "أقوى الحركات في اللغة العربية هي:", "options": ["الضمة", "الفتحة", "الكسرة", "السكون"], "answer": 2, "cat": "الهمزة المتوسطة"}, {"id": 36, "q": "إذا كانت الكسرة هي الحركة الأقوى، تُكتب الهمزة المتوسطة على:", "options": ["واو", "ياء", "ألف", "السطر"], "answer": 1, "cat": "الهمزة المتوسطة"}, {"id": 37, "q": "تُكتب الهمزة المتوسطة على الألف إذا كانت الفتحة أقوى من:", "options": ["الكسرة", "السكون", "الضمة", "الفتحة"], "answer": 1, "cat": "الهمزة المتوسطة"}, {"id": 38, "q": "الحركة التي تناسب كتابة الهمزة على الواو ( ؤ ) هي:", "options": ["الضمة", "الفتحة", "الكسرة", "السكون"], "answer": 0, "cat": "الهمزة المتوسطة"}, {"id": 39, "q": "كُتبت همزة كلمة ( المرأة ) على ( أ ) لأنها:", "options": ["مفتوحة وقبلها مفتوح", "مفتوحة وقبلها ساكن", "ساكنة وقبلها ساكن", "ساكنة وقبلها مفتوح"], "answer": 1, "cat": "الهمزة المتوسطة"}, {"id": 40, "q": "أي المجموعات التالية كُتبت فيها الهمزة المتوسطة «على واو» بشكل صحيح؟", "options": ["كُؤوس - فُؤاد - مُؤدب", "شيء - دفء - ماء", "مَأتم - رَأس - فأس", "زئير - رئيس - مئة"], "answer": 0, "cat": "الهمزة المتوسطة"}, {"id": 41, "q": "صح أو خطأ: إذا كانت الهمزة مفتوحة وسبقها ألف أو واو تُكتب على السطر.", "options": ["صح", "خطأ"], "answer": 1, "cat": "الهمزة المتوسطة"}, {"id": 42, "q": "صح أو خطأ: تُكتب الهمزة على السطر إذا كان الحرف الذي قبلها ساكن.", "options": ["صح", "خطأ"], "answer": 0, "cat": "الهمزة المتوسطة"}, {"id": 43, "q": "ما هو اللقب الذي عُرف به نبينا محمد صلى الله عليه وسلم؟", "options": ["الصابر المحتسب", "الصادق الأمين", "القوي الشجاع", "القوي المقدام"], "answer": 1, "cat": "الفهم القرائي", "passage": "نص قرائي: علينا جميعًا أن نتذكر دائمًا أن الصدق هو أجمل صفة يمكن أن يتحلى بها الإنسان، سواء كان صغيرًا أو كبيرًا. فالصادق هو الشخص الذي يقول الحق في كل وقت، ولا يكذب أبدًا. لذلك مسؤوليتنا نحن الصغار هي أن نتعود على قول الصدق في بيتنا ومدرستنا مع أصدقائنا ومعلمينا؛ لأن الصدق ينشر الثقة والمحبة بين الناس. عندما نلتزم بالصدق يثق فينا الآخرون ويحبون التعامل معنا. ومن الضروري أيضًا أن نعرف أن الصدق يجعلنا نشعر بالراحة والاطمئنان داخلنا؛ لأن الكذب يؤدي إلى الخوف والقلق. ولقد كان نبينا محمد – صلى الله عليه وسلم – يُلقَّب بـ«الصادق الأمين» لأنه لم يكذب قط طوال حياته. ومن أهم قواعد الصدق ألا نُخفي الحقيقة خوفًا من العقاب، بل نعترف بأخطائنا بشجاعة؛ لأن الصدق ينجي صاحبه ويعلمنا تحمل المسؤولية، والتمسك بالصدق ليس صعبًا بل هو طريق نحو النجاح ونيل رضا الله واحترام المجتمع."}, {"id": 44, "q": "الفكرة الرئيسة التي يدور حولها النص هي:", "options": ["أهمية التعاون بين الجيران", "كيفية الاعتراف بالخطأ أمام الوالدين", "قيمة الصدق وأثره على الفرد والمجتمع", "خطورة الكذب في المواقف الصعبة"], "answer": 2, "cat": "الفهم القرائي", "passage": "نص قرائي: علينا جميعًا أن نتذكر دائمًا أن الصدق هو أجمل صفة يمكن أن يتحلى بها الإنسان، سواء كان صغيرًا أو كبيرًا. فالصادق هو الشخص الذي يقول الحق في كل وقت، ولا يكذب أبدًا. لذلك مسؤوليتنا نحن الصغار هي أن نتعود على قول الصدق في بيتنا ومدرستنا مع أصدقائنا ومعلمينا؛ لأن الصدق ينشر الثقة والمحبة بين الناس. عندما نلتزم بالصدق يثق فينا الآخرون ويحبون التعامل معنا. ومن الضروري أيضًا أن نعرف أن الصدق يجعلنا نشعر بالراحة والاطمئنان داخلنا؛ لأن الكذب يؤدي إلى الخوف والقلق. ولقد كان نبينا محمد – صلى الله عليه وسلم – يُلقَّب بـ«الصادق الأمين» لأنه لم يكذب قط طوال حياته. ومن أهم قواعد الصدق ألا نُخفي الحقيقة خوفًا من العقاب، بل نعترف بأخطائنا بشجاعة؛ لأن الصدق ينجي صاحبه ويعلمنا تحمل المسؤولية، والتمسك بالصدق ليس صعبًا بل هو طريق نحو النجاح ونيل رضا الله واحترام المجتمع."}, {"id": 45, "q": "الشعور الذي يسببه الكذب للإنسان كما ورد في النص هو:", "options": ["السعادة والسرور", "الصبر والهدوء", "الجوع والتعب", "الخوف والقلق"], "answer": 3, "cat": "الفهم القرائي", "passage": "نص قرائي: علينا جميعًا أن نتذكر دائمًا أن الصدق هو أجمل صفة يمكن أن يتحلى بها الإنسان، سواء كان صغيرًا أو كبيرًا. فالصادق هو الشخص الذي يقول الحق في كل وقت، ولا يكذب أبدًا. لذلك مسؤوليتنا نحن الصغار هي أن نتعود على قول الصدق في بيتنا ومدرستنا مع أصدقائنا ومعلمينا؛ لأن الصدق ينشر الثقة والمحبة بين الناس. عندما نلتزم بالصدق يثق فينا الآخرون ويحبون التعامل معنا. ومن الضروري أيضًا أن نعرف أن الصدق يجعلنا نشعر بالراحة والاطمئنان داخلنا؛ لأن الكذب يؤدي إلى الخوف والقلق. ولقد كان نبينا محمد – صلى الله عليه وسلم – يُلقَّب بـ«الصادق الأمين» لأنه لم يكذب قط طوال حياته. ومن أهم قواعد الصدق ألا نُخفي الحقيقة خوفًا من العقاب، بل نعترف بأخطائنا بشجاعة؛ لأن الصدق ينجي صاحبه ويعلمنا تحمل المسؤولية، والتمسك بالصدق ليس صعبًا بل هو طريق نحو النجاح ونيل رضا الله واحترام المجتمع."}, {"id": 46, "q": "الشخص الذي يلتزم بقول الحق دائمًا يُسمى:", "options": ["الصادق", "الشجاع", "الكريم", "الأمين"], "answer": 0, "cat": "الفهم القرائي", "passage": "نص قرائي: علينا جميعًا أن نتذكر دائمًا أن الصدق هو أجمل صفة يمكن أن يتحلى بها الإنسان، سواء كان صغيرًا أو كبيرًا. فالصادق هو الشخص الذي يقول الحق في كل وقت، ولا يكذب أبدًا. لذلك مسؤوليتنا نحن الصغار هي أن نتعود على قول الصدق في بيتنا ومدرستنا مع أصدقائنا ومعلمينا؛ لأن الصدق ينشر الثقة والمحبة بين الناس. عندما نلتزم بالصدق يثق فينا الآخرون ويحبون التعامل معنا. ومن الضروري أيضًا أن نعرف أن الصدق يجعلنا نشعر بالراحة والاطمئنان داخلنا؛ لأن الكذب يؤدي إلى الخوف والقلق. ولقد كان نبينا محمد – صلى الله عليه وسلم – يُلقَّب بـ«الصادق الأمين» لأنه لم يكذب قط طوال حياته. ومن أهم قواعد الصدق ألا نُخفي الحقيقة خوفًا من العقاب، بل نعترف بأخطائنا بشجاعة؛ لأن الصدق ينجي صاحبه ويعلمنا تحمل المسؤولية، والتمسك بالصدق ليس صعبًا بل هو طريق نحو النجاح ونيل رضا الله واحترام المجتمع."}, {"id": 47, "q": "صيغة المبالغة من الفعل ( غَفَرَ ) هي:", "options": ["غفَّار", "غافر", "مغفور", "غفير"], "answer": 0, "cat": "التراكيب اللغوية"}, {"id": 48, "q": "أي من الكلمات التالية تبدأ بلام شمسية؟", "options": ["المخلفات", "البيئة", "الهواء", "الصدق"], "answer": 3, "cat": "التراكيب اللغوية"}, {"id": 49, "q": "الجملة التي تعبر عن «أسلوب تعجب» هي:", "options": ["هل نزرع الأشجار؟", "ما أروعَ النظافةَ!", "لا تلوث البيئة.", "اذهب إلى المدرسة."], "answer": 1, "cat": "التراكيب اللغوية"}, {"id": 50, "q": "المثنى من كلمة ( الفلاح ):", "options": ["الفلاحون", "الفلاحان", "الفلاحات", "الفلاح"], "answer": 1, "cat": "التراكيب اللغوية"}, {"id": 51, "q": "كلمة ( القاضي ) تعد من الأسماء الـ:", "options": ["مقصورة", "منقوصة", "ياء مد", "ممدودة"], "answer": 1, "cat": "التراكيب اللغوية"}, {"id": 52, "q": "أداة الشرط في جملة «إن تذاكر تنجح» هي:", "options": ["تذاكر", "إن", "تنجح", "هي"], "answer": 1, "cat": "التراكيب اللغوية"}, {"id": 53, "q": "كلمة ( أخطائنا ) رُسمت الهمزة فيها على نبرة لأنها:", "options": ["مفتوحة", "مكسورة", "مضمومة", "ساكنة"], "answer": 1, "cat": "التراكيب اللغوية"}, {"id": 54, "q": "ما هو الأسلوب اللغوي في جملة ( لعل طالب اليوم يكون عالم الغد )؟", "options": ["نهي", "تمنٍّ", "ترجٍّ", "نفي"], "answer": 2, "cat": "التراكيب اللغوية"}, {"id": 55, "q": "كلمة ( المنظار ) تبدأ بـ:", "options": ["همزة وصل", "همزة قطع", "مد بالألف", "ياء"], "answer": 0, "cat": "التراكيب اللغوية"}, {"id": 56, "q": "«نستخدم المِفتاح لفتح الأبواب»، كلمة ( المفتاح ) اسم آلة على وزن:", "options": ["مِفعل", "مِفعال", "فعلة", "فاعول"], "answer": 1, "cat": "التراكيب اللغوية"}, {"id": 57, "q": "صح أو خطأ: أداة النفي ( لا ) نستخدمها لنقول إن هذا الشيء لم يحدث.", "options": ["صح", "خطأ"], "answer": 0, "cat": "صح أو خطأ"}, {"id": 58, "q": "صح أو خطأ: كلمة ( الفصل ) تبدأ بلام شمسية.", "options": ["صح", "خطأ"], "answer": 1, "cat": "صح أو خطأ"}, {"id": 59, "q": "صح أو خطأ: الاسم الذي يدل على «المكان الذي نضع فيه القمامة» هو: الملعب.", "options": ["صح", "خطأ"], "answer": 1, "cat": "صح أو خطأ"}, {"id": 60, "q": "صح أو خطأ: كلمة ( شاكر ) على وزن ( فعَّال ).", "options": ["صح", "خطأ"], "answer": 1, "cat": "صح أو خطأ"}, {"id": 61, "q": "صح أو خطأ: كلمة ( الغسالة ) هي اسم آلة على وزن ( مِفْعَال ).", "options": ["صح", "خطأ"], "answer": 1, "cat": "صح أو خطأ"}];
+const KEYS = ["أ","ب","ج","د"];
+const GOOD = ["يا سلام! 🌟","أحسنت! 👏","ممتاز جداً!","إبداع ✨","بطل! 🏆","ما شاء الله!","رائع!","إجابة ذكية! 💡","تمام التمام!","عاش! 🎉"];
+const GOOD_SUB = ["إجابة موفقة، واصل التألق.","معلومة في محلها تماماً.","استمر على هذا المستوى!","سلسلتك تكبر، لا توقفها!","معرفة قوية بالنظريات."];
+const BAD = ["حظ أوفر 🍀","لا بأس، التالي لك 💪","قريبة جداً!","للأسف ليست الصحيحة","ركّز معنا في القادم","لا تستسلم!"];
+const BAD_SUB = ["راجع الإجابة الصحيحة بالأسفل.","كل خطأ خطوة نحو الإتقان.","المهم أنك تتعلم 👌","التالي فرصة جديدة."];
+
+let state = {pool:[], idx:0, score:0, streak:0, bestStreak:0, right:0, log:[], answered:false, count:20, shuffle:true, sound:true};
+
+const $=id=>document.getElementById(id);
+function show(id){["screenStart","screenQuiz","screenResult"].forEach(s=>$(s).classList.add("hidden"));$(id).classList.remove("hidden");$(id).classList.add("fade");window.scrollTo({top:0,behavior:"smooth"});}
+
+/* best score */
+function getBest(){try{return +localStorage.getItem("loghati3_best")||0}catch(e){return 0}}
+function setBest(v){try{localStorage.setItem("loghati3_best",v)}catch(e){}}
+$("bestShow").textContent=getBest();
+$("totalQ").textContent=QUESTIONS.length;
+
+/* segmented controls */
+$("segCount").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;[...$("segCount").children].forEach(x=>x.classList.remove("on"));b.classList.add("on");state.count=+b.dataset.n;});
+$("segOrder").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;[...$("segOrder").children].forEach(x=>x.classList.remove("on"));b.classList.add("on");state.shuffle=b.dataset.s==="1";});
+
+/* sound */
+let actx=null;
+$("sndBtn").addEventListener("click",()=>{state.sound=!state.sound;$("sndBtn").textContent=state.sound?"🔊":"🔇";});
+function beep(type){
+  if(!state.sound)return;
+  try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();
+  if(type==="good"){[0,.12,.24].forEach((t,i)=>tone([523,659,784][i],actx.currentTime+t,.16,.18));}
+  else{tone(196,actx.currentTime,.18,.16);tone(165,actx.currentTime+.14,.22,.16);}
+  }catch(e){}
+}
+function tone(f,t,d,v){const o=actx.createOscillator(),g=actx.createGain();o.type="triangle";o.frequency.value=f;
+  o.connect(g);g.connect(actx.destination);g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(v,t+.02);
+  g.gain.exponentialRampToValueAtTime(.0001,t+d);o.start(t);o.stop(t+d+.02);}
+
+/* start */
+function start(){
+  let arr=QUESTIONS.map((q,i)=>({...q,_i:i}));
+  if(state.shuffle)arr=shuffle(arr);
+  let n=state.count===0?arr.length:Math.min(state.count,arr.length);
+  state.pool=arr.slice(0,n);
+  state.idx=0;state.score=0;state.streak=0;state.bestStreak=0;state.right=0;state.log=[];
+  show("screenQuiz");render();
+}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function render(){
+  state.answered=false;
+  const q=state.pool[state.idx];
+  $("counter").textContent=`${state.idx+1} / ${state.pool.length}`;
+  $("bar").style.width=`${(state.idx/state.pool.length)*100}%`;
+  $("qno").textContent=`السؤال ${state.idx+1}`;
+  var pb=$("passage");
+  if(q.passage){pb.style.display="block";pb.innerHTML="<span class=\"ptag\">📖 اقرأ النص ثم أجب</span>"+q.passage;}
+  else{pb.style.display="none";pb.innerHTML="";}
+  $("catbadge").textContent=q.cat||"";
+  $("qtext").textContent=q.q;
+  $("scoreNow").textContent=state.score;
+  $("streakNow").textContent=state.streak;
+  $("feedback").innerHTML="";
+  $("nextBtn").classList.remove("show");
+  const ch=$("choices");ch.innerHTML="";
+  q.options.forEach((opt,i)=>{
+    const d=document.createElement("button");
+    d.className="choice";d.innerHTML=`<span class="key">${KEYS[i]}</span><span class="ctxt">${opt}</span><span class="mark"></span>`;
+    d.addEventListener("click",()=>pick(i,d));
+    ch.appendChild(d);
+  });
+}
+
+function pick(i,el){
+  if(state.answered)return;
+  state.answered=true;
+  const q=state.pool[state.idx];
+  const correct=q.answer;
+  const nodes=[...$("choices").children];
+  nodes.forEach((n,j)=>{n.classList.add("locked");
+    if(j===correct){n.classList.add("correct");n.querySelector(".mark").textContent="✓";}
+    else if(j===i){n.classList.add("wrong");n.querySelector(".mark").textContent="✕";}
+    else n.classList.add("dim");
+  });
+  const ok=i===correct;
+  state.log.push({q:q.q,options:q.options,answer:correct,chosen:i,ok});
+  const fb=$("feedback");
+  if(ok){
+    state.right++;state.streak++;state.bestStreak=Math.max(state.bestStreak,state.streak);
+    let pts=10+Math.min(state.streak-1,5)*2; // streak bonus
+    state.score+=pts;
+    fb.innerHTML=`<div class="fb good">${pick1(GOOD)}</div><small>+${pts} نقطة &nbsp;·&nbsp; ${pick1(GOOD_SUB)}</small>`;
+    beep("good");cheer(pick1(GOOD));confetti();
+  }else{
+    state.streak=0;
+    fb.innerHTML=`<div class="fb bad">${pick1(BAD)}</div><small>الإجابة الصحيحة: <b style="color:var(--green)">${KEYS[correct]}) ${q.options[correct]}</b><br>${pick1(BAD_SUB)}</small>`;
+    beep("bad");el.classList.add("shake");
+  }
+  $("scoreNow").textContent=state.score;
+  $("streakNow").textContent=state.streak;
+  $("nextBtn").textContent=state.idx+1>=state.pool.length?"إنهاء وعرض النتيجة 🏁":"التالي ←";
+  $("nextBtn").classList.add("show");
+}
+function pick1(a){return a[Math.floor(Math.random()*a.length)];}
+
+$("nextBtn").addEventListener("click",()=>{
+  if(state.idx+1>=state.pool.length){finish();}
+  else{state.idx++;render();}
+});
+
+function finish(){
+  $("bar").style.width="100%";
+  const total=state.pool.length;
+  const pct=Math.round(state.right/total*100);
+  show("screenResult");
+  // ring
+  const circ=465, off=circ-(pct/100)*circ;
+  setTimeout(()=>{$("ringFill").style.transition="stroke-dashoffset 1s ease";$("ringFill").style.strokeDashoffset=off;},120);
+  let cur=0;const t=setInterval(()=>{cur+=Math.ceil(pct/30)||1;if(cur>=pct){cur=pct;clearInterval(t);}$("pctNum").textContent=cur+"%";},28);
+  $("rightCount").textContent=`${state.right} من ${total} صحيحة`;
+  $("finalScore").textContent=state.score;
+  $("bestStreak").textContent=state.bestStreak;
+  let title,verd;
+  if(pct>=90){title="أداء أسطوري! 🏆";verd="ما شاء الله! بطل لغتي! أنت جاهز للاختبار المركزي بثقة.";confetti();confetti();}
+  else if(pct>=75){title="ممتاز! 🌟";verd="نتيجة قوية جداً. مراجعة بسيطة للأسئلة التي أخطأت فيها وستصل للكمال.";confetti();}
+  else if(pct>=60){title="جيد جداً 👍";verd="أساس متين! ركّز على مراجعة الإجابات الصحيحة لرفع مستواك أكثر.";}
+  else if(pct>=40){title="على الطريق 💪";verd="بداية جيدة، تحتاج مزيداً من المراجعة. لا تيأس، التكرار يصنع الإتقان.";}
+  else{title="حظ أوفر 🍀";verd="لا بأس أبداً! راجع الأسئلة جيداً وأعد المحاولة، التحسن قادم بإذن الله.";}
+  $("resTitle").textContent=title;$("verdict").textContent=verd;
+  if(state.score>getBest()){setBest(state.score);$("bestShow").textContent=state.score;}
+  // build review
+  const box=$("reviewBox");box.innerHTML="";box.classList.add("hidden");
+  state.log.forEach((l,k)=>{
+    const div=document.createElement("div");div.className="rev-item";
+    let html=`<div class="rq">${k+1}. ${l.q}</div>`;
+    html+=`<div class="rev-line ok"><b>الإجابة الصحيحة:</b> ${KEYS[l.answer]}) ${l.options[l.answer]}</div>`;
+    if(!l.ok)html+=`<div class="rev-line no"><b>إجابتك:</b> ${KEYS[l.chosen]}) ${l.options[l.chosen]}</div>`;
+    div.innerHTML=html;box.appendChild(div);
+  });
+}
+$("reviewBtn").addEventListener("click",()=>{const b=$("reviewBox");b.classList.toggle("hidden");$("reviewBtn").textContent=b.classList.contains("hidden")?"📝 مراجعة الإجابات":"إخفاء المراجعة ▲";if(!b.classList.contains("hidden"))b.scrollIntoView({behavior:"smooth"});});
+$("againBtn").addEventListener("click",()=>show("screenStart"));
+$("startBtn").addEventListener("click",start);
+
+/* cheer text */
+function cheer(txt){const c=$("cheer");c.textContent=txt;c.classList.remove("show");void c.offsetWidth;c.classList.add("show");}
+
+/* confetti */
+const cv=$("burst"),cx=cv.getContext("2d");let parts=[];
+function resize(){cv.width=innerWidth;cv.height=innerHeight;}resize();addEventListener("resize",resize);
+const COLORS=["#e8c468","#27c4b0","#2ecc71","#f3dea0","#34b3e0","#ffffff"];
+function confetti(){for(let i=0;i<70;i++){parts.push({x:innerWidth/2+(Math.random()-.5)*120,y:innerHeight*.4,
+  vx:(Math.random()-.5)*9,vy:Math.random()*-11-4,g:.32,s:Math.random()*7+4,
+  c:COLORS[Math.floor(Math.random()*COLORS.length)],r:Math.random()*6,vr:(Math.random()-.5)*.4,life:90});}
+  if(!raf)loop();}
+let raf=null;
+function loop(){cx.clearRect(0,0,cv.width,cv.height);
+  parts.forEach(p=>{p.vy+=p.g;p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;p.life--;
+    cx.save();cx.translate(p.x,p.y);cx.rotate(p.r);cx.fillStyle=p.c;cx.globalAlpha=Math.max(0,p.life/90);
+    cx.fillRect(-p.s/2,-p.s/2,p.s,p.s*.6);cx.restore();});
+  parts=parts.filter(p=>p.life>0&&p.y<cv.height+30);
+  if(parts.length){raf=requestAnimationFrame(loop);}else{cx.clearRect(0,0,cv.width,cv.height);raf=null;}}
+</script>
+</body>
+</html>
