@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>خطة الانضباط بعد الحج - د/فواز</title>
+    <style>
+        /* ===== CSS للطباعة المتقدمة - صفحة A4 واحدة ===== */
+        @page {
+            size: A4 portrait;
+            margin: 10mm;
+        }
+
+        @media print {
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            
+            html, body {
+                width: 210mm;
+                height: 297mm;
+                margin: 0;
+                padding: 10mm;
+                overflow: hidden;
+                background: white !important;
+            }
+            
+            .container {
+                width: 100%;
+                max-height: 297mm;
+                box-shadow: none !important;
+                margin: 0;
+            }
+
+            .print-btn {
+                display: none !important;
+            }
+
+            /* إخفاء Footer عند الطباعة */
+            .footer {
+                display: none !important;
+            }
+
+            /* منع تكرار الـ Header والـ Footer في كل صفحة */
+            .header {
+                page-break-inside: avoid;
+            }
+
+            .content {
+                overflow: hidden;
+            }
+
+            /* تقليل المسافات عند الطباعة */
+            .strategy-card {
+                page-break-inside: avoid;
+            }
+
+            .detail-item {
+                page-break-inside: avoid;
+            }
+
+            .timeline-item {
+                page-break-inside: avoid;
+            }
+
+            .day-card {
+                page-break-inside: avoid;
+            }
+
+            .metric-card {
+                page-break-inside: avoid;
+            }
+
+            /* تقليل الـ padding والـ margin عند الطباعة */
+            .content {
+                padding: 15px !important;
+            }
+
+            .strategy-card, .detail-item, .timeline-content {
+                margin: 5px !important;
+                padding: 8px !important;
+            }
+
+            .divider {
+                margin: 8px 0 !important;
+                height: 1px !important;
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Tajawal', 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 50px 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 400px;
+            height: 400px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+
+        .header h1 {
+            font-size: 42px;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .header .subtitle {
+            font-size: 18px;
+            opacity: 0.95;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header .badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px 20px;
+            border-radius: 50px;
+            margin-top: 15px;
+            font-size: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Main Content */
+        .content {
+            padding: 50px;
+        }
+
+        /* Timeline */
+        .timeline-section {
+            margin-bottom: 50px;
+        }
+
+        .section-title {
+            font-size: 28px;
+            color: #667eea;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #667eea;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 30px;
+            position: relative;
+            padding-right: 20px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 50px;
+            width: 3px;
+            height: calc(100% + 30px);
+            background: linear-gradient(to bottom, #667eea, #764ba2);
+        }
+
+        .timeline-item:last-child::before {
+            display: none;
+        }
+
+        .timeline-marker {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 28px;
+            flex-shrink: 0;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            position: relative;
+            z-index: 2;
+        }
+
+        .timeline-content {
+            flex: 1;
+            background: #f9fafb;
+            padding: 25px;
+            border-radius: 12px;
+            border-right: 4px solid #667eea;
+        }
+
+        .timeline-content h3 {
+            color: #667eea;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .timeline-content p {
+            color: #6b7280;
+            margin-bottom: 10px;
+        }
+
+        /* Strategy Cards */
+        .strategies-section {
+            margin-bottom: 50px;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .strategy-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border-top: 5px solid #667eea;
+            cursor: pointer;
+        }
+
+        .strategy-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(102, 126, 234, 0.3);
+        }
+
+        .card-icon {
+            font-size: 50px;
+            margin-bottom: 15px;
+        }
+
+        .strategy-card h3 {
+            color: #667eea;
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        .strategy-card p {
+            color: #6b7280;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .card-points {
+            list-style: none;
+            padding: 0;
+        }
+
+        .card-points li {
+            color: #6b7280;
+            padding: 8px 0;
+            padding-right: 25px;
+            position: relative;
+            font-size: 13px;
+        }
+
+        .card-points li::before {
+            content: '✓';
+            position: absolute;
+            right: 0;
+            color: #4ade80;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        /* Details Sections */
+        .details-section {
+            background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+            padding: 40px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+        }
+
+        .details-section h3 {
+            color: #667eea;
+            font-size: 22px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .detail-item {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            border-right: 4px solid #764ba2;
+        }
+
+        .detail-item h4 {
+            color: #764ba2;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .detail-item p {
+            color: #6b7280;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* Weekly Plan */
+        .weekly-plan {
+            margin-bottom: 50px;
+        }
+
+        .week-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .day-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .day-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+        }
+
+        .day-name {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .day-focus {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+
+        /* Alert Box */
+        .alert-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-right: 5px solid #f59e0b;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+        }
+
+        .alert-box h3 {
+            color: #d97706;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .alert-box p {
+            color: #92400e;
+        }
+
+        /* Success Box */
+        .success-box {
+            background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+            border-right: 5px solid #4ade80;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+        }
+
+        .success-box h3 {
+            color: #166534;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .success-box p {
+            color: #166534;
+        }
+
+        /* Metrics */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            border-top: 4px solid #667eea;
+        }
+
+        .metric-number {
+            font-size: 40px;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .metric-label {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        /* Footer */
+        .footer {
+            background: #f3f4f6;
+            padding: 30px;
+            text-align: center;
+            border-top: 2px solid #e5e7eb;
+        }
+
+        .footer p {
+            color: #6b7280;
+            margin-bottom: 10px;
+        }
+
+        .designer-link {
+            display: inline-block;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 10px 5px;
+            transition: all 0.3s ease;
+            padding: 10px 20px;
+            border-radius: 8px;
+        }
+
+        .designer-link:hover {
+            background: #e0e7ff;
+            color: #764ba2;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .content {
+                padding: 30px;
+            }
+
+            .header {
+                padding: 30px 20px;
+            }
+
+            .header h1 {
+                font-size: 28px;
+            }
+
+            .section-title {
+                font-size: 22px;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .week-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .timeline-item {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .timeline-marker {
+                width: 50px;
+                height: 50px;
+                font-size: 24px;
+            }
+
+            .timeline-content {
+                padding: 20px;
+            }
+        }
+
+        .divider {
+            height: 2px;
+            background: linear-gradient(to right, transparent, #667eea, transparent);
+            margin: 40px 0;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f3f4f6;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e7ff;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #667eea20 0%, #764ba220 100%);
+            padding: 2px 8px;
+            border-radius: 4px;
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .print-btn {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .print-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>📋 خطة الانضباط والتحصيل الدراسي</h1>
+            <p class="subtitle">في مرحلة ما بعد الحج والإجازات</p>
+            <div class="badge">🎯 برنامج شامل متكامل لضمان نجاح الطلاب</div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content">
+            <!-- Overview -->
+            <div class="success-box">
+                <h3>🌟 الرؤية المركزية</h3>
+                <p>
+                    بعد إجازة عيد الأضحى والحج، يمر الطلاب بفترة حساسة تتطلب إدارة ذكية للعودة للانضباط والتركيز الأكاديمي، 
+                    خاصة وأن الاختبارات النهائية تقترب. هذه الخطة توفر استراتيجيات متعددة المستويات لضمان استعادة الحماس والانضباط 
+                    بطريقة تربوية إيجابية.
+                </p>
+            </div>
+
+            <!-- Timeline -->
+            <div class="timeline-section">
+                <h2 class="section-title">⏱️ جدول المراحل الزمنية</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-marker">📌</div>
+                        <div class="timeline-content">
+                            <h3>الأسبوع الأول - التأقلم والعودة التدريجية</h3>
+                            <p><strong>الأيام الثلاثة الأولى:</strong> استقبال دافئ وتقييم أولي للحضور والاستعداد</p>
+                            <p><strong>الأيام الأخيرة:</strong> تقديم المنهج بطريقة تحفيزية والبدء بأنشطة جماعية</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-marker">📚</div>
+                        <div class="timeline-content">
+                            <h3>الأسبوع الثاني - التركيز والتكثيف</h3>
+                            <p><strong>بدء الدراسة الجادة:</strong> تكثيف شرح المقررات والمراجعات</p>
+                            <p><strong>الأنشطة:</strong> مسابقات تحصيلية وورش عمل متخصصة</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-marker">🏆</div>
+                        <div class="timeline-content">
+                            <h3>الأسبوع الثالث فما فوق - الاستقرار والتقييم</h3>
+                            <p><strong>مراقبة مستمرة:</strong> تقييميات دورية واختبارات تدريبية</p>
+                            <p><strong>التعزيز الإيجابي:</strong> تكريم الطلاب المتميزين وتوفير دعم إضافي للمتأخرين</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- Strategic Approaches -->
+            <div class="strategies-section">
+                <h2 class="section-title">🎯 الاستراتيجيات الإدارية والتربوية</h2>
+                
+                <div class="cards-grid">
+                    <!-- Card 1 -->
+                    <div class="strategy-card">
+                        <div class="card-icon">🤝</div>
+                        <h3>الاستقبال الإنساني</h3>
+                        <p>استرجاع الحماس والانتماء للمدرسة</p>
+                        <ul class="card-points">
+                            <li>حوار فردي مع كل طالب</li>
+                            <li>فهم احتياجاتهم وتحدياتهم</li>
+                            <li>تعزيز الانتماء المدرسي</li>
+                            <li>بناء علاقات إيجابية</li>
+                        </ul>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="strategy-card">
+                        <div class="card-icon">📅</div>
+                        <h3>جدولة منظمة</h3>
+                        <p>ترتيب واضح للدراسة والأنشطة</p>
+                        <ul class="card-points">
+                            <li>توزيع المواد بذكاء</li>
+                            <li>فترات راحة منتظمة</li>
+                            <li>أنشطة تحفيزية يومية</li>
+                            <li>وضوح المتطلبات والأهداف</li>
+                        </ul>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="strategy-card">
+                        <div class="card-icon">🎓</div>
+                        <h3>تنويع أساليب التدريس</h3>
+                        <p>الخروج عن الممل والروتيني</p>
+                        <ul class="card-points">
+                            <li>الدروس التفاعلية</li>
+                            <li>التعلم التعاوني</li>
+                            <li>الوسائل البصرية الحديثة</li>
+                            <li>ربط الدراسة بالحياة الواقعية</li>
+                        </ul>
+                    </div>
+
+                    <!-- Card 4 -->
+                    <div class="strategy-card">
+                        <div class="card-icon">⭐</div>
+                        <h3>التحفيز الإيجابي</h3>
+                        <p>نظام مكافآت عادل وفعال</p>
+                        <ul class="card-points">
+                            <li>لوحة تكريم الطلاب</li>
+                            <li>شهادات تقدير</li>
+                            <li>حوافز مادية بسيطة</li>
+                            <li>الثناء العلني المستحق</li>
+                        </ul>
+                    </div>
+
+                    <!-- Card 5 -->
+                    <div class="strategy-card">
+                        <div class="card-icon">👥</div>
+                        <h3>الدعم النفسي والأكاديمي</h3>
+                        <p>معالجة التأخر الدراسي</p>
+                        <ul class="card-points">
+                            <li>برامج تقوية مكثفة</li>
+                            <li>معلمون مختصون</li>
+                            <li>جلسات تقوية فردية</li>
+                            <li>متابعة منتظمة للتقدم</li>
+                        </ul>
+                    </div>
+
+                    <!-- Card 6 -->
+                    <div class="strategy-card">
+                        <div class="card-icon">📊</div>
+                        <h3>المتابعة والتقييم</h3>
+                        <p>قياس التقدم والانضباط</p>
+                        <ul class="card-points">
+                            <li>اختبارات دورية</li>
+                            <li>سجلات حضور دقيقة</li>
+                            <li>تقارير أسبوعية</li>
+                            <li>تواصل مع الأولياء</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- Weekly Schedule -->
+            <div class="weekly-plan">
+                <h2 class="section-title">📆 برنامج الأسبوع المقترح</h2>
+                <div class="week-grid">
+                    <div class="day-card">
+                        <div class="day-name">الأحد</div>
+                        <div class="day-focus">استرجاع عام + نشاط جماعي</div>
+                    </div>
+                    <div class="day-card">
+                        <div class="day-name">الاثنين</div>
+                        <div class="day-focus">تركيز على اللغة العربية</div>
+                    </div>
+                    <div class="day-card">
+                        <div class="day-name">الثلاثاء</div>
+                        <div class="day-focus">تركيز على الرياضيات</div>
+                    </div>
+                    <div class="day-card">
+                        <div class="day-name">الأربعاء</div>
+                        <div class="day-focus">تركيز على العلوم</div>
+                    </div>
+                    <div class="day-card">
+                        <div class="day-name">الخميس</div>
+                        <div class="day-focus">مراجعة عامة + اختبار تدريبي</div>
+                    </div>
+                    <div class="day-card">
+                        <div class="day-name">الجمعة</div>
+                        <div class="day-focus">استرخاء واكتشاف مواهب</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- Practical Strategies -->
+            <div class="details-section">
+                <h3>💡 استراتيجيات عملية يومية</h3>
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <h4>📢 في بداية اليوم</h4>
+                        <p>افتتاح يومي إيجابي بعبارات تحفيزية وتوضيح أهداف اليوم الدراسي بشكل واضح وملموس.</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4>🎯 خلال الحصص</h4>
+                        <p>استخدام استراتيجيات التعلم النشط، تقسيم الطلاب لمجموعات، والتركيز على الفهم العميق.</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4>⏲️ فترات الراحة</h4>
+                        <p>أنشطة تنويع بسيطة، حركة جسدية، ألعاب تربوية لاستعادة التركيز والحماس.</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4>👁️ المراقبة المرنة</h4>
+                        <p>مراقبة الانضباط بأسلوب توجيهي بناء لا إجراءات عقابية صارمة في البداية.</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4>📝 التقييم المستمر</h4>
+                        <p>اختبارات قصيرة يومية أو أسبوعية لقياس الفهم وإعطاء تغذية راجعة فورية.</p>
+                    </div>
+                    <div class="detail-item">
+                        <h4>🤝 التواصل مع الأسرة</h4>
+                        <p>إرسال نشرات دورية للأولياء عن تقدم أبنائهم والمتوقع منهم في المنزل.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- Key Metrics -->
+            <h2 class="section-title">📈 مؤشرات النجاح المتوقعة</h2>
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-number">95%</div>
+                    <div class="metric-label">نسبة الحضور المستهدفة</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">80%</div>
+                    <div class="metric-label">تحسن التحصيل الأكاديمي</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">70%</div>
+                    <div class="metric-label">الانضباط السلوكي</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-number">90%</div>
+                    <div class="metric-label">رضا الطلاب والأسر</div>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- Critical Points -->
+            <div class="alert-box">
+                <h3>⚠️ نقاط حاسمة يجب مراعاتها</h3>
+                <p style="margin-bottom: 10px;">
+                    • <span class="highlight">تجنب العقاب الجماعي</span> - معاملة كل طالب حسب ظروفه
+                </p>
+                <p style="margin-bottom: 10px;">
+                    • <span class="highlight">الاستماع الفعلي</span> - فهم أسباب التأخر أو الانقطاع
+                </p>
+                <p style="margin-bottom: 10px;">
+                    • <span class="highlight">التدرج في المتطلبات</span> - عدم فرض كل شيء دفعة واحدة
+                </p>
+                <p>
+                    • <span class="highlight">التواصل المستمر</span> - مع الطلاب والأولياء والزملاء المعلمين
+                </p>
+            </div>
+
+            <!-- Success Formula -->
+            <div class="success-box">
+                <h3>✅ معادلة النجاح</h3>
+                <p>
+                    <strong>الحب + الأمل + الوضوح + الاستقامة + التحفيز = طلاب منضبطون وناجحون</strong>
+                </p>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    تذكر دائماً أن الطالب بعد الإجازة الطويلة يحتاج إلى استعادة الثقة في نفسه وفي المدرسة. 
+                    كن الداعم لا الرقيب، كن المرشد لا الحكم.
+                </p>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- Roles -->
+            <h2 class="section-title">👨‍💼 الأدوار والمسؤوليات</h2>
+            <div class="details-grid">
+                <div class="detail-item">
+                    <h4>🎓 المعلم</h4>
+                    <p>التدريس بأسلوب تفاعلي، المتابعة اليومية، التغذية الراجعة الفورية، وبناء جسور ثقة مع الطلاب.</p>
+                </div>
+                <div class="detail-item">
+                    <h4>📋 المرشد التربوي</h4>
+                    <p>الدعم النفسي، التعامل مع الحالات الخاصة، تقديم الاستشارات، ومتابعة السلوك.</p>
+                </div>
+                <div class="detail-item">
+                    <h4>👔 المدير</h4>
+                    <p>الإشراف العام، توفير الموارد، تنسيق الجهود، ودعم التنفيذ الفعلي.</p>
+                </div>
+                <div class="detail-item">
+                    <h4>👨‍👩‍👧‍👦 الأسرة</h4>
+                    <p>المتابعة المنزلية، التشجيع، المراجعة، وتوفير بيئة صحية للدراسة.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <a href="https://t.me/TAqhjT3MFVE1Yzk0" class="designer-link" target="_blank">
+                📌 تصميم د/فواز - للمزيد اضغط هنا
+            </a>
+        </div>
+    </div>
+
+    <button class="print-btn" onclick="window.print()">🖨️ طباعة وحفظ PDF</button>
+
+    <script>
+        // Add smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Add animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(function (entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.6s ease forwards';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.strategy-card, .detail-item, .timeline-item').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Add animation keyframes
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
