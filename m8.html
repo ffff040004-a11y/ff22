@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مسابقة لغتي الخالدة - ثالث متوسط الفصل الثاني</title>
+    <title>اختبار الفترة الثانية لغتي - ثالث متوسط</title>
     <style>
         * {
             margin: 0;
@@ -13,7 +13,7 @@
 
         body {
             font-family: 'Tajawal', 'Amiri', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
             min-height: 100vh;
             padding: 20px;
             color: #333;
@@ -24,12 +24,12 @@
             margin: 0 auto;
             background: white;
             border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
             overflow: hidden;
         }
 
         .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
             color: white;
             padding: 40px 20px;
             text-align: center;
@@ -38,25 +38,32 @@
         .header h1 {
             font-size: 2.5em;
             margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .header .subtitle {
+            font-size: 1.3em;
+            opacity: 0.95;
+            margin-bottom: 15px;
         }
 
         .header p {
-            font-size: 1.2em;
+            font-size: 1.05em;
             opacity: 0.9;
         }
 
         .progress-bar {
             width: 100%;
-            height: 8px;
+            height: 10px;
             background: rgba(255, 255, 255, 0.3);
             position: relative;
             overflow: hidden;
+            margin-top: 15px;
         }
 
         .progress-fill {
             height: 100%;
-            background: #4CAF50;
+            background: linear-gradient(90deg, #4CAF50, #45a049);
             width: 0%;
             transition: width 0.3s ease;
         }
@@ -70,21 +77,54 @@
             text-align: center;
         }
 
+        .quiz-start h2 {
+            color: #1e3c72;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+
+        .quiz-info {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border-right: 5px solid #1e3c72;
+        }
+
+        .quiz-info ul {
+            list-style: none;
+            text-align: right;
+        }
+
+        .quiz-info li {
+            padding: 10px 0;
+            font-size: 1.1em;
+            color: #333;
+        }
+
+        .quiz-info li:before {
+            content: "✓ ";
+            color: #4CAF50;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
         .quiz-start button {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
             color: white;
             border: none;
-            padding: 15px 40px;
-            font-size: 1.2em;
+            padding: 15px 50px;
+            font-size: 1.3em;
             border-radius: 50px;
             cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: all 0.3s;
             margin-top: 30px;
+            box-shadow: 0 5px 20px rgba(30, 60, 114, 0.3);
         }
 
         .quiz-start button:hover {
             transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 10px 30px rgba(30, 60, 114, 0.5);
         }
 
         .question-container {
@@ -107,11 +147,27 @@
             }
         }
 
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
         .question-number {
-            color: #667eea;
+            color: #1e3c72;
             font-weight: bold;
-            margin-bottom: 15px;
-            font-size: 0.95em;
+            font-size: 1em;
+        }
+
+        .question-time {
+            background: #fff3cd;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            color: #856404;
         }
 
         .question-text {
@@ -119,7 +175,10 @@
             font-weight: bold;
             margin-bottom: 25px;
             color: #333;
-            line-height: 1.6;
+            line-height: 1.8;
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 10px;
         }
 
         .options {
@@ -139,13 +198,14 @@
         }
 
         .option:hover {
-            border-color: #667eea;
-            background: #f0f0ff;
+            border-color: #1e3c72;
+            background: #e8f4f8;
             transform: translateX(-5px);
         }
 
         .option input[type="radio"] {
             margin-left: 10px;
+            cursor: pointer;
         }
 
         .option label {
@@ -156,7 +216,7 @@
         }
 
         .submit-btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
             color: white;
             border: none;
             padding: 12px 30px;
@@ -164,11 +224,12 @@
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s;
+            font-weight: bold;
         }
 
-        .submit-btn:hover {
+        .submit-btn:hover:not(:disabled) {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 5px 15px rgba(30, 60, 114, 0.4);
         }
 
         .submit-btn:disabled {
@@ -182,16 +243,17 @@
             border-radius: 10px;
             display: none;
             animation: slideIn 0.5s ease;
+            font-size: 1.05em;
         }
 
         .feedback.success {
-            background: #d4edda;
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
             border: 2px solid #28a745;
             color: #155724;
         }
 
         .feedback.error {
-            background: #f8d7da;
+            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
             border: 2px solid #dc3545;
             color: #721c24;
         }
@@ -199,19 +261,24 @@
         .feedback-message {
             font-weight: bold;
             margin-bottom: 10px;
-            font-size: 1.1em;
+            font-size: 1.15em;
+        }
+
+        .feedback-message .emoji {
+            margin-left: 10px;
         }
 
         .correct-answer {
-            margin-top: 10px;
-            padding-top: 10px;
+            margin-top: 15px;
+            padding-top: 15px;
             border-top: 1px solid currentColor;
-            opacity: 0.9;
+            opacity: 0.95;
         }
 
-        .emoji {
-            font-size: 1.5em;
-            margin-right: 10px;
+        .correct-answer strong {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 1.05em;
         }
 
         .results {
@@ -223,43 +290,78 @@
             display: block;
         }
 
+        .results h2 {
+            color: #1e3c72;
+            margin-bottom: 30px;
+            font-size: 2.2em;
+        }
+
         .score-circle {
-            width: 150px;
-            height: 150px;
+            width: 180px;
+            height: 180px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
             color: white;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             margin: 20px auto;
-            font-size: 2.5em;
+            font-size: 3em;
             font-weight: bold;
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 10px 30px rgba(30, 60, 114, 0.3);
+            border: 5px solid #4CAF50;
         }
 
         .score-label {
-            font-size: 0.5em;
-            margin-top: 10px;
+            font-size: 0.4em;
+            margin-top: 5px;
         }
 
         .results-message {
-            font-size: 1.5em;
-            margin: 20px 0;
+            font-size: 1.6em;
+            margin: 25px 0;
             color: #333;
+            font-weight: bold;
         }
 
         .results-details {
-            background: #f9f9f9;
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px 0;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 25px 0;
             font-size: 1.1em;
         }
 
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-item {
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-top: 4px solid #1e3c72;
+        }
+
+        .stat-value {
+            font-size: 2.5em;
+            color: #1e3c72;
+            font-weight: bold;
+        }
+
+        .stat-label {
+            color: #666;
+            margin-top: 8px;
+            font-size: 0.95em;
+        }
+
         .restart-btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
             color: white;
             border: none;
             padding: 12px 30px;
@@ -268,63 +370,51 @@
             cursor: pointer;
             transition: all 0.3s;
             margin-top: 20px;
+            font-weight: bold;
         }
 
         .restart-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 5px 15px rgba(30, 60, 114, 0.4);
         }
 
         .footer {
-            background: #f5f5f5;
-            padding: 20px;
+            background: #1e3c72;
+            padding: 25px;
             text-align: center;
-            border-top: 1px solid #e0e0e0;
+            color: white;
             font-size: 0.95em;
-            color: #666;
+        }
+
+        .footer p {
+            margin: 8px 0;
         }
 
         .footer a {
-            color: #667eea;
+            color: #4CAF50;
             text-decoration: none;
             font-weight: bold;
             transition: color 0.3s;
         }
 
         .footer a:hover {
-            color: #764ba2;
+            color: #45a049;
+            text-decoration: underline;
         }
 
-        .stats {
-            display: flex;
-            justify-content: space-around;
-            margin: 20px 0;
-            text-align: center;
-        }
-
-        .stat-item {
-            flex: 1;
-            padding: 15px;
-            background: white;
-            border-radius: 10px;
-            margin: 0 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .stat-value {
-            font-size: 2em;
-            color: #667eea;
-            font-weight: bold;
-        }
-
-        .stat-label {
-            color: #666;
-            margin-top: 5px;
+        .designer-credit {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            color: #4CAF50;
         }
 
         @media (max-width: 768px) {
             .header h1 {
                 font-size: 1.8em;
+            }
+
+            .header .subtitle {
+                font-size: 1em;
             }
 
             .content {
@@ -336,11 +426,22 @@
             }
 
             .stats {
-                flex-direction: column;
+                grid-template-columns: 1fr;
             }
 
-            .stat-item {
-                margin: 10px 0;
+            .score-circle {
+                width: 130px;
+                height: 130px;
+                font-size: 2em;
+            }
+
+            .question-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .question-time {
+                margin-top: 10px;
             }
         }
     </style>
@@ -348,8 +449,9 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>🎓 مسابقة لغتي الخالدة</h1>
-            <p>الفصل الدراسي الثاني - ثالث متوسط</p>
+            <h1>📝 اختبار الفترة الثانية</h1>
+            <div class="subtitle">مادة لغتي الخالدة - الصف الثالث متوسط</div>
+            <p>🎯 الفصل الدراسي الثاني 1447هـ</p>
             <div class="progress-bar">
                 <div class="progress-fill"></div>
             </div>
@@ -358,14 +460,19 @@
         <div class="content">
             <!-- صفحة البداية -->
             <div class="quiz-start">
-                <h2>أهلاً وسهلاً بك 👋</h2>
-                <p style="margin-top: 15px; color: #666; font-size: 1.1em;">
-                    اختبر معلوماتك في مادة لغتي الخالدة من خلال 50 سؤالاً شاملاً
+                <h2>👋 أهلاً وسهلاً بك</h2>
+                <div class="quiz-info">
+                    <ul>
+                        <li>عدد الأسئلة: 30 سؤالاً متنوعاً</li>
+                        <li>الوقت المتاح: بدون حد زمني</li>
+                        <li>النوع: أسئلة اختيار من متعدد</li>
+                        <li>الموضوعات: نصوص، قواعد، وظائف لغوية</li>
+                    </ul>
+                </div>
+                <p style="color: #666; font-size: 1.1em; margin: 20px 0;">
+                    اختر الإجابة الصحيحة لكل سؤال واتابع تقدمك الفوري
                 </p>
-                <p style="margin-top: 10px; color: #999; font-size: 0.95em;">
-                    ⏱️ اختر الإجابة الصحيحة واتابع تقدمك
-                </p>
-                <button onclick="startQuiz()">ابدأ المسابقة 🚀</button>
+                <button onclick="startQuiz()">ابدأ الاختبار الآن 🚀</button>
             </div>
 
             <!-- أسئلة المسابقة -->
@@ -373,346 +480,222 @@
 
             <!-- الإحصائيات النهائية -->
             <div class="results" id="resultsContainer">
-                <h2>مبروك عليك! ✨</h2>
+                <h2>🎉 اكتمل الاختبار</h2>
                 <div class="score-circle">
                     <span id="finalScore">0</span>
-                    <span class="score-label">من 50</span>
+                    <span class="score-label">من 30</span>
                 </div>
                 <div class="results-message" id="resultMessage"></div>
                 <div class="results-details">
                     <div class="stats">
                         <div class="stat-item">
                             <div class="stat-value" id="correctCount">0</div>
-                            <div class="stat-label">إجابات صحيحة</div>
+                            <div class="stat-label">✅ إجابات صحيحة</div>
                         </div>
                         <div class="stat-item">
                             <div class="stat-value" id="wrongCount">0</div>
-                            <div class="stat-label">إجابات خاطئة</div>
+                            <div class="stat-label">❌ إجابات خاطئة</div>
                         </div>
                         <div class="stat-item">
                             <div class="stat-value" id="percentage">0%</div>
-                            <div class="stat-label">النسبة المئوية</div>
+                            <div class="stat-label">📊 النسبة المئوية</div>
                         </div>
                     </div>
                 </div>
-                <button class="restart-btn" onclick="restartQuiz()">أعد المسابقة 🔄</button>
+                <button class="restart-btn" onclick="restartQuiz()">إعادة الاختبار 🔄</button>
             </div>
         </div>
 
         <div class="footer">
-            <p>📱 <strong>تصميم د/فواز</strong> | للمزيد: <a href="https://t.me/TAqhjT3MFVE1Yzk0" target="_blank">انضم للقناة</a></p>
-            <p style="margin-top: 10px; color: #999; font-size: 0.9em;">جميع الأسئلة من ملخص لغتي الخالدة - الفصل الدراسي الثاني</p>
+            <div class="designer-credit">📱 تصميم د/فواز</div>
+            <p>للمزيد والمشاركة في مشاريعنا التعليمية</p>
+            <p><a href="https://t.me/TAqhjT3MFVE1Yzk0" target="_blank">👉 انضم للقناة الرسمية</a></p>
+            <p style="margin-top: 15px; color: #ccc; font-size: 0.85em;">جميع الحقوق محفوظة © 2025 | اختبارات لغتي الخالدة</p>
         </div>
     </div>
 
     <script>
-        // قاعدة بيانات الأسئلة (50 سؤال)
+        // قاعدة بيانات الأسئلة (30 سؤال من اختبار الفترة الثانية)
         const questions = [
             {
-                question: "كم عدد أدوات الاستثناء الرئيسية؟",
-                options: ["4", "5", "6", "7"],
-                correct: 2,
-                explanation: "أدوات الاستثناء الرئيسية هي: إلا، غير، سوى، خلا، حاشا"
-            },
-            {
-                question: "اسم الزمان والمكان يشتق من:",
-                options: ["الفعل الرباعي فقط", "الفعل الثلاثي والرباعي", "الأسماء", "الأدوات"],
-                correct: 1,
-                explanation: "يشتق اسم الزمان والمكان من الفعل الثلاثي والرباعي"
-            },
-            {
-                question: "النعت (الصفة) يدل على صفة لـ:",
-                options: ["الفعل", "الأداة", "اسم قبله يسمى المنعوت", "الحرف"],
-                correct: 2,
-                explanation: "النعت يدل على صفة لاسم قبله يسمى المنعوت"
-            },
-            {
-                question: "كم عدد أنواع المصادر الرئيسية؟",
-                options: ["نوعان", "ثلاثة أنواع", "أربعة أنواع", "خمسة أنواع"],
-                correct: 1,
-                explanation: "المصادر تنقسم إلى: مصدر الفعل الثلاثي، ومصدر الفعل الرباعي، ومصدر الفعل الخماسي والسداسي"
-            },
-            {
-                question: "العطف هو ربط بين كلمين بـ:",
-                options: ["حرف جر", "حرف عطف", "حرف جزم", "حرف نصب"],
-                correct: 1,
-                explanation: "العطف هو ربط بين كلمين بحرف من حروف العطف (و، أو، ف، ثم، إلخ)"
-            },
-            {
-                question: "البدل هو اسم تابع يقصد الحكم على:",
-                options: ["المعطوف فقط", "المبدل منه", "حرف العطف", "الفعل"],
-                correct: 1,
-                explanation: "البدل هو اسم تابع يقصد الحكم على المبدل منه"
-            },
-            {
-                question: "كم عدد أقسام البدل؟",
-                options: ["نوعان", "ثلاثة أنواع", "أربعة أنواع", "خمسة أنواع"],
-                correct: 2,
-                explanation: "أقسام البدل: بدل مطابق، وبدل جزء من كل"
-            },
-            {
-                question: "اسم الآلة مشتق من:",
-                options: ["الاسم فقط", "الفعل الثلاثي أو الجامد", "الفعل الرباعي", "الأداة"],
-                correct: 1,
-                explanation: "اسم الآلة مشتق من الفعل الثلاثي أو الجامد للدلالة على الأداة التي يؤدي بها الفاعل"
-            },
-            {
-                question: "كلمات بعض أحرفها زائدة تنقسم إلى:",
-                options: ["نوعان", "ثلاثة أنواع", "أربعة أنواع", "خمسة أنواع"],
+                question: "من أكبر أعداء الوطن؟",
+                options: ["الجهل والظلام", "المشاركة في التنمية", "الخيانة والعمل الصالح", "التعليم والتطور"],
                 correct: 0,
-                explanation: "تنقسم إلى نوعين: كلمات بحرف زائد (و، ا) وكلمات بأكثر من حرف زائد"
+                explanation: "الجهل هو أكبر عدو للوطن، حيث يمنع تقدمه وازدهاره"
             },
             {
-                question: "الحرف الزائد 'الواو' يأتي في الأفعال بعد:",
-                options: ["الحرف الأول", "الحرف الثاني", "الحرف الثالث", "في أي موضع"],
+                question: "لا تسلب حقوق الوطن إلا إذا كان:",
+                options: ["غارقاً في الجهل والظلام", "مهتماً بالعلم", "مواكباً للتطور", "يشارك في التنمية"],
                 correct: 0,
-                explanation: "الواو الزائدة تأتي في الأفعال بعد الحرف الأول (خروج، ذهوب)"
+                explanation: "تسلب حقوق الوطن عندما يكون غارقاً في الجهل والظلام"
             },
             {
-                question: "في جملة 'حضر الجميع عدا أحمد' أداة الاستثناء هي:",
-                options: ["حضر", "الجميع", "عدا", "أحمد"],
-                correct: 2,
-                explanation: "عدا هي أداة استثناء تعني إخراج اسم واحد من حكم الباقين"
-            },
-            {
-                question: "النعت المفرد يطابق المنعوت في:",
-                options: ["التذكير والتأنيث فقط", "الإفراد والتثنية والجمع فقط", "التذكير والتأنيث، والإفراد والتثنية والجمع", "التنوين فقط"],
-                correct: 2,
-                explanation: "النعت المفرد يطابق المنعوت في التذكير والتأنيث والإفراد والتثنية والجمع"
-            },
-            {
-                question: "اسم الزمان يدل على:",
-                options: ["مكان حدوث الفعل", "زمن حدوث الفعل", "الشخص الذي يقوم بالفعل", "الفعل نفسه"],
-                correct: 1,
-                explanation: "اسم الزمان يدل على زمن حدوث الفعل (مثل: مجلس = مكان، موعد = زمان)"
-            },
-            {
-                question: "اسم المكان يدل على:",
-                options: ["زمن حدوث الفعل", "مكان حدوث الفعل", "الفاعل", "الأداة"],
-                correct: 1,
-                explanation: "اسم المكان يدل على مكان حدوث الفعل (مثل: مسجد، مدرسة)"
-            },
-            {
-                question: "صيغة اسم الزمان والمكان من الفعل الثلاثي تكون على:",
-                options: ["مفعل", "فاعل", "فعال", "فعول"],
+                question: "اسم الآلة المشتق من الفعل 'كتب' هو:",
+                options: ["مكتبة", "مكتب", "كاتب", "كتابة"],
                 correct: 0,
-                explanation: "صيغة اسم الزمان والمكان من الفعل الثلاثي تكون على وزن مفعل (مثل: مجلس، موعد)"
+                explanation: "مكتبة واحدة من أسماء الآلة من الفعل كتب"
             },
             {
-                question: "في جملة 'رسم الكلمات المفصولة خطأ' نوع الرسم هو:",
-                options: ["رسم إملائي", "رسم خطي", "رسم بياني", "رسم هندسي"],
+                question: "اسم الزمان من الفعل 'جلس' على وزن مفعل يكون:",
+                options: ["مجلس", "جالس", "جلسة", "الجلوس"],
                 correct: 0,
-                explanation: "هذا يتعلق برسم الكلمات التي تُكتب مفصولة في الإملاء"
+                explanation: "مجلس هو اسم الزمان والمكان من الفعل جلس"
             },
             {
-                question: "التعجب هو شعور داخلي تجاه:",
-                options: ["أمر محمود", "أمر ذميم", "أمر محمود أو ذميم", "الفعل فقط"],
-                correct: 2,
-                explanation: "التعجب شعور داخلي تتفعل به النفس لاستعظام أمر محمود أو ذميم"
-            },
-            {
-                question: "أسلوب التعجب ينقسم إلى:",
-                options: ["نوعان فقط", "نوعان (سماعي وقياسي)", "ثلاثة أنواع", "أربعة أنواع"],
-                correct: 1,
-                explanation: "أسلوب التعجب ينقسم إلى: سماعي (ما أجمل!) وقياسي (أفعل به!)"
-            },
-            {
-                question: "صيغة التعجب القياسية تأتي بصيغة:",
-                options: ["أفعل به", "ما أفعله", "فعيل", "فاعل"],
+                question: "النعت يطابق المنعوت في:",
+                options: ["الإفراد والتثنية والجمع والتذكير والتأنيث", "الإفراد فقط", "الجمع فقط", "التأنيث فقط"],
                 correct: 0,
-                explanation: "الصيغة القياسية للتعجب: أفعل به (مثال: أجمل باللون الأحمر)"
+                explanation: "النعت يطابق المنعوت في جميع أحواله: الإفراد والتثنية والجمع والتذكير والتأنيث"
             },
             {
-                question: "كلمات محذوف بعض أحرفها تنقسم إلى:",
-                options: ["نوعان", "ثلاثة أنواع", "أربعة أنواع", "خمسة أنواع"],
-                correct: 2,
-                explanation: "تنقسم إلى: محذوف من الأول، من الوسط، من الآخر"
+                question: "استخرج النعت والمنعوت في الجملة: 'أصبح الأنبياء قدوة حسنة'",
+                options: ["النعت: حسنة، المنعوت: قدوة", "النعت: أصبح، المنعوت: الأنبياء", "النعت: الأنبياء، المنعوت: قدوة", "النعت: أصبح، المنعوت: حسنة"],
+                correct: 0,
+                explanation: "النعت هو 'حسنة' والمنعوت هو 'قدوة'"
             },
             {
-                question: "في كلمة 'ابن' الحرف المحذوف هو:",
-                options: ["الواو", "الياء", "الألف", "الهاء"],
-                correct: 2,
-                explanation: "في كلمة 'ابن' حُذفت الألف من الأول (الأصل: ألَبَن)"
+                question: "الاستثناء الذي تمت أركانه ولم يسبق بنفي يسمى:",
+                options: ["استثناء تاماً مثبتاً", "استثناء ناقصاً", "استثناء منفياً", "استثناء شرطياً"],
+                correct: 0,
+                explanation: "الاستثناء التام المثبت هو الذي يحتوي على جميع الأركان ولا يسبق بنفي"
             },
             {
-                question: "مصدر الفعل الثلاثي يكون على وزن:",
-                options: ["محدد واحد فقط", "أوزان متعددة", "فعل فقط", "فاعل فقط"],
-                correct: 1,
-                explanation: "مصدر الفعل الثلاثي له أوزان متعددة (فعل، فعال، فعول)"
+                question: "البدل ينبع المبدل منه في:",
+                options: ["الإعراب", "التنية", "الجمع", "الحرف"],
+                correct: 0,
+                explanation: "البدل ينبع المبدل منه في الإعراب ويأخذ حكمه الإعرابي"
             },
             {
-                question: "مصدر الفعل الرباعي يكون على وزن:",
-                options: ["فعل", "فعال", "فعلة", "فعول"],
-                correct: 2,
-                explanation: "مصدر الفعل الرباعي يأتي على وزن فعلة (مثل: دحرجة)"
+                question: "في جملة 'أكل محمد الرغيف نصفه' نوع البدل هو:",
+                options: ["بدل جزء من كل", "بدل مطابق", "بدل كل من كل", "بدل اشتمال"],
+                correct: 0,
+                explanation: "'نصفه' بدل جزء من كل لأنه جزء من الرغيف"
             },
             {
                 question: "حروف العطف الرئيسية عددها:",
-                options: ["3", "4", "5", "6"],
-                correct: 3,
-                explanation: "حروف العطف: الواو، الفاء، ثم، أو، أم، لكن"
+                options: ["ستة أحرف (و، ف، ثم، أو، أم، لكن)", "ثلاثة فقط", "أربعة فقط", "خمسة فقط"],
+                correct: 0,
+                explanation: "حروف العطف الرئيسية هي: الواو، الفاء، ثم، أو، أم، لكن"
             },
             {
                 question: "الواو في العطف تدل على:",
-                options: ["التعقيب", "التتابع السريع", "المشاركة والاشتراك", "التخيير"],
-                correct: 2,
+                options: ["المشاركة والاشتراك", "التعقيب المباشر", "التتابع السريع", "التخيير"],
+                correct: 0,
                 explanation: "الواو تدل على المشاركة والاشتراك بين المعطوف والمعطوف عليه"
             },
             {
-                question: "النعت الجملة يجب أن تحتوي على:",
-                options: ["فعل فقط", "اسم فقط", "فعل واسم", "ضمير يعود للمنعوت"],
-                correct: 3,
-                explanation: "النعت الجملة تحتوي على ضمير يعود للمنعوت"
-            },
-            {
-                question: "التعريف والتنكير من أنماط:",
-                options: ["النعت المفرد", "النعت الجملة", "النعت الجملة الفعلية", "النعت والمنعوت"],
+                question: "أهمية التعليم التقني والمهني تبرز في قدرته على:",
+                options: ["تأهيل القوى البشرية", "تدمير القوى البشرية", "تحطيم المشاريع", "إضعاف الاقتصاد"],
                 correct: 0,
-                explanation: "التعريف والتنكير يدخلان ضمن أنماط النعت المفرد"
+                explanation: "التعليم التقني يهدف إلى تأهيل القوى البشرية للعمل المنتج"
             },
             {
-                question: "في جملة 'كان الإمام عليها بليغاً' البدل هو:",
-                options: ["الإمام", "عليها", "بليغاً", "كان"],
-                correct: 2,
-                explanation: "بليغاً هو بدل مطابق للإمام"
+                question: "صل المصطلح بمعناه: الابتكار هو:",
+                options: ["الإبداع والجديد في كل شيء", "تجميع الأفكار القديمة", "الاستثمار المالي", "البحث العلمي"],
+                correct: 0,
+                explanation: "الابتكار هو الإبداع والجديد والسبق في كل ما هو حديث"
             },
             {
-                question: "نوع البدل في 'أكل محمد الرغيف نصفه' هو:",
-                options: ["بدل مطابق", "بدل جزء من كل", "بدل اشتمال", "بدل بيان"],
-                correct: 1,
-                explanation: "نصفه بدل جزء من كل (الرغيف هو الكل، ونصفه جزء منه)"
+                question: "صل المصطلح بمعناه: الاستثمار هو:",
+                options: ["إضافة طاقات إنتاجية جديدة", "البحث والتطوير", "الابتكار والجديد", "التمويل البسيط"],
+                correct: 0,
+                explanation: "الاستثمار هو إضافة طاقات إنتاجية جديدة للأصول الموجودة"
             },
             {
-                question: "اسم الآلة مثل 'مفتاح' يأتي على وزن:",
-                options: ["فعل", "فاعل", "مفعل", "فعول"],
-                correct: 2,
-                explanation: "اسم الآلة يأتي على وزن مفعل (مفتاح، مقص، مقلاة)"
+                question: "ما نوع النعت في جملة 'العمل ميزة للإنسان المسؤول'؟",
+                options: ["نعت مفرد مجرور", "نعت جملة اسمية", "نعت جملة فعلية", "نعت ظرفي"],
+                correct: 0,
+                explanation: "'المسؤول' نعت مفرد مجرور وعلامة جره الكسرة الظاهرة"
             },
             {
-                question: "من أمثلة أسماء الآلات:",
-                options: ["الرياح", "القلم", "المعلم", "الطالب"],
-                correct: 1,
-                explanation: "القلم اسم آلة لأنها الأداة التي يكتب بها"
+                question: "كلمات محذوف بعض أحرفها تنقسم إلى:",
+                options: ["محذوف من الأول أو الوسط أو الآخر", "محذوف من الأول فقط", "محذوف من الآخر فقط", "محذوف من الوسط فقط"],
+                correct: 0,
+                explanation: "كلمات محذوفة الأحرف تنقسم إلى ثلاثة أنواع حسب موضع الحذف"
+            },
+            {
+                question: "في كلمة 'ابن' حُذف حرف من:",
+                options: ["الأول (الأصل: ألبن)", "الوسط", "الآخر", "لم يُحذف منها"],
+                correct: 0,
+                explanation: "في كلمة 'ابن' حُذفت الألف من الأول وأصلها 'ألبن'"
+            },
+            {
+                question: "في كلمة 'شمس' حُذف حرف من:",
+                options: ["الأول (الأصل: يشمس)", "الوسط", "الآخر", "لم يُحذف"],
+                correct: 0,
+                explanation: "في كلمة 'شمس' حُذفت الياء من الأول"
+            },
+            {
+                question: "في كلمة 'إذا' حُذف حرف من:",
+                options: ["الوسط (الأصل: إذوا)", "الأول", "الآخر", "لم يُحذف"],
+                correct: 0,
+                explanation: "في كلمة 'إذا' حُذفت الواو من الوسط"
+            },
+            {
+                question: "كلمات بعض أحرفها زائدة تنقسم إلى:",
+                options: ["كلمات بحرف زائد أو بأكثر من حرف", "كلمات بحرف واحد فقط", "كلمات بحرفين فقط", "لا تنقسم"],
+                correct: 0,
+                explanation: "تنقسم إلى كلمات بحرف زائد واحد وكلمات بأكثر من حرف زائد"
+            },
+            {
+                question: "الحرف الزائد 'الواو' في الأفعال يأتي:",
+                options: ["بعد الحرف الأول (خروج، ذهوب)", "بعد الحرف الثاني", "بعد الحرف الثالث", "في أي موضع"],
+                correct: 0,
+                explanation: "الواو الزائدة في الأفعال تأتي بعد الحرف الأول"
             },
             {
                 question: "الحرف الزائد 'الألف' في الكلمات يأتي:",
-                options: ["في البداية فقط", "في الوسط فقط", "في النهاية فقط", "في أي موضع"],
-                correct: 2,
-                explanation: "الألف الزائدة في الكلمات تأتي في نهاية الكلمة (مثل: كتابا)"
-            },
-            {
-                question: "كلمة 'استفهام' فيها حرف زائد هو:",
-                options: ["الهمزة", "السين", "التاء", "الفاء"],
-                correct: 2,
-                explanation: "التاء زائدة (الأصل: سفهام)"
-            },
-            {
-                question: "كلمة 'مسكين' محذوف منها:",
-                options: ["حرف من الأول", "حرف من الوسط", "حرف من الآخر", "حرفان"],
-                correct: 1,
-                explanation: "حُذفت الواو من الوسط (الأصل: مسكوين)"
-            },
-            {
-                question: "كلمة 'داود' فيها حذف من:",
-                options: ["الأول", "الوسط", "الآخر", "لا يوجد حذف"],
-                correct: 2,
-                explanation: "حُذفت الواو من آخر الكلمة (الأصل: داوود)"
-            },
-            {
-                question: "صيغة المصدر تدل على:",
-                options: ["الزمن المحدد", "الحدث مجرداً من الزمن", "الفاعل", "الفعل"],
-                correct: 1,
-                explanation: "المصدر يدل على الحدث مجرداً من الزمن"
-            },
-            {
-                question: "مصدر 'كسر' يكون:",
-                options: ["كسر فقط", "كسرة أو كسار", "كسرة فقط", "كسار فقط"],
-                correct: 1,
-                explanation: "مصدر 'كسر' يأتي بصيغ متعددة: كسر، كسرة، كسار"
-            },
-            {
-                question: "حروف العطف التي تدل على البدل هي:",
-                options: ["أو", "لكن", "الواو والفاء", "ثم"],
-                correct: 1,
-                explanation: "لكن تدل على بدل الجملة السابقة بجملة أخرى"
-            },
-            {
-                question: "في جملة 'أقفل محمد الدهان أو الحداد' نوع العطف:",
-                options: ["عطف تخيير", "عطف تتابع", "عطف مشاركة", "عطف تعقيب"],
+                options: ["في آخر الكلمة (كتابا، درسا)", "في الأول", "في الوسط", "في أي موضع"],
                 correct: 0,
-                explanation: "'أو' تفيد التخيير بين الدهان والحداد"
+                explanation: "الألف الزائدة تأتي في آخر الكلمة غالباً"
             },
             {
-                question: "النعت الجملة الفعلية تحتوي على:",
-                options: ["فعل ماضي فقط", "فعل مضارع فقط", "فعل ماضي أو مضارع", "لا فعل فيها"],
-                correct: 2,
-                explanation: "النعت الجملة الفعلية تحتوي على فعل ماضي أو مضارع"
-            },
-            {
-                question: "النعت الشبه جملة يكون من:",
-                options: ["جار وما جرور فقط", "ظرف فقط", "جار وجرور أو ظرف", "حرف جر"],
-                correct: 2,
-                explanation: "النعت الشبه جملة يكون من جار وما جرور أو ظرف"
-            },
-            {
-                question: "في جملة 'رأيت أصدقائي سوى خالد' أداة الاستثناء:",
-                options: ["رأيت", "أصدقائي", "سوى", "خالد"],
-                correct: 2,
-                explanation: "'سوى' أداة استثناء تعني إخراج اسم من حكم الباقين"
-            },
-            {
-                question: "في التعجب 'ما أجمل السماء!' 'ما' هي:",
-                options: ["اسم استفهام", "اسم موصول", "حرف تعجب", "حرف نفي"],
-                correct: 2,
-                explanation: "'ما' في التعجب حرف تعجب يفيد الاستعظام"
-            },
-            {
-                question: "العدد 'واحد' من الأعداد:",
-                options: ["الدقيقة", "المركبة", "المعطوفة", "الكسرية"],
+                question: "صيغة اسم الزمان والمكان من الفعل الثلاثي الصحيح تكون على:",
+                options: ["وزن مفعل (مجلس، موعد)", "وزن فاعل", "وزن فعيل", "وزن فعول"],
                 correct: 0,
-                explanation: "العدد 'واحد' وما شابهه من الأعداد الدقيقة (1-2)"
+                explanation: "صيغة اسم الزمان والمكان من الفعل الثلاثي تكون على وزن مفعل"
             },
             {
-                question: "العددان 'ثلاثة' و'تسعة' يوافقان المعدود في:",
-                options: ["التذكير والتأنيث فقط", "الحالة الإعرابية فقط", "التذكير والتأنيث والحالة الإعرابية", "لا شيء"],
-                correct: 2,
-                explanation: "الأعداد 3-9 توافق المعدود في التذكير والتأنيث والحالة الإعرابية"
-            },
-            {
-                question: "العدد 'عشرة' يكون حكمه:",
-                options: ["موافق دائماً", "مخالف دائماً", "موافق مع الفردية ومخالف مع التركيب", "حسب السياق"],
-                correct: 2,
-                explanation: "'عشرة' توافق المعدود إفراداً وتخالفه في التركيب"
-            },
-            {
-                question: "المصدر من الفعل الخماسي يضاف إليه:",
-                options: ["التاء فقط", "الياء فقط", "التاء والياء", "الألف"],
+                question: "مصدر الفعل الثلاثي يكون على:",
+                options: ["أوزان متعددة (فعل، فعال، فعول)", "وزن واحد", "فعل فقط", "فعال فقط"],
                 correct: 0,
-                explanation: "المصدر من الفعل الخماسي يأتي بإضافة التاء (انطلاق)"
+                explanation: "مصدر الفعل الثلاثي له أوزان متعددة ومتنوعة"
             },
             {
-                question: "في 'الشباب واثقون من النجاح' نوع العطف:",
-                options: ["عطف بيان", "عطف معطوف", "عطف مشاركة", "عطف كلام"],
-                correct: 2,
-                explanation: "الواو هنا تربط الشباب بثقتهم (عطف مشاركة)"
-            },
-            {
-                question: "التنوين في النعت يجب أن يطابق:",
-                options: ["الفعل", "المنعوت", "الظرف", "الحرف"],
-                correct: 1,
-                explanation: "النعت المنون يجب أن يطابق المنعوت المنون"
-            },
-            {
-                question: "كلمة 'إذا' من كلمات محذوف منها:",
-                options: ["من الأول", "من الوسط", "من الآخر", "لا حذف فيها"],
-                correct: 1,
-                explanation: "'إذا' حُذفت منها الواو من الوسط (الأصل: إذوا)"
-            },
-            {
-                question: "كلمة 'شمس' محذوف منها حرف من:",
-                options: ["الأول", "الوسط", "الآخر", "لا حذف فيها"],
+                question: "مصدر الفعل الرباعي يكون على وزن:",
+                options: ["فعلة (دحرجة، معاملة)", "فعال", "فعول", "فعل"],
                 correct: 0,
-                explanation: "'شمس' حُذفت منها الياء من الأول (الأصل: يشمس)"
+                explanation: "مصدر الفعل الرباعي يأتي على وزن فعلة"
+            },
+            {
+                question: "المصدر يدل على:",
+                options: ["الحدث مجرداً من الزمن", "الحدث مع الزمن", "الفاعل", "المكان"],
+                correct: 0,
+                explanation: "المصدر يدل على الحدث مجرداً من الزمن المحدد"
+            },
+            {
+                question: "التعجب هو شعور داخلي تجاه:",
+                options: ["أمر محمود أو ذميم", "أمر محمود فقط", "أمر ذميم فقط", "الفعل فقط"],
+                correct: 0,
+                explanation: "التعجب شعور تجاه أمر محمود أو ذميم استعظاماً له"
+            },
+            {
+                question: "أسلوب التعجب ينقسم إلى:",
+                options: ["سماعي وقياسي", "نوع واحد", "ثلاثة أنواع", "أربعة أنواع"],
+                correct: 0,
+                explanation: "أسلوب التعجب ينقسم إلى: سماعي (ما أجمل!) وقياسي (أجمل به!)"
+            },
+            {
+                question: "الصيغة القياسية للتعجب تأتي بصيغة:",
+                options: ["أفعل به (مثل: أجمل باللون)", "ما أفعله", "أفعل فقط", "فاعل"],
+                correct: 0,
+                explanation: "الصيغة القياسية: أفعل به (مثل: أجمل باللون الأحمر)"
+            },
+            {
+                question: "في جملة التعجب 'ما أجمل السماء!' حرف التعجب 'ما' يفيد:",
+                options: ["الاستعظام والدهشة", "الاستفهام", "النفي", "التوكيد"],
+                correct: 0,
+                explanation: "حرف التعجب 'ما' يفيد الاستعظام والدهشة من جمال السماء"
             }
         ];
 
@@ -745,11 +728,14 @@
                 `).join('');
 
                 div.innerHTML = `
-                    <div class="question-number">السؤال ${index + 1} من 50</div>
+                    <div class="question-header">
+                        <div class="question-number">السؤال ${index + 1} من ${questions.length}</div>
+                        <div class="question-time">⏱️ اختر الإجابة الصحيحة</div>
+                    </div>
                     <div class="question-text">${q.question}</div>
                     <div class="options">${optionsHTML}</div>
                     <button class="submit-btn" onclick="submitAnswer(${index})" id="submit-${index}">
-                        ${index === 49 ? 'أنهي المسابقة ✓' : 'السؤال التالي →'}
+                        ${index === questions.length - 1 ? '✓ أنهي الاختبار' : '→ التالي'}
                     </button>
                     <div class="feedback" id="feedback-${index}"></div>
                 `;
@@ -787,33 +773,28 @@
                 feedback.innerHTML = `
                     <div class="feedback-message">
                         <span class="emoji">✨ ممتاز!</span>
-                        إجابة صحيحة جداً
+                        إجابة صحيحة جداً - استمر هكذا!
                     </div>
                 `;
             } else {
                 feedback.className = 'feedback error';
                 feedback.innerHTML = `
                     <div class="feedback-message">
-                        <span class="emoji">💡</span>
-                        الإجابة غير صحيحة
+                        <span class="emoji">💡 حاول مرة أخرى</span>
+                        هذه ليست الإجابة الصحيحة
                     </div>
                     <div class="correct-answer">
-                        <strong>الإجابة الصحيحة:</strong> ${questions[index].options[questions[index].correct]}
-                        <br><br>
-                        <strong>التوضيح:</strong> ${questions[index].explanation}
+                        <strong>✓ الإجابة الصحيحة:</strong> ${questions[index].options[questions[index].correct]}
+                        <br><strong>📚 التوضيح:</strong> ${questions[index].explanation}
                     </div>
                 `;
             }
             feedback.style.display = 'block';
 
             setTimeout(() => {
-                if (index < 49) {
+                if (index < questions.length - 1) {
                     currentQuestion = index + 1;
                     showQuestion(currentQuestion);
-                    document.querySelectorAll('.question-container').forEach(el => {
-                        el.classList.remove('active');
-                    });
-                    document.getElementById(`question-${currentQuestion}`).classList.add('active');
                 } else {
                     showResults();
                 }
@@ -836,19 +817,28 @@
             document.getElementById('percentage').textContent = percentage + '%';
 
             let message = '';
-            if (percentage >= 90) {
-                message = '🏆 أداء متميز جداً! أنت نجم!';
-            } else if (percentage >= 80) {
-                message = '🎉 أداء رائع! عمل رائع!';
-            } else if (percentage >= 70) {
-                message = '👍 أداء جيد! استمر في التحسن!';
-            } else if (percentage >= 60) {
-                message = '📚 أداء مقبول! حاول مرة أخرى!';
+            let icon = '';
+            if (percentage >= 95) {
+                message = '🏆 أداء متفوق جداً - نجم مميز!';
+                icon = '⭐';
+            } else if (percentage >= 85) {
+                message = '🎉 أداء ممتاز - عمل رائع!';
+                icon = '👏';
+            } else if (percentage >= 75) {
+                message = '👍 أداء جيد جداً - استمر في التحسن!';
+                icon = '💪';
+            } else if (percentage >= 65) {
+                message = '📚 أداء جيد - راجع الدروس قليلاً!';
+                icon = '🎯';
+            } else if (percentage >= 50) {
+                message = '✍️ أداء مقبول - حاول مرة أخرى!';
+                icon = '📖';
             } else {
-                message = '💪 لا تيأس! حاول مجدداً واستذكر الدروس!';
+                message = '💪 لا تيأس - استذكر جيداً وحاول مرة أخرى!';
+                icon = '🔄';
             }
             
-            document.getElementById('resultMessage').textContent = message;
+            document.getElementById('resultMessage').textContent = icon + ' ' + message;
             document.querySelector('.progress-fill').style.width = '100%';
         }
 
