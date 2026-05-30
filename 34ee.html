@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مسابقة العلوم النجمية | سادس ابتدائي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Changa:wght@500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Lalezar&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-0:#05030f;
+    --bg-1:#0b0826;
+    --bg-2:#150f3d;
+    --ink:#eef0ff;
+    --muted:#a7a3d6;
+    --gold:#ffd24a;
+    --gold-2:#ffb02e;
+    --cyan:#46e6ff;
+    --violet:#9b6bff;
+    --pink:#ff5fa2;
+    --green:#34e0a1;
+    --red:#ff5d6c;
+    --card:rgba(28,22,66,.62);
+    --line:rgba(155,140,255,.22);
+    --shadow:0 24px 60px -22px rgba(0,0,0,.85);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  html,body{height:100%}
+  body{
+    font-family:'Tajawal',sans-serif;
+    color:var(--ink);
+    background:
+      radial-gradient(1200px 700px at 80% -10%, rgba(155,107,255,.30), transparent 60%),
+      radial-gradient(1000px 600px at 5% 110%, rgba(70,230,255,.18), transparent 55%),
+      radial-gradient(800px 500px at 50% 50%, rgba(255,95,162,.10), transparent 60%),
+      linear-gradient(180deg, var(--bg-1), var(--bg-0));
+    min-height:100vh;
+    overflow-x:hidden;
+    position:relative;
+  }
+  /* twinkling star field */
+  .stars,.stars2,.stars3{position:fixed;inset:0;pointer-events:none;z-index:0}
+  .stars{background-image:radial-gradient(1px 1px at 20% 30%,#fff,transparent),radial-gradient(1px 1px at 70% 60%,#fff,transparent),radial-gradient(1.5px 1.5px at 40% 80%,#fff,transparent),radial-gradient(1px 1px at 85% 20%,#cfe9ff,transparent),radial-gradient(1px 1px at 10% 70%,#fff,transparent),radial-gradient(1.5px 1.5px at 60% 15%,#ffe9b0,transparent),radial-gradient(1px 1px at 90% 85%,#fff,transparent);background-repeat:repeat;background-size:600px 600px;animation:tw 6s ease-in-out infinite alternate;opacity:.8}
+  .stars2{background-image:radial-gradient(1px 1px at 30% 50%,#fff,transparent),radial-gradient(1px 1px at 80% 35%,#bfe,transparent),radial-gradient(1px 1px at 50% 90%,#fff,transparent),radial-gradient(1px 1px at 15% 25%,#fff,transparent);background-repeat:repeat;background-size:400px 400px;animation:tw 4s ease-in-out infinite alternate-reverse;opacity:.6}
+  .stars3{background-image:radial-gradient(2px 2px at 25% 65%,#ffd24a,transparent),radial-gradient(2px 2px at 75% 25%,#46e6ff,transparent),radial-gradient(2px 2px at 55% 45%,#ff5fa2,transparent);background-repeat:repeat;background-size:900px 900px;animation:drift 30s linear infinite;opacity:.7}
+  @keyframes tw{from{opacity:.35}to{opacity:.95}}
+  @keyframes drift{from{transform:translateY(0)}to{transform:translateY(-900px)}}
+
+  .wrap{position:relative;z-index:2;max-width:780px;margin:0 auto;padding:22px 18px 90px;min-height:100vh;display:flex;flex-direction:column}
+
+  /* shared card */
+  .panel{background:var(--card);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:26px;box-shadow:var(--shadow)}
+
+  /* ---------- START SCREEN ---------- */
+  #start{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:18px;padding:34px 24px;animation:rise .7s cubic-bezier(.2,.8,.2,1)}
+  .badge{font-family:'Changa';font-weight:700;font-size:13px;letter-spacing:1px;color:var(--bg-0);background:linear-gradient(90deg,var(--gold),var(--gold-2));padding:7px 18px;border-radius:999px;box-shadow:0 8px 22px -8px var(--gold-2)}
+  .planet{width:120px;height:120px;border-radius:50%;background:radial-gradient(circle at 32% 30%,#ffe9a8,var(--gold) 40%,#e8861f 75%,#9a4a06);box-shadow:0 0 50px -6px var(--gold-2),inset -14px -10px 30px rgba(0,0,0,.45);position:relative;animation:float 5s ease-in-out infinite}
+  .planet::after{content:"";position:absolute;inset:-22% -38%;border:6px solid rgba(70,230,255,.55);border-radius:50%;transform:rotate(-22deg);box-shadow:0 0 18px rgba(70,230,255,.4)}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+  h1.title{font-family:'Changa';font-weight:800;font-size:clamp(32px,8vw,52px);line-height:1.15;background:linear-gradient(90deg,#fff,var(--cyan) 40%,var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 0 30px rgba(70,230,255,.25)}
+  .subtitle{font-size:clamp(15px,4vw,19px);color:var(--muted);max-width:460px;line-height:1.7}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:4px}
+  .chip{font-size:13px;font-weight:700;color:var(--ink);background:rgba(155,107,255,.16);border:1px solid var(--line);padding:6px 13px;border-radius:999px}
+  .howto{font-size:14px;color:var(--muted);background:rgba(0,0,0,.22);border:1px dashed var(--line);border-radius:16px;padding:14px 18px;max-width:480px;line-height:1.9}
+  .howto b{color:var(--gold)}
+
+  .btn{font-family:'Changa';font-weight:700;cursor:pointer;border:none;border-radius:16px;padding:15px 30px;font-size:19px;color:var(--bg-0);background:linear-gradient(90deg,var(--cyan),#7ad6ff);box-shadow:0 12px 30px -10px var(--cyan);transition:transform .15s,box-shadow .2s;display:inline-flex;align-items:center;gap:10px}
+  .btn:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 18px 38px -10px var(--cyan)}
+  .btn:active{transform:translateY(0) scale(.98)}
+  .btn.gold{background:linear-gradient(90deg,var(--gold),var(--gold-2));box-shadow:0 12px 30px -10px var(--gold-2)}
+  .btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line);box-shadow:none;font-size:16px;padding:12px 22px}
+
+  /* ---------- QUIZ SCREEN ---------- */
+  #quiz{display:none;flex-direction:column;gap:16px;animation:rise .5s ease}
+  .topbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .hud{display:flex;align-items:center;gap:8px;font-family:'Changa';font-weight:700;font-size:15px;background:var(--card);border:1px solid var(--line);padding:8px 14px;border-radius:14px}
+  .hud .k{color:var(--muted);font-family:'Tajawal';font-weight:500;font-size:13px}
+  .hud.score{color:var(--gold)}
+  .hud.streak{color:var(--pink)}
+  .spacer{flex:1}
+  .iconbtn{cursor:pointer;background:var(--card);border:1px solid var(--line);color:var(--ink);width:42px;height:42px;border-radius:12px;font-size:18px;display:grid;place-items:center;transition:.2s}
+  .iconbtn:hover{background:rgba(155,107,255,.2)}
+
+  .progress{height:12px;background:rgba(0,0,0,.32);border:1px solid var(--line);border-radius:999px;overflow:hidden}
+  .progress > i{display:block;height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,var(--cyan),var(--violet),var(--pink));transition:width .45s cubic-bezier(.2,.8,.2,1);box-shadow:0 0 14px rgba(155,107,255,.6)}
+
+  .timerbar{height:7px;background:rgba(0,0,0,.3);border-radius:999px;overflow:hidden}
+  .timerbar > i{display:block;height:100%;width:100%;background:linear-gradient(90deg,var(--green),var(--gold));transition:width 1s linear}
+  .timerbar.warn > i{background:linear-gradient(90deg,var(--gold),var(--red))}
+
+  .qcard{padding:24px 22px}
+  .qchapter{font-family:'Changa';font-weight:600;font-size:13px;color:var(--cyan);letter-spacing:.5px;margin-bottom:10px;display:inline-block;background:rgba(70,230,255,.12);padding:5px 12px;border-radius:999px}
+  .qtext{font-family:'Changa';font-weight:700;font-size:clamp(19px,5vw,25px);line-height:1.6}
+  .options{display:flex;flex-direction:column;gap:12px;margin-top:20px}
+  .opt{position:relative;text-align:right;cursor:pointer;background:rgba(13,9,38,.65);border:1.6px solid var(--line);border-radius:16px;padding:15px 18px;font-size:clamp(15px,4.2vw,18px);font-weight:500;color:var(--ink);display:flex;align-items:center;gap:13px;transition:transform .12s,border-color .2s,background .2s}
+  .opt .lt{font-family:'Changa';font-weight:700;width:34px;height:34px;flex:none;border-radius:10px;display:grid;place-items:center;background:rgba(155,107,255,.2);color:var(--ink);font-size:16px;transition:.2s}
+  .opt:hover:not(.locked){transform:translateX(-4px);border-color:var(--cyan);background:rgba(70,230,255,.08)}
+  .opt:hover:not(.locked) .lt{background:var(--cyan);color:var(--bg-0)}
+  .opt.correct{border-color:var(--green);background:rgba(52,224,161,.16);animation:pop .4s}
+  .opt.correct .lt{background:var(--green);color:#04241a}
+  .opt.wrong{border-color:var(--red);background:rgba(255,93,108,.14)}
+  .opt.wrong .lt{background:var(--red);color:#2a0408}
+  .opt.locked{cursor:default}
+  .opt .mark{margin-right:auto;font-size:20px;opacity:0;transform:scale(.4);transition:.25s}
+  .opt.correct .mark,.opt.wrong .mark{opacity:1;transform:scale(1)}
+  @keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.04)}100%{transform:scale(1)}}
+
+  .nextrow{display:flex;justify-content:flex-end}
+
+  /* feedback toast */
+  #toast{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:30;pointer-events:none}
+  #toast .tb{font-family:'Lalezar';font-size:clamp(46px,14vw,92px);line-height:1;text-align:center;padding:0 18px;text-shadow:0 6px 30px rgba(0,0,0,.6);animation:burst .8s cubic-bezier(.18,.9,.25,1)}
+  #toast .sub{font-family:'Changa';font-weight:700;font-size:clamp(15px,4.5vw,22px);margin-top:10px;color:var(--ink);opacity:.95}
+  .tb.good{color:var(--gold);-webkit-text-stroke:2px #fff3}
+  .tb.bad{color:var(--cyan)}
+  @keyframes burst{0%{transform:scale(.2) rotate(-8deg);opacity:0}45%{transform:scale(1.15) rotate(3deg);opacity:1}70%{transform:scale(.96) rotate(0)}100%{transform:scale(1);opacity:1}}
+
+  /* ---------- RESULTS ---------- */
+  #result{display:none;flex-direction:column;align-items:center;text-align:center;gap:16px;padding:36px 24px;animation:rise .6s ease}
+  .trophy{font-size:80px;animation:float 4s ease-in-out infinite;filter:drop-shadow(0 10px 24px rgba(255,210,74,.4))}
+  .scorebig{font-family:'Lalezar';font-size:clamp(54px,16vw,96px);line-height:1;background:linear-gradient(90deg,var(--gold),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .rgrade{font-family:'Changa';font-weight:800;font-size:clamp(22px,6vw,30px)}
+  .rmsg{color:var(--muted);font-size:16px;max-width:440px;line-height:1.8}
+  .rstats{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:6px}
+  .stat{background:rgba(0,0,0,.28);border:1px solid var(--line);border-radius:16px;padding:14px 22px;min-width:96px}
+  .stat .n{font-family:'Changa';font-weight:800;font-size:26px}
+  .stat .l{font-size:13px;color:var(--muted);margin-top:2px}
+  .stat.ok .n{color:var(--green)} .stat.no .n{color:var(--red)} .stat.pt .n{color:var(--gold)}
+
+  /* confetti */
+  #confetti{position:fixed;inset:0;pointer-events:none;z-index:25}
+
+  footer{position:relative;z-index:2;text-align:center;padding:18px;color:var(--muted);font-size:13px;line-height:1.9}
+  footer a{color:var(--cyan);text-decoration:none;font-weight:700}
+  .credit{font-family:'Changa';font-weight:700;color:var(--gold);letter-spacing:.5px}
+
+  @keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+  @media (max-width:520px){.wrap{padding:16px 12px 80px}.qcard{padding:20px 16px}}
+</style>
+</head>
+<body>
+<div class="stars"></div><div class="stars2"></div><div class="stars3"></div>
+<canvas id="confetti"></canvas>
+<div id="toast"></div>
+
+<div class="wrap">
+
+  <!-- START -->
+  <section id="start">
+    <span class="badge">★ مسابقة الاختبارات المركزية ★</span>
+    <div class="planet"></div>
+    <h1 class="title">مسابقة العلوم النجمية</h1>
+    <p class="subtitle">رحلةٌ بين النجوم والمجرّات والمادّة والقوى! اختبر معلوماتك في مادة العلوم للصف السادس الابتدائي.</p>
+    <div class="chips">
+      <span class="chip">🌍 الفضاء والفلك</span>
+      <span class="chip">☀️ النظام الشمسي</span>
+      <span class="chip">⭐ النجوم والمجرّات</span>
+      <span class="chip">🧪 تصنيف المادّة</span>
+      <span class="chip">⚡ القوى والكهرباء</span>
+    </div>
+    <div class="howto">
+      🎯 لكل سؤال <b>٤ خيارات</b> وإجابةٌ واحدة صحيحة.<br>
+      ⏱️ كل سؤال له <b>وقتٌ محدّد</b> — كلما أسرعت زادت نقاطك!<br>
+      🔥 الإجابات الصحيحة المتتالية تمنحك <b>سلسلة نقاط</b> إضافية.
+    </div>
+    <button class="btn gold" onclick="startQuiz()">🚀 ابدأ المسابقة</button>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="quiz">
+    <div class="topbar">
+      <div class="hud"><span class="k">سؤال</span><span id="qnum">1</span><span class="k">/</span><span id="qtot">10</span></div>
+      <div class="hud score">🏆 <span id="score">0</span></div>
+      <div class="hud streak">🔥 <span id="streak">0</span></div>
+      <div class="spacer"></div>
+      <div class="iconbtn" id="soundBtn" title="الصوت" onclick="toggleSound()">🔊</div>
+    </div>
+    <div class="progress"><i id="bar"></i></div>
+    <div class="timerbar" id="timerWrap"><i id="timer"></i></div>
+
+    <div class="panel qcard">
+      <span class="qchapter" id="qchapter">الفصل</span>
+      <div class="qtext" id="qtext">…</div>
+      <div class="options" id="options"></div>
+    </div>
+
+    <div class="nextrow">
+      <button class="btn" id="nextBtn" style="display:none" onclick="nextQuestion()">السؤال التالي ←</button>
+    </div>
+  </section>
+
+  <!-- RESULT -->
+  <section id="result">
+    <div class="trophy" id="trophy">🏆</div>
+    <div class="scorebig" id="finalScore">0</div>
+    <div class="rgrade" id="grade">…</div>
+    <p class="rmsg" id="rmsg"></p>
+    <div class="rstats">
+      <div class="stat ok"><div class="n" id="rok">0</div><div class="l">إجابات صحيحة</div></div>
+      <div class="stat no"><div class="n" id="rno">0</div><div class="l">إجابات خاطئة</div></div>
+      <div class="stat pt"><div class="n" id="rpct">0%</div><div class="l">نسبة النجاح</div></div>
+    </div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:8px">
+      <button class="btn gold" onclick="restart()">🔁 العب مرّة أخرى</button>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="credit">✦ تصميم د/ فواز ✦</div>
+  <div>قناة التصميم التعليمي على تيليجرام:
+    <a href="https://t.me/TAqhjT3MFVE1Yzk0" target="_blank" rel="noopener">اضغط هنا للانضمام</a>
+  </div>
+</footer>
+
+<script>
+/* ================= QUESTION BANK (مستخرجة من ملزمة الاختبارات المركزية) ================= */
+const BANK = [
+  // ---- الفصل السابع: نظام الأرض والشمس ----
+  {c:"الفضاء والفلك", q:"ما الحركة التي تحدّد مفهوم الزمن وتعاقب الليل والنهار؟",
+   o:["دوران الأرض حول محورها","دوران الأرض حول الشمس","دوران القمر حول الأرض","دوران الشمس حول مركز المجرّة"], a:0},
+  {c:"الفضاء والفلك", q:"كم يستغرق دوران الأرض دورةً كاملة حول محورها (الدورة اليومية)؟",
+   o:["٢٤ ساعة","١٢ ساعة","٣٦٥ يوماً","٣٠ يوماً"], a:0},
+  {c:"الفضاء والفلك", q:"عند أي خط طول يقع خط التاريخ الدولي؟",
+   o:["١٨٠ درجة","٠ درجة","٩٠ درجة","٣٦٠ درجة"], a:0},
+  {c:"الفضاء والفلك", q:"إلى كم منطقة توقيت معياري قُسِّمت الأرض؟",
+   o:["٢٤ منطقة","١٢ منطقة","١٨٠ منطقة","٣٦٠ منطقة"], a:0},
+  {c:"الفضاء والفلك", q:"لماذا تكون درجة الحرارة في فصل الصيف أعلى منها في الشتاء؟",
+   o:["لأن أشعة الشمس تسقط عمودية ومركّزة على سطح الأرض","لأن الأرض تقترب من الشمس كثيراً","لأن الشمس تكبُر في الصيف","لأن الأرض تتوقّف عن الدوران"], a:0},
+  {c:"الفضاء والفلك", q:"العلم الذي يختص بدراسة الأجرام السماوية في الكون يسمّى:",
+   o:["علم الفلك","علم الأحياء","علم الكيمياء","علم الجيولوجيا"], a:0},
+  {c:"الفضاء والفلك", q:"المنظار الفلكي الذي يستعمل العدسات لتجميع الضوء وتكبير الصورة يسمّى:",
+   o:["المنظار الكاسر","المنظار العاكس","المنظار المغناطيسي","المنظار الراديوي"], a:0},
+  {c:"الفضاء والفلك", q:"المركبات الفضائية غير المأهولة بالناس والمزوّدة بأدوات لدراسة الفضاء تسمّى:",
+   o:["المسبار الفضائي","القمر الصناعي","المكوك","المحطة الدولية"], a:0},
+
+  // ---- الفصل الثامن: النظام الشمسي والنجوم والمجرّات ----
+  {c:"النظام الشمسي", q:"أيٌّ مما يأتي يُعَدّ من الكواكب الداخلية الصخرية؟",
+   o:["عطارد والزهرة والأرض والمريخ","المشتري وزحل","أورانوس ونبتون","بلوتو وسيريس"], a:0},
+  {c:"النظام الشمسي", q:"اعتماداً على جدول الكواكب الداخلية، أيُّ هذه الكواكب الأربعة هو الأكبر قُطراً؟",
+   o:["الأرض","الزهرة","عطارد","المريخ"], a:0},
+  {c:"النظام الشمسي", q:"الأجرام الصغيرة الصخرية التي تتحرّك في مدارات حول الشمس بين المريخ والمشتري تسمّى:",
+   o:["الكويكبات","الأقمار","المذنّبات","النجوم"], a:0},
+  {c:"النظام الشمسي", q:"كرةٌ من الجليد والصخور لها مدارٌ متطاولٌ جداً حول الشمس، ما اسمها؟",
+   o:["المذنّب","الكويكب","الشهاب","النيزك"], a:0},
+  {c:"النظام الشمسي", q:"جسمٌ صخري أو فلزي صغير يدخل الغلاف الجوي ويحترق ويظهر كخطٍّ لامع في السماء يسمّى:",
+   o:["الشهاب","النيزك","المذنّب","الكويكب"], a:0},
+  {c:"النظام الشمسي", q:"إذا لم يحترق الشهاب بالكامل في الغلاف الجوي ووصل جزءٌ منه إلى سطح الأرض، فإنه يسمّى:",
+   o:["النيزك","المذنّب","الكويكب","القمر"], a:0},
+  {c:"النجوم والمجرّات", q:"ما العامل الأساسي الذي يحدّد مراحل حياة النجم؟",
+   o:["كتلته","لونه","بُعده عنّا","عدد كواكبه"], a:0},
+  {c:"النجوم والمجرّات", q:"لون النجم يدل على درجة حرارته. أيُّ الألوان يدل على النجوم الأكثر سخونة؟",
+   o:["الأبيض المزرَق","الأحمر","البرتقالي","الأصفر"], a:0},
+  {c:"النجوم والمجرّات", q:"إذا شاهدت نجماً أبيض اللون بالتلسكوب، فهو مقارنةً بشمسنا الصفراء:",
+   o:["أسخن","أبرد","بنفس درجة الحرارة","لا يمكن مقارنته"], a:0},
+  {c:"النجوم والمجرّات", q:"المجرّة هي:",
+   o:["مجموعةٌ كبيرةٌ جداً من النجوم تترابط معاً بالجاذبية","كوكبٌ ضخمٌ يدور حول نجم","نجمٌ عملاقٌ منفرد","مجموعةٌ من الأقمار"], a:0},
+  {c:"النجوم والمجرّات", q:"مجرّة درب التبّانة (مجرّتنا) من نوع المجرّات:",
+   o:["اللولبية","الإهليلجية","غير المنتظمة","العملاقة"], a:0},
+  {c:"النجوم والمجرّات", q:"أيُّ أنواع المجرّات يبدو شكلها كالدوّامة ولها أذرعٌ تلتف حول مركزها؟",
+   o:["اللولبية","الإهليلجية","غير المنتظمة","القزمة"], a:0},
+  {c:"النجوم والمجرّات", q:"التوسّع المفاجئ للكون عندما كان صغيراً وكثيفاً يسمّى:",
+   o:["الانفجار العظيم","تكوّن المجرّة","ولادة النجم","الكسوف الكلّي"], a:0},
+
+  // ---- الفصل التاسع: تصنيف المادّة ----
+  {c:"تصنيف المادّة", q:"أيُّ المواد الآتية يُنصح باستخدامها لتغليف سلكٍ نحاسي موصول بالكهرباء؟",
+   o:["المطّاط","الحديد","الألومنيوم","الذهب"], a:0},
+  {c:"تصنيف المادّة", q:"ما نوع المخلوط الذي يتكوّن من حبيبات الرمل والماء؟",
+   o:["معلّق","متجانس","مستحلَب","غروي"], a:0},
+  {c:"تصنيف المادّة", q:"المخلوط المكوَّن من فلزٍّ أو أكثر مع موادّ صلبة أخرى يسمّى:",
+   o:["السبيكة","المحلول","الغروي","المستحلَب"], a:0},
+  {c:"تصنيف المادّة", q:"العملية التي يتحوّل فيها السائل إلى غاز تسمّى:",
+   o:["التبخّر","التكاثف","التقطير","الترشيح"], a:0},
+  {c:"تصنيف المادّة", q:"مادةٌ كثافتها ١٫٥١ جم/سم³ وُضعت في الماء (كثافة الماء ١ جم/سم³)، فماذا يحدث لها؟",
+   o:["تغرق لأن كثافتها أكبر من كثافة الماء","تطفو فوق الماء","تذوب تماماً","تتبخّر فوراً"], a:0},
+  {c:"تصنيف المادّة", q:"ما الخاصية الفيزيائية والأداة المناسبة لفصل برادة الحديد عن مسحوق الكبريت؟",
+   o:["المغناطيسية باستخدام المغناطيس","الذوبان باستخدام الماء","الكثافة باستخدام الميزان","الترشيح باستخدام مرشّح"], a:0},
+  {c:"تصنيف المادّة", q:"الكتلة هي:",
+   o:["مقدار ما في الجسم من مادة","مقدار جذب الأرض للجسم","المساحة التي يشغلها الجسم","سرعة الجسم"], a:0},
+  {c:"تصنيف المادّة", q:"قياس مقدار جذب الأرض للجسم يسمّى:",
+   o:["الوزن","الكتلة","الحجم","الكثافة"], a:0},
+  {c:"تصنيف المادّة", q:"امتزاج مادتين أو أكثر معاً مع احتفاظ كلِّ مادةٍ بخواصّها الأصلية يسمّى:",
+   o:["المخلوط","المركّب","العنصر","الذرّة"], a:0},
+  {c:"تصنيف المادّة", q:"تحوّل المادة مباشرةً من الحالة الصلبة إلى الحالة الغازية يسمّى:",
+   o:["التسامي (التصعيد)","التبخّر","التكاثف","الانصهار"], a:0},
+  {c:"تصنيف المادّة", q:"مكعّبٌ معدني أبعاده ٢سم × ٢سم × ٢سم، فما حجمه؟",
+   o:["٨ سم³","٦ سم³","٤ سم³","١٢ سم³"], a:0},
+
+  // ---- الفصل الحادي عشر: القوى والحركة والكهرباء ----
+  {c:"القوى والحركة", q:"في لعبة شدّ الحبل، إذا لم يستطع أيُّ الفريقين سحب الآخر، فإن القوى المؤثّرة تكون:",
+   o:["متّزنة","غير متّزنة","قوى احتكاك فقط","قوة رفع"], a:0},
+  {c:"القوى والحركة", q:"إذا سقطت ريشةٌ وكرةٌ من الارتفاع نفسه وفي الوقت نفسه (بافتراض عدم وجود هواء)، فإنهما:",
+   o:["يصطدمان بالأرض في الوقت نفسه","الكرة تصطدم أولاً","الريشة تصطدم أولاً","الريشة تطفو في الهواء"], a:0},
+  {c:"القوى والحركة", q:"ما القوة التي تعمل على اتّزان وزن الطائرة للمحافظة على ارتفاعها نفسه؟",
+   o:["قوة الدفع لأعلى (الرفع)","قوة السحب","قوة الجاذبية","القصور الذاتي"], a:0},
+  {c:"القوى والحركة", q:"وحدة قياس القوة هي:",
+   o:["النيوتن","المتر","الكيلوجرام","الثانية"], a:0},
+  {c:"القوى والحركة", q:"التغيّر في موقع جسمٍ ما مع مرور الزمن يعبّر عن:",
+   o:["الحركة","الكتلة","الكثافة","الاحتكاك"], a:0},
+  {c:"القوى والحركة", q:"الخاصية التي تجعل الجسم يقاوم تغيّر حالته الحركية بذاته تسمّى:",
+   o:["القصور الذاتي","قوة الفعل","الجاذبية","الوزن"], a:0},
+  {c:"القوى والحركة", q:"ما الذي يتغيّر عندما تؤثّر قوى غير متّزنة في جسم؟",
+   o:["حركته","كتلته","عدد ذرّاته","لونه"], a:0},
+  {c:"الكهرباء والمغناطيسية", q:"الشحنات الكهربائية المتشابهة (نفس النوع):",
+   o:["تتنافر","تتجاذب","تتعادل وتختفي","تتحوّل إلى حرارة"], a:0},
+  {c:"الكهرباء والمغناطيسية", q:"وحدة قياس المقاومة الكهربائية هي:",
+   o:["الأوم (Ω)","الأمبير","النيوتن","الواط"], a:0},
+  {c:"الكهرباء والمغناطيسية", q:"الجهاز الذي يحوّل الطاقة الكهربائية إلى حركة (مثل المروحة) يسمّى:",
+   o:["المحرّك الكهربائي","المولّد الكهربائي","المقاومة","المفتاح"], a:0},
+  {c:"الكهرباء والمغناطيسية", q:"الجهاز الذي يحوّل الحركة إلى طاقة كهربائية (مثل إضاءة الدرّاجة) يسمّى:",
+   o:["المولّد الكهربائي","المحرّك الكهربائي","البطارية","المصباح"], a:0},
+  {c:"الكهرباء والمغناطيسية", q:"كيف يمكن صنع مغناطيس كهربائي؟",
+   o:["بلفّ سلك حول مسمار حديد وإمرار تيار كهربائي فيه","بدهن المسمار بالماء","بتسخين قطعة بلاستيك","بوضع المسمار في الثلّاجة"], a:0},
+];
+
+/* ================= FEEDBACK PHRASES ================= */
+const GOOD = [
+  {big:"يا سلام! 🎉", sub:"إجابةٌ صحيحة، أبدعت!"},
+  {big:"رائع! 🌟", sub:"معلوماتك ممتازة!"},
+  {big:"أحسنت! 👏", sub:"إجابةٌ موفّقة!"},
+  {big:"عبقري! 🧠", sub:"استمرّ على هذا الإبداع!"},
+  {big:"ممتاز! 🏆", sub:"نجمٌ لامع في العلوم!"},
+  {big:"بطل! 💫", sub:"إجابةٌ دقيقة وسريعة!"},
+];
+const BAD = [
+  {big:"حظٌّ أوفر 💪", sub:"لا بأس، الإجابة الصحيحة بالأخضر."},
+  {big:"قريبٌ جداً 📚", sub:"راجع المعلومة وستتقنها!"},
+  {big:"المرّة القادمة 🚀", sub:"كل خطأ خطوةٌ نحو النجاح."},
+  {big:"لا تستسلم 🌱", sub:"تعلّمت شيئاً جديداً الآن!"},
+];
+
+/* ================= STATE ================= */
+let qs=[], idx=0, score=0, streak=0, correctCount=0, answered=false;
+let timeLeft=0, timerId=null, TIME=18;
+let soundOn=true;
+
+const $=id=>document.getElementById(id);
+
+function shuffle(arr){const a=arr.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function buildQuestions(){
+  qs = shuffle(BANK).map(item=>{
+    const correctText = item.o[item.a];
+    const opts = shuffle(item.o);
+    return {c:item.c, q:item.q, opts, correct:correctText};
+  });
+}
+
+/* ================= SOUND (Web Audio, no files) ================= */
+let actx=null;
+function ac(){ if(!actx){ try{actx=new (window.AudioContext||window.webkitAudioContext)();}catch(e){actx=null;} } return actx; }
+function tone(freq,dur,type='sine',vol=.18,delay=0){
+  if(!soundOn) return; const c=ac(); if(!c) return;
+  const o=c.createOscillator(), g=c.createGain();
+  o.type=type; o.frequency.value=freq;
+  o.connect(g); g.connect(c.destination);
+  const t=c.currentTime+delay;
+  g.gain.setValueAtTime(0.0001,t);
+  g.gain.exponentialRampToValueAtTime(vol,t+0.02);
+  g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+  o.start(t); o.stop(t+dur+0.02);
+}
+function sndCorrect(){ tone(660,.16,'triangle',.2,0); tone(880,.18,'triangle',.2,.12); tone(1175,.28,'triangle',.18,.24); }
+function sndWrong(){ tone(220,.22,'sawtooth',.16,0); tone(160,.3,'sawtooth',.14,.12); }
+function sndTick(){ tone(900,.05,'square',.05,0); }
+function sndWin(){ [523,659,784,1047,1319].forEach((f,i)=>tone(f,.35,'triangle',.18,i*.13)); }
+function toggleSound(){ soundOn=!soundOn; $('soundBtn').textContent=soundOn?'🔊':'🔇'; if(soundOn){ac();} }
+
+/* ================= FLOW ================= */
+function startQuiz(){
+  ac(); // unlock audio on user gesture
+  buildQuestions();
+  idx=0; score=0; streak=0; correctCount=0;
+  $('start').style.display='none';
+  $('result').style.display='none';
+  $('quiz').style.display='flex';
+  $('qtot').textContent=qs.length;
+  $('score').textContent='0';
+  $('streak').textContent='0';
+  renderQuestion();
+}
+
+function renderQuestion(){
+  answered=false;
+  const item=qs[idx];
+  $('qnum').textContent=idx+1;
+  $('qchapter').textContent=item.c;
+  $('qtext').textContent=item.q;
+  $('bar').style.width=((idx)/qs.length*100)+'%';
+  $('nextBtn').style.display='none';
+
+  const letters=['أ','ب','ج','د'];
+  const box=$('options'); box.innerHTML='';
+  item.opts.forEach((opt,i)=>{
+    const d=document.createElement('button');
+    d.className='opt';
+    d.innerHTML='<span class="lt">'+letters[i]+'</span><span class="ot">'+opt+'</span><span class="mark"></span>';
+    d.onclick=()=>choose(d,opt,item.correct);
+    box.appendChild(d);
+  });
+  startTimer();
+}
+
+function startTimer(){
+  clearInterval(timerId);
+  timeLeft=TIME;
+  const tWrap=$('timerWrap'), tBar=$('timer');
+  tWrap.classList.remove('warn');
+  tBar.style.transition='none'; tBar.style.width='100%';
+  void tBar.offsetWidth;
+  tBar.style.transition='width 1s linear';
+  tBar.style.width='0%';
+  timerId=setInterval(()=>{
+    timeLeft--;
+    if(timeLeft<=5){ tWrap.classList.add('warn'); if(timeLeft>0) sndTick(); }
+    if(timeLeft<=0){ clearInterval(timerId); timeUp(); }
+  },1000);
+}
+
+function timeUp(){
+  if(answered) return;
+  answered=true;
+  const opts=[...document.querySelectorAll('.opt')];
+  const item=qs[idx];
+  opts.forEach(o=>{
+    o.classList.add('locked');
+    const txt=o.querySelector('.ot').textContent;
+    if(txt===item.correct){ o.classList.add('correct'); o.querySelector('.mark').textContent='✔'; }
+  });
+  streak=0; $('streak').textContent='0';
+  sndWrong();
+  showToast({big:"انتهى الوقت ⏰", sub:"الإجابة الصحيحة باللون الأخضر."}, false);
+  revealNext();
+}
+
+function choose(el,chosen,correct){
+  if(answered) return;
+  answered=true;
+  clearInterval(timerId);
+  const opts=[...document.querySelectorAll('.opt')];
+  opts.forEach(o=>o.classList.add('locked'));
+
+  if(chosen===correct){
+    el.classList.add('correct');
+    el.querySelector('.mark').textContent='✔';
+    correctCount++;
+    streak++;
+    // points: base 10 + time bonus + streak bonus
+    const timeBonus=Math.max(0,timeLeft); // up to 18
+    const streakBonus=(streak>=2)?(streak-1)*3:0;
+    const gained=10+timeBonus+streakBonus;
+    score+=gained;
+    animateScore(gained);
+    $('streak').textContent=streak;
+    sndCorrect();
+    confettiBurst();
+    showToast(GOOD[Math.floor(Math.random()*GOOD.length)], true, streak>=3?("🔥 سلسلة ×"+streak):null);
+  } else {
+    el.classList.add('wrong');
+    el.querySelector('.mark').textContent='✘';
+    opts.forEach(o=>{
+      if(o.querySelector('.ot').textContent===correct){
+        o.classList.add('correct'); o.querySelector('.mark').textContent='✔';
+      }
+    });
+    streak=0; $('streak').textContent='0';
+    sndWrong();
+    showToast(BAD[Math.floor(Math.random()*BAD.length)], false);
+  }
+  revealNext();
+}
+
+function revealNext(){
+  $('nextBtn').textContent = (idx===qs.length-1) ? 'عرض النتيجة 🏁' : 'السؤال التالي ←';
+  setTimeout(()=>{ $('nextBtn').style.display='inline-flex'; },300);
+}
+
+function animateScore(g){
+  const el=$('score');
+  el.textContent=score;
+  el.style.transform='scale(1.35)'; el.style.transition='transform .15s';
+  setTimeout(()=>el.style.transform='scale(1)',160);
+}
+
+function nextQuestion(){
+  if(idx<qs.length-1){ idx++; renderQuestion(); }
+  else{ showResult(); }
+}
+
+/* ================= TOAST ================= */
+let toastTimer=null;
+function showToast(obj, good, extra){
+  const t=$('toast');
+  t.innerHTML='<div><div class="tb '+(good?'good':'bad')+'">'+obj.big+'</div><div class="sub">'+(extra?extra+' — ':'')+obj.sub+'</div></div>';
+  t.style.display='flex';
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>{ t.style.display='none'; },1300);
+}
+
+/* ================= RESULT ================= */
+function showResult(){
+  $('bar').style.width='100%';
+  $('quiz').style.display='none';
+  $('result').style.display='flex';
+  const total=qs.length, wrong=total-correctCount;
+  const pct=Math.round(correctCount/total*100);
+  $('finalScore').textContent=score+' نقطة';
+  $('rok').textContent=correctCount;
+  $('rno').textContent=wrong;
+  $('rpct').textContent=pct+'%';
+
+  let grade,msg,emo;
+  if(pct>=90){grade="نجمٌ متألّق! 🌟";emo="🏆";msg="أداءٌ مذهل! أنت متمكّنٌ من مادة العلوم. واصل التألّق نحو القمّة.";}
+  else if(pct>=75){grade="ممتاز! 🎯";emo="🥇";msg="نتيجةٌ رائعة تدل على فهمٍ قوي. مراجعةٌ بسيطة وستصل للكمال.";}
+  else if(pct>=50){grade="جيّد جداً 👍";emo="🥈";msg="على الطريق الصحيح! راجِع الأسئلة التي أخطأت فيها وكرّر المحاولة.";}
+  else{grade="بداية الرحلة 🚀";emo="📚";msg="لا بأس أبداً! المراجعة مفتاح النجاح، وأنت قادرٌ على التحسّن في المحاولة القادمة.";}
+  $('grade').textContent=grade;
+  $('trophy').textContent=emo;
+  $('rmsg').textContent=msg;
+  if(pct>=75){ sndWin(); confettiBurst(140); }
+}
+
+function restart(){
+  $('result').style.display='none';
+  $('start').style.display='flex';
+}
+
+/* ================= CONFETTI ================= */
+const cv=$('confetti'), ctx=cv.getContext('2d');
+let pieces=[], rafId=null;
+function resize(){ cv.width=innerWidth; cv.height=innerHeight; }
+addEventListener('resize',resize); resize();
+const COLORS=['#ffd24a','#46e6ff','#ff5fa2','#34e0a1','#9b6bff','#ffffff'];
+function confettiBurst(n=70){
+  for(let i=0;i<n;i++){
+    pieces.push({x:innerWidth/2+(Math.random()-.5)*200, y:innerHeight*0.35,
+      vx:(Math.random()-.5)*9, vy:Math.random()*-11-4, g:0.32,
+      s:Math.random()*8+5, c:COLORS[Math.floor(Math.random()*COLORS.length)],
+      rot:Math.random()*6, vr:(Math.random()-.5)*0.4, life:0});
+  }
+  if(!rafId) loop();
+}
+function loop(){
+  ctx.clearRect(0,0,cv.width,cv.height);
+  pieces.forEach(p=>{ p.vy+=p.g; p.x+=p.vx; p.y+=p.vy; p.rot+=p.vr; p.life++; });
+  pieces=pieces.filter(p=>p.y<innerHeight+40 && p.life<260);
+  pieces.forEach(p=>{
+    ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.rot);
+    ctx.fillStyle=p.c; ctx.globalAlpha=Math.max(0,1-p.life/240);
+    ctx.fillRect(-p.s/2,-p.s/2,p.s,p.s*0.6); ctx.restore();
+  });
+  if(pieces.length){ rafId=requestAnimationFrame(loop); }
+  else{ cancelAnimationFrame(rafId); rafId=null; ctx.clearRect(0,0,cv.width,cv.height); }
+}
+</script>
+</body>
+</html>
