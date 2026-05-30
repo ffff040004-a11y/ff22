@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>خطة الانضباط والجاهزية بعد الحج</title>
+<style>
+:root{
+  --bg:#f5f7fb;
+  --card:#ffffff;
+  --ink:#18233a;
+  --muted:#657085;
+  --primary:#163b73;
+  --primary2:#0e8aa8;
+  --gold:#d9a441;
+  --green:#1d9a6c;
+  --red:#d95757;
+  --soft:#eef5ff;
+  --line:#dce3ef;
+  --shadow:0 18px 45px rgba(17,38,78,.12);
+  --radius:24px;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:"Tahoma","Arial",sans-serif;
+  background:
+    radial-gradient(circle at 10% 10%, rgba(14,138,168,.16), transparent 28%),
+    radial-gradient(circle at 90% 20%, rgba(217,164,65,.18), transparent 25%),
+    linear-gradient(135deg,#f7f9fd,#eef3fb 55%,#f8fbff);
+  color:var(--ink);
+  line-height:1.8;
+}
+a{color:inherit}
+.hero{
+  position:relative;
+  overflow:hidden;
+  padding:36px 18px 26px;
+  background:linear-gradient(135deg,#0c2448,#163b73 52%,#0e8aa8);
+  color:#fff;
+}
+.hero:before{
+  content:"";
+  position:absolute; inset:-120px auto auto -120px;
+  width:330px; height:330px; border-radius:50%;
+  background:rgba(217,164,65,.25);
+}
+.hero:after{
+  content:"";
+  position:absolute; inset:auto -90px -130px auto;
+  width:340px; height:340px; border-radius:50%;
+  background:rgba(255,255,255,.11);
+}
+.wrap{max-width:1180px;margin:auto;position:relative;z-index:1}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:26px}
+.brand{
+  display:flex;align-items:center;gap:12px;font-weight:800;
+}
+.logo{
+  width:54px;height:54px;border-radius:18px;
+  background:linear-gradient(135deg,var(--gold),#fff2c7);
+  color:#10294f;display:grid;place-items:center;
+  box-shadow:0 12px 30px rgba(0,0,0,.18);
+  font-size:26px;
+}
+.actions{display:flex;gap:10px;flex-wrap:wrap}
+button,.btn{
+  border:0; cursor:pointer; border-radius:16px;
+  padding:11px 16px; font-weight:800; font-size:14px;
+  background:#fff; color:#10294f; text-decoration:none;
+  box-shadow:0 10px 24px rgba(0,0,0,.14);
+  transition:.2s transform,.2s filter;
+}
+button:hover,.btn:hover{transform:translateY(-2px);filter:brightness(.98)}
+.btn.gold{background:var(--gold);color:#15233d}
+.heroGrid{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:center}
+h1{font-size:clamp(28px,5vw,54px);line-height:1.25;margin:0 0 14px;font-weight:900;letter-spacing:-1px}
+.subtitle{font-size:clamp(16px,2.2vw,22px);opacity:.94;margin:0 0 20px;max-width:760px}
+.badges{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0}
+.badge{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);padding:8px 13px;border-radius:999px;font-weight:700;backdrop-filter:blur(8px)}
+.heroCard{
+  background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);
+  border-radius:28px;padding:22px;box-shadow:0 20px 50px rgba(0,0,0,.18);backdrop-filter:blur(10px)
+}
+.heroCard h3{margin:0 0 12px;font-size:22px}.heroCard ul{margin:0;padding:0 22px}.heroCard li{margin:7px 0}
+main{padding:28px 18px 60px}.section{margin:26px auto;max-width:1180px}.sectionTitle{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:14px;flex-wrap:wrap}
+.sectionTitle h2{margin:0;font-size:clamp(22px,3vw,34px);color:var(--primary)}
+.sectionTitle p{margin:0;color:var(--muted);font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.grid.two{grid-template-columns:repeat(2,1fr)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.card:before{content:"";position:absolute;top:0;right:0;width:8px;height:100%;background:linear-gradient(var(--primary2),var(--gold))}
+.card h3{margin:0 0 10px;color:#10294f;font-size:22px}.card p{margin:0;color:#38465e}.icon{width:42px;height:42px;border-radius:14px;background:var(--soft);display:grid;place-items:center;font-size:22px;margin-bottom:10px}
+.kpi{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}.kpi .box{background:#fff;border:1px solid var(--line);border-radius:20px;padding:16px;text-align:center;box-shadow:var(--shadow)}
+.kpi strong{display:block;font-size:24px;color:var(--primary)}.kpi span{color:var(--muted);font-weight:700;font-size:13px}
+.timeline{position:relative;display:grid;gap:14px}.step{display:grid;grid-template-columns:92px 1fr;gap:14px;align-items:stretch}.day{background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff;border-radius:20px;display:grid;place-items:center;text-align:center;font-weight:900;padding:12px;box-shadow:var(--shadow)}
+.stepContent{background:#fff;border:1px solid var(--line);border-radius:22px;padding:18px;box-shadow:var(--shadow)}.stepContent h3{margin:0 0 8px;color:var(--primary)}
+table{width:100%;border-collapse:separate;border-spacing:0;background:#fff;border-radius:22px;overflow:hidden;box-shadow:var(--shadow);border:1px solid var(--line)}
+th,td{padding:13px 14px;border-bottom:1px solid var(--line);vertical-align:top}th{background:linear-gradient(135deg,#10294f,#163b73);color:#fff;text-align:right;font-size:15px}tr:last-child td{border-bottom:0}td{color:#2d3a51}.tag{display:inline-block;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:800}.tag.green{background:#e6f7f0;color:#08764e}.tag.gold{background:#fff4d8;color:#8a6108}.tag.red{background:#ffeaea;color:#a22c2c}.tag.blue{background:#e9f4ff;color:#13548e}
+.tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}.tab{background:#fff;border:1px solid var(--line);box-shadow:none}.tab.active{background:var(--primary);color:#fff}
+.panel{display:none}.panel.active{display:block}
+.message{background:linear-gradient(135deg,#fff,#f7fbff);border:1px dashed #b6c8e5;border-radius:22px;padding:18px;margin:12px 0;position:relative}.message strong{color:var(--primary);display:block;margin-bottom:6px}.copy{position:absolute;top:12px;left:12px;padding:7px 10px;border-radius:12px;background:var(--primary);color:#fff;box-shadow:none;font-size:12px}
+.checklist{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.check{background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px;display:flex;gap:10px;align-items:flex-start;box-shadow:0 10px 26px rgba(17,38,78,.08)}.check input{width:20px;height:20px;accent-color:var(--green);margin-top:6px}.check label{font-weight:700;color:#24324b}.check small{display:block;color:var(--muted);font-weight:400}
+.notice{background:#122a52;color:#fff;border-radius:24px;padding:22px;box-shadow:var(--shadow);display:grid;grid-template-columns:1fr auto;gap:18px;align-items:center}.notice h2{margin:0 0 8px}.notice p{margin:0;opacity:.92}.meter{height:14px;background:#e9edf5;border-radius:999px;overflow:hidden}.bar{height:100%;width:95%;background:linear-gradient(90deg,var(--green),var(--gold));border-radius:999px}
+.footer{max-width:1180px;margin:30px auto 0;background:#fff;border:1px solid var(--line);border-radius:24px;padding:18px;text-align:center;box-shadow:var(--shadow);font-weight:800;color:var(--primary)}.footer a{color:var(--primary2);text-decoration:none}
+.references{font-size:13px;color:var(--muted);background:#fff;border:1px solid var(--line);border-radius:20px;padding:14px;box-shadow:0 8px 22px rgba(17,38,78,.08)}
+@media(max-width:900px){.heroGrid,.grid,.grid.two,.kpi,.checklist{grid-template-columns:1fr}.step{grid-template-columns:1fr}.notice{grid-template-columns:1fr}.actions{width:100%}button,.btn{flex:1;text-align:center}table{font-size:14px}th,td{padding:10px}}
+@media print{
+  body{background:#fff}.hero{padding:18px;color:#000;background:#fff;border-bottom:2px solid #ddd}.hero:before,.hero:after,.actions,.tabs,.copy,.footer{display:none!important}.heroGrid,.grid,.grid.two,.kpi,.checklist{grid-template-columns:1fr 1fr}.card,.box,table,.stepContent,.footer,.notice,.references{box-shadow:none}.section{break-inside:avoid;margin:16px auto}.heroCard{color:#000;background:#fff;border:1px solid #ddd}.badge{color:#000;border-color:#ddd;background:#fff}.notice{color:#000;background:#fff;border:1px solid #ddd}@page{size:A4;margin:10mm}
+}
+
+/* ===== إعداد احترافي للطباعة في صفحة A4 عمودية واحدة ===== */
+.printA4{display:none}
+@media print{
+  @page{
+    size:A4 portrait;
+    margin:10mm;
+  }
+  html,body{
+    width:210mm!important;
+    height:297mm!important;
+    margin:0!important;
+    padding:0!important;
+    overflow:hidden!important;
+    background:#fff!important;
+    -webkit-print-color-adjust:exact!important;
+    print-color-adjust:exact!important;
+  }
+  body *{
+    box-sizing:border-box!important;
+    page-break-inside:avoid!important;
+    break-inside:avoid!important;
+  }
+  .hero, main, .footer, .actions, .tabs, .copy{
+    display:none!important;
+  }
+  .printA4{
+    display:block!important;
+    width:190mm!important;
+    height:277mm!important;
+    margin:0 auto!important;
+    padding:0!important;
+    overflow:hidden!important;
+    direction:rtl!important;
+    color:#13213a!important;
+    font-family:"Tahoma","Arial",sans-serif!important;
+  }
+  .printPage{
+    width:100%!important;
+    height:100%!important;
+    overflow:hidden!important;
+    padding:0!important;
+    display:flex!important;
+    flex-direction:column!important;
+    gap:2.6mm!important;
+  }
+  .printHeader{
+    background:linear-gradient(135deg,#0c2448,#163b73 58%,#0e8aa8)!important;
+    color:#fff!important;
+    border-radius:8mm!important;
+    padding:5mm 6mm!important;
+    display:grid!important;
+    grid-template-columns:1fr 18mm!important;
+    gap:4mm!important;
+    align-items:center!important;
+    min-height:34mm!important;
+    max-height:42mm!important;
+    overflow:hidden!important;
+  }
+  .printHeader h1{
+    margin:1mm 0 1.5mm!important;
+    font-size:17.5pt!important;
+    line-height:1.25!important;
+    letter-spacing:-.2pt!important;
+  }
+  .printHeader p{
+    margin:0!important;
+    font-size:8.8pt!important;
+    line-height:1.65!important;
+  }
+  .printKicker{
+    display:inline-block!important;
+    font-size:7.5pt!important;
+    font-weight:800!important;
+    padding:1.2mm 2.5mm!important;
+    border-radius:99px!important;
+    background:rgba(255,255,255,.14)!important;
+    border:1px solid rgba(255,255,255,.25)!important;
+  }
+  .printSeal{
+    width:16mm!important;
+    height:16mm!important;
+    border-radius:5mm!important;
+    background:linear-gradient(135deg,#d9a441,#fff2c7)!important;
+    color:#10294f!important;
+    display:grid!important;
+    place-items:center!important;
+    font-size:18pt!important;
+    font-weight:900!important;
+  }
+  .printKPIs{
+    display:grid!important;
+    grid-template-columns:repeat(5,1fr)!important;
+    gap:2mm!important;
+  }
+  .printKPIs div{
+    border:1px solid #dce3ef!important;
+    background:#f7fbff!important;
+    border-radius:4mm!important;
+    padding:2mm 1mm!important;
+    text-align:center!important;
+    min-height:13mm!important;
+    overflow:hidden!important;
+  }
+  .printKPIs b{
+    display:block!important;
+    color:#163b73!important;
+    font-size:12pt!important;
+    line-height:1.05!important;
+  }
+  .printKPIs span{
+    display:block!important;
+    color:#4f5e73!important;
+    font-size:6.8pt!important;
+    line-height:1.2!important;
+    font-weight:700!important;
+  }
+  .printGrid{
+    display:grid!important;
+    grid-template-columns:1fr 1fr!important;
+    gap:2.5mm!important;
+  }
+  .printGrid.small{
+    gap:2mm!important;
+  }
+  .printBox{
+    border:1px solid #dce3ef!important;
+    border-radius:5mm!important;
+    background:#fff!important;
+    padding:3mm 4mm!important;
+    overflow:hidden!important;
+  }
+  .printBox h2{
+    margin:0 0 1.6mm!important;
+    color:#163b73!important;
+    font-size:10pt!important;
+    line-height:1.2!important;
+  }
+  .printBox ul,.printBox ol{
+    margin:0!important;
+    padding:0 5mm 0 0!important;
+  }
+  .printBox li,.printBox p{
+    margin:0!important;
+    font-size:7.8pt!important;
+    line-height:1.55!important;
+  }
+  .printTable{
+    width:100%!important;
+    border-collapse:collapse!important;
+    table-layout:fixed!important;
+    border:1px solid #dce3ef!important;
+    border-radius:4mm!important;
+    overflow:hidden!important;
+    box-shadow:none!important;
+    font-size:7.4pt!important;
+    line-height:1.35!important;
+  }
+  .printTable th{
+    background:#163b73!important;
+    color:#fff!important;
+    font-size:7.5pt!important;
+    padding:1.7mm 2mm!important;
+    text-align:right!important;
+  }
+  .printTable td{
+    padding:1.45mm 2mm!important;
+    border:1px solid #e5eaf2!important;
+    vertical-align:top!important;
+    color:#24324b!important;
+    word-break:break-word!important;
+  }
+  .printTable.compact td,.printTable.compact th{
+    padding:1.25mm 2mm!important;
+    font-size:7.2pt!important;
+  }
+  .printFooterLine{
+    margin-top:auto!important;
+    border-radius:5mm!important;
+    background:#122a52!important;
+    color:#fff!important;
+    padding:3mm 4mm!important;
+    font-size:8pt!important;
+    line-height:1.6!important;
+    overflow:hidden!important;
+  }
+}
+
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand"><div class="logo">✓</div><div>منصة الانضباط والجاهزية<br><small>بعد الحج وقبل الاختبارات النهائية</small></div></div>
+      <div class="actions">
+        <button onclick="window.print()">طباعة الخطة</button>
+        <button class="gold" onclick="scrollToSection('exec')">ابدأ التنفيذ</button>
+      </div>
+    </div>
+    <div class="heroGrid">
+      <div>
+        <h1>خطة الانضباط والجاهزية للاختبارات بعد إجازة عيد الأضحى</h1>
+        <p class="subtitle">تحويل الفترة التي يراها الطلاب وقتًا مهملًا إلى أسبوع حسم: حضور، مراجعة، علاج فاقد، تهيئة نفسية، ومتابعة يومية بالأرقام.</p>
+        <div class="badges">
+          <span class="badge">انضباط ذكي</span>
+          <span class="badge">مراجعات مركزة</span>
+          <span class="badge">متابعة أسرية</span>
+          <span class="badge">تحفيز يومي</span>
+          <span class="badge">جاهزية للاختبار</span>
+        </div>
+      </div>
+      <div class="heroCard">
+        <h3>قاعدة الخطة الذهبية</h3>
+        <ul>
+          <li>كل يوم حضور له قيمة.</li>
+          <li>كل غياب له متابعة في نفس اليوم.</li>
+          <li>كل حصة لها أثر واضح قبل الاختبار.</li>
+          <li>الحزم مطلوب، لكن بلا تحويل المدرسة إلى نقطة تفتيش.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+<section class="section">
+  <div class="kpi">
+    <div class="box"><strong>95%</strong><span>مستهدف الحضور</span></div>
+    <div class="box"><strong>50%</strong><span>خفض التأخر</span></div>
+    <div class="box"><strong>100%</strong><span>تنفيذ المراجعات</span></div>
+    <div class="box"><strong>24س</strong><span>متابعة الغياب</span></div>
+    <div class="box"><strong>7</strong><span>أيام حسم</span></div>
+    <div class="box"><strong>4</strong><span>مسارات عمل</span></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="sectionTitle"><h2>الفكرة الإدارية</h2><p>ضبط + تحفيز + مراجعة + متابعة</p></div>
+  <div class="grid">
+    <div class="card"><div class="icon">🎯</div><h3>الهدف العام</h3><p>رفع الانضباط والحضور الفعلي بعد الإجازة، وتحويل الأيام القصيرة قبل الاختبارات إلى فترة مراجعة مركزة وعلاج فاقد وتهيئة نفسية.</p></div>
+    <div class="card"><div class="icon">📊</div><h3>القيادة بالأرقام</h3><p>حصر يومي للحضور والتأخر والخروج المبكر، مع إعلان نسب الصفوف وتحليل الطلاب الأكثر احتياجًا للمتابعة.</p></div>
+    <div class="card"><div class="icon">🔥</div><h3>الحضور له قيمة</h3><p>لا يكفي أن نحضر الطالب للمدرسة؛ يجب أن يجد مراجعات ونماذج واختبارات قصيرة تجعل الغياب خسارة حقيقية.</p></div>
+  </div>
+</section>
+
+<section class="section" id="exec">
+  <div class="sectionTitle"><h2>خطة التنفيذ المرحلية</h2><p>من قبل العودة حتى ما قبل الاختبار</p></div>
+  <div class="timeline">
+    <div class="step"><div class="day">قبل العودة<br>بيومين</div><div class="stepContent"><h3>إطلاق الرسائل الوقائية</h3><p>إرسال رسائل قصيرة للأسر والطلاب توضح أن أيام ما بعد الإجازة مخصصة للمراجعة المركزة والنماذج التدريبية وعلاج الفاقد.</p></div></div>
+    <div class="step"><div class="day">اليوم الأول</div><div class="stepContent"><h3>استعادة الإيقاع</h3><p>استقبال منظم، حصر فوري، كلمة قصيرة، مراجعات خفيفة، إعلان الحوافز، وتقرير حضور بنهاية اليوم.</p></div></div>
+    <div class="step"><div class="day">اليومان<br>2 - 3</div><div class="stepContent"><h3>تشخيص ومراجعة</h3><p>اختبارات قصيرة من 5 إلى 10 أسئلة، تحديد المهارات الضعيفة، وتقديم مراجعات مركزة في المواد الأساسية.</p></div></div>
+    <div class="step"><div class="day">اليومان<br>4 - 5</div><div class="stepContent"><h3>علاج الأخطاء والتحفيز</h3><p>حل نماذج تدريبية، تصحيح فوري، مسابقات صفية، تكريم الصفوف الأعلى حضورًا، ومتابعة الطلاب المتكرري الغياب.</p></div></div>
+    <div class="step"><div class="day">قبل الاختبار</div><div class="stepContent"><h3>الجاهزية النهائية</h3><p>توضيح جدول الاختبارات، قواعد الدخول والخروج، أدوات كل مادة، نماذج الأسئلة، ورسائل الطمأنة النفسية.</p></div></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="sectionTitle"><h2>غرفة العمليات المدرسية</h2><p>توزيع أدوار واضح</p></div>
+  <table>
+    <thead><tr><th>المسؤول</th><th>المهمة</th><th>المخرج المتوقع</th></tr></thead>
+    <tbody>
+      <tr><td>مدير المدرسة</td><td>إعلان الخطة، متابعة المؤشرات اليومية، معالجة الحالات المتكررة.</td><td><span class="tag blue">تقرير يومي</span></td></tr>
+      <tr><td>الوكلاء</td><td>حصر الغياب والتأخر والخروج المبكر، والتواصل السريع.</td><td><span class="tag green">سجل متابعة</span></td></tr>
+      <tr><td>الموجه الطلابي</td><td>مقابلات فردية، دراسة أسباب الغياب، دعم نفسي وسلوكي.</td><td><span class="tag gold">خطة علاجية</span></td></tr>
+      <tr><td>المعلمون</td><td>مراجعات مركزة، نماذج قصيرة، بطاقة خروج، رصد المشاركة.</td><td><span class="tag green">أثر تعليمي</span></td></tr>
+      <tr><td>رائد النشاط</td><td>لوحة الشرف، تحديات الحضور، التحفيز اليومي.</td><td><span class="tag gold">دافعية أعلى</span></td></tr>
+      <tr><td>ولي الأمر</td><td>ضمان حضور الطالب، ضبط النوم، المتابعة المنزلية.</td><td><span class="tag blue">شراكة أسرية</span></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="section">
+  <div class="sectionTitle"><h2>برنامج الحصة الفعالة</h2><p>45 دقيقة لا تضيع</p></div>
+  <table>
+    <thead><tr><th>الزمن</th><th>النشاط</th><th>الأثر</th></tr></thead>
+    <tbody>
+      <tr><td>5 دقائق</td><td>سؤال افتتاحي سريع</td><td>استثارة الانتباه</td></tr>
+      <tr><td>10 دقائق</td><td>مراجعة مهارة مهمة</td><td>تركيز على الأولويات</td></tr>
+      <tr><td>15 دقيقة</td><td>حل نموذج قصير</td><td>تدريب مشابه للاختبار</td></tr>
+      <tr><td>10 دقائق</td><td>تصحيح فوري ومناقشة الأخطاء</td><td>علاج فاقد مباشر</td></tr>
+      <tr><td>5 دقائق</td><td>بطاقة خروج: أهم فكرة تعلمتها؟</td><td>قياس فهم سريع</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="section">
+  <div class="sectionTitle"><h2>مسارات الانضباط</h2><p>لا نعالج الجميع بالطريقة نفسها</p></div>
+  <div class="grid two">
+    <div class="card"><div class="icon">✅</div><h3>الطالب المنتظم</h3><p>تكريم فوري، بطاقة جاهزية، مشاركة في تحديات المراجعة، وإشادة داخل الصف.</p></div>
+    <div class="card"><div class="icon">⏰</div><h3>المتأخر صباحيًا</h3><p>تنبيه فردي، رسالة للأسرة عند التكرار، متابعة البوابة، وربط التأخر بفوات مراجعة مهمة.</p></div>
+    <div class="card"><div class="icon">⚠️</div><h3>الغائب المتكرر</h3><p>اتصال مباشر، مقابلة مع الموجه الطلابي، خطة تعويض، وتحديد سبب الغياب بدقة.</p></div>
+    <div class="card"><div class="icon">📚</div><h3>الضعيف دراسيًا</h3><p>جلسة مراجعة قصيرة، ملخص مهارات، زميل داعم، ونموذج اختبار علاجي.</p></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="sectionTitle"><h2>مؤشرات قياس النجاح</h2><p>الخطة لا تنجح بالكلام فقط</p></div>
+  <table>
+    <thead><tr><th>المؤشر</th><th>المستهدف</th><th>طريقة القياس</th></tr></thead>
+    <tbody>
+      <tr><td>نسبة الحضور اليومية</td><td><span class="tag green">95% فأكثر</span></td><td>نظام الحضور / سجل المدرسة</td></tr>
+      <tr><td>انخفاض التأخر الصباحي</td><td><span class="tag gold">50%</span></td><td>مقارنة يومية</td></tr>
+      <tr><td>تنفيذ مراجعات المواد الأساسية</td><td><span class="tag green">100%</span></td><td>خطة المعلم وسجل الحصص</td></tr>
+      <tr><td>التواصل مع أسر الغائبين</td><td><span class="tag blue">في نفس اليوم</span></td><td>سجل الاتصالات والرسائل</td></tr>
+      <tr><td>انخفاض الغياب المتكرر</td><td><span class="tag green">تحسن يومي</span></td><td>قائمة الطلاب المستهدفين</td></tr>
+      <tr><td>رضا المعلمين عن الانضباط</td><td><span class="tag gold">جيد جدًا فأعلى</span></td><td>استبانة قصيرة</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="section">
+  <div class="sectionTitle"><h2>رسائل جاهزة للنسخ</h2><p>للأسرة والطلاب</p></div>
+  <div class="tabs">
+    <button class="tab active" onclick="showPanel('p1',this)">ولي الأمر</button>
+    <button class="tab" onclick="showPanel('p2',this)">الطالب</button>
+    <button class="tab" onclick="showPanel('p3',this)">تنبيه غياب</button>
+    <button class="tab" onclick="showPanel('p4',this)">رسالة شكر</button>
+  </div>
+  <div id="p1" class="panel active"><div class="message"><button class="copy" onclick="copyText(this)">نسخ</button><strong>رسالة ولي الأمر</strong><p>ولي الأمر الكريم، تبدأ بعد إجازة عيد الأضحى مرحلة مهمة جدًا قبل الاختبارات النهائية، وستخصص المدرسة أيام العودة للمراجعة المركزة، علاج الفاقد، نماذج الاختبارات، وتنبيه الطلاب على المهارات المهمة. حضور ابنكم في هذه الفترة مؤثر جدًا في جاهزيته للاختبار. نأمل عدم الغياب أو التأخر.</p></div></div>
+  <div id="p2" class="panel"><div class="message"><button class="copy" onclick="copyText(this)">نسخ</button><strong>رسالة الطالب</strong><p>عزيزي الطالب، لا تجعل أيام ما بعد العيد تضيع عليك. هذه الأيام هي أيام المراجعات الذهبية قبل الاختبارات. حضورك يعني فرصة أعلى، وغيابك يعني أنك تلعب الاختبار على الوضع الصعب.</p></div></div>
+  <div id="p3" class="panel"><div class="message"><button class="copy" onclick="copyText(this)">نسخ</button><strong>رسالة تنبيه غياب</strong><p>ولي الأمر الكريم، نلاحظ غياب ابنكم في فترة حرجة تسبق الاختبارات النهائية. هذه الأيام مخصصة للمراجعة ومعالجة الفاقد، وغيابه قد يؤثر مباشرة في جاهزيته للاختبار. نأمل التواصل مع المدرسة عند وجود عذر، والحرص على انتظامه من الغد.</p></div></div>
+  <div id="p4" class="panel"><div class="message"><button class="copy" onclick="copyText(this)">نسخ</button><strong>رسالة شكر</strong><p>شكرًا لولي الأمر الكريم على حرصكم على انتظام ابنكم في هذه الفترة المهمة. حضور الطلاب بعد الإجازات مؤشر وعي ومسؤولية، ونسأل الله لهم التوفيق في اختباراتهم.</p></div></div>
+</section>
+
+<section class="section">
+  <div class="sectionTitle"><h2>قائمة متابعة يومية</h2><p>ضع علامة عند الإنجاز</p></div>
+  <div class="checklist">
+    <div class="check"><input type="checkbox"><label>حصر الغياب خلال أول 15 دقيقة<small>لا تنتظر نهاية اليوم، الغياب يبرد إذا تأخر التعامل معه.</small></label></div>
+    <div class="check"><input type="checkbox"><label>إرسال رسائل للغائبين<small>رسالة مختصرة ومباشرة لولي الأمر.</small></label></div>
+    <div class="check"><input type="checkbox"><label>إعلان الصف الأعلى حضورًا<small>المنافسة الصفية تجعل الانضباط لعبة مفيدة.</small></label></div>
+    <div class="check"><input type="checkbox"><label>تنفيذ مراجعة مركزة في المواد الأساسية<small>رياضيات، علوم، لغة عربية، إنجليزي حسب المرحلة.</small></label></div>
+    <div class="check"><input type="checkbox"><label>رصد المتأخرين صباحيًا<small>معالجة التأخر قبل أن يتحول إلى غياب مقنع.</small></label></div>
+    <div class="check"><input type="checkbox"><label>متابعة الطلاب كثيري الغياب<small>مقابلة فردية وخطة تعويض مختصرة.</small></label></div>
+    <div class="check"><input type="checkbox"><label>تقرير نهاية اليوم<small>نسبة حضور، أبرز حالات، إجراء الغد.</small></label></div>
+    <div class="check"><input type="checkbox"><label>رسالة شكر للمنتظمين<small>التعزيز السريع أقوى من خطاب طويل.</small></label></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="notice">
+    <div>
+      <h2>الخلاصة التنفيذية</h2>
+      <p>الفترة بعد الحج ليست أيام انتظار. هي أسبوع حسم: من حضر استفاد، ومن غاب تمت متابعته، ومن ضعف عولج، ومن التزم كُرّم.</p>
+    </div>
+    <div style="min-width:190px">
+      <b>مستهدف الانضباط</b>
+      <div class="meter"><div class="bar"></div></div>
+      <small>95% حضور يومي فأكثر</small>
+    </div>
+  </div>
+</section>
+
+
+<div class="footer">
+  تصميم د/فواز &nbsp; | &nbsp; <a href="https://t.me/TAqhjT3MFVE1Yzk0" target="_blank">تفضل للمزيد هنا</a>
+</div>
+</main>
+
+<section class="printA4">
+  <div class="printPage">
+    <div class="printHeader">
+      <div>
+        <div class="printKicker">خطة تشغيلية مدرسية مختصرة</div>
+        <h1>خطة الانضباط والجاهزية بعد إجازة عيد الأضحى</h1>
+        <p>تحويل فترة ما بعد الحج وقبل الاختبارات إلى أسبوع حسم: حضور، مراجعة، علاج فاقد، تهيئة نفسية، ومتابعة يومية بالأرقام.</p>
+      </div>
+      <div class="printSeal">✓</div>
+    </div>
+
+    <div class="printKPIs">
+      <div><b>95%</b><span>حضور يومي</span></div>
+      <div><b>50%</b><span>خفض التأخر</span></div>
+      <div><b>100%</b><span>مراجعات أساسية</span></div>
+      <div><b>24س</b><span>متابعة الغياب</span></div>
+      <div><b>7</b><span>أيام حسم</span></div>
+    </div>
+
+    <div class="printGrid">
+      <div class="printBox">
+        <h2>قاعدة الخطة الذهبية</h2>
+        <ul>
+          <li>كل يوم حضور له قيمة.</li>
+          <li>كل غياب له متابعة في نفس اليوم.</li>
+          <li>كل حصة لها أثر واضح قبل الاختبار.</li>
+          <li>الحزم مطلوب دون تحويل المدرسة إلى نقطة تفتيش.</li>
+        </ul>
+      </div>
+      <div class="printBox">
+        <h2>مراحل التنفيذ</h2>
+        <ol>
+          <li><b>قبل العودة:</b> رسائل وقائية للأسر والطلاب.</li>
+          <li><b>اليوم الأول:</b> استقبال، حصر، إعلان الحوافز.</li>
+          <li><b>اليومان 2-3:</b> تشخيص ومراجعة المهارات.</li>
+          <li><b>اليومان 4-5:</b> علاج أخطاء وتحفيز.</li>
+          <li><b>قبل الاختبار:</b> جاهزية نفسية وتنظيمية.</li>
+        </ol>
+      </div>
+    </div>
+
+    <table class="printTable">
+      <thead><tr><th>المسؤول</th><th>الدور المختصر</th><th>المخرج</th></tr></thead>
+      <tbody>
+        <tr><td>مدير المدرسة</td><td>إعلان الخطة ومراجعة المؤشرات اليومية.</td><td>تقرير يومي</td></tr>
+        <tr><td>الوكلاء</td><td>حصر الغياب والتأخر والخروج المبكر.</td><td>سجل متابعة</td></tr>
+        <tr><td>الموجه الطلابي</td><td>مقابلات فردية ودعم الطلاب كثيري الغياب.</td><td>خطة علاجية</td></tr>
+        <tr><td>المعلمون</td><td>مراجعات مركزة ونماذج قصيرة وبطاقات خروج.</td><td>أثر تعليمي</td></tr>
+        <tr><td>رائد النشاط</td><td>لوحة الشرف وتحديات الحضور والتحفيز.</td><td>دافعية أعلى</td></tr>
+        <tr><td>ولي الأمر</td><td>ضبط النوم وضمان الحضور والمتابعة المنزلية.</td><td>شراكة أسرية</td></tr>
+      </tbody>
+    </table>
+
+    <div class="printGrid small">
+      <div class="printBox">
+        <h2>برنامج الحصة الفعالة</h2>
+        <p><b>5د</b> سؤال افتتاحي، <b>10د</b> مراجعة مهارة، <b>15د</b> نموذج قصير، <b>10د</b> تصحيح فوري، <b>5د</b> بطاقة خروج.</p>
+      </div>
+      <div class="printBox">
+        <h2>مسارات الطلاب</h2>
+        <p><b>منتظم:</b> تكريم. <b>متأخر:</b> تنبيه ومتابعة. <b>غائب متكرر:</b> اتصال ومقابلة. <b>ضعيف:</b> مراجعة علاجية وزميل داعم.</p>
+      </div>
+    </div>
+
+    <table class="printTable compact">
+      <thead><tr><th>مؤشر النجاح</th><th>المستهدف</th><th>القياس</th></tr></thead>
+      <tbody>
+        <tr><td>الحضور اليومي</td><td>95% فأكثر</td><td>سجل الحضور</td></tr>
+        <tr><td>التأخر الصباحي</td><td>انخفاض 50%</td><td>مقارنة يومية</td></tr>
+        <tr><td>المراجعات الأساسية</td><td>تنفيذ 100%</td><td>خطة المعلم</td></tr>
+        <tr><td>التواصل مع الأسر</td><td>في نفس اليوم</td><td>سجل الاتصالات</td></tr>
+      </tbody>
+    </table>
+
+    <div class="printFooterLine">
+      <b>الخلاصة التنفيذية:</b>
+      الفترة بعد الحج ليست أيام انتظار؛ هي أسبوع حسم: من حضر استفاد، ومن غاب تمت متابعته، ومن ضعف عولج، ومن التزم كُرّم.
+    </div>
+  </div>
+</section>
+
+
+<script>
+function scrollToSection(id){document.getElementById(id).scrollIntoView({behavior:'smooth'});}
+function showPanel(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active'); btn.classList.add('active');
+}
+function copyText(btn){
+  const text=btn.parentElement.querySelector('p').innerText;
+  navigator.clipboard.writeText(text).then(()=>{btn.textContent='تم النسخ';setTimeout(()=>btn.textContent='نسخ',1300);});
+}
+</script>
+</body>
+</html>
