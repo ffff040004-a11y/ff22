@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>منصة مسابقة الإنجليزي المركزي - ثالث متوسط</title>
+<style>
+:root{--bg:#071426;--card:#0f233d;--card2:#132b4a;--gold:#f7c948;--blue:#38bdf8;--green:#22c55e;--red:#ef4444;--text:#eef6ff;--muted:#b9c7d8;--line:rgba(255,255,255,.12)}
+*{box-sizing:border-box}body{margin:0;font-family:Tahoma,Arial,sans-serif;background:radial-gradient(circle at 20% 0%,#1e3a8a 0,#071426 38%,#030712 100%);color:var(--text);min-height:100vh}.wrap{max-width:1180px;margin:auto;padding:22px}.hero{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:28px;padding:26px;background:linear-gradient(135deg,rgba(56,189,248,.16),rgba(247,201,72,.11)),rgba(15,35,61,.8);box-shadow:0 18px 50px rgba(0,0,0,.32)}.hero:before{content:"";position:absolute;inset:-80px auto auto -80px;width:220px;height:220px;background:rgba(247,201,72,.18);filter:blur(10px);border-radius:50%}.title{font-size:clamp(24px,4vw,44px);font-weight:900;margin:0 0 8px;color:#fff}.sub{color:var(--muted);font-size:16px;line-height:1.8;margin:0}.badges{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}.badge{border:1px solid var(--line);background:rgba(255,255,255,.08);padding:9px 13px;border-radius:999px;color:#fff}.panel{display:grid;grid-template-columns:300px 1fr;gap:18px;margin-top:18px}.side,.quiz{border:1px solid var(--line);border-radius:24px;background:rgba(15,35,61,.82);box-shadow:0 14px 40px rgba(0,0,0,.25)}.side{padding:16px;height:max-content;position:sticky;top:14px}.quiz{padding:18px;min-height:550px}.btn{border:0;border-radius:16px;padding:12px 16px;font-weight:800;cursor:pointer;color:#071426;background:#e5edf7;transition:.2s;box-shadow:0 7px 18px rgba(0,0,0,.18)}.btn:hover{transform:translateY(-2px)}.btn.primary{background:linear-gradient(135deg,var(--gold),#ffe796)}.btn.blue{background:linear-gradient(135deg,var(--blue),#93e5ff)}.btn.ghost{background:rgba(255,255,255,.08);color:#fff;border:1px solid var(--line)}.btn.danger{background:linear-gradient(135deg,#fb7185,#fecdd3)}.stack{display:grid;gap:10px}.select,.input{width:100%;border:1px solid var(--line);background:rgba(255,255,255,.08);color:#fff;border-radius:14px;padding:12px;outline:none}.select option{color:#111}.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}.stat{background:rgba(255,255,255,.07);border:1px solid var(--line);border-radius:16px;padding:12px;text-align:center}.stat b{display:block;font-size:24px;color:var(--gold)}.progress{height:12px;background:rgba(255,255,255,.12);border-radius:99px;overflow:hidden;margin:12px 0}.bar{height:100%;width:0;background:linear-gradient(90deg,var(--green),var(--blue),var(--gold));transition:.35s}.qtop{display:flex;justify-content:space-between;gap:10px;align-items:center;color:var(--muted);margin-bottom:12px}.category{color:var(--gold);font-weight:900}.qtext{font-size:clamp(20px,3vw,30px);line-height:1.55;font-weight:900;background:rgba(255,255,255,.06);border:1px solid var(--line);padding:20px;border-radius:20px;margin:0 0 16px;direction:ltr;text-align:left}.qtext.ar{direction:rtl;text-align:right}.options{display:grid;gap:12px}.option{direction:ltr;text-align:left;border:1px solid var(--line);background:rgba(255,255,255,.08);color:#fff;padding:15px 16px;border-radius:18px;cursor:pointer;font-weight:800;font-size:17px;transition:.2s}.option:hover{background:rgba(56,189,248,.18);transform:scale(1.01)}.option.correct{background:rgba(34,197,94,.25);border-color:var(--green)}.option.wrong{background:rgba(239,68,68,.25);border-color:var(--red)}.explain{display:none;margin-top:14px;padding:14px;border-radius:16px;background:rgba(247,201,72,.12);border:1px solid rgba(247,201,72,.35);line-height:1.8}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}.modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.55);z-index:10;padding:20px}.modal.show{display:flex}.pop{width:min(520px,96vw);text-align:center;border-radius:28px;padding:28px;background:linear-gradient(135deg,#10284a,#071426);border:1px solid var(--line);box-shadow:0 25px 80px #000}.pop h2{font-size:46px;margin:0 0 8px}.pop.good h2{color:var(--green)}.pop.bad h2{color:#fb7185}.footer{text-align:center;color:var(--muted);padding:20px 8px;line-height:1.8}.footer a{color:var(--gold);font-weight:900}.review{display:grid;gap:10px;margin-top:14px}.reviewItem{background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:16px;padding:12px;direction:ltr;text-align:left}.tiny{font-size:13px;color:var(--muted)}.confetti{position:fixed;top:-20px;width:10px;height:10px;z-index:20;animation:fall 1.4s linear forwards}@keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:.2}}@media(max-width:850px){.panel{grid-template-columns:1fr}.side{position:static}.qtop{align-items:flex-start;flex-direction:column}.stats{grid-template-columns:repeat(4,1fr)}.stat b{font-size:20px}}@media print{body{background:white;color:#111}.hero,.side,.actions,.footer{display:none}.panel{display:block}.quiz{box-shadow:none;border:0;color:#111;background:white}.qtext,.option,.reviewItem{color:#111;background:white;border-color:#ccc}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="hero">
+  <h1 class="title">منصة مسابقة الإنجليزي المركزي — ثالث متوسط</h1>
+  <p class="sub">أسئلة مستخرجة من ملف الاختبار النهائي ومفتاح الإجابة، مع إضافة محاكي الاختبار الوزاري. اختر القسم وابدأ التحدي… واللي يغلط؟ حظ أوفر، بس لا يزعل علينا الإنجليزي.</p>
+  <div class="badges"><span class="badge">إجابات فورية</span><span class="badge">عبارات تشجيعية</span><span class="badge">عرض الجواب الصحيح</span><span class="badge">يعمل دون إنترنت</span></div>
+</header>
+<section class="panel">
+<aside class="side">
+  <div class="stack">
+    <label>اختر المجموعة</label>
+    <select id="setSelect" class="select"></select>
+    <label>اختر القسم</label>
+    <select id="catSelect" class="select"></select>
+    <button class="btn primary" onclick="startQuiz()">ابدأ المسابقة</button>
+    <button class="btn blue" onclick="shuffleCurrent()">خلط الأسئلة</button>
+    <button class="btn ghost" onclick="showAllAnswers()">عرض كل الإجابات</button>
+    <button class="btn danger" onclick="resetQuiz()">تصفير النتائج</button>
+  </div>
+  <div class="stats">
+    <div class="stat"><b id="score">0</b>صحيح</div>
+    <div class="stat"><b id="wrong">0</b>خطأ</div>
+    <div class="stat"><b id="current">0</b>السؤال</div>
+    <div class="stat"><b id="total">0</b>المجموع</div>
+  </div>
+  <div class="progress"><div class="bar" id="bar"></div></div>
+  <p class="tiny">ملاحظة: أسئلة الكتابة والصور حُولت إلى صيغ مناسبة للمسابقة، مع تثبيت الإجابات حسب مفتاح الإجابة أو حسب النص الواضح في الملفات.</p>
+</aside>
+<main class="quiz" id="quizBox"></main>
+</section>
+<div class="footer">تصميم د/فواز — <a href="https://t.me/TAqhjT3MFVE1Yzk0" target="_blank">تفضل للمزيد هنا</a></div>
+</div>
+<div class="modal" id="modal" onclick="closeModal()"><div class="pop" id="pop"><h2 id="popTitle"></h2><p id="popMsg"></p><button class="btn primary">متابعة</button></div></div>
+<script>
+const DATA=[
+{set:'الاختبار النهائي المركزي 1447هـ',cat:'Guided Composition',q:'Write a paragraph about: How to Deal with Culture Shock. Use: practice – patient – follow – culture – gesture – learn',type:'info',answer:'Sample: Each country has its own culture. Learn about traditions, follow local customs, practice the language, ask about gestures, and be patient.'},
+{set:'الاختبار النهائي المركزي 1447هـ',cat:'Reading',q:'Lizzie is … years old.',options:['35','53','42','24'],answer:'35'},
+{set:'الاختبار النهائي المركزي 1447هـ',cat:'Reading',q:'Juliette’s father works at …',options:['school','store','hospital','bank'],answer:'hospital'},
+{set:'الاختبار النهائي المركزي 1447هـ',cat:'Reading',q:'How many siblings does Juliette have?',options:['2','3','4','5'],answer:'2'},
+{set:'الاختبار النهائي المركزي 1447هـ',cat:'Reading',q:'The children go to school …',options:['by car','by bus','by bike','on foot'],answer:'on foot'},
+{set:'الاختبار النهائي المركزي 1447هـ',cat:'Reading',q:'Juliette’s family have dinner at …',options:['8:12','8:15','8:00','8:30'],answer:'8:00'},
+{set:'الاختبار النهائي المركزي 1447هـ',cat:'Reading',q:'Mary’s favorite food is …',options:['pizza','spaghetti','salad','fish'],answer:'fish'},
+{set:'الاختبار النهائي المركزي 1447هـ',cat:'Reading - True/False',q:'Juliette lives in London with her family.',options:['T','F'],answer:'T'},
+{set:'الاختبار النهائي المركزي 1447هـ',cat:'Reading - True/False',q:'Juliette’s mother is a doctor.',options:['T','F'],answer:'F'},
+{set:'الاختبار النهائي المركزي 1447هـ',cat:'Reading - True/False',q:'Hans is six years old.',options:['T','F'],answer:'F'},
+{set:'الاختبار النهائي المركزي 1447هـ',cat:'Grammar',q:'A clown is a person … makes children laugh.',options:['who','which','when','where'],answer:'who'},
+{set:'الاختبار النهائي المركزي 1447هـ',cat:'Grammar',q:'My brother was watching TV while he … dinner.',options:['eat','eats','ate','was eating'],answer:'was eating'},
+{set:'الاختبار النهائي المركزي 1447هـ',cat:'Grammar',q:'I haven’t washed the clothes …',options:['just','yet','since','for'],answer:'yet'},
+{set:'الاختبار النهائي المركزي 1447هـ',cat:'Grammar',q:'I can’t stop … tea and coffee.',options:['drank','drinking','drinks','drink'],answer:'drinking'},
+{set:'الاختبار النهائي المركزي 1447هـ',cat:'Grammar',q:'I wish I … in a big house in the city.',options:['live','lives','lived','living'],answer:'lived'},
+{set:'الاختبار النهائي المركزي 1447هـ',cat:'Grammar',q:'By the time we arrived at the station, the bus …',options:['leave','left','had left','leaving'],answer:'had left'},
+{set:'الاختبار النهائي المركزي 1447هـ',cat:'Grammar',q:'He eats pizza, …?',options:['don’t he','doesn’t he','didn’t he','isn’t he'],answer:'doesn’t he'},
+{set:'الاختبار النهائي المركزي 1447هـ',cat:'Grammar',q:'You … honk your horn. It’s a hospital area.',options:['must','mustn’t','should','shouldn’t'],answer:'mustn’t'},
+{set:'الاختبار النهائي المركزي 1447هـ',cat:'Grammar',q:'Mona is a good cook. She cooks …',options:['good','better','best','well'],answer:'well'},
+{set:'الاختبار النهائي المركزي 1447هـ',cat:'Vocabulary',q:'Write the word under the picture: eating sticks used in some cultures.',options:['chopsticks','nail polish','farmer','airshow'],answer:'chopsticks'},
+{set:'الاختبار النهائي المركزي 1447هـ',cat:'Vocabulary',q:'Write the word under the picture: colored cosmetic for nails.',options:['nail polish','mud','pedal cab','farmer'],answer:'nail polish'},
+{set:'الاختبار النهائي المركزي 1447هـ',cat:'Vocabulary',q:'Write the word under the picture: a person who works on a farm.',options:['farmer','airshow','trunk','screwdriver'],answer:'farmer'},
+{set:'الاختبار النهائي المركزي 1447هـ',cat:'Vocabulary',q:'Write the word under the picture: a bicycle taxi.',options:['pedal cab','airshow','stop','knife'],answer:'pedal cab'},
+{set:'الاختبار النهائي المركزي 1447هـ',cat:'Vocabulary',q:'Write the word under the picture: planes performing in the sky.',options:['airshow','mud','trunk','stop'],answer:'airshow'},
+{set:'الاختبار النهائي المركزي 1447هـ',cat:'Vocabulary - Classify',q:'Classify: knife',options:['Things used for cooking','Parts of the car','Traffic signs','Things used for repairing'],answer:'Things used for cooking'},
+{set:'الاختبار النهائي المركزي 1447هـ',cat:'Vocabulary - Classify',q:'Classify: trunk',options:['Things used for cooking','Parts of the car','Traffic signs','Things used for repairing'],answer:'Parts of the car'},
+{set:'الاختبار النهائي المركزي 1447هـ',cat:'Vocabulary - Classify',q:'Classify: stop',options:['Things used for cooking','Parts of the car','Traffic signs','Things used for repairing'],answer:'Traffic signs'},
+{set:'الاختبار النهائي المركزي 1447هـ',cat:'Vocabulary - Classify',q:'Classify: screwdriver',options:['Things used for cooking','Parts of the car','Traffic signs','Things used for repairing'],answer:'Things used for repairing'},
+{set:'الاختبار النهائي المركزي 1447هـ',cat:'Orthography',q:'I caught him trying to s__eal my bike.',options:['b','d','p','t'],answer:'t'},
+{set:'الاختبار النهائي المركزي 1447هـ',cat:'Orthography',q:'A p__rsuasive person is someone who gets others to do what he wants or thinks.',options:['a','e','i','u'],answer:'e'},
+{set:'الاختبار النهائي المركزي 1447هـ',cat:'Orthography',q:'A neph__w is a son of one’s brother or sister.',options:['e','i','o','u'],answer:'e'},
+{set:'الاختبار النهائي المركزي 1447هـ',cat:'Orthography',q:'The twins often bor__ow each other’s clothes.',options:['r','o','a','w'],answer:'r'},
+{set:'الاختبار النهائي المركزي 1447هـ',cat:'Orthography',q:'Please help me to remo__e the table to the corner.',options:['f','v','r','t'],answer:'v'},
+{set:'محاكي الاختبار الوزاري 1447هـ',cat:'Composition',q:'Write a paragraph about “Saudi Arabia and Culture” at least 6 sentences.',type:'info',answer:'Sample: Saudi Arabia has beautiful cities, generous people, strong family values, traditional food, customs, and many beautiful places to visit.'},
+{set:'محاكي الاختبار الوزاري 1447هـ',cat:'Reading',q:'Daniel is a very … person.',options:['lonely','lazy','social'],answer:'social'},
+{set:'محاكي الاختبار الوزاري 1447هـ',cat:'Reading',q:'Daniel likes to go out with his …',options:['family','friends','relatives'],answer:'friends'},
+{set:'محاكي الاختبار الوزاري 1447هـ',cat:'Reading',q:'Daniel has a very important test in …',options:['history','geography','math'],answer:'history'},
+{set:'محاكي الاختبار الوزاري 1447هـ',cat:'Reading - True/False',q:'Daniel plans to study alone for history test.',options:['T','F'],answer:'F'},
+{set:'محاكي الاختبار الوزاري 1447هـ',cat:'Reading - True/False',q:'He has a lot to do.',options:['T','F'],answer:'T'},
+{set:'محاكي الاختبار الوزاري 1447هـ',cat:'Reading - True/False',q:'He wants to go to college.',options:['T','F'],answer:'T'},
+{set:'محاكي الاختبار الوزاري 1447هـ',cat:'Grammar',q:'Adel isn’t from Saudi Arabia, …?',options:['is he','isn’t he','he is','he isn’t'],answer:'is he'},
+{set:'محاكي الاختبار الوزاري 1447هـ',cat:'Grammar',q:'The cat … hates dogs is golden.',options:['who','which','where','her'],answer:'which'},
+{set:'محاكي الاختبار الوزاري 1447هـ',cat:'Grammar',q:'Ahmed is just joking. He … be serious.',options:["can't",'who','such','not'],answer:"can't"},
+{set:'محاكي الاختبار الوزاري 1447هـ',cat:'Grammar',q:'You … stop at the traffic lights.',options:['should','has to','must','can'],answer:'must'},
+{set:'محاكي الاختبار الوزاري 1447هـ',cat:'Grammar',q:'If Saif gets the job, he … very happy.',options:['will being','so much','so many','will be'],answer:'will be'},
+{set:'محاكي الاختبار الوزاري 1447هـ',cat:'Grammar - Rearrange',q:'please. / polite to / say / It is',options:['It is polite to say please.','Please polite to say it is.','It say polite to please.'],answer:'It is polite to say please.'},
+{set:'محاكي الاختبار الوزاري 1447هـ',cat:'Grammar - Rearrange',q:'are / the car. / They / able to / fix',options:['They are able to fix the car.','They able are to fix the car.','The car are able to they fix.'],answer:'They are able to fix the car.'},
+{set:'محاكي الاختبار الوزاري 1447هـ',cat:'Vocabulary - Pictures',q:'Picture 1 shows a lazy boy. Choose the word.',options:['people','ladder','Lazy','dishes'],answer:'Lazy'},
+{set:'محاكي الاختبار الوزاري 1447هـ',cat:'Vocabulary - Pictures',q:'Picture 2 shows a climbing tool. Choose the word.',options:['ladder','road','seatbelt','scissors'],answer:'ladder'},
+{set:'محاكي الاختبار الوزاري 1447هـ',cat:'Vocabulary - Pictures',q:'Picture 3 shows a car safety belt. Choose the word.',options:['road','seatbelt','people','dishes'],answer:'seatbelt'},
+{set:'محاكي الاختبار الوزاري 1447هـ',cat:'Vocabulary - Pictures',q:'Picture 4 shows a street. Choose the word.',options:['road','ladder','people','scissors'],answer:'road'},
+{set:'محاكي الاختبار الوزاري 1447هـ',cat:'Vocabulary - Pictures',q:'Picture 5 shows a group. Choose the word.',options:['people','Lazy','dishes','seatbelt'],answer:'people'},
+{set:'محاكي الاختبار الوزاري 1447هـ',cat:'Vocabulary - Pictures',q:'Picture 6 shows a cutting tool. Choose the word.',options:['scissors','road','ladder','dishes'],answer:'scissors'},
+{set:'محاكي الاختبار الوزاري 1447هـ',cat:'Vocabulary - Pictures',q:'Picture 7 shows plates and cups. Choose the word.',options:['dishes','people','road','seatbelt'],answer:'dishes'},
+{set:'محاكي الاختبار الوزاري 1447هـ',cat:'Vocabulary - Match',q:'A talkative person is someone who …',options:['makes you laugh','likes to be with others','speaks a lot','isn’t polite'],answer:'speaks a lot'},
+{set:'محاكي الاختبار الوزاري 1447هـ',cat:'Vocabulary - Match',q:'A rude person is someone who …',options:['makes you laugh','likes to be with others','speaks a lot','isn’t polite'],answer:'isn’t polite'},
+{set:'محاكي الاختبار الوزاري 1447هـ',cat:'Vocabulary - Match',q:'A funny person is someone who …',options:['makes you laugh','likes to be with others','speaks a lot','isn’t polite'],answer:'makes you laugh'},
+{set:'محاكي الاختبار الوزاري 1447هـ',cat:'Vocabulary - Match',q:'A friendly person is someone who …',options:['makes you laugh','likes to be with others','speaks a lot','isn’t polite'],answer:'likes to be with others'},
+{set:'محاكي الاختبار الوزاري 1447هـ',cat:'Vocabulary - Odd word',q:'Choose the odd word: sorry – please – excuse me – artist',options:['sorry','please','excuse me','artist'],answer:'artist'},
+{set:'محاكي الاختبار الوزاري 1447هـ',cat:'Vocabulary - Odd word',q:'Choose the odd word: carefully – quickly – recklessly – disease',options:['carefully','quickly','recklessly','disease'],answer:'disease'},
+{set:'محاكي الاختبار الوزاري 1447هـ',cat:'Vocabulary - Odd word',q:'Choose the odd word: dishwashing – poverty – clean up the room – take out the garbage',options:['dishwashing','poverty','clean up the room','take out the garbage'],answer:'poverty'},
+{set:'محاكي الاختبار الوزاري 1447هـ',cat:'Orthography',q:'Can you spell it? po__ice',options:['l','r','n','t'],answer:'l'},
+{set:'محاكي الاختبار الوزاري 1447هـ',cat:'Orthography',q:'Can you spell it? fa__m',options:['r','l','n','t'],answer:'r'},
+{set:'محاكي الاختبار الوزاري 1447هـ',cat:'Orthography',q:'Can you spell it? t__avel',options:['r','l','n','d'],answer:'r'},
+{set:'محاكي الاختبار الوزاري 1447هـ',cat:'Orthography',q:'Can you spell it? stu__y',options:['d','t','r','l'],answer:'d'},
+{set:'محاكي الاختبار الوزاري 1447هـ',cat:'Orthography',q:'Can you spell it? tenni__',options:['s','c','t','r'],answer:'s'},
+{set:'محاكي الاختبار الوزاري 1447هـ',cat:'Orthography',q:'Can you spell it? whe__l',options:['e','a','i','o'],answer:'e'},
+{set:'محاكي الاختبار الوزاري 1447هـ',cat:'Orthography - Spelling',q:'Choose the correct spelling.',options:['factory','faktoory','facktwry','facotry'],answer:'factory'},
+{set:'محاكي الاختبار الوزاري 1447هـ',cat:'Orthography - Spelling',q:'Choose the correct spelling.',options:['lanb','land','lanp','lind'],answer:'land'},
+{set:'محاكي الاختبار الوزاري 1447هـ',cat:'Orthography - Spelling',q:'Choose the correct spelling.',options:['knife','nife','knive','knif'],answer:'knife'},
+{set:'محاكي الاختبار الوزاري 1447هـ',cat:'Orthography - Spelling',q:'Choose the correct spelling.',options:['idea','Ldea','Ibea','idee'],answer:'idea'},
+{set:'محاكي الاختبار الوزاري 1447هـ',cat:'Orthography - Spelling',q:'Choose the correct spelling.',options:['tronk','trink','trunk','trunke'],answer:'trunk'},
+{set:'محاكي الاختبار الوزاري 1447هـ',cat:'Orthography - Spelling',q:'Choose the correct spelling.',options:['drenk','drnk','dreik','drink'],answer:'drink'},
+{set:'محاكي الاختبار الوزاري 1447هـ',cat:'Orthography - Spelling',q:'Choose the correct spelling.',options:['monoy','money','mony','mwony'],answer:'money'},
+{set:'محاكي الاختبار الوزاري 1447هـ',cat:'Orthography - Spelling',q:'Choose the correct spelling.',options:['kollege','college','koleg','colg'],answer:'college'}
+];
+let pool=[],idx=0,score=0,wrong=0,locked=false,answered=[];
+const good=['ياسلام! إجابة ولا أروع','برافو عليك! ممتاز','كفو والله! الإنجليزي صار يخاف منك','رهيب! استمر','تمام التمام'];
+const bad=['حظ أوفر… الجواب الصحيح ظهر لك','قريبة، لكن الإنجليزي لفّ عليك شوي','لا بأس، تعلّمناها الآن','غلطة وتعدي… ركّز في الجاي','مو مشكلة، الجولة القادمة لك'];
+function uniq(a){return [...new Set(a)]}
+function init(){const sets=uniq(DATA.map(x=>x.set));setSelect.innerHTML=sets.map(s=>`<option>${s}</option>`).join('')+`<option>كل المجموعات</option>`;setSelect.onchange=fillCats;fillCats();startQuiz()}
+function fillCats(){let s=setSelect.value;let arr=DATA.filter(x=>s==='كل المجموعات'||x.set===s);let cats=['كل الأقسام',...uniq(arr.map(x=>x.cat))];catSelect.innerHTML=cats.map(c=>`<option>${c}</option>`).join('')}
+function startQuiz(){let s=setSelect.value,c=catSelect.value;pool=DATA.filter(x=>(s==='كل المجموعات'||x.set===s)&&(c==='كل الأقسام'||x.cat===c));idx=0;score=0;wrong=0;answered=[];render()}
+function shuffleCurrent(){pool.sort(()=>Math.random()-.5);idx=0;render()}
+function resetQuiz(){startQuiz()}
+function render(){locked=false;total.textContent=pool.length;current.textContent=Math.min(idx+1,pool.length);scoreEl();bar.style.width=pool.length?((idx)/pool.length*100)+'%':'0%';if(!pool.length){quizBox.innerHTML='<h2>لا توجد أسئلة في هذا القسم.</h2>';return}let item=pool[idx];if(item.type==='info'){quizBox.innerHTML=`<div class="qtop"><span class="category">${item.set} / ${item.cat}</span><span>سؤال كتابي - للعرض</span></div><p class="qtext">${item.q}</p><div class="explain" style="display:block"><b>إجابة مقترحة:</b><br>${item.answer}</div><div class="actions"><button class="btn blue" onclick="nextQ()">التالي</button><button class="btn ghost" onclick="showAllAnswers()">عرض كل الإجابات</button></div>`;return}
+quizBox.innerHTML=`<div class="qtop"><span class="category">${item.set} / ${item.cat}</span><span>السؤال ${idx+1} من ${pool.length}</span></div><p class="qtext">${item.q}</p><div class="options">${item.options.map(o=>`<button class="option" onclick="choose(this,'${safe(o)}')">${o}</button>`).join('')}</div><div class="explain" id="explain"><b>الجواب الصحيح:</b> ${item.answer}</div><div class="actions"><button class="btn blue" onclick="nextQ()">التالي</button><button class="btn ghost" onclick="showAnswer()">إظهار الجواب</button></div>`}
+function safe(s){return String(s).replace(/'/g,"&#39;")}
+function choose(btn,val){if(locked)return;locked=true;let item=pool[idx];let ok=val===item.answer;document.querySelectorAll('.option').forEach(b=>{if(b.textContent===item.answer)b.classList.add('correct')});if(!ok)btn.classList.add('wrong');ok?score++:wrong++;answered.push({q:item.q,a:item.answer,y:val,ok});scoreEl();document.getElementById('explain').style.display='block';pop(ok);if(ok)confetti()}
+function scoreEl(){score.textContent=score;document.getElementById('score').textContent=score;document.getElementById('wrong').textContent=wrong}
+function nextQ(){if(idx<pool.length-1){idx++;render()}else{finish()}}
+function showAnswer(){let item=pool[idx];document.querySelectorAll('.option').forEach(b=>{if(b.textContent===item.answer)b.classList.add('correct')});document.getElementById('explain').style.display='block'}
+function pop(ok){popTitle.textContent= ok? good[Math.floor(Math.random()*good.length)] : bad[Math.floor(Math.random()*bad.length)];popMsg.textContent= ok?'استمر… باقي الأسئلة تنتظر جلدك لها.':'راجع الجواب الصحيح ثم تابع.';pop.className='pop '+(ok?'good':'bad');modal.classList.add('show')}
+function closeModal(){modal.classList.remove('show')}
+function confetti(){for(let i=0;i<45;i++){let d=document.createElement('div');d.className='confetti';d.style.left=Math.random()*100+'vw';d.style.background=['#f7c948','#38bdf8','#22c55e','#fb7185'][i%4];d.style.animationDelay=Math.random()*.25+'s';document.body.appendChild(d);setTimeout(()=>d.remove(),1700)}}
+function finish(){bar.style.width='100%';let pct=pool.length?Math.round(score/(score+wrong||1)*100):0;quizBox.innerHTML=`<h2 class="title">انتهت المسابقة</h2><div class="stats"><div class="stat"><b>${score}</b>صحيح</div><div class="stat"><b>${wrong}</b>خطأ</div><div class="stat"><b>${pct}%</b>النسبة</div><div class="stat"><b>${pool.length}</b>عدد الأسئلة</div></div><p class="sub">${pct>=80?'نتيجة قوية… ياسلام عليك!':'تحتاج مراجعة بسيطة، ولا عليك: حظ أوفر والجاي أجمل.'}</p><div class="actions"><button class="btn primary" onclick="startQuiz()">إعادة المحاولة</button><button class="btn ghost" onclick="showAllAnswers()">مراجعة الإجابات</button></div>`}
+function showAllAnswers(){let arr=pool.length?pool:DATA;quizBox.innerHTML='<h2>مراجعة الأسئلة والإجابات</h2><div class="review">'+arr.map((x,i)=>`<div class="reviewItem"><b>${i+1}. ${x.q}</b><br><span class="tiny">${x.set} / ${x.cat}</span><br><b>Answer:</b> ${x.answer}</div>`).join('')+'</div><div class="actions"><button class="btn primary" onclick="startQuiz()">رجوع للمسابقة</button><button class="btn ghost" onclick="window.print()">طباعة</button></div>'}
+init();
+</script>
+</body>
+</html>

@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>محاكي الاختبار الوزاري | اللغة الإنجليزية - ثالث متوسط</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0b1f3a;
+  --navy:#102a4c;
+  --navy2:#16365f;
+  --gold:#e9b949;
+  --gold-deep:#c9952a;
+  --teal:#13a89e;
+  --teal-deep:#0c7d75;
+  --cream:#f6f1e7;
+  --paper:#fffdf8;
+  --green:#16a34a;
+  --red:#e23b4e;
+  --shadow:0 18px 50px -18px rgba(11,31,58,.55);
+  --ring:0 0 0 4px rgba(233,185,73,.25);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{
+  font-family:'Tajawal',sans-serif;
+  color:var(--ink);
+  background:
+    radial-gradient(1200px 600px at 85% -10%, rgba(19,168,158,.20), transparent 60%),
+    radial-gradient(1000px 700px at 5% 110%, rgba(233,185,73,.18), transparent 55%),
+    linear-gradient(160deg,#0b1f3a,#102a4c 45%,#0c2444);
+  min-height:100%;
+  padding:18px;
+  display:flex;justify-content:center;align-items:flex-start;
+}
+.en{font-family:'Poppins','Tajawal',sans-serif;direction:ltr;unicode-bidi:isolate}
+.app{width:100%;max-width:840px}
+
+/* ---------- Header ---------- */
+.topbar{
+  display:flex;align-items:center;gap:14px;
+  background:linear-gradient(120deg,rgba(255,253,248,.96),rgba(246,241,231,.92));
+  border:1px solid rgba(233,185,73,.5);
+  border-radius:22px;padding:14px 18px;box-shadow:var(--shadow);
+  position:relative;overflow:hidden;
+}
+.topbar::before{content:"";position:absolute;inset:0;background:
+  repeating-linear-gradient(135deg,rgba(19,168,158,.05) 0 12px,transparent 12px 24px);pointer-events:none}
+.crest{
+  width:54px;height:54px;flex:none;border-radius:14px;
+  background:linear-gradient(145deg,var(--teal),var(--teal-deep));
+  display:grid;place-items:center;color:#fff;font-weight:800;font-size:26px;
+  box-shadow:0 8px 18px -6px rgba(12,125,117,.6);border:2px solid rgba(255,255,255,.4)
+}
+.titles h1{font-size:19px;font-weight:900;letter-spacing:.2px;line-height:1.2}
+.titles p{font-size:13px;color:var(--navy2);font-weight:500;margin-top:2px}
+.badge-min{margin-inline-start:auto;text-align:center;background:var(--ink);color:var(--gold);
+  border-radius:14px;padding:8px 12px;font-weight:800;font-size:12px;line-height:1.3;border:1px solid var(--gold)}
+
+/* ---------- Cards / screens ---------- */
+.screen{margin-top:18px;animation:rise .5s cubic-bezier(.2,.8,.25,1) both}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.card{
+  background:linear-gradient(180deg,var(--paper),var(--cream));
+  border-radius:24px;box-shadow:var(--shadow);
+  border:1px solid rgba(11,31,58,.06);overflow:hidden
+}
+
+/* ---------- Home ---------- */
+.hero{padding:26px 24px 8px;text-align:center}
+.hero .kick{display:inline-block;font-weight:800;color:var(--teal-deep);background:rgba(19,168,158,.12);
+  padding:6px 14px;border-radius:999px;font-size:13px;letter-spacing:.5px}
+.hero h2{font-size:27px;font-weight:900;margin:14px 0 6px;color:var(--ink)}
+.hero p{color:var(--navy2);font-size:14.5px;max-width:520px;margin:0 auto;line-height:1.7}
+.exam-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;padding:22px 24px 6px}
+.exam-card{
+  cursor:pointer;border:none;text-align:right;font-family:inherit;
+  background:#fff;border-radius:18px;padding:16px 16px 14px;
+  border:1.5px solid rgba(11,31,58,.08);position:relative;transition:.22s;
+  box-shadow:0 6px 16px -10px rgba(11,31,58,.5)
+}
+.exam-card:hover{transform:translateY(-4px);border-color:var(--gold);box-shadow:0 16px 30px -16px rgba(201,149,42,.6)}
+.exam-card .num{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;
+  font-family:'Poppins';font-weight:800;color:#fff;font-size:17px;
+  background:linear-gradient(145deg,var(--navy),var(--navy2));margin-bottom:10px}
+.exam-card:nth-child(2) .num{background:linear-gradient(145deg,var(--teal),var(--teal-deep))}
+.exam-card:nth-child(3) .num{background:linear-gradient(145deg,var(--gold-deep),var(--gold))}
+.exam-card:nth-child(4) .num{background:linear-gradient(145deg,#8a4dd6,#6c33b5)}
+.exam-card:nth-child(5) .num{background:linear-gradient(145deg,#d65a8a,#b53371)}
+.exam-card h3{font-size:15.5px;font-weight:800;line-height:1.3}
+.exam-card .meta{font-size:12.5px;color:var(--navy2);margin-top:5px;font-weight:600}
+.exam-card .topic{font-size:12px;color:var(--teal-deep);font-weight:700;margin-top:7px}
+.allbtn-wrap{padding:8px 24px 24px}
+.allbtn{width:100%;border:none;font-family:inherit;cursor:pointer;border-radius:16px;padding:16px;
+  font-size:16px;font-weight:800;color:var(--ink);
+  background:linear-gradient(120deg,var(--gold),#f2cd6b);box-shadow:0 10px 24px -12px var(--gold-deep);transition:.2s}
+.allbtn:hover{transform:translateY(-2px);filter:brightness(1.04)}
+
+/* ---------- Quiz HUD ---------- */
+.hud{display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  background:rgba(255,253,248,.95);border:1px solid rgba(233,185,73,.4);
+  border-radius:18px;padding:10px 14px;box-shadow:var(--shadow)}
+.hud .back{border:none;cursor:pointer;font-family:inherit;font-weight:800;color:var(--navy);
+  background:rgba(16,42,76,.08);border-radius:10px;padding:8px 12px;font-size:13px}
+.hud .back:hover{background:rgba(16,42,76,.15)}
+.chip{font-weight:800;font-size:13px;padding:7px 12px;border-radius:999px;display:flex;align-items:center;gap:6px}
+.chip.section{background:rgba(19,168,158,.14);color:var(--teal-deep)}
+.chip.score{background:rgba(22,163,74,.13);color:var(--green)}
+.chip.streak{background:rgba(233,185,73,.2);color:var(--gold-deep)}
+.hud .spacer{margin-inline-start:auto}
+.progress{height:9px;border-radius:99px;background:rgba(16,42,76,.1);margin-top:12px;overflow:hidden}
+.progress > i{display:block;height:100%;border-radius:99px;width:0;
+  background:linear-gradient(90deg,var(--teal),var(--gold));transition:width .4s ease}
+
+/* ---------- Question ---------- */
+.q-card{padding:24px 24px 26px;margin-top:16px}
+.q-tag{display:inline-flex;gap:8px;align-items:center;font-weight:800;font-size:12.5px;
+  color:var(--navy2);background:rgba(16,42,76,.07);padding:6px 12px;border-radius:999px}
+.q-tag b{color:var(--teal-deep)}
+.q-text{font-size:21px;font-weight:700;line-height:1.6;margin:16px 0 6px;color:var(--ink)}
+.q-text .blank{color:var(--gold-deep);font-weight:800;letter-spacing:1px}
+.q-sub{font-size:13.5px;color:var(--navy2);font-weight:600;margin-bottom:6px}
+.options{display:grid;gap:11px;margin-top:18px}
+.opt{
+  cursor:pointer;border:1.6px solid rgba(11,31,58,.12);background:#fff;
+  border-radius:15px;padding:15px 17px;font-family:inherit;font-size:17px;font-weight:600;
+  text-align:right;display:flex;align-items:center;gap:13px;transition:.16s;color:var(--ink)
+}
+.opt .key{width:30px;height:30px;flex:none;border-radius:9px;display:grid;place-items:center;
+  font-family:'Poppins';font-weight:700;font-size:14px;background:rgba(16,42,76,.08);color:var(--navy)}
+.opt:hover:not(:disabled){border-color:var(--teal);transform:translateX(-3px)}
+.opt:disabled{cursor:default}
+.opt.correct{border-color:var(--green);background:linear-gradient(0deg,rgba(22,163,74,.1),rgba(22,163,74,.05))}
+.opt.correct .key{background:var(--green);color:#fff}
+.opt.wrong{border-color:var(--red);background:linear-gradient(0deg,rgba(226,59,78,.1),rgba(226,59,78,.05))}
+.opt.wrong .key{background:var(--red);color:#fff}
+.opt.dim{opacity:.55}
+
+/* ---------- Feedback ---------- */
+.feedback{margin-top:18px;border-radius:16px;padding:15px 18px;display:none;align-items:center;gap:12px;
+  font-weight:800;font-size:17px;animation:pop .35s cubic-bezier(.2,1.4,.4,1) both}
+@keyframes pop{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:none}}
+.feedback.good{display:flex;background:linear-gradient(120deg,rgba(22,163,74,.14),rgba(19,168,158,.1));color:var(--green);border:1.5px solid rgba(22,163,74,.35)}
+.feedback.bad{display:flex;background:linear-gradient(120deg,rgba(226,59,78,.12),rgba(233,185,73,.1));color:var(--red);border:1.5px solid rgba(226,59,78,.3)}
+.feedback .emoji{font-size:26px}
+.feedback .ans{display:block;font-size:13.5px;font-weight:700;color:var(--navy2);margin-top:3px}
+.feedback .ans .en{color:var(--teal-deep)}
+.nextbar{margin-top:18px;display:none}
+.nextbar.show{display:block}
+.next{width:100%;border:none;cursor:pointer;font-family:inherit;border-radius:15px;padding:15px;
+  font-size:16.5px;font-weight:800;color:#fff;background:linear-gradient(120deg,var(--navy),var(--teal-deep));
+  box-shadow:0 10px 22px -12px var(--teal-deep);transition:.2s}
+.next:hover{transform:translateY(-2px);filter:brightness(1.06)}
+
+/* ---------- Results ---------- */
+.result{padding:34px 26px;text-align:center}
+.result .ring{width:150px;height:150px;margin:6px auto 18px;position:relative}
+.result .ring svg{transform:rotate(-90deg)}
+.result .ring .pct{position:absolute;inset:0;display:grid;place-content:center;font-family:'Poppins';font-weight:800;font-size:34px;color:var(--ink)}
+.result h2{font-size:26px;font-weight:900}
+.result .msg{font-size:16px;color:var(--navy2);font-weight:600;margin-top:8px;line-height:1.6}
+.result .stats{display:flex;justify-content:center;gap:12px;margin:22px 0 8px;flex-wrap:wrap}
+.stat{background:#fff;border:1.5px solid rgba(11,31,58,.08);border-radius:16px;padding:14px 20px;min-width:96px}
+.stat b{display:block;font-family:'Poppins';font-size:26px;font-weight:800}
+.stat span{font-size:12.5px;color:var(--navy2);font-weight:700}
+.stat.ok b{color:var(--green)} .stat.no b{color:var(--red)} .stat.tot b{color:var(--navy)}
+.result .actions{display:flex;gap:12px;justify-content:center;margin-top:20px;flex-wrap:wrap}
+.result .actions button{border:none;cursor:pointer;font-family:inherit;font-weight:800;font-size:15px;border-radius:14px;padding:14px 22px;transition:.2s}
+.btn-gold{background:linear-gradient(120deg,var(--gold),#f2cd6b);color:var(--ink)}
+.btn-ghost{background:rgba(16,42,76,.08);color:var(--navy)}
+.result .actions button:hover{transform:translateY(-2px)}
+
+/* ---------- Toast (big celebration word) ---------- */
+.toast{position:fixed;inset:0;display:none;place-items:center;pointer-events:none;z-index:60}
+.toast.show{display:grid}
+.toast .word{font-family:'Tajawal';font-weight:900;font-size:clamp(46px,13vw,120px);
+  color:#fff;text-shadow:0 8px 30px rgba(0,0,0,.4);animation:tword .9s cubic-bezier(.2,1.5,.3,1) both;
+  padding:10px 30px;border-radius:24px}
+.toast.good .word{background:linear-gradient(120deg,rgba(22,163,74,.9),rgba(19,168,158,.9))}
+.toast.bad .word{background:linear-gradient(120deg,rgba(226,59,78,.9),rgba(201,149,42,.9));font-size:clamp(34px,9vw,80px)}
+@keyframes tword{0%{opacity:0;transform:scale(.4) rotate(-6deg)}60%{opacity:1;transform:scale(1.05)}100%{opacity:0;transform:scale(1) translateY(-30px)}}
+
+/* ---------- Confetti ---------- */
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:55}
+
+/* ---------- Footer credit ---------- */
+.credit{margin:20px auto 6px;text-align:center;color:rgba(246,241,231,.85);font-size:13px;font-weight:600}
+.credit a{color:var(--gold);text-decoration:none;font-weight:800}
+.credit a:hover{text-decoration:underline}
+.credit .sig{display:inline-block;background:rgba(255,253,248,.1);border:1px solid rgba(233,185,73,.4);
+  border-radius:999px;padding:6px 16px;margin-top:6px}
+
+@media(max-width:560px){
+  body{padding:12px}
+  .q-text{font-size:18.5px}.opt{font-size:15.5px}
+  .titles h1{font-size:16px}.hero h2{font-size:22px}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- Header -->
+  <div class="topbar">
+    <div class="crest">EN</div>
+    <div class="titles">
+      <h1>محاكي الاختبار الوزاري — اللغة الإنجليزية</h1>
+      <p>الصف الثالث المتوسط · الفترة الدراسية الثانية · ١٤٤٧هـ</p>
+    </div>
+    <div class="badge-min">٤٠<br><span style="font-size:10px">الدرجة الكاملة</span></div>
+  </div>
+
+  <!-- Screens render here -->
+  <div id="root"></div>
+
+  <div class="credit">
+    منصة تفاعلية تعليمية · <span class="sig">تصميم د/ فواز</span><br>
+    <a href="https://t.me/TAqhjT3MFVE1Yzk0" target="_blank" rel="noopener">قناة التصاميم على تيليجرام ↗</a>
+  </div>
+</div>
+
+<div class="toast" id="toast"><div class="word" id="toastWord"></div></div>
+<canvas id="confetti"></canvas>
+
+<script>
+/* =========================================================
+   بنك الأسئلة — مستخرج من النماذج الخمسة (اختبار محاكٍ وزاري)
+   كل سؤال: { t: نص السؤال, sub: تلميح/تعليمات, opts:[خيارات],
+   a: رقم الإجابة الصحيحة (0-based), sec: القسم }
+   ========================================================= */
+const EXAMS = [
+  {
+    title:"النموذج الأول",
+    topic:"قطعة: Japan",
+    qs:[
+      // Reading – Japan
+      {sec:"Reading",t:'Japan is surrounded by the ___ Ocean.',opts:["Pacific","Atlantic","Indian","Arctic"],a:0},
+      {sec:"Reading",t:'The Japanese cultivate ___ in the warm water around the islands.',opts:["flowers","pearls","herbs","fruit"],a:1},
+      {sec:"Reading",t:'They grow ___ and vegetables.',opts:["rice","wheat","beans","nuts"],a:0},
+      {sec:"Reading",t:'The Japanese people are very ___ and active.',opts:["rude","happy","sad","polite"],a:3},
+      {sec:"Reading",t:'True or False: The Japanese favourite food is raw chicken and rice.',opts:["True","False"],a:1},
+      {sec:"Reading",t:'True or False: Their writing goes from top to bottom.',opts:["True","False"],a:0},
+      // Grammar
+      {sec:"Grammar",t:'While I was driving the car, I ___ into the tree.',opts:["crashed","crash","crashing","crashes"],a:0},
+      {sec:"Grammar",t:'This is the doctor ___ treats my father.',opts:["who","which","whose","where"],a:0},
+      {sec:"Grammar",t:'Sara enjoys ___ Italian food.',opts:["cook","cooking","cooks","cooked"],a:1},
+      {sec:"Grammar",t:"I haven't done the homework ___ .",opts:["already","just","yet","ago"],a:2},
+      {sec:"Grammar",t:'If you study hard, you will ___ the exam.',opts:["pass","passing","passes","passed"],a:0},
+      {sec:"Grammar",t:"You haven't cleaned the room, ___ ?",opts:["have you","you have","haven't you","you haven't"],a:0},
+      {sec:"Grammar",t:'You ___ help your dad.',opts:["mustn't","shouldn't","isn't","should"],a:3},
+      {sec:"Grammar",t:'Ali has so ___ books.',opts:["much","many","a lot","little"],a:1},
+      // Vocabulary (word bank)
+      {sec:"Vocabulary",t:'Noura went to the library to ___ books.',opts:["borrow","feed","tip","remove"],a:0},
+      {sec:"Vocabulary",t:'A ___ is a person who grows potatoes.',opts:["farmer","tourist","thief","doctor"],a:0},
+      {sec:"Vocabulary",t:'My brothers always ___ the fish.',opts:["feed","borrow","remove","tip"],a:0},
+      {sec:"Vocabulary",t:'In America, it is polite to ___ a taxi.',opts:["tip","feed","borrow","hang up"],a:0},
+      {sec:"Vocabulary",t:'People of the city are always ___ .',opts:["in a hurry","poor","polite","fake"],a:0},
+      {sec:"Vocabulary",t:'In many countries people ___ the shoes before entering a house.',opts:["remove","feed","borrow","tip"],a:0},
+      {sec:"Vocabulary",t:'Poverty means being ___ .',opts:["poor","rich","busy","kind"],a:0},
+      {sec:"Vocabulary",t:'"call up" means …',opts:["phone","prepare for a test","advantage","rather"],a:0},
+      {sec:"Vocabulary",t:'"study" means …',opts:["prepare for a test","phone","something new","undecided"],a:0},
+      {sec:"Vocabulary",t:'"of course" means …',opts:["yes in a strong way","rather","phone","something new"],a:0},
+      {sec:"Vocabulary",t:'"kind of" means …',opts:["rather","phone","undecided","advantage"],a:0},
+      {sec:"Vocabulary",t:'"novelty" means …',opts:["something new","yes in a strong way","phone","rather"],a:0},
+      {sec:"Vocabulary",t:'"up in the air" means …',opts:["undecided","something new","rather","phone"],a:0},
+      // Orthography
+      {sec:"Orthography",t:'Rearrange the letters: (revmeo)',sub:'Please ___ your sandals before entering the mosque.',opts:["remove","mover","remona","movere"],a:0},
+      {sec:"Orthography",t:'Rearrange the letters: (mroirr)',sub:'She looked at herself in the ___ .',opts:["mirror","mirrer","ROImr","rimorr"],a:0},
+      {sec:"Orthography",t:'Rearrange the letters: (dinm)',sub:'Please ___ your step while walking on the stairs.',opts:["mind","dmin","nidm","mdin"],a:0},
+      {sec:"Orthography",t:'Rearrange the letters: (pkcote)',sub:'She put her phone in her ___ .',opts:["pocket","packet","pockte","poket"],a:0},
+      {sec:"Orthography",t:'Choose the missing letter: hair___rush',opts:["b","m","s","o"],a:0},
+      {sec:"Orthography",t:'Choose the missing letter: ho___t',opts:["s","m","a","o"],a:0},
+      {sec:"Orthography",t:'Choose the missing letter: p___llution',opts:["o","a","s","m"],a:0},
+      {sec:"Orthography",t:'Choose the missing letter: co___plaint',opts:["m","s","b","a"],a:0},
+    ]
+  },
+  {
+    title:"النموذج الثاني",
+    topic:"قطعة: Dubai Mall",
+    qs:[
+      // Reading – Dubai Mall
+      {sec:"Reading",t:'Dubai Mall was opened in:',opts:["2002","2008","2010","2019"],a:1},
+      {sec:"Reading",t:'It contains 1,200:',opts:["libraries","offices","shops","gardens"],a:2},
+      {sec:"Reading",t:'It has an aquarium and an underwater:',opts:["zoo","museum","cinema","station"],a:0},
+      {sec:"Reading",t:'The mall includes a VR ___ where virtual adventures come to life.',opts:["school","pool","bank","park"],a:3},
+      {sec:"Reading",t:'True or False: Dubai Mall is a part of the Burj Khalifa complex.',opts:["True","False"],a:0},
+      {sec:"Reading",t:"True or False: The mall doesn't attract millions of visitors each year.",opts:["True","False"],a:1},
+      // Grammar
+      {sec:"Grammar",t:'Have you done the homework ___ ?',opts:["yet","already","just","before"],a:0},
+      {sec:"Grammar",t:'She is good at English, ___ ?',opts:["is she","she is","isn't she","she isn't"],a:2},
+      {sec:"Grammar",t:'English is a language ___ is easy to learn.',opts:["who","which","where","when"],a:1},
+      {sec:"Grammar",t:'Sami would rather ___ coffee than tea.',opts:["drink","drinks","drank","drinking"],a:0},
+      {sec:"Grammar",t:'If you heat ice, it ___ .',opts:["melt","melts","melting","melted"],a:1},
+      {sec:"Grammar",t:'May I ___ to the manager?',opts:["speak","speaks","spoke","spoken"],a:0},
+      {sec:"Grammar",t:'___ TV is boring.',opts:["Watch","Watched","Watches","Watching"],a:3},
+      {sec:"Grammar",t:'Ahlam had ___ to the park.',opts:["go","goes","gone","went"],a:2},
+      {sec:"Grammar",t:"I can't stand ___ in a line.",opts:["wait","waiting","waited","waits"],a:1},
+      {sec:"Grammar",t:"You mustn't ___ your car here.",opts:["park","parks","parked","parking"],a:0},
+      // Vocabulary
+      {sec:"Vocabulary",t:"People remove their shoes so that they don't bring ___ inside the house.",opts:["mud","tip","toothpaste","friendly"],a:0},
+      {sec:"Vocabulary",t:'You use a ___ to clean your teeth.',opts:["toothpaste","mud","tip","crowded"],a:0},
+      {sec:"Vocabulary",t:'A ___ person is someone who likes to be with others.',opts:["friendly","crowded","mud","tip"],a:0},
+      {sec:"Vocabulary",t:'Riyadh is full of people. It is always ___ .',opts:["crowded","friendly","tip","mud"],a:0},
+      {sec:"Vocabulary",t:'"reduce" means …',opts:["make less","depend on","able to change in different situations","advantage"],a:0},
+      {sec:"Vocabulary",t:'"flexible" means …',opts:["able to change in different situations","make less","depend on","finally"],a:0},
+      // Orthography
+      {sec:"Orthography",t:'Choose the correct letter: G___aduation',opts:["r","f","m","z"],a:0},
+      {sec:"Orthography",t:'Choose the correct letter: Tal___ative',opts:["w","r","k","y"],a:2},
+      {sec:"Orthography",t:'Choose the correct letter: Cell pho___e',opts:["z","x","o","n"],a:3},
+      {sec:"Orthography",t:'Choose the correct letter: Ta___i',opts:["f","x","u","v"],a:1},
+      {sec:"Orthography",t:'Circle the correct letter: gol___fish',opts:["d","b","p","q"],a:0},
+      {sec:"Orthography",t:'Circle the correct letter: poc___et',opts:["j","s","k","d"],a:2},
+      {sec:"Orthography",t:'Circle the correct letter: tou___ist',opts:["l","r","t","p"],a:1},
+      {sec:"Orthography",t:'Circle the correct letter: re___ort',opts:["s","a","q","y"],a:0},
+      {sec:"Orthography",t:'Circle the correct letter: far___er',opts:["n","m","d","s"],a:1},
+      {sec:"Orthography",t:'Circle the correct letter: c___te',opts:["s","y","a","u"],a:3},
+      {sec:"Orthography",t:'Circle the correct letter: cultu___e',opts:["r","f","d","y"],a:0},
+      {sec:"Orthography",t:'Circle the correct letter: co___plain',opts:["m","i","e","u"],a:0},
+      {sec:"Orthography",t:'Fill the missing letter: gui___e',opts:["d","t","b","p"],a:0},
+      {sec:"Orthography",t:'Fill the missing letter: f___n',opts:["a","o","u","e"],a:0},
+      {sec:"Orthography",t:'Fill the missing letter: chi___dren',opts:["l","r","n","m"],a:0},
+      {sec:"Orthography",t:'Fill the missing letter: No Ent___y',opts:["r","l","t","s"],a:0},
+    ]
+  },
+  {
+    title:"النموذج الثالث",
+    topic:"قطعة: My Village / Adam",
+    qs:[
+      // Reading
+      {sec:"Reading",t:'The village is ___ meters away from the sea.',opts:["10","100","1000","10000"],a:1},
+      {sec:"Reading",t:'"Poor" (line 2) means someone who doesn\u2019t have ___ .',opts:["children","parents","money","cars"],a:2},
+      {sec:"Reading",t:'Most of the people there work as ___ .',opts:["teachers","doctors","players","farmers"],a:3},
+      {sec:"Reading",t:'The writer goes to school ___ .',opts:["by car","by bike","by bus","on foot"],a:3},
+      {sec:"Reading",t:'The football team play on ___ .',opts:["Sunday","Monday","Tuesday","Friday"],a:0},
+      {sec:"Reading",t:'The writer goes to the stadium with his ___ .',opts:["brother","friends","father","cousins"],a:2},
+      // Grammar
+      {sec:"Grammar",t:'___ football is fun.',opts:["Play","Plays","Played","Playing"],a:3},
+      {sec:"Grammar",t:'Nora has taught Chinese ___ she was 22.',opts:["for","since","yet","ever"],a:1},
+      {sec:"Grammar",t:'Try ___ on time.',opts:["come","to come","comes","came"],a:1},
+      {sec:"Grammar",t:'___ sun rises in the east and sets in the west.',opts:["A","An","The","Ø (no article)"],a:2},
+      {sec:"Grammar",t:"You ___ smoke here. It's forbidden.",opts:["must","mustn't","should","shouldn't"],a:1},
+      {sec:"Grammar",t:"Samar didn't buy the toys, ___ ?",opts:["didn't she","do she","did she","does she"],a:2},
+      {sec:"Grammar",t:'If you help me, I ___ thank you.',opts:["would","could","will","had"],a:2},
+      {sec:"Grammar",t:'Ali ___ skate better when he was 12.',opts:["be able to","was able to","were able to","are able to"],a:1},
+      {sec:"Grammar",t:"Let\u2019s ___ a film.",opts:["watch","watches","watching","watched"],a:0},
+      {sec:"Grammar",t:'Faten is a good writer. She writes ___ .',opts:["good","goodly","well","will"],a:2},
+      {sec:"Grammar",t:'Complete with must / mustn\u2019t: You ___ cheat.',opts:["mustn't","must"],a:0},
+      {sec:"Grammar",t:'Complete with must / mustn\u2019t: You ___ obey your parents.',opts:["mustn't","must"],a:1},
+      // Vocabulary
+      {sec:"Vocabulary",t:'He was arrested for driving without a ___ .',opts:["horn","license","windshield","gas tank"],a:1},
+      {sec:"Vocabulary",t:'We need a ___ to cut the grass.',opts:["lawn mower","spoon","saw","knife"],a:0},
+      {sec:"Vocabulary",t:'We cut the grass by the ___ .',opts:["lawn mower","broom","hammer","pliers"],a:0},
+      // Orthography
+      {sec:"Orthography",t:'Choose the missing letter: la___der (used to climb up)',opts:["b","d","p","t"],a:1},
+      {sec:"Orthography",t:'Choose the missing letter: lu___gage (checked at the airport)',opts:["g","j","f","r"],a:0},
+      {sec:"Orthography",t:'Choose the missing letter: The room was warm and c___zy.',opts:["r","o","u","w"],a:1},
+      {sec:"Orthography",t:'Choose the missing letter: The village has very n___rrow streets.',opts:["a","e","i","o"],a:0},
+      {sec:"Orthography",t:'Choose the missing letter: The thie___ stole the bag.',opts:["v","h","f","d"],a:2},
+      {sec:"Orthography",t:'Choose the missing letter: The airsh___w was great.',opts:["a","e","u","o"],a:3},
+      {sec:"Orthography",t:'Choose the missing letter: Chinese eat with chopstic___s.',opts:["k","l","m","r"],a:0},
+      {sec:"Orthography",t:'Choose the missing letter: The car needs a new headl___ght.',opts:["a","e","y","i"],a:3},
+    ]
+  },
+  {
+    title:"النموذج الرابع",
+    topic:"قطعة: Juliette / Culture Shock",
+    qs:[
+      // Guided composition – word box (How to Deal with Culture Shock)
+      {sec:"Composition",t:'Each country has its own ___ .',sub:'Word box: practice – patient – follow – culture – gesture – learn',opts:["culture","gesture","practice","patient"],a:0},
+      {sec:"Composition",t:'Make sure to ___ as much as possible about traditions.',sub:'Word box: practice – patient – follow – culture – gesture – learn',opts:["learn","follow","practice","culture"],a:0},
+      {sec:"Composition",t:'Watch what others do while eating and ___ their table manners.',sub:'Word box: practice – patient – follow – culture – gesture – learn',opts:["follow","learn","gesture","patient"],a:0},
+      {sec:"Composition",t:"It\u2019s important to ___ speaking the language.",sub:'Word box: practice – patient – follow – culture – gesture – learn',opts:["practice","learn","follow","culture"],a:0},
+      {sec:"Composition",t:"If you don\u2019t understand a ___ , ask someone what it means.",sub:'Word box: practice – patient – follow – culture – gesture – learn',opts:["gesture","culture","practice","follow"],a:0},
+      {sec:"Composition",t:"Finally, be ___ and you\u2019ll learn how to fit in.",sub:'Word box: practice – patient – follow – culture – gesture – learn',opts:["patient","practice","gesture","learn"],a:0},
+      // Reading – Juliette
+      {sec:"Reading",t:'Lizzie is ___ years old.',opts:["35","53","42","24"],a:0},
+      {sec:"Reading",t:'Juliette\u2019s father works at a ___ .',opts:["school","store","hospital","bank"],a:2},
+      {sec:"Reading",t:'How many siblings does Juliette have?',opts:["2","3","4","5"],a:0},
+      {sec:"Reading",t:'The children go to school ___ .',opts:["by car","by bus","by bike","on foot"],a:3},
+      {sec:"Reading",t:'Juliette\u2019s family have dinner at ___ .',opts:["8:12","8:15","8:00","8:30"],a:2},
+      {sec:"Reading",t:"Mary's favourite food is ___ .",opts:["pizza","spaghetti","salad","fish"],a:3},
+      // Grammar
+      {sec:"Grammar",t:'An oven is a machine ___ is used for cooking food.',opts:["who","which","when","where"],a:1},
+      {sec:"Grammar",t:'Ahmed was walking in the park when he ___ Hameed.',opts:["see","sees","saw","seen"],a:2},
+      {sec:"Grammar",t:'Have you done the dishes ___ ?',opts:["already","just","yet","since"],a:2},
+      {sec:"Grammar",t:"I can't stop ___ tea and coffee.",opts:["drank","drinking","drinks","drink"],a:1},
+      {sec:"Grammar",t:'The meal was ___ delicious that we ate too much.',opts:["so","such","so many","so much"],a:0},
+      {sec:"Grammar",t:"He isn't good at sports, ___ ?",opts:["he is","he isn't","isn't he","is he"],a:3},
+      {sec:"Grammar",t:'You ___ cheat in the exam.',opts:["must","mustn't","should","can"],a:1},
+      {sec:"Grammar",t:'I wish I ___ in a big house in the city.',opts:["live","lives","lived","living"],a:2},
+      {sec:"Grammar",t:'Make sure ___ off the light before you leave.',opts:["turn","turned","turning","to turn"],a:3},
+      {sec:"Grammar",t:'By the time we arrived at the station, the bus ___ .',opts:["leave","left","had left","leaving"],a:2},
+      {sec:"Grammar",t:'Correct the verb: If you mix red and blue, you (would) get purple.',opts:["get","would get","got","getting"],a:0},
+      {sec:"Grammar",t:'Correct the verb: (move) to another country helps you to know its culture.',opts:["Moving","Move","Moved","Moves"],a:0},
+      // Vocabulary
+      {sec:"Vocabulary",t:'There were two security guards ___ outside the building.',opts:["clean up","on duty","reliable","polite"],a:1},
+      {sec:"Vocabulary",t:'"missing home and family" means:',opts:["newcomer","flexible","homesick","frustrating"],a:2},
+      {sec:"Vocabulary",t:'Would you ___ your radio a little?',opts:["turn right","turn left","turn around","turn down"],a:3},
+      // Orthography
+      {sec:"Orthography",t:'Choose the missing letter: I caught him trying to s___eal my bike.',opts:["b","d","p","t"],a:3},
+      {sec:"Orthography",t:'Choose the missing letter: A sa___ is a tool for cutting wood.',opts:["w","m","u","v"],a:0},
+      {sec:"Orthography",t:"Choose the missing letter: A neph___w is a son of one's brother or sister.",opts:["e","i","o","u"],a:0},
+      {sec:"Orthography",t:"Choose the missing letter: The twins often bor___ow each other's clothes.",opts:["r","o","a","w"],a:0},
+      {sec:"Orthography",t:'Choose the missing letter: She had to make a choi___e between the two dresses.',opts:["k","x","c","s"],a:2},
+      {sec:"Orthography",t:'Choose the missing letter: Our hotel had a sce___ic beauty of the countryside.',opts:["m","n","u","w"],a:1},
+      {sec:"Orthography",t:'Choose the missing letter: Please help me to remo___e the table to the corner.',opts:["f","v","r","t"],a:1},
+      {sec:"Orthography",t:'Choose the missing letter: We fill the car tan___ .',opts:["k","c","d","f"],a:0},
+    ]
+  },
+  {
+    title:"النموذج الخامس",
+    topic:"قطعة: Expo 2030 Riyadh",
+    qs:[
+      // Reading – Expo 2030
+      {sec:"Reading",t:'Which city will host Expo 2030?',opts:["Riyadh","Jeddah","Dubai","Doha"],a:0},
+      {sec:"Reading",t:'The expected date of hosting the event is between ___ .',opts:["October 2030 and March 2031","January 2030 and June 2030","May 2031 and December 2031","2025 and 2026"],a:0},
+      {sec:"Reading",t:'The pronoun "It" in the passage refers to ___ .',opts:["Riyadh","the budget","the World Expo history","the Pacific Ocean"],a:0},
+      {sec:"Reading",t:'The vote results were from ___ members.',opts:["182","165","119","78"],a:0},
+      {sec:"Reading",t:'The opposite of "top" is ___ .',opts:["big","down","short","high"],a:1},
+      {sec:"Reading",t:'The budget to hold the Expo has been more than ___ billion dollars.',opts:["2030","7","7.8","9"],a:2},
+      {sec:"Reading",t:'True or False: Prince Mohammed bin Salman underscored offering an exceptional edition of the Expo.',opts:["True","False"],a:0},
+      {sec:"Reading",t:'True or False: The World Expo showcases only technological innovations.',opts:["True","False"],a:1},
+      {sec:"Reading",t:'True or False: The World Expo showcases technological innovations of one nation only.',opts:["True","False"],a:1},
+      {sec:"Reading",t:'True or False: Riyadh will host the event from October 2030 to March 2031.',opts:["True","False"],a:0},
+      // Grammar
+      {sec:"Grammar",t:'A talkative person is someone ___ speaks a lot.',opts:["which","while","who","when"],a:2},
+      {sec:"Grammar",t:"He can't drive a car, ___ ?",opts:["can he","can't he","he can","he can't"],a:0},
+      {sec:"Grammar",t:'Amal couldn\u2019t sleep last night. She ___ be tired.',opts:["must","can't","so","such"],a:0},
+      {sec:"Grammar",t:'If Ali gets the job, he ___ happy.',opts:["will be","won't be","ought to be","might be"],a:0},
+      {sec:"Grammar",t:'___ is a good way to learn about other cultures.',opts:["Travel","Traveling","Travels","Traveled"],a:1},
+      {sec:"Grammar",t:'Have you washed the clothes ___ ?',opts:["just","yet","already","never"],a:1},
+      {sec:"Grammar",t:'Correct the verb: We didn\u2019t (expecting) to arrive so late.',opts:["expect","expecting","expected","expects"],a:0},
+      {sec:"Grammar",t:'Use "wish": I can\u2019t speak French.',opts:["I wish I could speak French.","I wish I speak French.","I wish I will speak French.","I wish I am speaking French."],a:0},
+      {sec:"Grammar",t:'Rewrite (same meaning): Put away the toys.',opts:["Put the toys away.","Put away them toys.","Put toys the away.","Away put the toys."],a:0},
+      // Vocabulary
+      {sec:"Vocabulary",t:'"benefits" means …',opts:["advantages","a fine","finally","decide"],a:0},
+      {sec:"Vocabulary",t:'"No kidding" means …',opts:["an expression of surprise and disbelief","finally","decide","advantages"],a:0},
+      {sec:"Vocabulary",t:'"make up your mind" means …',opts:["decide","finally","a fine","advantages"],a:0},
+      {sec:"Vocabulary",t:'"at long last" means …',opts:["finally","decide","a fine","advantages"],a:0},
+      {sec:"Vocabulary",t:'That diamond is not real. It is ___ .',opts:["thief","give direction","fake","steal"],a:2},
+      {sec:"Vocabulary",t:"Some people are always ___ . They don't have time to relax.",opts:["pretend","in a hurry","steal","give direction"],a:1},
+      {sec:"Vocabulary",t:'You use a toothbrush and ___ to brush your teeth.',opts:["toothpaste","hair dryer","shampoo","scissors"],a:0},
+      {sec:"Vocabulary",t:'You use ___ to cut paper.',opts:["dishwashing liquid","scissors","hair dryer","mirror"],a:1},
+      {sec:"Vocabulary",t:'Circle the odd word:',opts:["car","doctor","manager","athlete"],a:0},
+      {sec:"Vocabulary",t:'Circle the odd word:',opts:["book","technology","computer","cell phone"],a:0},
+      // Orthography (multi-letter -> word recognition)
+      {sec:"Orthography",t:'Complete: Cult___re makes people understand each other better.',opts:["u","o","e","a"],a:0},
+      {sec:"Orthography",t:'Complete: under___ ___ and (understand)',opts:["st","sd","ts","dn"],a:0},
+      {sec:"Orthography",t:'Complete: I hate this pr___gram.',opts:["o","a","e","u"],a:0},
+      {sec:"Orthography",t:'Complete: I am going to turn it of___ .',opts:["f","v","p","b"],a:0},
+      {sec:"Orthography",t:'Complete: Have you taken the gar___age out?',opts:["b","p","d","g"],a:0},
+      {sec:"Orthography",t:'Complete: It is a good id___ ___ (idea).',opts:["ea","ia","ai","ae"],a:0},
+      {sec:"Orthography",t:'Complete: learn about trad___ ___ ions (traditions).',opts:["it","et","ti","te"],a:0},
+      {sec:"Orthography",t:'Complete: Stu___ ___ means to prepare for a test (study).',opts:["dy","di","ey","ay"],a:0},
+      {sec:"Orthography",t:'Complete: I mean is a p___rase (phrase) to introduce an explanation.',opts:["h","f","w","r"],a:0},
+    ]
+  }
+];
+
+/* ---------- Celebration phrases ---------- */
+const GOOD_WORDS = ["يا سلام!","أحسنت!","رائع!","ممتاز!","عبقري!","ما شاء الله!","إجابة موفقة!","بطل!","مذهل!"];
+const BAD_WORDS  = ["حظ أوفر","حاول مجدداً","لا بأس!","قريب جداً","المرة القادمة","واصل المحاولة","لا تستسلم"];
+const GOOD_LINES = ["إجابة صحيحة تماماً.","ضربة معلّم!","استمر على هذا التألق.","معلومة في مكانها."];
+const BAD_LINES  = ["الإجابة الصحيحة موضّحة بالأسفل.","ركّز في المرة القادمة، أنت قريب.","راجع القاعدة ثم تابع.","الخطأ بداية الإتقان."];
+
+/* ============== App state & logic ============== */
+const root = document.getElementById('root');
+let active=[], idx=0, score=0, streak=0, bestStreak=0, answered=false, mode="";
+
+const KEYS=["A","B","C","D","E"];
+const rnd=a=>a[Math.floor(Math.random()*a.length)];
+
+function home(){
+  mode="";
+  let cards = EXAMS.map((e,i)=>`
+    <button class="exam-card" onclick="startExam(${i})">
+      <div class="num">${i+1}</div>
+      <h3>${e.title}</h3>
+      <div class="meta">${e.qs.length} سؤالاً</div>
+      <div class="topic en">${e.topic.replace(/قطعة: /,'')}</div>
+    </button>`).join('');
+  root.innerHTML=`
+    <div class="screen">
+      <div class="card">
+        <div class="hero">
+          <span class="kick">منصة المسابقة التفاعلية</span>
+          <h2>اختر نموذجاً وابدأ التحدي</h2>
+          <p>أسئلة موضوعية مستخرجة من نماذج المحاكي الوزاري. أجب بصحّة لتنطلق عبارات التشجيع، وتابع سلسلة إجاباتك الصحيحة!</p>
+        </div>
+        <div class="exam-grid">${cards}</div>
+        <div class="allbtn-wrap">
+          <button class="allbtn" onclick="startAll()">🎲 تحدّي شامل — كل الأسئلة بترتيب عشوائي</button>
+        </div>
+      </div>
+    </div>`;
+}
+
+function buildList(qs, examLabel){
+  return qs.map(q=>({...q, exam:examLabel}));
+}
+function startExam(i){
+  const e=EXAMS[i];
+  active=buildList(e.qs, e.title);
+  mode=e.title; reset(); render();
+}
+function startAll(){
+  active=[];
+  EXAMS.forEach(e=>active.push(...buildList(e.qs,e.title)));
+  // shuffle
+  for(let k=active.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[active[k],active[j]]=[active[j],active[k]];}
+  mode="تحدٍّ شامل"; reset(); render();
+}
+function reset(){idx=0;score=0;streak=0;bestStreak=0;answered=false;}
+
+function render(){
+  if(idx>=active.length){return results();}
+  const q=active[idx];
+  const pct=Math.round((idx/active.length)*100);
+  const opts=q.opts.map((o,i)=>`
+    <button class="opt" data-i="${i}" onclick="choose(${i})">
+      <span class="key">${KEYS[i]}</span><span class="en" style="flex:1">${o}</span>
+    </button>`).join('');
+  root.innerHTML=`
+   <div class="screen">
+    <div class="hud">
+      <button class="back" onclick="home()">‹ القائمة</button>
+      <span class="chip section">${secAr(q.sec)}</span>
+      <span class="spacer"></span>
+      <span class="chip streak">🔥 ${streak}</span>
+      <span class="chip score">⭐ ${score}/${active.length}</span>
+    </div>
+    <div class="progress"><i style="width:${pct}%"></i></div>
+
+    <div class="card q-card">
+      <span class="q-tag">سؤال <b>${idx+1}</b> من ${active.length} · <span class="en">${q.exam==='تحدٍّ شامل'?q.exam:''}</span></span>
+      <div class="q-text en">${hl(q.t)}</div>
+      ${q.sub?`<div class="q-sub en">${q.sub}</div>`:''}
+      <div class="options" id="opts">${opts}</div>
+      <div class="feedback" id="fb"></div>
+      <div class="nextbar" id="nb">
+        <button class="next" onclick="nextQ()">${idx+1>=active.length?'عرض النتيجة 🏁':'السؤال التالي ›'}</button>
+      </div>
+    </div>
+   </div>`;
+}
+
+function hl(t){return t.replace(/___/g,'<span class="blank">_____</span>');}
+function secAr(s){return ({Reading:"📖 استيعاب المقروء",Grammar:"✍️ القواعد",Vocabulary:"📚 المفردات",Orthography:"🔤 الإملاء",Composition:"📝 التعبير"})[s]||s;}
+
+function choose(i){
+  if(answered) return;
+  answered=true;
+  const q=active[idx];
+  const btns=[...document.querySelectorAll('.opt')];
+  btns.forEach(b=>{b.disabled=true; const bi=+b.dataset.i;
+    if(bi===q.a) b.classList.add('correct');
+    else if(bi===i) b.classList.add('wrong');
+    else b.classList.add('dim');
+  });
+  const fb=document.getElementById('fb');
+  const correct = i===q.a;
+  if(correct){
+    score++; streak++; bestStreak=Math.max(bestStreak,streak);
+    fb.className='feedback good';
+    fb.innerHTML=`<span class="emoji">🎉</span><div>${rnd(GOOD_WORDS)}<span class="ans">${rnd(GOOD_LINES)}</span></div>`;
+    celebrate(true);
+  }else{
+    streak=0;
+    fb.className='feedback bad';
+    fb.innerHTML=`<span class="emoji">💡</span><div>${rnd(BAD_WORDS)}<span class="ans">${rnd(BAD_LINES)} الإجابة: <b class="en">${q.opts[q.a]}</b></span></div>`;
+    celebrate(false);
+  }
+  document.getElementById('nb').classList.add('show');
+}
+function nextQ(){idx++;answered=false;render();}
+
+/* ---------- Results ---------- */
+function results(){
+  const pct=Math.round((score/active.length)*100);
+  const C=2*Math.PI*64, off=C*(1-pct/100);
+  let msg, head;
+  if(pct>=90){head="أداء أسطوري! 🏆";msg="إتقان رائع — أنت جاهز للاختبار الوزاري بكل ثقة.";}
+  else if(pct>=75){head="ممتاز! 🌟";msg="مستوى عالٍ، راجع الأخطاء البسيطة وستصل للكمال.";}
+  else if(pct>=50){head="جيد، وتقدر تطوّر أكثر 💪";msg="أنت في الطريق الصحيح — أعد المحاولة لرفع نتيجتك.";}
+  else{head="بداية الطريق 🚀";msg="لا تقلق، التكرار يصنع الإتقان. جرّب نموذجاً آخر وراجع القواعد.";}
+  const stroke = pct>=75? 'var(--green)' : pct>=50? 'var(--gold)' : 'var(--red)';
+  root.innerHTML=`
+   <div class="screen">
+    <div class="card result">
+      <div class="ring">
+        <svg width="150" height="150">
+          <circle cx="75" cy="75" r="64" stroke="rgba(16,42,76,.12)" stroke-width="14" fill="none"/>
+          <circle cx="75" cy="75" r="64" stroke="${stroke}" stroke-width="14" fill="none"
+            stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C}"
+            style="transition:stroke-dashoffset 1.1s ease" id="prog"/>
+        </svg>
+        <div class="pct">${pct}%</div>
+      </div>
+      <h2>${head}</h2>
+      <p class="msg">${msg}</p>
+      <div class="stats">
+        <div class="stat ok"><b>${score}</b><span>صحيحة</span></div>
+        <div class="stat no"><b>${active.length-score}</b><span>خاطئة</span></div>
+        <div class="stat tot"><b>${bestStreak}</b><span>أطول سلسلة 🔥</span></div>
+      </div>
+      <div class="actions">
+        <button class="btn-gold" onclick="restart()">🔁 إعادة المحاولة</button>
+        <button class="btn-ghost" onclick="home()">↩ القائمة الرئيسية</button>
+      </div>
+    </div>
+   </div>`;
+  setTimeout(()=>{const p=document.getElementById('prog'); if(p) p.style.strokeDashoffset=off;},120);
+  if(pct>=75) bigConfetti();
+}
+function restart(){idx=0;score=0;streak=0;bestStreak=0;answered=false;
+  if(mode==="تحدٍّ شامل"){for(let k=active.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[active[k],active[j]]=[active[j],active[k]];}}
+  render();}
+
+/* ---------- Toast word ---------- */
+function celebrate(good){
+  const t=document.getElementById('toast'), w=document.getElementById('toastWord');
+  t.className='toast show '+(good?'good':'bad');
+  w.textContent= good? rnd(GOOD_WORDS): rnd(BAD_WORDS);
+  if(good) miniConfetti();
+  clearTimeout(t._tm);
+  t._tm=setTimeout(()=>{t.className='toast';},900);
+}
+
+/* ---------- Confetti engine ---------- */
+const cv=document.getElementById('confetti'), cx=cv.getContext('2d');
+let parts=[],raf=null;
+function fit(){cv.width=innerWidth;cv.height=innerHeight;}
+fit();addEventListener('resize',fit);
+const COLORS=['#e9b949','#13a89e','#16a34a','#102a4c','#f2cd6b','#0c7d75'];
+function spawn(n,power){
+  for(let i=0;i<n;i++){
+    parts.push({x:innerWidth/2+(Math.random()-.5)*120,y:innerHeight*0.42,
+      vx:(Math.random()-.5)*power,vy:-(Math.random()*power*0.9+4),
+      g:0.18+Math.random()*0.12,r:5+Math.random()*6,
+      c:COLORS[Math.floor(Math.random()*COLORS.length)],
+      a:1,rot:Math.random()*6,vr:(Math.random()-.5)*.3});
+  }
+  if(!raf) loop();
+}
+function miniConfetti(){spawn(34,9);}
+function bigConfetti(){spawn(140,16);}
+function loop(){
+  cx.clearRect(0,0,cv.width,cv.height);
+  parts.forEach(p=>{p.vy+=p.g;p.x+=p.vx;p.y+=p.vy;p.rot+=p.vr;p.a-=0.008;
+    cx.save();cx.globalAlpha=Math.max(p.a,0);cx.translate(p.x,p.y);cx.rotate(p.rot);
+    cx.fillStyle=p.c;cx.fillRect(-p.r/2,-p.r/2,p.r,p.r*0.6);cx.restore();});
+  parts=parts.filter(p=>p.a>0&&p.y<cv.height+40);
+  if(parts.length){raf=requestAnimationFrame(loop);}else{cx.clearRect(0,0,cv.width,cv.height);raf=null;}
+}
+
+/* ---------- boot ---------- */
+home();
+</script>
+</body>
+</html>
