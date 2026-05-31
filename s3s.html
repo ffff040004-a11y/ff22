@@ -3,807 +3,374 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>منصة تحليل تقرير التقويم الخارجي للمدرسة</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<title>منصة تحليل التقويم الخارجي للمدارس</title>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-<script>
-  if(window.pdfjsLib){ pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js'; }
-</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
-  :root{
-    --ink:#0c2b2a;          /* كحلي/بترولي غامق */
-    --ink-2:#143f3d;
-    --teal:#1f6f6b;
-    --teal-soft:#e6f0ef;
-    --gold:#c4972b;
-    --gold-soft:#f6edd6;
-    --cream:#f6f3ea;        /* خلفية كريمية */
-    --paper:#ffffff;
-    --line:#e4ded0;
-    --muted:#6b7873;
-    /* مستويات الأداء */
-    --lvl-excel:#16a34a;
-    --lvl-progress:#2563eb;
-    --lvl-launch:#ea8c2b;
-    --lvl-prep:#dc2626;
-    --shadow:0 10px 30px -12px rgba(12,43,42,.28);
-    --shadow-sm:0 4px 14px -8px rgba(12,43,42,.35);
-    --radius:18px;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html,body{background:var(--cream);color:var(--ink);font-family:'Tajawal',sans-serif}
-  body{
-    line-height:1.7;
-    background-image:radial-gradient(circle at 12% -5%,rgba(31,111,107,.10),transparent 42%),
-                     radial-gradient(circle at 95% 0%,rgba(196,151,43,.10),transparent 40%);
-    background-attachment:fixed;
-  }
-  .wrap{max-width:1180px;margin:0 auto;padding:28px 20px 60px}
-  h1,h2,h3{font-family:'Amiri',serif;letter-spacing:0}
-  .display{font-family:'Amiri',serif}
-
-  /* ===== الترويسة ===== */
-  header.masthead{
-    position:relative;overflow:hidden;
-    background:linear-gradient(135deg,var(--ink) 0%,var(--ink-2) 60%,var(--teal) 130%);
-    color:#fff;border-radius:24px;padding:38px 36px;box-shadow:var(--shadow);
-    border:1px solid rgba(255,255,255,.06);
-  }
-  header.masthead::after{
-    content:"";position:absolute;inset:0;opacity:.5;pointer-events:none;
-    background:
-      repeating-linear-gradient(115deg,rgba(255,255,255,.025) 0 2px,transparent 2px 26px);
-  }
-  .brand-row{display:flex;align-items:center;gap:14px;position:relative;z-index:1}
-  .seal{width:54px;height:54px;border-radius:14px;flex:0 0 auto;
-    background:radial-gradient(circle at 30% 25%,var(--gold) 0%,#9c7620 90%);
-    display:grid;place-items:center;color:#1b1402;font-weight:800;font-size:13px;
-    box-shadow:inset 0 0 0 2px rgba(255,255,255,.25)}
-  .seal span{font-family:'Amiri',serif;font-size:26px;line-height:1}
-  header.masthead h1{font-size:34px;font-weight:700;margin-bottom:2px;position:relative;z-index:1}
-  header.masthead p{color:#cfe0de;font-size:15.5px;max-width:760px;position:relative;z-index:1}
-  .tagchip{display:inline-flex;gap:7px;align-items:center;margin-top:14px;
-    background:rgba(196,151,43,.16);border:1px solid rgba(196,151,43,.45);
-    color:var(--gold-soft);padding:5px 13px;border-radius:999px;font-size:12.5px;font-weight:500;
-    position:relative;z-index:1}
-
-  /* ===== لوحة الاستيراد ===== */
-  .panel{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);
-    box-shadow:var(--shadow-sm);padding:26px;margin-top:22px}
-  .panel-title{display:flex;align-items:center;gap:10px;margin-bottom:6px}
-  .panel-title .n{width:30px;height:30px;border-radius:9px;background:var(--ink);color:#fff;
-    display:grid;place-items:center;font-weight:800;font-size:14px;font-family:'Tajawal'}
-  .panel-title h2{font-size:21px}
-  .panel-sub{color:var(--muted);font-size:14px;margin-bottom:18px}
-
-  .tabs{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
-  .tab{border:1px solid var(--line);background:#fbfaf5;color:var(--ink);padding:9px 18px;
-    border-radius:11px;cursor:pointer;font-family:'Tajawal';font-weight:700;font-size:14px;transition:.18s}
-  .tab.active{background:var(--ink);color:#fff;border-color:var(--ink)}
-  .tab:hover:not(.active){border-color:var(--teal)}
-
-  .dropzone{border:2px dashed var(--line);border-radius:16px;padding:40px 20px;text-align:center;
-    background:linear-gradient(180deg,#fbfaf4,#fff);cursor:pointer;transition:.2s}
-  .dropzone:hover,.dropzone.drag{border-color:var(--teal);background:var(--teal-soft)}
-  .dropzone .ico{font-size:40px;margin-bottom:8px}
-  .dropzone b{font-size:17px}
-  .dropzone small{display:block;color:var(--muted);margin-top:6px;font-size:13px}
-  .filename{margin-top:14px;font-size:14px;color:var(--teal);font-weight:700;display:none}
-
-  textarea#jsonInput{width:100%;min-height:200px;border:1px solid var(--line);border-radius:12px;
-    padding:14px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;direction:ltr;
-    text-align:left;resize:vertical;background:#fbfaf5}
-
-  .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px;align-items:center}
-  .btn{border:none;border-radius:12px;padding:12px 26px;font-family:'Tajawal';font-weight:800;
-    font-size:15px;cursor:pointer;transition:.18s;display:inline-flex;gap:8px;align-items:center}
-  .btn-primary{background:linear-gradient(135deg,var(--teal),var(--ink-2));color:#fff;box-shadow:var(--shadow-sm)}
-  .btn-primary:hover{transform:translateY(-1px);filter:brightness(1.06)}
-  .btn-primary:disabled{opacity:.55;cursor:not-allowed;transform:none}
-  .btn-ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
-  .btn-gold{background:linear-gradient(135deg,var(--gold),#a87d1d);color:#1b1402}
-
-  .status{font-size:14px;font-weight:600}
-  .status.err{color:var(--lvl-prep)}
-  .status.ok{color:var(--lvl-excel)}
-  .spinner{width:18px;height:18px;border:3px solid rgba(255,255,255,.4);border-top-color:#fff;
-    border-radius:50%;animation:spin .8s linear infinite;display:inline-block}
-  @keyframes spin{to{transform:rotate(360deg)}}
-
-  .apikey-note{background:var(--gold-soft);border:1px solid #e7d4a3;border-radius:12px;
-    padding:12px 15px;font-size:13px;color:#6a5414;margin-top:14px}
-  .apikey-row{display:none;gap:10px;margin-top:12px;flex-wrap:wrap;align-items:center}
-  .apikey-row input{flex:1;min-width:240px;border:1px solid var(--line);border-radius:10px;
-    padding:10px 12px;font-family:ui-monospace,monospace;direction:ltr;text-align:left;font-size:13px}
-
-  /* ===== النتائج ===== */
-  #results{display:none;margin-top:26px}
-  .section{margin-top:26px}
-  .section-head{display:flex;align-items:center;gap:12px;margin-bottom:14px}
-  .section-head .bar{width:6px;height:26px;border-radius:6px;background:linear-gradient(var(--gold),var(--teal))}
-  .section-head h2{font-size:24px}
-
-  .grid{display:grid;gap:16px}
-  .info-grid{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
-  .info-card{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:14px 16px;box-shadow:var(--shadow-sm)}
-  .info-card .k{font-size:12.5px;color:var(--muted);margin-bottom:3px}
-  .info-card .v{font-size:18px;font-weight:800;font-family:'Tajawal'}
-
-  .overview{display:grid;grid-template-columns:340px 1fr;gap:18px}
-  @media(max-width:820px){.overview{grid-template-columns:1fr}.info-grid{grid-template-columns:1fr 1fr}}
-  .card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);
-    box-shadow:var(--shadow-sm);padding:22px}
-  .gauge-wrap{text-align:center;position:relative}
-  .gauge-center{position:absolute;left:0;right:0;top:60%;transform:translateY(-50%)}
-  .gauge-center .pct{font-size:42px;font-weight:800;font-family:'Tajawal'}
-  .gauge-center .lvl{font-size:16px;font-weight:700;margin-top:-4px}
-  .gauge-desc{color:var(--muted);font-size:13.5px;margin-top:6px}
-
-  .domain-cards{grid-template-columns:repeat(auto-fit,minmax(180px,1fr));margin-top:16px}
-  .dcard{border-radius:14px;padding:16px;color:#fff;position:relative;overflow:hidden;box-shadow:var(--shadow-sm)}
-  .dcard h3{font-family:'Tajawal';font-weight:800;font-size:16px}
-  .dcard .big{font-size:30px;font-weight:800;font-family:'Tajawal';margin-top:6px}
-  .dcard .lvl-tag{font-size:12px;background:rgba(255,255,255,.22);padding:2px 10px;border-radius:999px;display:inline-block;margin-top:6px}
-
-  /* مستويات */
-  .lvl-excel{background:linear-gradient(135deg,#16a34a,#0f7a37)}
-  .lvl-progress{background:linear-gradient(135deg,#2563eb,#1742a8)}
-  .lvl-launch{background:linear-gradient(135deg,#ea8c2b,#c06f17)}
-  .lvl-prep{background:linear-gradient(135deg,#dc2626,#9e1414)}
-  .badge{display:inline-block;padding:3px 11px;border-radius:999px;font-size:12.5px;font-weight:700;color:#fff}
-  .b-excel{background:var(--lvl-excel)}.b-progress{background:var(--lvl-progress)}
-  .b-launch{background:var(--lvl-launch)}.b-prep{background:var(--lvl-prep)}
-
-  /* الأكورديون / المعايير والمؤشرات */
-  .acc{border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-bottom:12px;background:var(--paper)}
-  .acc-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:15px 18px;
-    cursor:pointer;background:#fbfaf5;transition:.15s}
-  .acc-head:hover{background:var(--teal-soft)}
-  .acc-head .left{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-  .acc-head h3{font-family:'Tajawal';font-weight:800;font-size:17px}
-  .acc-head .pct{font-size:20px;font-weight:800;font-family:'Tajawal'}
-  .acc-head .chev{transition:.25s;color:var(--muted)}
-  .acc.open .chev{transform:rotate(180deg)}
-  .acc-body{display:none;padding:6px 18px 18px}
-  .acc.open .acc-body{display:block}
-  .criteria-mini{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 16px}
-  .crit-chip{border:1px solid var(--line);border-radius:11px;padding:8px 14px;background:#fbfaf5;font-size:13.5px}
-  .crit-chip b{font-family:'Tajawal';font-weight:800}
-
-  table.ind{width:100%;border-collapse:collapse;font-size:14px}
-  table.ind th,table.ind td{padding:11px 12px;text-align:right;border-bottom:1px solid var(--line);vertical-align:top}
-  table.ind th{background:var(--ink);color:#fff;font-family:'Tajawal';font-weight:700;font-size:13px;position:sticky}
-  table.ind tr:hover td{background:#fbfaf4}
-  .code{font-family:ui-monospace,monospace;direction:ltr;display:inline-block;font-size:12.5px;
-    background:var(--gold-soft);color:#6a5414;padding:2px 7px;border-radius:6px;font-weight:700}
-  .lvl-cell{font-weight:800;font-family:'Tajawal';white-space:nowrap}
-  .tip{color:var(--muted);font-size:13px;line-height:1.6;margin-top:4px}
-
-  /* تحليل */
-  .analysis-grid{grid-template-columns:1fr 1fr;align-items:start}
-  @media(max-width:820px){.analysis-grid{grid-template-columns:1fr}.overview .card canvas{max-height:240px}}
-  .list-rank{list-style:none}
-  .list-rank li{display:flex;justify-content:space-between;gap:10px;padding:9px 4px;border-bottom:1px dashed var(--line);font-size:14px}
-  .list-rank li b{font-family:'Tajawal';font-weight:800}
-  .crit-alert{border-right:4px solid var(--lvl-prep);background:#fdeaea;border-radius:10px;padding:10px 14px;margin-bottom:8px}
-  .crit-alert .code{background:#fff}
-  .empty-note{color:var(--muted);font-size:14px;padding:8px 0}
-
-  /* footer / credit */
-  .footer-credit{margin-top:40px;text-align:center;color:var(--muted);font-size:13.5px;
-    border-top:1px solid var(--line);padding-top:22px}
-  .footer-credit a{color:var(--teal);text-decoration:none;font-weight:700}
-  .footer-credit .sig{font-family:'Amiri',serif;font-size:19px;color:var(--ink);font-weight:700}
-
-  .toolbar{display:flex;gap:10px;justify-content:flex-end;margin-bottom:6px}
-
-  /* طباعة */
-  @media print{
-    body{background:#fff;background-image:none}
-    .no-print{display:none !important}
-    .panel,header.masthead{box-shadow:none}
-    .acc-body{display:block !important}
-    .card,.acc,.info-card{break-inside:avoid}
-    header.masthead{background:var(--ink) !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-    .dcard,.badge,.b-excel,.b-progress,.b-launch,.b-prep,table.ind th{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  }
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Tajawal:wght@400;500;700;800&display=swap');
+:root{
+  --navy:#0b2341;--navy2:#123a63;--blue:#1e63a5;--bg:#f4f7fb;--card:#fff;--muted:#64748b;
+  --green:#0f9f6e;--orange:#f59e0b;--red:#dc2626;--line:#e2e8f0;--shadow:0 18px 45px rgba(15,35,65,.10);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:"Cairo","Tajawal",sans-serif;color:#122033}
+.app{display:grid;grid-template-columns:290px 1fr;min-height:100vh}
+.sidebar{background:linear-gradient(180deg,var(--navy),#07182c);color:#fff;padding:22px;position:sticky;top:0;height:100vh;overflow:auto}
+.brand{display:flex;gap:12px;align-items:center;margin-bottom:24px}
+.logo{width:52px;height:52px;border-radius:18px;background:linear-gradient(135deg,#fff,#98c7ff);display:grid;place-items:center;color:var(--navy);font-weight:900;font-size:22px;box-shadow:0 10px 25px rgba(0,0,0,.25)}
+.brand h1{font-size:18px;line-height:1.45;margin:0}
+.brand small{color:#bfd4ea}
+.nav button{width:100%;border:0;background:transparent;color:#dce8f7;padding:12px 14px;border-radius:14px;text-align:right;margin:4px 0;cursor:pointer;font-family:inherit;font-weight:700}
+.nav button.active,.nav button:hover{background:rgba(255,255,255,.12);color:#fff}
+.main{padding:24px;overflow:hidden}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:18px}
+.title h2{margin:0;font-size:26px;color:var(--navy)}
+.title p{margin:4px 0 0;color:var(--muted)}
+.actions{display:flex;gap:10px;flex-wrap:wrap}
+.btn{border:0;border-radius:14px;padding:11px 16px;font-family:inherit;font-weight:800;cursor:pointer;background:var(--navy);color:#fff;box-shadow:0 8px 18px rgba(11,35,65,.18)}
+.btn.secondary{background:#fff;color:var(--navy);border:1px solid var(--line);box-shadow:none}
+.btn.danger{background:var(--red)}
+.btn.green{background:var(--green)}
+.dropzone{background:#fff;border:2px dashed #b8c7da;border-radius:22px;padding:26px;text-align:center;box-shadow:var(--shadow);margin-bottom:18px}
+.dropzone.drag{border-color:var(--blue);background:#edf6ff}
+.file-row{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:12px}
+input[type=file]{display:none}
+.progress{height:12px;background:#e8eef6;border-radius:999px;overflow:hidden;margin-top:16px}
+.bar{height:100%;width:0;background:linear-gradient(90deg,var(--green),var(--blue));transition:.25s}
+.log{margin-top:10px;color:var(--muted);font-size:14px;white-space:pre-wrap}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);padding:18px}
+.metric b{display:block;font-size:28px;color:var(--navy);margin-top:8px}
+.metric span{color:var(--muted);font-weight:700}
+.school{display:grid;grid-template-columns:2fr 1fr;gap:14px;margin-bottom:18px}
+.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.info-item{background:#f8fafc;border:1px solid var(--line);border-radius:14px;padding:10px}
+.info-item small{display:block;color:var(--muted);font-weight:700}.info-item strong{display:block;color:var(--navy);margin-top:4px}
+.level{display:inline-flex;padding:7px 12px;border-radius:999px;color:#fff;font-weight:900}
+.level.excellent{background:var(--green)}.level.progress{background:var(--blue)}.level.start{background:var(--orange)}.level.prepare{background:var(--red)}
+.charts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-bottom:18px}.chart-wrap{height:320px}
+.section{display:none}.section.active{display:block}
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.search,select,input.edit{border:1px solid var(--line);border-radius:14px;padding:11px 12px;font-family:inherit;background:#fff;min-width:180px}
+.table-wrap{overflow:auto;background:#fff;border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow)}
+table{width:100%;border-collapse:collapse;min-width:850px}th,td{border-bottom:1px solid var(--line);padding:12px;text-align:right;vertical-align:top}th{background:#f8fafc;color:var(--navy);font-weight:900}
+.badge{display:inline-block;padding:5px 10px;border-radius:999px;color:#fff;font-weight:800;font-size:12px}
+.badge.strong{background:var(--green)}.badge.weak{background:var(--orange)}.badge.critical{background:var(--red)}
+.ind-card{margin-bottom:10px}.ind-head{display:flex;justify-content:space-between;gap:10px;cursor:pointer}.ind-body{display:none;margin-top:12px;color:#334155}.ind-card.open .ind-body{display:block}
+.plan{border-right:5px solid var(--orange);margin-bottom:12px}
+.stake-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.modal{position:fixed;inset:0;background:rgba(2,6,23,.55);display:none;align-items:center;justify-content:center;padding:20px;z-index:20}
+.modal.show{display:flex}.modal-box{background:#fff;border-radius:24px;padding:20px;max-width:760px;width:100%;max-height:90vh;overflow:auto}
+.edit-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.toast{position:fixed;bottom:20px;left:20px;background:#0f172a;color:white;padding:13px 16px;border-radius:14px;box-shadow:var(--shadow);display:none;z-index:50}
+.toast.show{display:block}
+textarea{width:100%;min-height:170px;border:1px solid var(--line);border-radius:16px;padding:12px;font-family:inherit}
+@media(max-width:980px){.app{grid-template-columns:1fr}.sidebar{position:relative;height:auto}.grid,.school,.charts,.stake-grid{grid-template-columns:1fr}.info-grid{grid-template-columns:1fr}.topbar{align-items:flex-start;flex-direction:column}}
+@media print{.sidebar,.dropzone,.actions,.filters,.btn,.modal,.toast{display:none!important}.app{display:block}.main{padding:0}.card,.table-wrap{box-shadow:none;break-inside:avoid}body{background:white}}
 </style>
 </head>
 <body>
-<div class="wrap">
-
-  <!-- الترويسة -->
-  <header class="masthead">
-    <div class="brand-row">
-      <div class="seal"><span>تميز</span></div>
-      <div>
-        <h1>منصة تحليل تقرير التقويم الخارجي للمدرسة</h1>
-        <p>استيراد تقارير التقويم المدرسي الصادرة عن هيئة تقويم التعليم والتدريب، وقراءتها آليًّا، وتحليل مجالاتها ومعاييرها ومؤشراتها وعرضها في بطاقات ورسوم بيانية تفاعلية.</p>
-      </div>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><div class="logo">ت</div><div><h1>منصة تحليل التقويم الخارجي للمدارس</h1><small>قراءة PDF + تحليل + خطط تحسين</small></div></div>
+    <div class="nav">
+      <button class="active" data-page="dashboard">لوحة المعلومات</button>
+      <button data-page="all">جميع المؤشرات</button>
+      <button data-page="strengths">نقاط القوة</button>
+      <button data-page="weaknesses">نقاط الضعف</button>
+      <button data-page="critical">النقاط الحرجة</button>
+      <button data-page="plans">خطط التحسين</button>
+      <button data-page="stakeholders">آراء أصحاب المصلحة</button>
+      <button data-page="raw">النص المستخرج</button>
     </div>
-    <span class="tagchip">◆ يدعم مستويات الأداء الأربعة: التميز · التقدم · الانطلاق · التهيئة</span>
-  </header>
+  </aside>
 
-  <!-- لوحة الاستيراد -->
-  <div class="panel no-print" id="importPanel">
-    <div class="panel-title"><span class="n">١</span><h2>استيراد التقرير</h2></div>
-    <div class="panel-sub">اختر مسار الاستيراد: رفع ملف الـ PDF لقراءته آليًّا، أو لصق بيانات JSON المُستخرَجة مسبقًا.</div>
-
-    <div class="tabs">
-      <button class="tab active" data-tab="pdf">📄 رفع ملف PDF</button>
-      <button class="tab" data-tab="json">📋 لصق JSON</button>
-    </div>
-
-    <!-- مسار PDF -->
-    <div id="tab-pdf">
-      <div class="dropzone" id="dropzone">
-        <div class="ico">📥</div>
-        <b>اسحب ملف التقرير هنا أو انقر للاختيار</b>
-        <small>صيغة PDF فقط — تقرير مدرسة واحدة</small>
-        <div class="filename" id="filename"></div>
-      </div>
-      <input type="file" id="pdfInput" accept="application/pdf" hidden />
-
-      <div class="apikey-note">
-        <b>ملاحظة تشغيلية:</b> داخل بيئة Claude يُدار مفتاح الـ API تلقائيًّا. عند استضافة الملف على خادمك الخاص،
-        ستحتاج إلى تمرير مفتاح Anthropic أو استخدام وسيط (proxy) لتفادي قيود CORS. للاختبار المباشر يمكنك إدخال مفتاح مؤقت أدناه.
-        <div style="margin-top:8px">
-          <button class="btn btn-ghost" style="padding:6px 14px;font-size:13px" id="toggleKey">إدخال مفتاح API يدويًّا</button>
-        </div>
-        <div class="apikey-row" id="keyRow">
-          <input type="password" id="apiKey" placeholder="sk-ant-... (لا يُحفظ ويبقى في المتصفح فقط)" />
-        </div>
-      </div>
-
+  <main class="main">
+    <div class="topbar">
+      <div class="title"><h2>منصة تحليل التقويم الخارجي للمدارس</h2><p>استورد تقرير PDF، ثم راقب استخراج البيانات والمؤشرات بدقة مرنة.</p></div>
       <div class="actions">
-        <button class="btn btn-primary" id="extractBtn" disabled>
-          <span id="extractLabel">قراءة وتحليل التقرير</span>
-        </button>
-        <span class="status" id="status"></span>
+        <button class="btn secondary" onclick="openEdit()">تعديل معلومات المدرسة</button>
+        <button class="btn secondary" onclick="window.print()">طباعة</button>
+        <button class="btn danger" onclick="clearData()">مسح البيانات</button>
       </div>
     </div>
 
-    <!-- مسار JSON -->
-    <div id="tab-json" style="display:none">
-      <div class="panel-sub" style="margin-bottom:10px">شغّل موجّه الاستخراج في أي أداة، ثم الصق ناتج JSON كاملًا هنا.</div>
-      <textarea id="jsonInput" placeholder='{ "معلومات_المدرسة": { ... }, "المجالات": [ ... ] }' dir="ltr"></textarea>
-      <div class="actions">
-        <button class="btn btn-primary" id="loadJsonBtn">عرض التحليل</button>
-        <button class="btn btn-ghost" id="sampleBtn">تحميل نموذج تجريبي</button>
-        <span class="status" id="statusJson"></span>
+    <section class="dropzone" id="dropzone">
+      <h3>استيراد تقرير التقويم الخارجي PDF</h3>
+      <p>اختر الملف أو اسحبه هنا. لا تعتمد المنصة على OCR ولا على رقم صفحة ثابت.</p>
+      <div class="file-row">
+        <label class="btn" for="pdfFile">اختيار ملف PDF</label>
+        <input id="pdfFile" type="file" accept="application/pdf" />
+        <button class="btn green" onclick="analyzeSelected()">تحليل وتحميل</button>
+        <button class="btn secondary" onclick="applyPublish()">تطبيق ونشر على المنصة</button>
       </div>
-    </div>
-  </div>
+      <div class="progress"><div class="bar" id="bar"></div></div>
+      <div class="log" id="log">جاهز للاستيراد.</div>
+    </section>
 
-  <!-- النتائج -->
-  <div id="results">
-    <div class="toolbar no-print">
-      <button class="btn btn-gold" onclick="window.print()">🖨️ طباعة / حفظ PDF</button>
-      <button class="btn btn-ghost" id="newImport">استيراد تقرير آخر</button>
-    </div>
-
-    <!-- معلومات المدرسة -->
-    <div class="section">
-      <div class="section-head"><span class="bar"></span><h2>معلومات المدرسة</h2></div>
-      <div class="grid info-grid" id="schoolInfo"></div>
-    </div>
-
-    <!-- نظرة عامة -->
-    <div class="section">
-      <div class="section-head"><span class="bar"></span><h2>الأداء العام</h2></div>
-      <div class="overview">
-        <div class="card gauge-wrap">
-          <canvas id="gaugeChart" height="200"></canvas>
-          <div class="gauge-center">
-            <div class="pct" id="overallPct">—</div>
-            <div class="lvl" id="overallLvl"></div>
-          </div>
-          <div class="gauge-desc" id="overallDesc"></div>
+    <section id="dashboard" class="section active">
+      <div class="school">
+        <div class="card">
+          <h3>بيانات المدرسة</h3>
+          <div class="info-grid" id="schoolInfo"></div>
         </div>
         <div class="card">
-          <h3 style="font-family:'Tajawal';font-weight:800;font-size:17px;margin-bottom:10px">الأداء وفق المجالات</h3>
-          <canvas id="domainsChart" height="150"></canvas>
+          <h3>الأداء العام</h3>
+          <div class="metric"><span>النسبة العامة</span><b id="overallPct">0%</b></div>
+          <p><span id="overallLevel" class="level prepare">غير محدد</span></p>
         </div>
       </div>
-      <div class="grid domain-cards" id="domainCards"></div>
-    </div>
-
-    <!-- الأداء التفصيلي -->
-    <div class="section">
-      <div class="section-head"><span class="bar"></span><h2>الأداء التفصيلي للمجالات</h2></div>
-      <div id="detailed"></div>
-    </div>
-
-    <!-- آراء أصحاب المصلحة -->
-    <div class="section" id="stakeSection">
-      <div class="section-head"><span class="bar"></span><h2>آراء أصحاب المصلحة</h2></div>
-      <div class="card"><canvas id="stakeChart" height="120"></canvas></div>
-    </div>
-
-    <!-- نافس -->
-    <div class="section" id="nafesSection">
-      <div class="section-head"><span class="bar"></span><h2>أداء المدرسة في اختبارات "نافس"</h2></div>
-      <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr))" id="nafesCards"></div>
-    </div>
-
-    <!-- التحليل -->
-    <div class="section">
-      <div class="section-head"><span class="bar"></span><h2>القراءة التحليلية</h2></div>
-      <div class="grid analysis-grid">
-        <div class="card">
-          <h3 style="font-family:'Tajawal';font-weight:800;font-size:16px;margin-bottom:6px">توزيع المؤشرات على المستويات</h3>
-          <canvas id="distChart" height="160"></canvas>
-        </div>
-        <div class="card">
-          <h3 style="font-family:'Tajawal';font-weight:800;font-size:16px;margin-bottom:10px">ترتيب المجالات</h3>
-          <ul class="list-rank" id="domainRank"></ul>
-        </div>
-        <div class="card">
-          <h3 style="font-family:'Tajawal';font-weight:800;font-size:16px;margin-bottom:10px;color:var(--lvl-excel)">أعلى المؤشرات</h3>
-          <ul class="list-rank" id="topInd"></ul>
-        </div>
-        <div class="card">
-          <h3 style="font-family:'Tajawal';font-weight:800;font-size:16px;margin-bottom:10px;color:var(--lvl-launch)">أدنى المؤشرات</h3>
-          <ul class="list-rank" id="lowInd"></ul>
-        </div>
-        <div class="card" style="grid-column:1/-1">
-          <h3 style="font-family:'Tajawal';font-weight:800;font-size:16px;margin-bottom:10px;color:var(--lvl-prep)">المؤشرات الحرجة (أقل من 50%)</h3>
-          <div id="critList"></div>
-        </div>
-        <div class="card" style="grid-column:1/-1">
-          <h3 style="font-family:'Tajawal';font-weight:800;font-size:16px;margin-bottom:10px">مقارنة تقييم فريق التقويم بآراء أصحاب المصلحة</h3>
-          <canvas id="compareChart" height="110"></canvas>
-        </div>
+      <div class="grid">
+        <div class="card metric"><span>إجمالي المؤشرات</span><b id="mTotal">0</b></div>
+        <div class="card metric"><span>نقاط القوة</span><b id="mStrong">0</b></div>
+        <div class="card metric"><span>نقاط الضعف</span><b id="mWeak">0</b></div>
+        <div class="card metric"><span>النقاط الحرجة</span><b id="mCritical">0</b></div>
       </div>
-    </div>
-  </div>
+      <div class="charts">
+        <div class="card chart-wrap"><canvas id="domainsChart"></canvas></div>
+        <div class="card chart-wrap"><canvas id="distChart"></canvas></div>
+        <div class="card chart-wrap"><canvas id="radarChart"></canvas></div>
+        <div class="card chart-wrap"><canvas id="barChart"></canvas></div>
+      </div>
+    </section>
 
-  <!-- توقيع المصمم (يختفي عند الطباعة) -->
-  <div class="footer-credit no-print">
-    <div class="sig">تصميم د/ فواز</div>
-    <div style="margin-top:4px">قناة التصاميم التربوية على تيليجرام:
-      <a href="https://t.me/TAqhjT3MFVE1Yzk0" target="_blank" rel="noopener">اضغط هنا للانضمام</a>
-    </div>
-  </div>
+    <section id="all" class="section"><h3>جميع المؤشرات</h3><div id="commonFilters"></div><div id="allTable"></div></section>
+    <section id="strengths" class="section"><h3>نقاط القوة</h3><div id="strengthCards"></div></section>
+    <section id="weaknesses" class="section"><h3>نقاط الضعف</h3><div id="weakCards"></div></section>
+    <section id="critical" class="section"><h3>النقاط الحرجة</h3><div id="criticalCards"></div></section>
+    <section id="plans" class="section"><h3>خطط التحسين التلقائية</h3><div id="plansList"></div></section>
+    <section id="stakeholders" class="section"><h3>آراء أصحاب المصلحة</h3><div class="stake-grid" id="stakeholdersGrid"></div></section>
+    <section id="raw" class="section"><h3>النص المستخرج</h3><textarea id="rawText" placeholder="سيظهر النص المستخرج هنا بعد التحليل..."></textarea><button class="btn" onclick="analyzeRaw()">حلل النص الملصق</button></section>
+  </main>
 </div>
 
+<div class="modal" id="editModal"><div class="modal-box">
+  <h3>تعديل معلومات المدرسة</h3>
+  <div class="edit-grid" id="editGrid"></div>
+  <br><button class="btn green" onclick="saveEdit()">حفظ التغييرات</button>
+  <button class="btn secondary" onclick="closeEdit()">إغلاق</button>
+</div></div>
+<div class="toast" id="toast"></div>
+
 <script>
-/* ============ الإعدادات والثوابت ============ */
-const LEVELS = {
-  'التميز':   {cls:'excel',    color:'#16a34a'},
-  'التقدم':   {cls:'progress', color:'#2563eb'},
-  'الانطلاق': {cls:'launch',   color:'#ea8c2b'},
-  'التهيئة':  {cls:'prep',     color:'#dc2626'}
-};
-function levelFromPct(p){
-  if(p==null) return 'التقدم';
-  if(p>=90) return 'التميز';
-  if(p>=75) return 'التقدم';
-  if(p>=50) return 'الانطلاق';
-  return 'التهيئة';
+pdfjsLib.GlobalWorkerOptions.workerSrc="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+let selectedFile=null, charts=[], pendingData=null;
+const DOMAIN_NAMES=["الإدارة المدرسية","التعليم والتعلم","نواتج التعلم","البيئة المدرسية"];
+let data=emptyData();
+
+function emptyData(){
+ return {school_info:{name:"",ministry_number:"",education_admin:"",stage:"",gender:"",students_count:"",teachers_count:"",admin_count:"",year:"",evaluation_date:"",overall_percentage:0,overall_level:""},
+ domains:[],indicators:[],stakeholders:{students:{overall:0,domains:{}},parents:{overall:0,domains:{}},teachers:{overall:0,domains:{}}},rawText:"",plans:[]};
 }
-function lvlColor(lvl,p){ return (LEVELS[lvl]||LEVELS[levelFromPct(p)]).color; }
-function lvlCls(lvl,p){ return (LEVELS[lvl]||LEVELS[levelFromPct(p)]).cls; }
-const FONT = "Tajawal, sans-serif";
-Chart.defaults.font.family = FONT;
-Chart.defaults.font.size = 13;
-let charts = {};
-
-/* قالب JSON المختصر المُرسل للنموذج */
-const JSON_TEMPLATE = `{
-"معلومات_المدرسة":{"اسم_المدرسة":"","الرقم_الوزاري":"","إدارة_التعليم":"","مكتب_التعليم":"","نوع_المدرسة":"","المرحلة_الدراسية":"","جنس_المدرسة":"","مستقلة_أو_مشتركة":"","عدد_الطلاب":null,"عدد_شاغلي_الوظائف_التعليمية":null,"عدد_الوكلاء":null,"عدد_محضري_المختبرات":null,"عدد_الموجهين_الطلابيين":null,"عدد_شاغلي_الوظائف_الإدارية":null,"تاريخ_تطبيق_التقويم":""},
-"الأداء_عبر_السنوات":[{"السنة":2024,"النسبة":null}],
-"الأداء_العام":{"النسبة":null,"المستوى":"","الوصف":""},
-"المجالات":[{"اسم_المجال":"","النسبة":null,"المستوى":"","المعايير":[{"اسم_المعيار":"","النسبة":null,"المستوى":""}],"المؤشرات":[{"الرمز":"","النص":"","النسبة":null,"المستوى":"","درجة_التحقق":"","مقترح_التحسين":""}]}],
-"آراء_أصحاب_المصلحة":{"المتعلم":{"الإدارة المدرسية":null,"التعليم والتعلم":null,"نواتج التعلم":null,"البيئة المدرسية":null},"ولي_الأمر":{"الإدارة المدرسية":null,"التعليم والتعلم":null,"نواتج التعلم":null,"البيئة المدرسية":null},"المعلم":{"الإدارة المدرسية":null,"التعليم والتعلم":null,"نواتج التعلم":null,"البيئة المدرسية":null}},
-"نتائج_نافس":{"القراءة":{"الرمز":"1-1-1-3","النسبة":null},"الرياضيات":{"الرمز":"2-1-1-3","النسبة":null},"العلوم":{"الرمز":"3-1-1-3","النسبة":null}},
-"ملخص_النتائج":{"أبرز_جوانب_التميز":[{"الرمز":"","النص":""}],"أبرز_جوانب_التحسين":[{"الرمز":"","النص":""}]},
-"تنبيهات_القراءة":[]
-}`;
-
-const SYSTEM_PROMPT = `أنت محلل بيانات تقارير التقويم المدرسي (هيئة تقويم التعليم والتدريب / منصة تميز).
-ستصلك إمّا نص مُستخرَج من ملف التقرير (مرتّب صفحة بصفحة) أو ملف الـ PDF نفسه. اقرأه بالكامل
-واستخرج بياناته بدقة حرفية، وأخرِج JSON فقط بلا أي نص خارجه ولا أسوار كود.
-العتبات: التميز ≥90، التقدم 75–<90، الانطلاق 50–<75، التهيئة <50.
-المجالات الأربعة بالترتيب: الإدارة المدرسية، التعليم والتعلم، نواتج التعلم، البيئة المدرسية.
-قواعد إلزامية:
-- النِسَب أرقام عشرية بلا % (طبّع "%88.50" أو "88.50%" إلى 88.50).
-- افصِل "المستوى" (التميز/التقدم/الانطلاق/التهيئة) عن "درجة_التحقق" (متميزة/متقدمة/متوسطة/أقل من المتوقع).
-- رموز المؤشرات أربعة أرقام مفصولة بشرطات (مثل 7-1-1-2). انقلها حرفيًّا دون عكس ترتيبها.
-- اربط كل مؤشر بمعياره ومجاله حسب موضعه في النص لا حسب الرقم وحده.
-- مقترح التحسين كاملًا (الجملة التي تبدأ بـ "يتوقع من المدرسة…").
-- القيم المفقودة null دون تخمين.
-- أرقام نافس من مؤشرات نواتج التعلم (القراءة 1-1-1-3، الرياضيات 2-1-1-3، العلوم 3-1-1-3).
-تحقّق ذاتي قبل الإخراج: عدد المجالات = 4؛ كل نسبة بين 0 و100؛ المستوى يطابق النسبة وفق العتبات؛
-لا رموز مكررة. ضع أي قيمة بدت غير متّسقة في مصفوفة "تنبيهات_القراءة".
-التزم تمامًا بقالب الـ JSON المعطى في رسالة المستخدم.`;
-
-/* نقطة نهاية الـ API — للاستضافة على خادمك ضع هنا رابط الـ Worker بدل العنوان المباشر */
-const API_ENDPOINT = 'https://api.anthropic.com/v1/messages';
-
-/* ============ عناصر الواجهة ============ */
-const $ = s => document.querySelector(s);
-let pdfFile = null;
-
-/* تبويبات */
-document.querySelectorAll('.tab').forEach(t=>{
-  t.onclick=()=>{
-    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
-    t.classList.add('active');
-    $('#tab-pdf').style.display = t.dataset.tab==='pdf'?'block':'none';
-    $('#tab-json').style.display = t.dataset.tab==='json'?'block':'none';
-  };
-});
-
-/* رفع الملف */
-const dz=$('#dropzone'), pdfInput=$('#pdfInput');
-dz.onclick=()=>pdfInput.click();
-['dragover','dragenter'].forEach(e=>dz.addEventListener(e,ev=>{ev.preventDefault();dz.classList.add('drag')}));
-['dragleave','drop'].forEach(e=>dz.addEventListener(e,ev=>{ev.preventDefault();dz.classList.remove('drag')}));
-dz.addEventListener('drop',ev=>{ if(ev.dataTransfer.files[0]) setFile(ev.dataTransfer.files[0]); });
-pdfInput.onchange=e=>{ if(e.target.files[0]) setFile(e.target.files[0]); };
-function setFile(f){
-  if(f.type!=='application/pdf'){ setStatus('الملف يجب أن يكون بصيغة PDF','err'); return; }
-  pdfFile=f;
-  $('#filename').style.display='block';
-  $('#filename').textContent='✓ '+f.name;
-  $('#extractBtn').disabled=false;
-  setStatus('');
+function cleanStr(s){return (s||"").normalize("NFKC").replace(/[\u200E\u200F\u202A-\u202E\u2066-\u2069]/g,"").replace(/[ \t]+/g," ").trim();}
+function extractPct(s){
+ s=cleanStr(String(s||""));
+ let tests=[/%\s*([0-9]{1,3}(?:[.,][0-9]+)?)/, /([0-9]{1,3}(?:[.,][0-9]+)?)\s*%/];
+ for(const r of tests){let m=s.match(r);if(m){let v=parseFloat(m[1].replace(",","."));if(v>=0&&v<=100)return v;}}
+ if(/^\s*[0-9]{1,3}(?:[.,][0-9]+)?\s*$/.test(s)){let v=parseFloat(s.replace(",","."));if(v>=0&&v<=100)return v;}
+ return null;
 }
-function setStatus(msg,type){ const s=$('#status'); s.textContent=msg; s.className='status'+(type?' '+type:''); }
+function allPcts(s){let arr=[];String(s).replace(/%?\s*([0-9]{1,3}(?:[.,][0-9]+)?)\s*%?/g,(m,n)=>{let v=parseFloat(n.replace(",","."));if(v>=0&&v<=100)arr.push(v)});return arr}
+function getLevelFromPct(v){v=+v||0;return v>=90?"التميز":v>=75?"التقدم":v>=50?"الانطلاق":"التهيئة"}
+function classify(v){v=+v||0;return v>=75?"نقطة قوة":v>=50?"نقطة ضعف":"نقطة حرجة"}
+function domainFromCode(code){let p=code.split("-");let k=p[2];return {"1":DOMAIN_NAMES[0],"2":DOMAIN_NAMES[1],"3":DOMAIN_NAMES[2],"4":DOMAIN_NAMES[3]}[k]||"غير محدد"}
+function levelClass(l){return l==="التميز"?"excellent":l==="التقدم"?"progress":l==="الانطلاق"?"start":"prepare"}
+function toast(msg){let t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),3200)}
+function log(msg){document.getElementById("log").textContent=msg}
+function progress(v){document.getElementById("bar").style.width=Math.max(0,Math.min(100,v))+"%"}
 
-/* مفتاح API */
-$('#toggleKey').onclick=()=>{ const r=$('#keyRow'); r.style.display=r.style.display==='flex'?'none':'flex'; };
+document.getElementById("pdfFile").addEventListener("change",e=>{selectedFile=e.target.files[0];log(selectedFile?("تم اختيار: "+selectedFile.name):"جاهز")});
+const dz=document.getElementById("dropzone");
+["dragenter","dragover"].forEach(ev=>dz.addEventListener(ev,e=>{e.preventDefault();dz.classList.add("drag")}));
+["dragleave","drop"].forEach(ev=>dz.addEventListener(ev,e=>{e.preventDefault();dz.classList.remove("drag")}));
+dz.addEventListener("drop",e=>{selectedFile=e.dataTransfer.files[0];log(selectedFile?("تم إسقاط: "+selectedFile.name):"لم يتم اختيار ملف")});
 
-/* تحويل لـ base64 (مسار احتياطي للملفات الممسوحة بلا طبقة نص) */
-function pdfToBase64(file){
-  return new Promise((res,rej)=>{
-    const r=new FileReader();
-    r.onload=()=>res(r.result.split(',')[1]);
-    r.onerror=()=>rej(new Error('فشل قراءة الملف'));
-    r.readAsDataURL(file);
-  });
-}
-
-/* استخراج طبقة النص من الـ PDF داخل المتصفح (أدق بكثير من القراءة البصرية) */
-async function extractPdfText(file){
-  if(!window.pdfjsLib) return '';
-  const buf=await file.arrayBuffer();
+async function analyzeSelected(){
+ if(!selectedFile){toast("اختر ملف PDF أولًا");return}
+ try{
+  progress(5);log("بدأت قراءة PDF...");
+  const buf=await selectedFile.arrayBuffer();
   const pdf=await pdfjsLib.getDocument({data:buf}).promise;
-  let out='';
-  for(let i=1;i<=pdf.numPages;i++){
-    const page=await pdf.getPage(i);
-    const content=await page.getTextContent();
-    // ترتيب العناصر حسب الموضع (أعلى لأسفل) للحفاظ على تسلسل الصفوف
-    const items=content.items.slice().sort((a,b)=>{
-      const ay=a.transform[5], by=b.transform[5];
-      if(Math.abs(ay-by)>4) return by-ay;
-      return b.transform[4]-a.transform[4]; // يمين لليسار
+  let full=[];
+  for(let p=1;p<=pdf.numPages;p++){
+    const page=await pdf.getPage(p);
+    const txt=await page.getTextContent();
+    const rows=[];
+    txt.items.forEach(it=>{
+      const y=Math.round(it.transform[5]); const x=it.transform[4]; const str=cleanStr(it.str);
+      if(!str)return;
+      let row=rows.find(r=>Math.abs(r.y-y)<=4);
+      if(!row){row={y,items:[]};rows.push(row)}
+      row.items.push({x,str});
     });
-    out+='\n===== صفحة '+i+' =====\n'+items.map(it=>it.str).join(' ');
+    rows.sort((a,b)=>b.y-a.y).forEach(r=>{
+      r.items.sort((a,b)=>b.x-a.x);
+      full.push(cleanStr(r.items.map(i=>i.str).join(" ")));
+    });
+    progress(5+(p/pdf.numPages)*75);log(`قراءة الصفحة ${p} من ${pdf.numPages}`);
   }
-  return out.trim();
+  const text=full.filter(Boolean).join("\n");
+  document.getElementById("rawText").value=text;
+  pendingData=parseReport(text);
+  progress(92);log("اكتمل التحليل. اضغط تطبيق ونشر على المنصة.");
+  toast("تم استخراج النص وتحليله مبدئيًا");
+ }catch(err){console.error(err);log("فشل قراءة الملف: "+err.message);toast("فشل قراءة PDF، جرّب لصق النص في تبويب النص المستخرج")}
 }
+function applyPublish(){
+ if(!pendingData){toast("لا توجد بيانات محللة للنشر");return}
+ data=pendingData; renderAll(); saveLocal(); progress(100); toast("تم تطبيق النتائج على المنصة");
+}
+function analyzeRaw(){const text=document.getElementById("rawText").value; if(!text.trim())return toast("الصق نص التقرير أولًا"); pendingData=parseReport(text); applyPublish();}
 
-/* استدعاء النموذج: نص أولًا، ثم صورة كاحتياط */
-$('#extractBtn').onclick=async()=>{
-  if(!pdfFile) return;
-  const btn=$('#extractBtn');
-  btn.disabled=true;
-  $('#extractLabel').innerHTML='<span class="spinner"></span> جارٍ القراءة والتحليل...';
-  setStatus('استخراج النص ثم تحليله — قد يستغرق بعض الوقت','');
-  try{
-    let userContent;
-    let mode='نص';
-    let txt='';
-    try{ txt=await extractPdfText(pdfFile); }catch(e){ txt=''; }
-
-    if(txt && txt.replace(/\s/g,'').length>400){
-      // المسار الدقيق: إرسال النص المُستخرَج
-      userContent=[{type:'text',
-        text:'هذا نص مُستخرَج من تقرير تقويم مدرسي (مرتّب صفحة بصفحة). استخرج بياناته وأخرِج JSON فقط مطابقًا للقالب أدناه.\n\n=== نص التقرير ===\n'
-          +txt+'\n\n=== القالب المطلوب ===\n'+JSON_TEMPLATE}];
-    }else{
-      // احتياط: ملف ممسوح بلا طبقة نص → أرسل الصورة
-      mode='صورة';
-      const base64=await pdfToBase64(pdfFile);
-      userContent=[
-        {type:'document',source:{type:'base64',media_type:'application/pdf',data:base64}},
-        {type:'text',text:'استخرج بيانات هذا التقرير وأخرِجها بصيغة JSON فقط مطابقةً لهذا القالب:\n'+JSON_TEMPLATE}
-      ];
+function parseReport(raw){
+ const d=emptyData(); d.rawText=raw; const lines=raw.split(/\n+/).map(cleanStr).filter(Boolean);
+ extractSchool(lines,d); extractOverall(lines,d); extractDomains(lines,d); extractIndicators(lines,d); extractStakeholders(lines,d);
+ if(!d.school_info.overall_percentage && d.indicators.length){d.school_info.overall_percentage=+(d.indicators.reduce((a,b)=>a+b.percentage,0)/d.indicators.length).toFixed(2)}
+ if(!d.school_info.overall_level)d.school_info.overall_level=getLevelFromPct(d.school_info.overall_percentage);
+ d.plans=d.indicators.filter(i=>i.classification!=="نقطة قوة").map(makePlan);
+ return d;
+}
+function extractSchool(lines,d){
+ const first=lines.slice(0,200);
+ const bad=/التقويم|التقرير|الهيئة|الوزارة|المجال|المعيار|المؤشر|الأداء/;
+ for(const l of first){
+  if(!d.school_info.name && /(ابتدائية|المتوسطة|متوسطة|الثانوية|ثانوية|الابتدائية)/.test(l) && !bad.test(l)) d.school_info.name=l.replace(/اسم المدرسة[:：]?/,"").trim();
+  let m=l.match(/\bS-\d{4,8}\b/i); if(m)d.school_info.ministry_number=m[0];
+  if(!d.school_info.education_admin && /(إدارة تعليم|تعليم منطقة|الإدارة العامة للتعليم)/.test(l))d.school_info.education_admin=l;
+  if(!d.school_info.stage && /ابتدائي|ابتدائية/.test(l))d.school_info.stage="ابتدائي";
+  if(!d.school_info.stage && /متوسط|متوسطة/.test(l))d.school_info.stage="متوسط";
+  if(!d.school_info.stage && /ثانوي|ثانوية/.test(l))d.school_info.stage="ثانوي";
+  if(!d.school_info.gender && /بنين/.test(l))d.school_info.gender="بنين";
+  if(!d.school_info.gender && /بنات/.test(l))d.school_info.gender="بنات";
+  if(!d.school_info.year){let y=l.match(/\b20\d{2}\b/); if(y)d.school_info.year=y[0];}
+  if(/تاريخ.*(تطبيق|تقويم|زيارة)|تاريخ التقويم/.test(l)){let dt=l.match(/\d{1,2}[\/\-]\d{1,2}[\/\-]\d{4}|\d{4}[\/\-]\d{1,2}[\/\-]\d{1,2}/); if(dt)d.school_info.evaluation_date=dt[0];}
+  if(/(عدد|إجمالي).*(الطلاب|الطالبات|المتعلمين|المتعلمات)/.test(l)){let n=l.match(/\d+/); if(n)d.school_info.students_count=n[0];}
+  if(/(عدد|إجمالي).*(المعلمين|المعلمات)/.test(l)){let n=l.match(/\d+/); if(n)d.school_info.teachers_count=n[0];}
+  if(/(عدد|إجمالي).*(الإداريين|الإداريات|الهيئة الإدارية)/.test(l)){let n=l.match(/\d+/); if(n)d.school_info.admin_count=n[0];}
+ }
+}
+function extractOverall(lines,d){
+ const levels=["التميز","التقدم","الانطلاق","التهيئة"];
+ for(let i=0;i<Math.min(300,lines.length);i++){
+  if(levels.some(l=>lines[i].includes(l))){
+    let lvl=levels.find(l=>lines[i].includes(l));
+    for(let j=i-1;j>=Math.max(0,i-8);j--){
+      const ps=allPcts(lines[j]); if(ps.length===1 && ps[0]>=30){d.school_info.overall_percentage=ps[0];d.school_info.overall_level=lvl;return}
     }
-    setStatus('تم استخراج المحتوى ('+mode+') — جارٍ التحليل…','');
-
-    const key=$('#apiKey').value.trim();
-    const headers={'Content-Type':'application/json'};
-    if(key){ headers['x-api-key']=key; headers['anthropic-version']='2023-06-01'; headers['anthropic-dangerous-direct-browser-access']='true'; }
-    const resp=await fetch(API_ENDPOINT,{
-      method:'POST',headers,
-      body:JSON.stringify({
-        model:'claude-sonnet-4-20250514',
-        max_tokens:16000,
-        system:SYSTEM_PROMPT,
-        messages:[{role:'user',content:userContent}]
-      })
-    });
-    if(!resp.ok){ throw new Error('استجابة الخادم: '+resp.status+' — تحقّق من المفتاح أو رابط الوسيط (CORS)'); }
-    const data=await resp.json();
-    const raw=(data.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('\n').replace(/```json|```/g,'').trim();
-    const parsed=safeParse(raw);
-    render(parsed);
-    setStatus('تم الاستخراج بنجاح ('+mode+')','ok');
-  }catch(err){
-    setStatus('تعذّر الاستخراج: '+err.message+' — يمكنك بدلًا من ذلك استخدام مسار «لصق JSON».','err');
-  }finally{
-    btn.disabled=false;
-    $('#extractLabel').textContent='قراءة وتحليل التقرير';
   }
-};
-
-function safeParse(raw){
-  try{ return JSON.parse(raw); }
-  catch(e){ const m=raw.match(/\{[\s\S]*\}/); if(m) return JSON.parse(m[0]); throw new Error('تعذّر تحليل JSON'); }
+ }
+ const keys=/الأداء العام للمدرسة|الأداء العام|الأداء الكلي|النسبة الكلية|التقدير العام/;
+ for(let i=0;i<lines.length;i++)if(keys.test(lines[i])){
+   for(let j=i;j<Math.min(lines.length,i+12);j++){let ps=allPcts(lines[j]); if(ps.length===1){d.school_info.overall_percentage=ps[0];d.school_info.overall_level=getLevelFromPct(ps[0]);return}}
+ }
 }
-
-/* مسار JSON اليدوي */
-$('#loadJsonBtn').onclick=()=>{
-  try{
-    const data=safeParse($('#jsonInput').value.trim());
-    render(data);
-    $('#statusJson').textContent='تم العرض ✓'; $('#statusJson').className='status ok';
-  }catch(e){
-    $('#statusJson').textContent='JSON غير صالح: '+e.message; $('#statusJson').className='status err';
+function extractDomains(lines,d){
+ d.domains=DOMAIN_NAMES.map(name=>{
+  let pct=null;
+  for(let i=0;i<lines.length;i++) if(lines[i].includes(name)){
+    for(let j=i;j<Math.min(lines.length,i+9);j++){let ps=allPcts(lines[j]); if(ps.length){pct=ps[ps.length-1];break}}
+    if(pct!==null)break;
   }
-};
-$('#sampleBtn').onclick=()=>{ $('#jsonInput').value=JSON.stringify(SAMPLE,null,2); };
-
-/* استيراد جديد */
-$('#newImport').onclick=()=>{
-  $('#results').style.display='none';
-  $('#importPanel').style.display='block';
-  window.scrollTo({top:0,behavior:'smooth'});
-};
-
-/* ============ العرض ============ */
-function render(d){
-  if(!d || !Array.isArray(d.المجالات)) { alert('البيانات لا تحتوي على مجالات صالحة'); return; }
-  // حفظ اختياري بأمان
-  try{ localStorage.setItem('lastReport', JSON.stringify(d)); }catch(e){}
-
-  $('#importPanel').style.display='none';
-  $('#results').style.display='block';
-  Object.values(charts).forEach(c=>{try{c.destroy()}catch(e){}}); charts={};
-
-  renderSchoolInfo(d.معلومات_المدرسة||{});
-  renderOverall(d.الأداء_العام||{});
-  renderDomains(d.المجالات);
-  renderDetailed(d.المجالات);
-  renderStakeholders(d.آراء_أصحاب_المصلحة);
-  renderNafes(d.نتائج_نافس);
-  renderAnalysis(d);
-  window.scrollTo({top:0,behavior:'smooth'});
+  return {name,percentage:pct||0,level:getLevelFromPct(pct||0)};
+ });
 }
-
-function renderSchoolInfo(s){
-  const map=[
-    ['اسم المدرسة',s.اسم_المدرسة],['الرقم الوزاري',s.الرقم_الوزاري],
-    ['إدارة التعليم',s.إدارة_التعليم],['المرحلة الدراسية',s.المرحلة_الدراسية],
-    ['جنس المدرسة',s.جنس_المدرسة],['نوع المدرسة',s.نوع_المدرسة],
-    ['عدد الطلاب',s.عدد_الطلاب],['الوظائف التعليمية',s.عدد_شاغلي_الوظائف_التعليمية],
-    ['عدد الوكلاء',s.عدد_الوكلاء],['الموجهون الطلابيون',s.عدد_الموجهين_الطلابيين],
-    ['تاريخ التطبيق',s.تاريخ_تطبيق_التقويم]
-  ];
-  $('#schoolInfo').innerHTML=map.filter(([k,v])=>v!=null&&v!=='')
-    .map(([k,v])=>`<div class="info-card"><div class="k">${k}</div><div class="v">${v}</div></div>`).join('');
-}
-
-function renderOverall(o){
-  const pct=o.النسبة, lvl=o.المستوى||levelFromPct(pct), col=lvlColor(lvl,pct);
-  $('#overallPct').textContent = pct!=null? pct+'%':'—';
-  $('#overallPct').style.color=col;
-  $('#overallLvl').textContent=lvl; $('#overallLvl').style.color=col;
-  $('#overallDesc').textContent=o.الوصف||'';
-  charts.gauge=new Chart($('#gaugeChart'),{
-    type:'doughnut',
-    data:{datasets:[{data:[pct||0,100-(pct||0)],backgroundColor:[col,'#ece6d8'],
-      borderWidth:0,circumference:180,rotation:270}]},
-    options:{cutout:'72%',plugins:{legend:{display:false},tooltip:{enabled:false}},responsive:true}
-  });
-}
-
-function renderDomains(domains){
-  // رسم الأعمدة
-  charts.dom=new Chart($('#domainsChart'),{
-    type:'bar',
-    data:{labels:domains.map(m=>m.اسم_المجال),
-      datasets:[{data:domains.map(m=>m.النسبة),
-        backgroundColor:domains.map(m=>lvlColor(m.المستوى,m.النسبة)),borderRadius:8,maxBarThickness:64}]},
-    options:{plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.parsed.y+'%'}}},
-      scales:{y:{beginAtZero:true,max:100,ticks:{callback:v=>v+'%'}}},responsive:true}
-  });
-  // البطاقات
-  $('#domainCards').innerHTML=domains.map(m=>{
-    const lvl=m.المستوى||levelFromPct(m.النسبة);
-    return `<div class="dcard lvl-${lvlCls(lvl,m.النسبة)}">
-      <h3>${m.اسم_المجال}</h3>
-      <div class="big">${m.النسبة!=null?m.النسبة+'%':'—'}</div>
-      <span class="lvl-tag">${lvl}</span></div>`;
-  }).join('');
-}
-
-function renderDetailed(domains){
-  $('#detailed').innerHTML=domains.map((m,i)=>{
-    const lvl=m.المستوى||levelFromPct(m.النسبة);
-    const crits=(m.المعايير||[]).map(c=>{
-      const cl=lvlColor(c.المستوى,c.النسبة);
-      return `<div class="crit-chip"><b style="color:${cl}">${c.النسبة!=null?c.النسبة+'%':'—'}</b> · ${c.اسم_المعيار}</div>`;
-    }).join('');
-    const rows=(m.المؤشرات||[]).map(ind=>{
-      const il=ind.المستوى||levelFromPct(ind.النسبة), ic=lvlColor(il,ind.النسبة);
-      return `<tr>
-        <td><span class="code">${ind.الرمز||''}</span></td>
-        <td><div style="font-weight:600">${ind.النص||''}</div>
-            ${ind.مقترح_التحسين?`<div class="tip"><b>مقترح التحسين:</b> ${ind.مقترح_التحسين}</div>`:''}</td>
-        <td style="text-align:center"><span class="badge b-${lvlCls(il,ind.النسبة)}">${ind.النسبة!=null?ind.النسبة+'%':'—'}</span>
-            <div class="lvl-cell" style="color:${ic};margin-top:4px">${il}</div>
-            ${ind.درجة_التحقق?`<div class="tip" style="text-align:center">${ind.درجة_التحقق}</div>`:''}</td>
-      </tr>`;
-    }).join('');
-    return `<div class="acc ${i===0?'open':''}">
-      <div class="acc-head" onclick="this.parentElement.classList.toggle('open')">
-        <div class="left">
-          <h3>${m.اسم_المجال}</h3>
-          <span class="badge b-${lvlCls(lvl,m.النسبة)}">${lvl}</span>
-        </div>
-        <div style="display:flex;align-items:center;gap:14px">
-          <span class="pct" style="color:${lvlColor(lvl,m.النسبة)}">${m.النسبة!=null?m.النسبة+'%':'—'}</span>
-          <span class="chev">▾</span>
-        </div>
-      </div>
-      <div class="acc-body">
-        ${crits?`<div class="criteria-mini">${crits}</div>`:''}
-        ${rows?`<table class="ind"><thead><tr><th style="width:90px">الرمز</th><th>المؤشر ومقترح التحسين</th><th style="width:150px;text-align:center">النسبة / المستوى</th></tr></thead><tbody>${rows}</tbody></table>`:'<div class="empty-note">لا توجد مؤشرات تفصيلية لهذا المجال.</div>'}
-      </div>
-    </div>`;
-  }).join('');
-}
-
-function renderStakeholders(st){
-  if(!st){ $('#stakeSection').style.display='none'; return; }
-  $('#stakeSection').style.display='block';
-  const domains=['الإدارة المدرسية','التعليم والتعلم','نواتج التعلم','البيئة المدرسية'];
-  const groups=[['المتعلم',st.المتعلم],['ولي الأمر',st.ولي_الأمر],['المعلم',st.المعلم]];
-  const colors=['#1f6f6b','#c4972b','#143f3d'];
-  charts.stake=new Chart($('#stakeChart'),{
-    type:'bar',
-    data:{labels:domains,datasets:groups.map((g,i)=>({
-      label:g[0],data:domains.map(dn=>g[1]?g[1][dn]:null),
-      backgroundColor:colors[i],borderRadius:6,maxBarThickness:38}))},
-    options:{plugins:{legend:{position:'top'},tooltip:{callbacks:{label:c=>c.dataset.label+': '+c.parsed.y+'%'}}},
-      scales:{y:{beginAtZero:true,max:100,ticks:{callback:v=>v+'%'}}},responsive:true}
-  });
-}
-
-function renderNafes(n){
-  if(!n){ $('#nafesSection').style.display='none'; return; }
-  const items=[['القراءة',n.القراءة],['الرياضيات',n.الرياضيات],['العلوم',n.العلوم]].filter(([k,v])=>v&&v.النسبة!=null);
-  if(!items.length){ $('#nafesSection').style.display='none'; return; }
-  $('#nafesSection').style.display='block';
-  $('#nafesCards').innerHTML=items.map(([k,v])=>{
-    const col=lvlColor(null,v.النسبة);
-    return `<div class="card" style="text-align:center;border-top:4px solid ${col}">
-      <div class="k" style="color:var(--muted);font-size:14px">${k}</div>
-      <div style="font-size:34px;font-weight:800;font-family:'Tajawal';color:${col}">${v.النسبة}%</div>
-      <span class="code">${v.الرمز||''}</span></div>`;
-  }).join('');
-}
-
-function renderAnalysis(d){
-  const domains=d.المجالات;
-  // كل المؤشرات
-  let all=[];
-  domains.forEach(m=>(m.المؤشرات||[]).forEach(ind=>{ if(ind.النسبة!=null) all.push({...ind,مجال:m.اسم_المجال}); }));
-  // توزيع المستويات
-  const dist={التميز:0,التقدم:0,الانطلاق:0,التهيئة:0};
-  all.forEach(ind=>{ dist[ind.المستوى||levelFromPct(ind.النسبة)]++; });
-  charts.dist=new Chart($('#distChart'),{
-    type:'doughnut',
-    data:{labels:Object.keys(dist),datasets:[{data:Object.values(dist),
-      backgroundColor:['#16a34a','#2563eb','#ea8c2b','#dc2626'],borderWidth:2,borderColor:'#fff'}]},
-    options:{plugins:{legend:{position:'right'}},cutout:'55%',responsive:true}
-  });
-  // ترتيب المجالات
-  const ranked=[...domains].filter(m=>m.النسبة!=null).sort((a,b)=>b.النسبة-a.النسبة);
-  $('#domainRank').innerHTML=ranked.map((m,i)=>
-    `<li><span>${i+1}. ${m.اسم_المجال}</span><b style="color:${lvlColor(m.المستوى,m.النسبة)}">${m.النسبة}%</b></li>`).join('');
-  // أعلى / أدنى
-  const sorted=[...all].sort((a,b)=>b.النسبة-a.النسبة);
-  const fmt=ind=>`<li><span><span class="code">${ind.الرمز||''}</span> ${trim(ind.النص,46)}</span><b style="color:${lvlColor(ind.المستوى,ind.النسبة)}">${ind.النسبة}%</b></li>`;
-  $('#topInd').innerHTML=sorted.slice(0,3).map(fmt).join('')||'<div class="empty-note">—</div>';
-  $('#lowInd').innerHTML=sorted.slice(-3).reverse().map(fmt).join('')||'<div class="empty-note">—</div>';
-  // المؤشرات الحرجة
-  const crit=all.filter(ind=>ind.النسبة<50);
-  $('#critList').innerHTML=crit.length? crit.map(ind=>
-    `<div class="crit-alert"><span class="code">${ind.الرمز||''}</span> <b>${ind.النسبة}%</b> — ${ind.النص||''}
-     <div class="tip">المجال: ${ind.مجال}</div></div>`).join('')
-    : '<div class="empty-note">لا توجد مؤشرات في مستوى التهيئة (أقل من 50%). 🎉</div>';
-  // مقارنة الفريق بأصحاب المصلحة
-  renderCompare(d);
-}
-
-function renderCompare(d){
-  const st=d.آراء_أصحاب_المصلحة;
-  const domains=['الإدارة المدرسية','التعليم والتعلم','نواتج التعلم','البيئة المدرسية'];
-  const teamMap={}; (d.المجالات||[]).forEach(m=>teamMap[m.اسم_المجال]=m.النسبة);
-  const ds=[
-    {label:'فريق التقويم',data:domains.map(dn=>teamMap[dn]??null),backgroundColor:'#0c2b2a',borderRadius:6,maxBarThickness:30}
-  ];
-  if(st){
-    ds.push({label:'المتعلم',data:domains.map(dn=>st.المتعلم?st.المتعلم[dn]:null),backgroundColor:'#1f6f6b',borderRadius:6,maxBarThickness:30});
-    ds.push({label:'ولي الأمر',data:domains.map(dn=>st.ولي_الأمر?st.ولي_الأمر[dn]:null),backgroundColor:'#c4972b',borderRadius:6,maxBarThickness:30});
-    ds.push({label:'المعلم',data:domains.map(dn=>st.المعلم?st.المعلم[dn]:null),backgroundColor:'#7da8a4',borderRadius:6,maxBarThickness:30});
+function extractIndicators(lines,d){
+ const codeRe=/(\d{1,2}-\d-\d-\d{1,2})/; const seen=new Set(); const out=[];
+ for(let i=0;i<lines.length;i++){
+   const m=lines[i].match(codeRe); if(!m)continue; const code=m[1]; if(seen.has(code))continue;
+   let title=cleanStr(lines[i].replace(codeRe,"").replace(/%?\s*\d{1,3}(?:[.,]\d+)?\s*%?/g,"").replace(/[|،:]+$/,""));
+   if(title.length<8 && i>0)title=cleanStr(lines[i-1].replace(/%?\s*\d{1,3}(?:[.,]\d+)?\s*%?/g,""));
+   let pct=extractPct(lines[i]);
+   for(let j=i+1;pct===null && j<Math.min(lines.length,i+16);j++){
+     if(j>i+2 && codeRe.test(lines[j]))break;
+     const ps=allPcts(lines[j]); if(ps.length===1)pct=ps[0]; else if(ps.length>1)pct=ps[ps.length-1];
+   }
+   if(pct!==null){seen.add(code);out.push({code,text:title||"مؤشر بدون نص واضح",percentage:pct,level:getLevelFromPct(pct),classification:classify(pct),domain:domainFromCode(code)})}
+ }
+ if(out.length<5){
+  for(let i=0;i<lines.length;i++){
+    let ps=allPcts(lines[i]); if(ps.length!==1)continue;
+    for(let j=i-1;j>=Math.max(0,i-5);j--){let m=lines[j].match(codeRe); if(m&&!seen.has(m[1])){let code=m[1],title=cleanStr(lines[j].replace(codeRe,""));seen.add(code);out.push({code,text:title||"مؤشر بدون نص واضح",percentage:ps[0],level:getLevelFromPct(ps[0]),classification:classify(ps[0]),domain:domainFromCode(code)});break}}
   }
-  charts.compare=new Chart($('#compareChart'),{
-    type:'bar',data:{labels:domains,datasets:ds},
-    options:{plugins:{legend:{position:'top'}},scales:{y:{beginAtZero:true,max:100,ticks:{callback:v=>v+'%'}}},responsive:true}
-  });
+ }
+ d.indicators=out.sort((a,b)=>a.code.localeCompare(b.code,'en',{numeric:true}));
+}
+function extractStakeholders(lines,d){
+ const start=lines.findIndex(l=>/آراء أصحاب المصلحة/.test(l)); if(start<0)return;
+ const slice=lines.slice(start,start+220);
+ const groups=[["students",/استبانة.*(المتعلم|الطالب|الطلاب|الطالبات)/],["parents",/استبانة.*(ولي الأمر|أولياء الأمور|ولي الامر)/],["teachers",/استبانة.*(المعلم|المعلمين|المعلمات)/]];
+ for(const [key,re] of groups){
+   const idx=slice.findIndex(l=>re.test(l)); if(idx<0)continue;
+   for(let i=idx+1;i<Math.min(slice.length,idx+20);i++){let ps=allPcts(slice[i]); if(ps.length){d.stakeholders[key].overall=ps[0];break}}
+   DOMAIN_NAMES.forEach(dom=>{for(let i=idx;i<Math.min(slice.length,idx+60);i++)if(slice[i].includes(dom)){let ps=allPcts(slice[i]); if(ps.length)d.stakeholders[key].domains[dom]=ps[ps.length-1]; else {let p=extractPct(slice[i+1]||""); if(p!==null)d.stakeholders[key].domains[dom]=p} break;}});
+ }
+}
+function makePlan(i){
+ const map={
+  "الإدارة المدرسية":["تعزيز الحوكمة المدرسية المرتبطة بالمؤشر","تشكيل فريق متابعة للمؤشر، مراجعة الإجراءات الحالية، بناء خطة تنفيذ أسبوعية، توثيق القرارات ومراجعة الأثر شهريًا.","محاضر اجتماعات، خطة تشغيلية، مؤشرات متابعة، تقارير إنجاز، شواهد تنفيذ.","مراجعة شهرية من القيادة المدرسية وربط النتائج بخطة التحسين."],
+  "التعليم والتعلم":["رفع جودة ممارسات التعليم والتعلم","تنفيذ زيارات صفية بنائية، مجتمعات تعلم مهنية، تحليل نواتج الدروس، تدريب مصغر على الاستراتيجيات النشطة والتقويم البنائي.","بطاقات زيارة، خطط علاجية، نماذج دروس، عينات أعمال الطلاب، سجلات تغذية راجعة.","متابعة أثر الاستراتيجيات على تحسن أداء الطلاب كل أسبوعين."],
+  "نواتج التعلم":["تحسين نواتج التعلم والتحصيل","تحليل فجوات المهارات، بناء خطط علاج وإثراء، اختبارات قصيرة دورية، مجموعات دعم للطلاب المتعثرين والمتقدمين.","تحليل نتائج، خطط علاجية، اختبارات قبلية وبعدية، سجلات حضور الدعم، تقارير تقدم.","قياس التحسن بمؤشرات رقمية واضحة وربطه بأداء المواد الأساسية."],
+  "البيئة المدرسية":["تحسين البيئة المدرسية الداعمة للتعلم","حصر جوانب الاحتياج، تفعيل إجراءات السلامة والانضباط، تحسين المرافق، إشراك الطلاب وأولياء الأمور في مبادرات البيئة المدرسية.","نماذج تفقد، صور قبل/بعد، سجلات صيانة، مبادرات طلابية، استبانات رضا.","متابعة رضا المستفيدين واستدامة التحسينات في البيئة المدرسية."]
+ };
+ const a=map[i.domain]||map["الإدارة المدرسية"];
+ return {indicator:i,title:a[0],actions:a[1],evidence:a[2],follow:a[3]};
 }
 
-function trim(s,n){ s=s||''; return s.length>n? s.slice(0,n)+'…':s; }
-
-/* ============ نموذج تجريبي (المتوسطة الثلاثون بالمدينة) ============ */
-const SAMPLE={
-  "معلومات_المدرسة":{"اسم_المدرسة":"المتوسطة الثلاثون بالمدينة","الرقم_الوزاري":"S-41876","إدارة_التعليم":"الإدارة العامة للتعليم بمنطقة المدينة المنورة","مكتب_التعليم":"المرحلة المتوسطة","نوع_المدرسة":"حكومي","المرحلة_الدراسية":"متوسط","جنس_المدرسة":"بنات","مستقلة_أو_مشتركة":"مشترك أساسي","عدد_الطلاب":618,"عدد_شاغلي_الوظائف_التعليمية":29,"عدد_الوكلاء":2,"عدد_محضري_المختبرات":1,"عدد_الموجهين_الطلابيين":1,"عدد_شاغلي_الوظائف_الإدارية":17,"تاريخ_تطبيق_التقويم":"2024/04/26"},
-  "الأداء_عبر_السنوات":[{"السنة":2024,"النسبة":79},{"السنة":2025,"النسبة":79}],
-  "الأداء_العام":{"النسبة":79,"المستوى":"التقدم","الوصف":"أداء جيد يحتاج إلى استمرار ومتابعة التحسين والتطوير"},
-  "المجالات":[
-    {"اسم_المجال":"الإدارة المدرسية","النسبة":83.75,"المستوى":"التقدم",
-     "المعايير":[{"اسم_المعيار":"التخطيط","النسبة":82.50,"المستوى":"التقدم"},{"اسم_المعيار":"قيادة العملية التعليمية","النسبة":87.00,"المستوى":"التقدم"},{"اسم_المعيار":"المجتمع المدرسي","النسبة":81.50,"المستوى":"التقدم"},{"اسم_المعيار":"التطوير المؤسسي","النسبة":83.00,"المستوى":"التقدم"}],
-     "المؤشرات":[
-       {"الرمز":"1-1-1-1","النص":"تضع المدرسة خطة تشغيلية مكتملة العناصر وفق أهداف تطويرية محددة","النسبة":88.50,"المستوى":"التقدم","درجة_التحقق":"متقدمة","مقترح_التحسين":"يتوقع من المدرسة تطوير خطة تشغيلية مرنة تتضمن أهدافًا تطويرية طموحة وبرامج وأنشطة متنوعة ومبادرات نوعية ومؤشرات أداء ومهام ومسؤوليات مزمّنة وواضحة."},
-       {"الرمز":"2-1-2-1","النص":"تلتزم المدرسة بقيم مهنة التعليم وأخلاقياتها","النسبة":94.50,"المستوى":"التميز","درجة_التحقق":"متميزة","مقترح_التحسين":"يتوقع من المدرسة الاستمرار في تعزيز الالتزام بقواعد السلوك الوظيفي وأخلاقيات مهنة التعليم بأساليب متنوعة ومبتكرة."},
-       {"الرمز":"3-1-4-1","النص":"تطبق المدرسة التقويم الذاتي المبني على المعايير المعتمدة من الهيئة","النسبة":99.25,"المستوى":"التميز","درجة_التحقق":"متميزة","مقترح_التحسين":"يتوقع من المدرسة الاستمرار في تنفيذ التقويم الذاتي المستند على الإطار والمعايير المعتمدة، والإسهام في نقل الخبرة للمدارس الأخرى."},
-       {"الرمز":"1-1-4-1","النص":"تشجع المدرسة منسوبيها للحصول على الرخصة المهنية","النسبة":68.50,"المستوى":"الانطلاق","درجة_التحقق":"متوسطة","مقترح_التحسين":"يتوقع من المدرسة توفير أنشطة وبرامج توعوية متنوعة تحفّز المنسوبين للمبادرة في الحصول على الرخصة المهنية."}
-     ]},
-    {"اسم_المجال":"التعليم والتعلم","النسبة":71.75,"المستوى":"الانطلاق",
-     "المعايير":[{"اسم_المعيار":"بناء خبرات التعلم","النسبة":67.00,"المستوى":"الانطلاق"},{"اسم_المعيار":"تقويم التعلم","النسبة":82.50,"المستوى":"التقدم"}],
-     "المؤشرات":[
-       {"الرمز":"2-1-1-2","النص":"تدعم المدرسة تنفيذ المناهج لتحقيق نواتج التعلم المستهدفة","النسبة":90.75,"المستوى":"التميز","درجة_التحقق":"متميزة","مقترح_التحسين":"يتوقع من المدرسة الاستمرار في توفير أنشطة ومصادر متنوعة ومبتكرة تدعم تعلم المعارف والمهارات النوعية."},
-       {"الرمز":"7-1-1-2","النص":"تنمي المدرسة مهارات التفكير العليا لدى المتعلمين","النسبة":49.50,"المستوى":"التهيئة","درجة_التحقق":"أقل من المتوقع","مقترح_التحسين":"يتوقع من المدرسة توفير أساليب وأنشطة تعلم متنوعة تستهدف تنمية مهارات التحليل والاستنتاج والتقويم والإبداع وحل المشكلات."},
-       {"الرمز":"1-1-1-2","النص":"توفر المدرسة فرصًا متكافئة للتعلم تلبي احتياجات المتعلمين","النسبة":59.75,"المستوى":"الانطلاق","درجة_التحقق":"متوسطة","مقترح_التحسين":"يتوقع من المدرسة توفير فرص تعلم متكافئة لجميع المتعلمين بمن فيهم ذوو الإعاقة والموهوبون."},
-       {"الرمز":"2-1-2-2","النص":"تحلل المدرسة نتائج التقويم وتوظفها في تحسين نواتج التعلم","النسبة":99.25,"المستوى":"التميز","درجة_التحقق":"متميزة","مقترح_التحسين":"يتوقع من المدرسة الاستمرار في تحليل نتائج التقويم وتوظيفها في بناء الخطط العلاجية والإثرائية."}
-     ]},
-    {"اسم_المجال":"نواتج التعلم","النسبة":77.00,"المستوى":"التقدم",
-     "المعايير":[{"اسم_المعيار":"التحصيل التعليمي","النسبة":73.50,"المستوى":"الانطلاق"},{"اسم_المعيار":"التطور الشخصي والصحي والاجتماعي","النسبة":90.75,"المستوى":"التميز"}],
-     "المؤشرات":[
-       {"الرمز":"1-1-1-3","النص":"يحقق المتعلمون نتائج متقدمة في مجال القراءة وفقًا للاختبارات الوطنية","النسبة":77.78,"المستوى":"التقدم","درجة_التحقق":"متقدمة","مقترح_التحسين":"يتوقع من المدرسة رفع نسبة المتعلمين الذين يحققون مستويات متقدمة في القراءة وتحليل بيانات نافس."},
-       {"الرمز":"2-1-1-3","النص":"يحقق المتعلمون نتائج متقدمة في مجال الرياضيات وفقًا للاختبارات الوطنية","النسبة":66.02,"المستوى":"الانطلاق","درجة_التحقق":"متوسطة","مقترح_التحسين":"يتوقع من المدرسة رفع نسبة المتعلمين الذين يحققون مستويات متقدمة في الرياضيات."},
-       {"الرمز":"3-1-1-3","النص":"يحقق المتعلمون نتائج متقدمة في مجال العلوم وفقًا للاختبارات الوطنية","النسبة":77.57,"المستوى":"التقدم","درجة_التحقق":"متقدمة","مقترح_التحسين":"يتوقع من المدرسة رفع نسبة المتعلمين الذين يحققون مستويات متقدمة في العلوم."},
-       {"الرمز":"1-1-2-3","النص":"يظهر المتعلمون الاعتزاز بالقيم والهوية الوطنية","النسبة":98.00,"المستوى":"التميز","درجة_التحقق":"متميزة","مقترح_التحسين":"يتوقع من المدرسة الاستمرار في تعزيز القيم الإسلامية والهوية الوطنية واللغة العربية."}
-     ]},
-    {"اسم_المجال":"البيئة المدرسية","النسبة":90.50,"المستوى":"التميز",
-     "المعايير":[{"اسم_المعيار":"المبنى المدرسي","النسبة":89.75,"المستوى":"التقدم"},{"اسم_المعيار":"الأمن والسلامة","النسبة":91.00,"المستوى":"التميز"}],
-     "المؤشرات":[
-       {"الرمز":"1-1-1-4","النص":"تنظيم مبنى المدرسة ملائم لعدد المتعلمين والمرحلة العمرية","النسبة":98.25,"المستوى":"التميز","درجة_التحقق":"متميزة","مقترح_التحسين":"يتوقع من المدرسة الاستمرار في العمل مع الجهات ذات العلاقة لتطوير المبنى المدرسي."},
-       {"الرمز":"1-1-2-4","النص":"تتوافر في فصول المدرسة ومعاملها وجميع مرافقها متطلبات الأمن والسلامة","النسبة":98.75,"المستوى":"التميز","درجة_التحقق":"متميزة","مقترح_التحسين":"يتوقع من المدرسة الاستمرار في متابعة متطلبات وتجهيزات الأمن والسلامة بانتظام."},
-       {"الرمز":"2-1-1-4","النص":"تتوافر فصول ومعامل ملائمة للعملية التعليمية تلبي احتياجات المتعلمين","النسبة":84.75,"المستوى":"التقدم","درجة_التحقق":"متقدمة","مقترح_التحسين":"يتوقع من المدرسة تنظيم الفصول والمعامل وتجهيزاتها بما يطابق المعايير والمواصفات."}
-     ]}
-  ],
-  "آراء_أصحاب_المصلحة":{
-    "المتعلم":{"الإدارة المدرسية":82,"التعليم والتعلم":80,"نواتج التعلم":90,"البيئة المدرسية":77},
-    "ولي_الأمر":{"الإدارة المدرسية":82,"التعليم والتعلم":80,"نواتج التعلم":88,"البيئة المدرسية":88},
-    "المعلم":{"الإدارة المدرسية":95,"التعليم والتعلم":94,"نواتج التعلم":94,"البيئة المدرسية":89}
-  },
-  "نتائج_نافس":{"القراءة":{"الرمز":"1-1-1-3","النسبة":77.78},"الرياضيات":{"الرمز":"2-1-1-3","النسبة":66.02},"العلوم":{"الرمز":"3-1-1-3","النسبة":77.57}},
-  "ملخص_النتائج":{"أبرز_جوانب_التميز":[{"الرمز":"3-1-4-1","النص":"تطبق المدرسة التقويم الذاتي المبني على المعايير"}],"أبرز_جوانب_التحسين":[{"الرمز":"7-1-1-2","النص":"تنمية مهارات التفكير العليا"}]},
-  "تنبيهات_القراءة":[]
-};
-
-/* استرجاع آخر تقرير إن وُجد */
-try{ const last=localStorage.getItem('lastReport'); if(last){ /* متاح للاستخدام عند الحاجة */ } }catch(e){}
+function renderAll(){
+ document.getElementById("rawText").value=data.rawText||"";
+ renderSchool(); renderMetrics(); renderTables(); renderCards(); renderPlans(); renderStakeholders(); renderCharts();
+}
+function renderSchool(){
+ const s=data.school_info, items=[["اسم المدرسة",s.name],["الرقم الوزاري",s.ministry_number],["الإدارة التعليمية",s.education_admin],["المرحلة",s.stage],["النوع",s.gender],["عدد الطلاب",s.students_count],["عدد المعلمين",s.teachers_count],["السنة",s.year],["تاريخ التقويم",s.evaluation_date]];
+ document.getElementById("schoolInfo").innerHTML=items.map(x=>`<div class="info-item"><small>${x[0]}</small><strong>${x[1]||"غير محدد"}</strong></div>`).join("");
+ document.getElementById("overallPct").textContent=(s.overall_percentage||0)+"%";
+ const l=s.overall_level||getLevelFromPct(s.overall_percentage||0); const el=document.getElementById("overallLevel"); el.textContent=l; el.className="level "+levelClass(l);
+}
+function renderMetrics(){
+ const a=data.indicators; mTotal.textContent=a.length; mStrong.textContent=a.filter(i=>i.classification==="نقطة قوة").length; mWeak.textContent=a.filter(i=>i.classification==="نقطة ضعف").length; mCritical.textContent=a.filter(i=>i.classification==="نقطة حرجة").length;
+}
+function renderTables(){
+ document.getElementById("commonFilters").innerHTML=`<div class="filters"><input class="search" id="q" placeholder="بحث في المؤشرات..." oninput="renderTables()"><select id="domainFilter" onchange="renderTables()"><option value="">كل المجالات</option>${DOMAIN_NAMES.map(d=>`<option>${d}</option>`).join("")}</select><select id="classFilter" onchange="renderTables()"><option value="">كل التصنيفات</option><option>نقطة قوة</option><option>نقطة ضعف</option><option>نقطة حرجة</option></select></div>`;
+ const q=(document.getElementById("q")?.value||"").trim(), df=document.getElementById("domainFilter")?.value||"", cf=document.getElementById("classFilter")?.value||"";
+ const rows=data.indicators.filter(i=>(!q||JSON.stringify(i).includes(q))&&(!df||i.domain===df)&&(!cf||i.classification===cf));
+ allTable.innerHTML=`<div class="table-wrap"><table><thead><tr><th>الكود</th><th>المؤشر</th><th>المجال</th><th>النسبة</th><th>المستوى</th><th>التصنيف</th></tr></thead><tbody>${rows.map(row).join("")||"<tr><td colspan='6'>لا توجد مؤشرات بعد.</td></tr>"}</tbody></table></div>`;
+}
+function row(i){let c=i.classification==="نقطة قوة"?"strong":i.classification==="نقطة ضعف"?"weak":"critical";return `<tr><td>${i.code}</td><td>${i.text}</td><td>${i.domain}</td><td>${i.percentage}%</td><td>${i.level}</td><td><span class="badge ${c}">${i.classification}</span></td></tr>`}
+function renderCards(){
+ const make=(arr)=>arr.map(i=>`<div class="card ind-card" onclick="this.classList.toggle('open')"><div class="ind-head"><b>${i.code} - ${i.text}</b><span>${i.percentage}%</span></div><div class="ind-body"><p>المجال: ${i.domain}</p><p>المستوى: ${i.level}</p><p>التصنيف: ${i.classification}</p></div></div>`).join("")||"<div class='card'>لا توجد بيانات.</div>";
+ strengthCards.innerHTML=make(data.indicators.filter(i=>i.classification==="نقطة قوة"));
+ weakCards.innerHTML=make(data.indicators.filter(i=>i.classification==="نقطة ضعف"));
+ criticalCards.innerHTML=make(data.indicators.filter(i=>i.classification==="نقطة حرجة"));
+}
+function renderPlans(){
+ plansList.innerHTML=data.plans.map(p=>`<div class="card plan"><h4>${p.title}</h4><p><b>المؤشر:</b> ${p.indicator.code} - ${p.indicator.text}</p><p><b>إجراءات تنفيذية:</b> ${p.actions}</p><p><b>شواهد مقترحة:</b> ${p.evidence}</p><p><b>توصيات متابعة:</b> ${p.follow}</p></div>`).join("")||"<div class='card'>لا توجد نقاط ضعف أو حرجة لبناء خطط تحسين.</div>";
+}
+function renderStakeholders(){
+ const labels={students:"المتعلمون/الطلاب",parents:"أولياء الأمور",teachers:"المعلمون"};
+ stakeholdersGrid.innerHTML=Object.keys(labels).map(k=>{let g=data.stakeholders[k];return `<div class="card"><h4>${labels[k]}</h4><div class="metric"><span>النسبة العامة</span><b>${g.overall||0}%</b></div>${DOMAIN_NAMES.map(d=>`<p>${d}: <b>${g.domains[d]||0}%</b></p>`).join("")}</div>`}).join("");
+}
+function renderCharts(){
+ charts.forEach(c=>c.destroy()); charts=[];
+ const domLabels=data.domains.map(d=>d.name), domVals=data.domains.map(d=>d.percentage);
+ charts.push(new Chart(domainsChart,{type:"bar",data:{labels:domLabels,datasets:[{label:"نسب المجالات",data:domVals}]},options:{responsive:true,maintainAspectRatio:false}}));
+ const dist=["نقطة قوة","نقطة ضعف","نقطة حرجة"].map(c=>data.indicators.filter(i=>i.classification===c).length);
+ charts.push(new Chart(distChart,{type:"doughnut",data:{labels:["قوة","ضعف","حرجة"],datasets:[{data:dist}]},options:{responsive:true,maintainAspectRatio:false}}));
+ charts.push(new Chart(radarChart,{type:"radar",data:{labels:domLabels,datasets:[{label:"رادار المجالات",data:domVals}]},options:{responsive:true,maintainAspectRatio:false,scales:{r:{min:0,max:100}}}}));
+ charts.push(new Chart(barChart,{type:"bar",data:{labels:data.indicators.slice(0,12).map(i=>i.code),datasets:[{label:"أعلى/أول المؤشرات",data:data.indicators.slice(0,12).map(i=>i.percentage)}]},options:{indexAxis:"y",responsive:true,maintainAspectRatio:false,scales:{x:{min:0,max:100}}}}));
+}
+document.querySelectorAll(".nav button").forEach(b=>b.onclick=()=>{document.querySelectorAll(".nav button").forEach(x=>x.classList.remove("active"));b.classList.add("active");document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));document.getElementById(b.dataset.page).classList.add("active")});
+function openEdit(){
+ const s=data.school_info; const fields=Object.keys(s);
+ editGrid.innerHTML=fields.map(k=>`<label>${k}<input class="edit" id="e_${k}" value="${String(s[k]??"").replace(/"/g,"&quot;")}"></label>`).join("");
+ editModal.classList.add("show");
+}
+function closeEdit(){editModal.classList.remove("show")}
+function saveEdit(){Object.keys(data.school_info).forEach(k=>data.school_info[k]=document.getElementById("e_"+k).value);renderAll();saveLocal();closeEdit();toast("تم حفظ التعديلات")}
+function clearData(){if(confirm("هل تريد مسح جميع البيانات؟")){data=emptyData();pendingData=null;renderAll();localStorage.removeItem("externalEvalAnalyzer");progress(0);log("تم مسح البيانات.")}}
+function saveLocal(){localStorage.setItem("externalEvalAnalyzer",JSON.stringify(data))}
+try{let old=localStorage.getItem("externalEvalAnalyzer"); if(old){data=JSON.parse(old)}}catch(e){}
+renderAll();
 </script>
 </body>
 </html>
