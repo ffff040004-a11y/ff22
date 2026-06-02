@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تعليمات بطاقة صراف الصندوق المدرسي</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C97A;
+    --gold-dark: #9B7A2E;
+    --navy: #0A1628;
+    --navy-mid: #112240;
+    --navy-light: #1A3356;
+    --teal: #0D7C8C;
+    --teal-light: #11A3B8;
+    --white: #F4F0E8;
+    --text: #EDE8DC;
+    --muted: #A8A090;
+    --danger: #E05252;
+    --success: #3DB87A;
+    --warn: #E8972A;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Tajawal', sans-serif;
+    background: var(--navy);
+    color: var(--text);
+    min-height: 100vh;
+    direction: rtl;
+    overflow-x: hidden;
+  }
+
+  /* ===== BACKGROUND PATTERN ===== */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% 0%, rgba(201,168,76,0.08) 0%, transparent 60%),
+      repeating-linear-gradient(45deg, transparent, transparent 40px, rgba(255,255,255,0.012) 40px, rgba(255,255,255,0.012) 41px),
+      repeating-linear-gradient(-45deg, transparent, transparent 40px, rgba(255,255,255,0.012) 40px, rgba(255,255,255,0.012) 41px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 18px 40px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ===== HEADER ===== */
+  .hero {
+    text-align: center;
+    padding: 40px 20px 30px;
+    position: relative;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+    color: var(--navy);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    padding: 5px 18px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+    text-transform: uppercase;
+  }
+
+  .hero h1 {
+    font-size: clamp(22px, 5vw, 36px);
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--gold-light), var(--gold), var(--gold-dark));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.3;
+    margin-bottom: 8px;
+  }
+
+  .hero-sub {
+    font-size: 13px;
+    color: var(--muted);
+    font-weight: 400;
+  }
+
+  .hero-line {
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 16px auto 0;
+    border-radius: 2px;
+  }
+
+  /* ===== CARD VISUAL ===== */
+  .card-visual {
+    background: linear-gradient(135deg, #1a3a6e, #0f2040, #1a3a6e);
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 16px;
+    padding: 22px 28px;
+    margin: 20px 0 28px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05);
+  }
+
+  .card-visual::before {
+    content: '';
+    position: absolute;
+    top: -30px; left: -30px;
+    width: 140px; height: 140px;
+    background: radial-gradient(circle, rgba(201,168,76,0.15), transparent 70%);
+    border-radius: 50%;
+  }
+
+  .card-visual::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; right: 40px;
+    width: 180px; height: 180px;
+    background: radial-gradient(circle, rgba(13,124,140,0.2), transparent 70%);
+    border-radius: 50%;
+  }
+
+  .card-info {
+    position: relative; z-index: 1;
+  }
+
+  .card-info h2 {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--gold-light);
+    margin-bottom: 4px;
+  }
+
+  .card-info p {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .card-icon-wrap {
+    position: relative; z-index: 1;
+    width: 64px; height: 44px;
+    background: linear-gradient(135deg, #c9a84c, #9b7a2e);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    box-shadow: 0 4px 12px rgba(201,168,76,0.3);
+    flex-shrink: 0;
+  }
+
+  .visa-text {
+    color: white;
+    font-size: 13px;
+    font-style: italic;
+    font-weight: 900;
+    letter-spacing: 1px;
+  }
+
+  /* ===== SECTION TITLE ===== */
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 32px 0 16px;
+  }
+
+  .section-icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .section-icon.gold { background: linear-gradient(135deg, rgba(201,168,76,0.2), rgba(201,168,76,0.05)); border: 1px solid rgba(201,168,76,0.3); }
+  .section-icon.teal { background: linear-gradient(135deg, rgba(13,124,140,0.25), rgba(13,124,140,0.05)); border: 1px solid rgba(13,124,140,0.3); }
+  .section-icon.warn { background: linear-gradient(135deg, rgba(232,151,42,0.2), rgba(232,151,42,0.05)); border: 1px solid rgba(232,151,42,0.3); }
+
+  .section-title h3 {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--gold-light);
+  }
+
+  .section-title .section-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(201,168,76,0.4), transparent);
+  }
+
+  /* ===== STEPS ===== */
+  .steps-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .step-card {
+    background: linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 14px;
+    padding: 16px 18px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    cursor: default;
+  }
+
+  .step-card:hover {
+    transform: translateX(-3px);
+    border-color: rgba(201,168,76,0.25);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  }
+
+  .step-num {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+    color: var(--navy);
+    font-size: 15px;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(201,168,76,0.3);
+  }
+
+  .step-content {
+    flex: 1;
+    padding-top: 3px;
+  }
+
+  .step-content p {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--text);
+  }
+
+  .step-content .highlight {
+    background: linear-gradient(135deg, rgba(201,168,76,0.15), rgba(201,168,76,0.05));
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 8px;
+    padding: 8px 12px;
+    margin-top: 8px;
+    font-size: 15px;
+    color: var(--gold-light);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .step-content a {
+    color: var(--teal-light);
+    text-decoration: none;
+    word-break: break-all;
+  }
+
+  .step-content a:hover { text-decoration: underline; }
+
+  /* ===== ACTIVE BADGE ===== */
+  .active-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(61,184,122,0.15);
+    border: 1px solid rgba(61,184,122,0.3);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 12px;
+    color: var(--success);
+    font-weight: 700;
+    margin-top: 8px;
+  }
+
+  .active-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--success);
+    animation: pulse-dot 1.5s infinite;
+  }
+
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.7); }
+  }
+
+  /* ===== ALERT ===== */
+  .alert {
+    border-radius: 14px;
+    padding: 16px 18px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    margin: 10px 0;
+  }
+
+  .alert.danger {
+    background: linear-gradient(135deg, rgba(224,82,82,0.1), rgba(224,82,82,0.04));
+    border: 1px solid rgba(224,82,82,0.25);
+  }
+
+  .alert.warn {
+    background: linear-gradient(135deg, rgba(232,151,42,0.1), rgba(232,151,42,0.04));
+    border: 1px solid rgba(232,151,42,0.25);
+  }
+
+  .alert.info {
+    background: linear-gradient(135deg, rgba(13,124,140,0.12), rgba(13,124,140,0.04));
+    border: 1px solid rgba(13,124,140,0.25);
+  }
+
+  .alert-icon {
+    font-size: 22px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .alert-body p {
+    font-size: 15.5px;
+    line-height: 1.8;
+  }
+
+  .alert.danger .alert-body p { color: #f08080; }
+  .alert.warn .alert-body p { color: #f0b870; }
+  .alert.info .alert-body p { color: #80d4df; }
+
+  /* ===== PURCHASE STEPS ===== */
+  .purchase-steps {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  @media (max-width: 560px) {
+    .purchase-steps { grid-template-columns: 1fr; }
+  }
+
+  .purchase-card {
+    background: linear-gradient(135deg, rgba(13,124,140,0.1), rgba(13,124,140,0.03));
+    border: 1px solid rgba(13,124,140,0.2);
+    border-radius: 14px;
+    padding: 16px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .purchase-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+  }
+
+  .purchase-card .p-num {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, var(--teal), var(--teal-light));
+    color: white;
+    font-size: 14px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .purchase-card p {
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--text);
+    padding-top: 3px;
+  }
+
+  /* ===== NOTES ===== */
+  .notes-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .note-card {
+    background: linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+    border: 1px solid rgba(255,255,255,0.07);
+    border-right: 3px solid var(--gold);
+    border-radius: 0 12px 12px 0;
+    padding: 14px 16px 14px 14px;
+    font-size: 15.5px;
+    line-height: 1.8;
+    color: var(--text);
+    transition: border-color 0.2s;
+  }
+
+  .note-card:hover { border-right-color: var(--gold-light); }
+
+  .note-card strong {
+    color: var(--gold-light);
+    display: block;
+    margin-bottom: 4px;
+    font-size: 16px;
+  }
+
+  /* ===== NO-CASH BANNER ===== */
+  .no-cash {
+    background: linear-gradient(135deg, rgba(224,82,82,0.08), rgba(224,82,82,0.03));
+    border: 1px solid rgba(224,82,82,0.2);
+    border-radius: 14px;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 16px;
+    color: #f08080;
+    font-weight: 700;
+  }
+
+  .no-cash span:first-child { font-size: 22px; }
+
+  /* ===== FOOTER ===== */
+  .footer {
+    margin-top: 36px;
+    border-top: 1px solid rgba(255,255,255,0.07);
+    padding-top: 20px;
+    text-align: center;
+  }
+
+  .footer-org {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 14px;
+    line-height: 1.8;
+  }
+
+  .footer-org strong { color: var(--gold); display: block; font-size: 13px; }
+
+  .telegram-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, rgba(201,168,76,0.15), rgba(201,168,76,0.05));
+    border: 1px solid rgba(201,168,76,0.35);
+    border-radius: 30px;
+    padding: 10px 22px;
+    color: var(--gold-light);
+    font-size: 13.5px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.25s;
+    margin-top: 10px;
+  }
+
+  .telegram-btn:hover {
+    background: linear-gradient(135deg, rgba(201,168,76,0.25), rgba(201,168,76,0.1));
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(201,168,76,0.2);
+  }
+
+  .telegram-btn svg { width: 20px; height: 20px; fill: var(--gold-light); }
+
+  .footer-credit {
+    margin-top: 14px;
+    font-size: 11px;
+    color: rgba(255,255,255,0.2);
+  }
+
+  /* ===== DIVIDER ===== */
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+    margin: 28px 0 20px;
+  }
+
+  /* ===== SCROLL ANIMATIONS ===== */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(16px);
+    animation: fadeUp 0.5s ease forwards;
+  }
+
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .step-card:nth-child(1) { animation-delay: 0.05s; }
+  .step-card:nth-child(2) { animation-delay: 0.10s; }
+  .step-card:nth-child(3) { animation-delay: 0.15s; }
+  .step-card:nth-child(4) { animation-delay: 0.20s; }
+  .step-card:nth-child(5) { animation-delay: 0.25s; }
+  .step-card:nth-child(6) { animation-delay: 0.30s; }
+  .step-card:nth-child(7) { animation-delay: 0.35s; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- HERO -->
+  <div class="hero fade-in">
+    <div class="hero-badge">الإدارة العامة لتعليم الرياض</div>
+    <h1>تعليمات بطاقة صراف<br>الصندوق المدرسي</h1>
+    <p class="hero-sub">إدارة الخدمات المشتركة · قسم المالية والمشتريات</p>
+    <div class="hero-line"></div>
+  </div>
+
+  <!-- CARD VISUAL -->
+  <div class="card-visual fade-in">
+    <div class="card-info">
+      <h2>بطاقة الصندوق المدرسي</h2>
+      <p>بطاقة VISA عبر بوابة الراجحي شركات<br>للشراء من نقاط البيع فقط</p>
+      <div class="active-badge">
+        <div class="active-dot"></div>
+        Active — جاهزة للاستخدام
+      </div>
+    </div>
+    <div class="card-icon-wrap">
+      <span class="visa-text">VISA</span>
+    </div>
+  </div>
+
+  <!-- SECTION 1: ACTIVATION -->
+  <div class="section-title fade-in">
+    <div class="section-icon gold">🔐</div>
+    <h3>خطوات تفعيل البطاقة</h3>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="steps-grid">
+
+    <div class="step-card fade-in">
+      <div class="step-num">١</div>
+      <div class="step-content">
+        <p>الدخول إلى <strong>بوابة الراجحي شركات</strong> عبر الرابط أو رمز QR الموجود في النشرة المرفقة:</p>
+        <div class="highlight">
+          🔗 <a href="https://alrajhicorporatecards.neoleap.com.sa/portal/login" target="_blank">alrajhicorporatecards.neoleap.com.sa/portal/login</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-card fade-in">
+      <div class="step-num">٢</div>
+      <div class="step-content">
+        <p>اسم المستخدم: <strong>البريد الإلكتروني للمدرسة أو مدير المدرسة</strong> (المسجل في نظام نور أو المنصة)</p>
+        <div class="highlight">
+          📱 كلمة المرور المؤقتة: رقم الجوال مبتدئاً بـ <strong>966Xxxxxxxxxx</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-card fade-in">
+      <div class="step-num">٣</div>
+      <div class="step-content">
+        <p>إعادة تعيين <strong>كلمة مرور جديدة</strong> مع استيفاء الشروط:</p>
+        <div class="highlight">
+          🔑 ٨ أرقام وحروف كبيرة وصغيرة
+        </div>
+      </div>
+    </div>
+
+    <div class="step-card fade-in">
+      <div class="step-num">٤</div>
+      <div class="step-content">
+        <p>استكمال إجراءات التحقق عبر <strong>منصة نفاذ</strong> الوطنية</p>
+      </div>
+    </div>
+
+    <div class="step-card fade-in">
+      <div class="step-num">٥</div>
+      <div class="step-content">
+        <p>عند الوصول للوحة التحكم، يمكن <strong>تنشيط البطاقة</strong> بالضغط على زر <strong>«تفعيل»</strong> وتعيين الرمز السري <strong>PIN</strong> المكوّن من أربعة أرقام</p>
+      </div>
+    </div>
+
+    <div class="step-card fade-in">
+      <div class="step-num">٦</div>
+      <div class="step-content">
+        <p>بمجرد تفعيل البطاقة سوف يظهر <strong>«Active»</strong> باللون الأخضر، مما يعني أنها جاهزة للاستخدام، ويتمكن مدير المدرسة من عرض <strong>تفاصيل البطاقة والرصيد المتاح</strong></p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- IMPORTANT NOTICE -->
+  <div class="alert danger fade-in" style="margin-top:14px;">
+    <div class="alert-icon">⚠️</div>
+    <div class="alert-body">
+      <p><strong>تنبيه هام:</strong> يُشترط لتفعيل البطاقة أن تكون <strong>أول عملية مالية عبر إدخال البطاقة في جهاز نقاط البيع</strong> وإتمام العملية بالرقم السري.<br>
+      <strong>لا يُعتد بالتفعيل</strong> إذا كانت العملية الأولى عن طريق: تقريب البطاقة على الجهاز، أو عبر القنوات الإلكترونية، أو من خلال أجهزة الصرف الآلي.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 2: PURCHASE & INVOICES -->
+  <div class="section-title fade-in">
+    <div class="section-icon teal">🛒</div>
+    <h3>تعليمات الشراء ورفع الفواتير</h3>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="purchase-steps">
+
+    <div class="purchase-card fade-in">
+      <div class="p-num">١</div>
+      <p>بعد إتمام عملية الشراء، الدخول إلى <strong>بوابة الراجحي شركات</strong> واستعراض سجل العمليات الشرائية</p>
+    </div>
+
+    <div class="purchase-card fade-in">
+      <div class="p-num">٢</div>
+      <p>يوجد أمام كل عملية شراء أيقونة تحميل <strong>(Upload)</strong> يتم من خلالها رفع <strong>فاتورة الشراء</strong> الصادرة من المحل</p>
+    </div>
+
+    <div class="purchase-card fade-in">
+      <div class="p-num">٣</div>
+      <p><strong>السحب النقدي غير متاح</strong> — يتم الشراء من <strong>نقاط البيع فقط</strong></p>
+    </div>
+
+    <div class="purchase-card fade-in">
+      <div class="p-num">٤</div>
+      <p>التقيد ببنود الصرف الواردة في <strong>لائحة الصناديق المدرسية</strong></p>
+    </div>
+
+  </div>
+
+  <!-- NO CASH BANNER -->
+  <div class="no-cash fade-in" style="margin-top:12px;">
+    <span>🚫</span>
+    <span>السحب النقدي غير متاح — الشراء من نقاط البيع فقط</span>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 3: NOTES -->
+  <div class="section-title fade-in">
+    <div class="section-icon warn">📋</div>
+    <h3>ملاحظات هامة</h3>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="notes-grid">
+
+    <div class="note-card fade-in">
+      <strong>🔄 فقدان البطاقة</strong>
+      في حال فقدان البطاقة يمكن استبدالها من <strong>خيارات البطاقة</strong> — ويُتاح هذا الخيار فقط في حال فقدان البطاقة وتعذّر الحصول عليها.
+    </div>
+
+    <div class="note-card fade-in">
+      <strong>👤 نقل أو تغيير مدير المدرسة</strong>
+      في حال نقل أو تغيير مدير المدرسة، يتم إشعار <strong>إدارة الخدمات المشتركة / قسم المالية والمشتريات</strong> وتعبئة النموذج المرفق.
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer fade-in">
+    <a href="https://t.me/TAqhjT3MFVE1Yzk0" target="_blank" class="telegram-btn">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L8.32 14.617l-2.96-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.828.942z"/>
+      </svg>
+      تفضل للمزيد هنا
+    </a>
+    <div class="footer-credit">تصميم د/فواز</div>
+  </div>
+
+</div>
+</body>
+</html>
