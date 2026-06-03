@@ -378,21 +378,118 @@
 
         @media print {
             body { background: white !important; padding: 0 !important; margin: 0 !important; }
-            .tabs-wrapper, .toolbar, .btn, .delete-btn, .tab-btn { display: none !important; }
+            .tabs-wrapper, .toolbar, .btn, .delete-btn, .tab-btn, .print-panel, .footer, .weight-warning { display: none !important; }
             .tab-content { display: block !important; padding-top: 10px; }
-            .container { max-width: 100% !important; padding: 0 !important; }
-            .table-container { box-shadow: none !important; border: 1px solid #000 !important; border-radius: 0 !important; }
-            th { background-color: #f1f5f9 !important; color: #000 !important; border-bottom: 2px solid #000 !important; }
-            td, th { padding: 8px !important; border-bottom: 1px solid #cbd5e1 !important; }
+            .container { max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
+            .table-container { box-shadow: none !important; border: 1px solid #000 !important; border-radius: 0 !important; overflow: visible !important; }
+            th { background-color: #f1f5f9 !important; color: #000 !important; border-bottom: 2px solid #000 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            td, th { padding: 6px 8px !important; border-bottom: 1px solid #cbd5e1 !important; font-size: 11pt !important; }
             .total-row td, .goal-total-row td { background-color: #f8fafc !important; color: black !important; }
-            input, textarea, select { border: none !important; background: transparent !important; box-shadow: none !important; padding: 0 !important; }
+            input, textarea, select { border: none !important; background: transparent !important; box-shadow: none !important; padding: 0 !important; font-size: 11pt !important; }
             .kpi-card { box-shadow: none !important; border: 1px solid #cbd5e1 !important; background: #f8fafc !important; color: black !important; }
-            .kpi-card.highlight, .kpi-card.highlight-blue { background: #e2e8f0 !important; color: black !important; }
-            .highlight .kpi-title, .highlight .kpi-value, .highlight-blue .kpi-title, .highlight-blue .kpi-value { color: black !important; }
+            .kpi-card.highlight, .kpi-card.highlight-blue, .kpi-card.highlight-purple { background: #e2e8f0 !important; color: black !important; }
+            .highlight .kpi-title, .highlight .kpi-value,
+            .highlight-blue .kpi-title, .highlight-blue .kpi-value,
+            .highlight-purple .kpi-title, .highlight-purple .kpi-value { color: black !important; }
             .metadata-section { box-shadow: none !important; border: 1px solid #cbd5e1 !important; }
+            .result-box { box-shadow: none !important; border: 1px solid #cbd5e1 !important; }
+            .result-breakdown { flex-wrap: wrap; }
+            table { width: 100% !important; table-layout: fixed; }
+            * { overflow: visible !important; }
         }
 
-        @page { size: A4 portrait; margin: 12mm; }
+        @page { size: A4 portrait; margin: 12mm; } /* يتم تجاوزه بـ JS */
+
+        /* لوحة إعدادات الطباعة */
+        .print-panel {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 18px 24px;
+            margin-top: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .print-panel-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 14px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+        }
+        .print-options {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+        .print-option-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .print-option-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+        .print-orient-btns {
+            display: flex;
+            gap: 8px;
+        }
+        .orient-btn {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 8px 16px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            background: var(--bg);
+            color: var(--text-muted);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Tajawal', sans-serif;
+        }
+        .orient-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary-dark);
+            background: var(--primary-light);
+        }
+        .orient-btn.active {
+            border-color: var(--primary);
+            color: var(--primary-dark);
+            background: var(--primary-light);
+            box-shadow: 0 0 0 3px rgba(46,125,50,0.15);
+        }
+        .btn-print-main {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #0f172a;
+            color: white;
+            border: none;
+            padding: 11px 24px;
+            font-size: 14px;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Tajawal', sans-serif;
+        }
+        .btn-print-main:hover { background: #1e293b; transform: translateY(-1px); }
+        .print-hint {
+            margin-top: 12px;
+            font-size: 12px;
+            color: var(--text-muted);
+            background: #f8fafc;
+            padding: 8px 12px;
+            border-radius: 6px;
+            border-right: 3px solid var(--warning);
+        }
+
     </style>
 </head>
 <body>
@@ -417,12 +514,6 @@
 
         <div class="toolbar">
             <button class="btn btn-primary" onclick="addNewRow()">＋ إضافة جدارة</button>
-            <button class="btn btn-print" onclick="triggerPrint()">
-                <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="margin-left:5px;">
-                    <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 4v1a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h8zm1.5-4a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1z"/>
-                </svg>
-                طباعة / تصدير PDF
-            </button>
         </div>
 
         <header>
@@ -547,12 +638,6 @@
 
         <div class="toolbar">
             <button class="btn btn-blue" onclick="addGoalRow()">＋ إضافة هدف</button>
-            <button class="btn btn-print" onclick="triggerPrint()">
-                <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="margin-left:5px;">
-                    <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 4v1a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h8zm1.5-4a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1z"/>
-                </svg>
-                طباعة / تصدير PDF
-            </button>
         </div>
 
         <header class="goal-header">
@@ -647,12 +732,6 @@
     <div id="tab-result" class="tab-content">
 
         <div class="toolbar">
-            <button class="btn btn-print" onclick="triggerPrint()">
-                <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="margin-left:5px;">
-                    <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 4v1a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h8zm1.5-4a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1z"/>
-                </svg>
-                طباعة / تصدير PDF
-            </button>
             <button class="btn" style="background:#6a1b9a;" onclick="refreshFinal()">🔄 تحديث النتيجة</button>
         </div>
 
@@ -727,9 +806,51 @@
     </div>
     <!-- نهاية تبويب النتيجة الكلية -->
 
-    <!-- الفوتر -->
+    <!-- لوحة إعدادات الطباعة -->
+    <div class="print-panel">
+        <div class="print-panel-title">
+            🖨️ إعدادات الطباعة وحفظ PDF
+        </div>
+        <div class="print-options">
+            <div class="print-option-group">
+                <label class="print-option-label">اتجاه الورقة:</label>
+                <div class="print-orient-btns">
+                    <button class="orient-btn active" id="btn-portrait" onclick="setOrientation('portrait')">
+                        <svg width="18" height="22" viewBox="0 0 18 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="1" y="1" width="16" height="20" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                            <line x1="4" y1="6" x2="14" y2="6" stroke="currentColor" stroke-width="1.2"/>
+                            <line x1="4" y1="9" x2="14" y2="9" stroke="currentColor" stroke-width="1.2"/>
+                            <line x1="4" y1="12" x2="10" y2="12" stroke="currentColor" stroke-width="1.2"/>
+                        </svg>
+                        عمودي A4
+                    </button>
+                    <button class="orient-btn" id="btn-landscape" onclick="setOrientation('landscape')">
+                        <svg width="22" height="18" viewBox="0 0 22 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="1" y="1" width="20" height="16" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                            <line x1="4" y1="5" x2="18" y2="5" stroke="currentColor" stroke-width="1.2"/>
+                            <line x1="4" y1="8" x2="18" y2="8" stroke="currentColor" stroke-width="1.2"/>
+                            <line x1="4" y1="11" x2="12" y2="11" stroke="currentColor" stroke-width="1.2"/>
+                        </svg>
+                        أفقي A4
+                    </button>
+                </div>
+            </div>
+            <button class="btn-print-main" onclick="triggerPrint()">
+                <svg width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 4v1a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h8zm1.5-4a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1z"/>
+                </svg>
+                طباعة / حفظ PDF
+            </button>
+        </div>
+        <div class="print-hint">
+            💡 لحفظ PDF: اختر "حفظ بصيغة PDF" من قائمة الطابعات في نافذة الطباعة
+        </div>
+    </div>
+
+    <!-- الفوتر — يظهر في الشاشة فقط ولا يُطبع -->
     <div class="footer">
-        تصميم د/فواز &nbsp;|&nbsp; <a href="https://t.me/TAqhjT3MFVE1Yzk0" target="_blank">📲 قناة التيليجرام</a>
+        تصميم د/فواز &nbsp;|&nbsp;
+        <a href="https://t.me/TAqhjT3MFVE1Yzk0" target="_blank">📲 تفضل للمزيد هنا</a>
     </div>
 
 </div>
@@ -746,7 +867,30 @@
         if (tab === 'result') refreshFinal();
     }
 
-    function triggerPrint() { window.print(); }
+    // اتجاه الطباعة الافتراضي
+    let printOrientation = 'portrait';
+
+    function setOrientation(orient) {
+        printOrientation = orient;
+        document.getElementById('btn-portrait').classList.toggle('active', orient === 'portrait');
+        document.getElementById('btn-landscape').classList.toggle('active', orient === 'landscape');
+    }
+
+    function triggerPrint() {
+        // إزالة أي style ديناميكي سابق
+        const old = document.getElementById('dynamic-page-style');
+        if (old) old.remove();
+        // حقن @page ديناميكي بالاتجاه المختار
+        const style = document.createElement('style');
+        style.id = 'dynamic-page-style';
+        style.textContent = `@page { size: A4 ${printOrientation}; margin: 10mm; }
+        body { zoom: 1; }
+        table { font-size: ${printOrientation === 'landscape' ? '10pt' : '9pt'} !important; }
+        .col-desc, .comp-desc { font-size: ${printOrientation === 'landscape' ? '10pt' : '8.5pt'} !important; }
+        `;
+        document.head.appendChild(style);
+        window.print();
+    }
 
     // ============================
     // منطق تقييم الجدارات
