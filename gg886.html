@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مسابقة الرخصة المهنية للمدربين</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #0d2137;
+    --secondary: #1a3a5c;
+    --gold: #c9a227;
+    --gold-light: #e8c563;
+    --success: #1db954;
+    --error: #e74c3c;
+    --text: #f0f4f8;
+    --text-dim: #a0b4c8;
+    --card-bg: #112233;
+    --border: rgba(201,162,39,0.3);
+    --shadow: 0 8px 32px rgba(0,0,0,0.5);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Tajawal', sans-serif;
+    background: var(--primary);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ========== BACKGROUND ========== */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 20%, rgba(201,162,39,0.07) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 80%, rgba(29,185,84,0.05) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 50%, rgba(26,58,92,0.8) 0%, transparent 100%);
+    pointer-events: none; z-index: 0;
+  }
+
+  /* ========== SCREENS ========== */
+  .screen { display: none; position: relative; z-index: 1; }
+  .screen.active { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
+
+  /* ========== HOME ========== */
+  .home-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 48px 40px;
+    max-width: 680px;
+    width: 100%;
+    text-align: center;
+    box-shadow: var(--shadow), 0 0 60px rgba(201,162,39,0.1);
+  }
+  .home-icon {
+    width: 100px; height: 100px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 48px; margin: 0 auto 24px;
+    box-shadow: 0 0 40px rgba(201,162,39,0.4);
+    animation: pulse 3s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%,100%{transform:scale(1); box-shadow:0 0 40px rgba(201,162,39,0.4);}
+    50%{transform:scale(1.05); box-shadow:0 0 60px rgba(201,162,39,0.6);}
+  }
+  .home-title { font-size: 2.2rem; font-weight: 900; color: var(--gold); line-height: 1.3; margin-bottom: 8px; }
+  .home-sub { font-size: 1.1rem; color: var(--text-dim); margin-bottom: 32px; }
+  .stats-row {
+    display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-bottom: 32px;
+  }
+  .stat-badge {
+    background: rgba(201,162,39,0.1);
+    border: 1px solid var(--border);
+    border-radius: 12px; padding: 12px 20px;
+    font-size: 0.95rem; color: var(--gold-light);
+  }
+  .stat-badge strong { font-size: 1.4rem; display: block; color: var(--gold); }
+
+  /* ========== SETTINGS ========== */
+  .settings-box {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 16px; padding: 24px; margin-bottom: 28px; text-align: right;
+  }
+  .settings-title { font-size: 1rem; color: var(--gold); font-weight: 700; margin-bottom: 16px; }
+  .setting-row {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 14px; flex-wrap: wrap; gap: 10px;
+  }
+  .setting-label { font-size: 0.95rem; color: var(--text-dim); }
+  .setting-input {
+    background: var(--primary); border: 1px solid var(--border);
+    color: var(--text); border-radius: 8px; padding: 6px 12px;
+    font-family: 'Tajawal', sans-serif; font-size: 0.9rem; width: 160px;
+  }
+  select.setting-input option { background: var(--primary); }
+
+  /* ========== BUTTONS ========== */
+  .btn-start {
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    color: var(--primary); font-family: 'Tajawal', sans-serif;
+    font-size: 1.2rem; font-weight: 900;
+    border: none; border-radius: 50px; padding: 16px 48px;
+    cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 20px rgba(201,162,39,0.4);
+    width: 100%;
+  }
+  .btn-start:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(201,162,39,0.6); }
+
+  /* ========== QUIZ ========== */
+  #quizScreen { padding: 16px; }
+  .quiz-header {
+    position: sticky; top: 0; z-index: 10;
+    background: var(--primary);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 20px;
+    display: flex; align-items: center; gap: 12px;
+    width: 100%; max-width: 760px;
+    border-radius: 0 0 16px 16px;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+  }
+  .quiz-meta { flex: 1; text-align: right; }
+  .q-counter { font-size: 0.85rem; color: var(--text-dim); }
+  .q-num { font-size: 1.3rem; font-weight: 900; color: var(--gold); }
+  .progress-bar {
+    flex: 2; height: 8px; background: rgba(255,255,255,0.1);
+    border-radius: 99px; overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    border-radius: 99px; transition: width 0.4s ease;
+  }
+  .score-live {
+    font-size: 0.85rem; color: var(--text-dim);
+    white-space: nowrap; text-align: center;
+  }
+  .score-live span { color: var(--gold); font-weight: 700; }
+
+  /* Timer */
+  .timer-circle {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    background: conic-gradient(var(--gold) 0%, rgba(255,255,255,0.1) 0%);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; font-weight: 900; color: var(--gold);
+    transition: background 0.5s;
+    flex-shrink: 0;
+  }
+
+  .quiz-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 20px; padding: 28px;
+    max-width: 760px; width: 100%;
+    box-shadow: var(--shadow);
+    animation: slideIn 0.35s ease;
+  }
+  @keyframes slideIn {
+    from{opacity:0;transform:translateY(20px);}
+    to{opacity:1;transform:translateY(0);}
+  }
+  .question-text {
+    font-size: 1.15rem; font-weight: 700; line-height: 1.8;
+    color: var(--text); margin-bottom: 24px;
+    padding-bottom: 16px; border-bottom: 1px solid var(--border);
+  }
+  .options-grid { display: flex; flex-direction: column; gap: 12px; }
+  .option-btn {
+    background: rgba(255,255,255,0.03);
+    border: 2px solid rgba(255,255,255,0.1);
+    border-radius: 14px; padding: 14px 20px;
+    display: flex; align-items: center; gap: 14px;
+    cursor: pointer; transition: all 0.25s; text-align: right;
+    font-family: 'Tajawal', sans-serif; font-size: 1rem; color: var(--text);
+  }
+  .option-btn:hover:not(:disabled) {
+    background: rgba(201,162,39,0.1);
+    border-color: var(--gold);
+    transform: translateX(-4px);
+  }
+  .option-label {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: rgba(255,255,255,0.07);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 900; font-size: 0.95rem; flex-shrink: 0;
+    color: var(--gold-light);
+  }
+  .option-btn.correct {
+    background: rgba(29,185,84,0.15);
+    border-color: var(--success);
+    animation: bounceIn 0.4s ease;
+  }
+  .option-btn.correct .option-label { background: var(--success); color: #fff; }
+  .option-btn.wrong {
+    background: rgba(231,76,60,0.15);
+    border-color: var(--error);
+    animation: shake 0.4s ease;
+  }
+  .option-btn.wrong .option-label { background: var(--error); color: #fff; }
+  .option-btn:disabled { cursor: not-allowed; }
+  @keyframes bounceIn {
+    0%{transform:scale(0.95);}50%{transform:scale(1.03);}100%{transform:scale(1);}
+  }
+  @keyframes shake {
+    0%,100%{transform:translateX(0);}25%{transform:translateX(-8px);}75%{transform:translateX(8px);}
+  }
+
+  /* Feedback */
+  .feedback-box {
+    margin-top: 20px; padding: 16px 20px; border-radius: 14px;
+    font-size: 0.95rem; line-height: 1.7; display: none;
+    animation: fadeIn 0.3s ease;
+  }
+  @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+  .feedback-box.success { background: rgba(29,185,84,0.1); border: 1px solid rgba(29,185,84,0.4); }
+  .feedback-box.error { background: rgba(231,76,60,0.1); border: 1px solid rgba(231,76,60,0.4); }
+  .feedback-emoji { font-size: 1.5rem; margin-left: 8px; }
+  .feedback-msg { font-weight: 900; font-size: 1.1rem; color: var(--gold); }
+
+  .btn-next {
+    margin-top: 20px; width: 100%;
+    background: linear-gradient(135deg, var(--secondary), #1e4a7a);
+    border: 1px solid var(--border);
+    color: var(--gold-light); font-family: 'Tajawal', sans-serif;
+    font-size: 1.05rem; font-weight: 700;
+    border-radius: 50px; padding: 14px; cursor: pointer;
+    transition: all 0.3s; display: none;
+  }
+  .btn-next:hover { background: linear-gradient(135deg, #1e4a7a, #2a6aab); transform: translateY(-1px); }
+
+  /* ========== RESULT ========== */
+  #resultScreen { text-align: center; }
+  .result-card {
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-radius: 24px; padding: 48px 36px; max-width: 640px; width: 100%;
+    box-shadow: var(--shadow), 0 0 80px rgba(201,162,39,0.15);
+  }
+  .trophy { font-size: 80px; animation: trophyPop 0.8s cubic-bezier(.17,.67,.35,1.3); }
+  @keyframes trophyPop {
+    from{transform:scale(0) rotate(-20deg); opacity:0;}
+    to{transform:scale(1) rotate(0); opacity:1;}
+  }
+  .result-grade { font-size: 2.5rem; font-weight: 900; margin: 12px 0 4px; }
+  .result-score { font-size: 1.2rem; color: var(--text-dim); margin-bottom: 24px; }
+  .result-ring {
+    width: 160px; height: 160px; border-radius: 50%;
+    margin: 0 auto 24px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    font-size: 2.8rem; font-weight: 900; color: var(--gold);
+    border: 6px solid var(--gold);
+    background: rgba(201,162,39,0.08);
+    box-shadow: 0 0 40px rgba(201,162,39,0.3);
+  }
+  .result-ring small { font-size: 0.75rem; color: var(--text-dim); font-weight: 400; }
+  .result-stats {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 28px;
+  }
+  .r-stat {
+    background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+    border-radius: 12px; padding: 14px 8px;
+  }
+  .r-stat .val { font-size: 1.6rem; font-weight: 900; }
+  .r-stat .lbl { font-size: 0.8rem; color: var(--text-dim); margin-top: 2px; }
+  .correct-val { color: var(--success); }
+  .wrong-val { color: var(--error); }
+  .skip-val { color: var(--text-dim); }
+  .btn-group { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn-retry, .btn-review {
+    flex: 1; border-radius: 50px; padding: 14px;
+    font-family: 'Tajawal', sans-serif; font-size: 1rem; font-weight: 700;
+    cursor: pointer; transition: all 0.3s;
+  }
+  .btn-retry {
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    border: none; color: var(--primary);
+    box-shadow: 0 4px 16px rgba(201,162,39,0.4);
+  }
+  .btn-retry:hover { transform: translateY(-2px); }
+  .btn-review {
+    background: transparent; border: 1px solid var(--border);
+    color: var(--text-dim);
+  }
+  .btn-review:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* ========== REVIEW ========== */
+  #reviewScreen { padding: 20px; }
+  .review-header {
+    display: flex; align-items: center; gap: 12px;
+    max-width: 760px; width: 100%; margin-bottom: 20px;
+  }
+  .btn-back {
+    background: transparent; border: 1px solid var(--border);
+    color: var(--gold); font-family: 'Tajawal', sans-serif;
+    font-size: 0.95rem; border-radius: 8px; padding: 8px 16px; cursor: pointer;
+    transition: all 0.2s; flex-shrink: 0;
+  }
+  .btn-back:hover { background: rgba(201,162,39,0.1); }
+  .review-title { font-size: 1.3rem; font-weight: 900; color: var(--gold); }
+  .review-card {
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-radius: 16px; padding: 20px;
+    max-width: 760px; width: 100%;
+    margin-bottom: 14px;
+  }
+  .review-q-num { font-size: 0.8rem; color: var(--text-dim); margin-bottom: 6px; }
+  .review-q-text { font-size: 0.95rem; font-weight: 700; margin-bottom: 14px; line-height: 1.7; }
+  .review-option {
+    padding: 10px 16px; border-radius: 10px; font-size: 0.9rem;
+    margin-bottom: 6px; display: flex; align-items: center; gap: 10px;
+  }
+  .review-option.correct-ans { background: rgba(29,185,84,0.15); color: #6aee99; }
+  .review-option.user-wrong { background: rgba(231,76,60,0.15); color: #f8a0a0; }
+  .review-option.neutral { background: rgba(255,255,255,0.03); color: var(--text-dim); }
+  .review-icon { flex-shrink: 0; }
+
+  /* ========== FOOTER ========== */
+  .footer {
+    margin-top: 32px; padding: 16px;
+    text-align: center; font-size: 0.85rem; color: var(--text-dim);
+    border-top: 1px solid var(--border);
+    max-width: 760px; width: 100%;
+  }
+  .footer a { color: var(--gold); text-decoration: none; }
+  .footer a:hover { text-decoration: underline; }
+  .footer-brand { font-weight: 700; color: var(--gold-light); }
+
+  /* ========== RESPONSIVE ========== */
+  @media(max-width:600px){
+    .home-card{padding:32px 20px;}
+    .home-title{font-size:1.7rem;}
+    .result-stats{grid-template-columns:repeat(3,1fr);}
+    .quiz-card{padding:20px 16px;}
+    .question-text{font-size:1rem;}
+    .option-btn{font-size:0.9rem; padding:12px 14px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ==================== HOME ==================== -->
+<div id="homeScreen" class="screen active">
+  <div class="home-card">
+    <div class="home-icon">🎓</div>
+    <div class="home-title">مسابقة الرخصة المهنية للمدربين</div>
+    <div class="home-sub">أسئلة محاكية • اختبر معلوماتك وارفع كفاءتك</div>
+    <div class="stats-row">
+      <div class="stat-badge"><strong>201</strong>سؤال</div>
+      <div class="stat-badge"><strong>MCQ</strong>اختيار متعدد</div>
+      <div class="stat-badge"><strong>4</strong>خيارات</div>
+    </div>
+    <div class="settings-box">
+      <div class="settings-title">⚙️ إعدادات المسابقة</div>
+      <div class="setting-row">
+        <label class="setting-label">عدد الأسئلة لكل جلسة</label>
+        <select id="setCount" class="setting-input">
+          <option value="10">10 أسئلة</option>
+          <option value="20">20 سؤالاً</option>
+          <option value="30">30 سؤالاً</option>
+          <option value="50" selected>50 سؤالاً</option>
+          <option value="100">100 سؤال</option>
+          <option value="201">كل الأسئلة (201)</option>
+        </select>
+      </div>
+      <div class="setting-row">
+        <label class="setting-label">وقت كل سؤال</label>
+        <select id="setTimer" class="setting-input">
+          <option value="0">بدون توقيت</option>
+          <option value="30" selected>30 ثانية</option>
+          <option value="45">45 ثانية</option>
+          <option value="60">60 ثانية</option>
+          <option value="90">90 ثانية</option>
+        </select>
+      </div>
+      <div class="setting-row">
+        <label class="setting-label">ترتيب الأسئلة</label>
+        <select id="setOrder" class="setting-input">
+          <option value="random" selected>عشوائي</option>
+          <option value="order">بالترتيب</option>
+        </select>
+      </div>
+    </div>
+    <button class="btn-start" onclick="startQuiz()">🚀 ابدأ المسابقة</button>
+  </div>
+  <div class="footer">
+    <span class="footer-brand">تصميم د/فواز</span> • تفضل للمزيد هنا
+    <a href="https://t.me/TAqhjT3MFVE1Yzk0" target="_blank">https://t.me/TAqhjT3MFVE1Yzk0</a><br>
+    <small>والشكر والدعاء موصول لمعدّها 🤍</small>
+  </div>
+</div>
+
+<!-- ==================== QUIZ ==================== -->
+<div id="quizScreen" class="screen">
+  <div class="quiz-header">
+    <button onclick="confirmHome()" style="background:transparent;border:1px solid var(--border);color:var(--gold);border-radius:8px;padding:6px 10px;cursor:pointer;font-size:1.1rem;flex-shrink:0;" title="العودة للرئيسية">🏠</button>
+    <div class="quiz-meta">
+      <div class="q-counter">السؤال</div>
+      <div class="q-num" id="qNum">1 / 50</div>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+    <div class="score-live">✅ <span id="liveScore">0</span></div>
+    <div class="timer-circle" id="timerCircle">—</div>
+  </div>
+
+  <div class="quiz-card" id="quizCard">
+    <div class="question-text" id="questionText"></div>
+    <div class="options-grid" id="optionsGrid"></div>
+    <div class="feedback-box" id="feedbackBox"></div>
+    <button class="btn-next" id="btnNext" onclick="nextQuestion()">التالي ◀</button>
+  </div>
+</div>
+
+<!-- ==================== RESULT ==================== -->
+<div id="resultScreen" class="screen">
+  <div class="result-card">
+    <div class="trophy" id="trophyEmoji">🏆</div>
+    <div class="result-grade" id="resultGrade"></div>
+    <div class="result-ring" id="resultRing"></div>
+    <div class="result-score" id="resultScore"></div>
+    <div class="result-stats">
+      <div class="r-stat"><div class="val correct-val" id="resCorrect">0</div><div class="lbl">✅ صحيح</div></div>
+      <div class="r-stat"><div class="val wrong-val" id="resWrong">0</div><div class="lbl">❌ خطأ</div></div>
+      <div class="r-stat"><div class="val skip-val" id="resSkip">0</div><div class="lbl">⏩ انتهى وقته</div></div>
+    </div>
+    <div class="btn-group">
+      <button class="btn-retry" onclick="startQuiz()">🔄 مرة أخرى</button>
+      <button class="btn-review" onclick="showReview()">📋 مراجعة الإجابات</button>
+      <button class="btn-review" onclick="goHome()" style="border-color:var(--gold);color:var(--gold);">🏠 الرئيسية</button>
+    </div>
+  </div>
+  <div class="footer">
+    <span class="footer-brand">تصميم د/فواز</span> • تفضل للمزيد هنا
+    <a href="https://t.me/TAqhjT3MFVE1Yzk0" target="_blank">https://t.me/TAqhjT3MFVE1Yzk0</a><br>
+    <small>والشكر والدعاء موصول لمعدّها 🤍</small>
+  </div>
+</div>
+
+<!-- ==================== REVIEW ==================== -->
+<div id="reviewScreen" class="screen">
+  <div class="review-header">
+    <button class="btn-back" onclick="backToResult()">◀ رجوع</button>
+    <div class="review-title">📋 مراجعة إجاباتك</div>
+  </div>
+  <div id="reviewList" style="max-width:760px;width:100%;"></div>
+  <div class="footer">
+    <span class="footer-brand">تصميم د/فواز</span> • تفضل للمزيد هنا
+    <a href="https://t.me/TAqhjT3MFVE1Yzk0" target="_blank">https://t.me/TAqhjT3MFVE1Yzk0</a>
+  </div>
+</div>
+
+<script>
+// ============================================================
+//  QUESTIONS DATA — 201 questions
+// ============================================================
+const ALL_QUESTIONS = [
+{q:"أثناء تدريب عملي، لحظ المدرب أن المتدرب يكرر نفس الخطأ في تسلسل تركيب القطع. الإجراء \"الأكثر\" فاعلية وفقاً لمبادئ المدرسة السلوكية لضمان تعديل السلوك هو:",opts:["إيقاف المتدرب فوراً وتوجيهه للبدء من جديد مع التركيز على الملاحظة","تقديم تغذية راجعة تصحيحية فورية مقرونة بتعزيز إيجابي عند تجاوز الخطوة المتعثرة","ترك المتدرب يحاول مراراً حتى يكتشف التسلسل الصحيح من خلال التجربة والخطأ","عرض فيديو توضيحي للعملية مرة أخرى لتعميق الفهم البصري للمهمة"],ans:1},
+{q:"في ورشة عمل حول \"التفكير الاستراتيجي\"، تعمد المدرب عرض المشكلة الكلية أولاً قبل شرح التفاصيل، لمساعدة المتدربين على تكوين \"صورة ذهنية\" شاملة. هذا الإجراء يحاكي:",opts:["مبدأ \"التعلم بالنمذجة\" في النظرية الاجتماعية","مبدأ \"الاستبصار\" وتنظيم الإدراك في المدرسة المعرفية","مبدأ \"المثير والاستجابة\" في المدرسة السلوكية","مبدأ \"التعلم بالاقتران\" في المدرسة البنائية"],ans:1},
+{q:"مدرب يخطط لجلسة تدريبية لفئة \"الخبراء\" في مجال الإدارة. أي المداخل التالية \"أصح\" إجرائياً لضمان تفاعلهم وفق خصائص الكبار (الأندراغوجيا)؟",opts:["تخصيص وقت كافٍ للمحاضرة النظرية لتحديث معلوماتهم القديمة بمفاهيم حديثة","صياغة الأنشطة بناءً على مشكلات واقعية يواجهونها في عملهم لتبادل الحلول","استخدام نظام الحوافز والمكافآت لرفع مستوى التنافسية والدافعية بينهم","تكليفهم بقراءة المادة العلمية بشكل فردي ثم إجراء اختبار تقييمي شامل"],ans:1},
+{q:"أثناء نقاش جماعي، طرح متدرب رأياً مخالفاً تماماً للمادة العلمية ولرأي المدرب. الإجراء \"الأصح\" الذي يضمن استمرارية التعلم النشط هو:",opts:["تصحيح المعلومة للمتدرب فوراً مدعومة بالمراجع لقطع دابر الخطأ العلمي","شكر المتدرب على شجاعته وتجاوز النقطة للانتقال للموضوع التالي تلافياً للجدل","تحويل رأي المتدرب كقضية للنقاش بين المجموعات لتمحيصها والوصول للحقيقة","الطلب من المتدرب تأجيل رأيه لنهاية اليوم لمناقشته بشكل فردي مع المدرب"],ans:2},
+{q:"اكتشف مدرب في منتصف البرنامج أن بعض المتدربين المتميزين يشعرون بالملل بسبب سهولة الأنشطة. الإجراء \"الأنسب\" لتطبيق التمايز التدريبي هو:",opts:["الطلب من المتميزين مساعدة زملائهم المتعثرين لتعزيز روح التعاون","زيادة وتيرة الشرح النظري لتغطية جوانب أكثر عمقاً في المادة العلمية","تزويد المتدربين المتميزين بمهام ذات مستويات تفكير عليا (تحدي) بشكل إضافي","إعادة توزيع المجموعات بحيث يترأس كل متميز مجموعة تدريبية"],ans:2},
+{q:"أي من المعايير التالية هو \"الأكثر أهمية\" عند اختيار وسيلة تعليمية لدرس عملي حول \"صيانة الدوائر الكهربائية\"؟",opts:["مدى حداثة التقنية المستخدمة في الوسيلة وجذبها لانتباه المتدربين","سهولة استخدام الوسيلة من قِبَل المدرب وتوفرها في القاعة التدريبية","مدى مواءمة الوسيلة للأهداف السلوكية وطبيعة المهارة العملية المستهدفة","انخفاض التكلفة المادية للوسيلة وإمكانية تكرار استخدامها لعدة مرات"],ans:2},
+{q:"مدرب يريد بناء \"اختبار بعدي\" لبرنامج تقني. لضمان \"صدق\" الاختبار، يجب عليه إجرائياً:",opts:["التأكد من أن درجات المتدربين ستكون متقاربة عند إعادة الاختبار مرة أخرى","صياغة أسئلة متنوعة تغطي كافة مستويات بلوم (تذكر، فهم، تطبيق)","مطابقة أسئلة الاختبار مع الأوزان النسبية للأهداف التدريبية في جدول المواصفات","عرض الاختبار على مجموعة من الخبراء للتأكد من وضوح الصياغة اللغوية"],ans:2},
+{q:"تقدم متدرب بشكوى ضد زميله في المجموعة متهماً إياه بتهميش رأيه أثناء النشاط. الإجراء المهني \"الأول\" للمدرب هو:",opts:["نقل المتدرب المشتكي لمجموعة أخرى فوراً لضمان راحته النفسية","توجيه لفت نظر للمتدرب الآخر بضرورة احترام آراء الزملاء","عقد اجتماع قصير مع المجموعة لمراجعة \"ميثاق العمل الجماعي\" المتفق عليه","تجاهل الشكوى باعتبارها خلافات شخصية لا تؤثر على سير التدريب"],ans:2},
+{q:"وجد المدرب صورة لأحد المتدربين في عرض تقديمي لزميل آخر دون الإشارة للمصدر أو أخذ الإذن. الموقف التعليمي \"الأكمل\" هنا هو:",opts:["حسم درجات من المتدرب الذي استخدم الصورة لمخالفته الملكية الفكرية","الطلب من المتدرب حذف الصورة فوراً وتغيير الشريحة قبل إكمال العرض","استثمار الموقف لشرح مفهوم \"المواطنة الرقمية\" وحقوق الملكية للجميع","التواصل مع المتدرب صاحب الصورة سراً لسؤاله إن كان يمانع استخدامها"],ans:2},
+{q:"أي من الممارسات التالية يعكس تطبيق المدرب لـ \"المسؤولية المهنية\" تجاه تطوير ذاته؟",opts:["الاعتماد على حقيبة تدريبية واحدة أثبتت نجاحها على مدى سنوات طويلة","التركيز على نيل شهادات حضور لبرامج تدريبية متنوعة لتعزيز سيرته الذاتية","تحليل نتائج تقييم المتدربين وتقارير الأداء لبناء خطة تحسين شخصية","متابعة المدربين المشهورين في وسائل التواصل لمحاكاة أساليبهم الإلقائية"],ans:2},
+{q:"يريد مدرب تطبيق نموذج \"التعلم المعكوس\" (Flipped Learning) في دورة \"الأمن السيبراني\". الإجراء الإجرائي \"الأصح\" هو:",opts:["شرح الجوانب النظرية في القاعة وتكليف المتدربين بالتطبيق العملي في المنزل","إرسال فيديوهات الشرح والمادة العلمية قبل اللقاء، وتخصيص وقت القاعة للمختبرات العملية","استخدام منصة إلكترونية لعقد الاختبارات البعدية فقط لتوفير وقت القاعة","تقسيم المتدربين لمجموعتين؛ واحدة تتعلم حضورياً والأخرى عن بعد بالتناوب"],ans:1},
+{q:"عند استخدام أدوات \"الذكاء الاصطناعي\" في التدريب، يكمن دور المدرب \"الأهم\" في:",opts:["تدريب المتدربين على كيفية الحصول على الإجابات الجاهزة بسرعة","التأكد من قدرة المتدربين على نقد وتحليل المخرجات الناتجة عن الذكاء الاصطناعي","استبدال الأنشطة التقليدية بالكامل بأنشطة تعتمد على الروبوتات","منع استخدام هذه الأدوات لضمان اعتماد المتدرب على تفكيره المجرد"],ans:1},
+{q:"أي الأهداف التالية \"أصح\" من حيث الصياغة الإجرائية القابلة للقياس؟",opts:["أن يدرك المتدرب أهمية السلامة المهنية في المصانع","أن يكتب المتدرب تقريراً عن مخاطر العمل في صفحتين دون أخطاء لغوية","أن يلم المتدرب بمبادئ الإسعافات الأولية بنهاية الجلسة","أن يستعرض المدرب خطوات الإخلاء أمام المتدربين بوضوح"],ans:1},
+{q:"لاحظ مدرب وجود \"صراع\" بين متدربين أثناء ورشة عمل. الإجراء الذي يعكس مهارة \"إدارة النزاع\" تربوياً هو:",opts:["استبعاد الطرفين من النشاط لضمان هدوء القاعة","التدخل فوراً لفرض الحل الصحيح وإنهاء الجدال","توجيه المتدربين لاستخدام مهارات \"الاستماع النشط\" والبحث عن نقاط الاتفاق","ترك النزاع يستمر طالما أنه لا يخرج عن حدود الأدب العام"],ans:2},
+{q:"التقييم الذي يهدف إلى \"ترتيب المتدربين\" حسب مستوياتهم بالنسبة لبعضهم البعض يسمى:",opts:["تقييم محكي المرجع","تقييم معياري المرجع","تقييم تشخيصي","تقييم تكويني"],ans:1},
+{q:"عند استخدام استراتيجية \"دراسة الحالة\"، وجد المدرب أن المتدربين وصلوا لنتائج مختلفة تماماً. الإجراء الصحيح هو:",opts:["تخطئة المجموعات التي لم تصل للحل الموجود في دليل المدرب","شكر الجميع وتوضيح أن حالات الدراسة دائماً ما تحتمل حلولاً متعددة ومنطقية","إعادة النشاط مرة أخرى وإعطاء تلميحات قوية للوصول للحل الصحيح","الطلب من المجموعات التصويت على الحل الأفضل واعتماده كحل وحيد"],ans:1},
+{q:"ما هو الإجراء \"الأول\" الذي يجب على المدرب القيام به عند البدء في \"تحليل الاحتياجات التدريبية\"؟",opts:["تصميم الاختبارات القبلية والبعدية للبرنامج","تحديد الفجوة بين الأداء الحالي والأداء المأمول (المطلوب)","اختيار الوسائل التقنية المناسبة للعرض","حجز القاعة التدريبية والتأكد من جاهزيتها"],ans:1},
+{q:"\"التغذية الراجعة\" التي تقدم للمتدرب وتكون وصفية لأدائه دون إصدار حكم (ناجح/راسب) تسمى:",opts:["تغذية راجعة تقويمية","تغذية راجعة تصحيحية/بنائية","تغذية راجعة ختامية","تغذية راجعة سلبية"],ans:1},
+{q:"أي الممارسات التالية يعزز \"التعلم المستدام\" لدى المتدربين؟",opts:["تزويدهم بملخصات مركزة للحفظ قبل الاختبار النهائي","التركيز على الأنشطة التي تتطلب ربط المهارة بحياتهم المهنية اليومية","استخدام أسلوب المكافآت المادية لكل إجابة صحيحة","زيادة كمية المعلومات النظرية في الحقيبة التدريبية"],ans:1},
+{q:"وجد المدرب أن متدرباً \"حركياً\" يعاني من كثرة التشتت أثناء المحاضرة. الإجراء الأنسب هو:",opts:["تنبيهه بضرورة الهدوء وعدم الحركة احتراماً للزملاء","تكليفه بمهام إدارية مثل توزيع الأوراق أو الكتابة على السبورة","الطلب منه الجلوس في المقاعد الأمامية لزيادة التركيز","إعطاؤه استراحة إضافية منفصلة عن زملائه"],ans:1},
+{q:"الإجراء \"الأكثر أماناً\" عند استخدام المدرب لجهازه الشخصي في القاعة هو:",opts:["عدم وضع كلمة مرور لسهولة الدخول أثناء التدريب","إيقاف الإشعارات الخاصة والرسائل الشخصية قبل بدء العرض","السماح للمتدربين باستخدام الجهاز للبحث في الاستراحة","حفظ كلمات مرور الحسابات البنكية في المتصفح لتوفير الوقت"],ans:1},
+{q:"\"المعلم كمرشد\" في النظرية البنائية يعني إجرائياً:",opts:["تقديم المعلومة بشكل مباشر ومبسط","تهيئة البيئة التعليمية وتوفير المصادر للمتدرب ليكتشف المعرفة","مراقبة المتدربين ومعاقبة المقصرين منهم","وضع الاختبارات وتصحيحها ورصد الدرجات"],ans:1},
+{q:"أي الرسوم البيانية التالية هو الأفضل لمقارنة \"ميزانية التدريب\" بين 4 أقسام مختلفة؟",opts:["الرسم البياني الخطي","الأعمدة البيانية","رسم التشتت","خريطة التدفق"],ans:1},
+{q:"عند صياغة أسئلة اختبار \"متعدد الخيارات\"، يجب أن يكون \"الجذع\" (نص السؤال):",opts:["محتوياً على كلمات توحي بالإجابة الصحيحة","طويلاً جداً ليشمل كل تفاصيل المادة العلمية","واضحاً ومحدداً ويطرح مشكلة واحدة فقط","بصيغة النفي دائماً لزيادة مستوى التحدي"],ans:2},
+{q:"الإجراء الأنسب للتعامل مع متدرب \"كثير الكلام\" يقاطع المدرب باستمرار:",opts:["إحراجه أمام الزملاء ليصمت","شكره على حماسه وتذكيره بـ \"اتفاقية الوقت\" المحددة للمداخلات","تجاهل مداخلته تماماً وعدم النظر إليه","إنهاء الجلسة التدريبية مبكراً"],ans:1},
+{q:"أي مما يلي يعد من مهارات \"التفكير العليا\" في تصنيف بلوم المطور؟",opts:["التلخيص والشرح","الاستذكار وتحديد المفاهيم","النقد وتصميم البدائل","استخدام القوانين في حل المسائل"],ans:2},
+{q:"لتطبيق \"التلعيب\" (Gamification) في التدريب، يجب على المدرب:",opts:["جعل المتدربين يلعبون ألعاب فيديو طوال الوقت","دمج عناصر اللعبة (نقاط، أوسمة، مستويات) في الأنشطة التعليمية","تحويل القاعة التدريبية إلى ملعب رياضي","إلغاء المادة العلمية والتركيز على الترفيه"],ans:1},
+{q:"\"النمذجة\" (Modeling) تكون أكثر فاعلية عندما:",opts:["يشرح المدرب الخطوات نظرياً فقط","يقوم المدرب بالأداء أمام المتدربين مع التعليق على الخطوات","يطلب من المتدربين تخيل كيفية أداء المهارة","يوزع المدرب كتيبات تحتوي على صور للمهارة"],ans:1},
+{q:"ما هي الخطوة \"الأخيرة\" في دورة حياة النظام التدريبي؟",opts:["التنفيذ","التقويم المستمر والختامي","التحليل","التطوير بناءً على نتائج التقييم"],ans:3},
+{q:"أي الإجراءات التالية يحقق \"العدالة\" في التقييم؟",opts:["إعطاء نفس الدرجة لجميع المتدربين لتجنب الحساسية","استخدام أدوات تقييم متنوعة تناسب أنماط التعلم المختلفة","تصعيب الاختبار لضمان نجاح المتميزين فقط","تسريب بعض الأسئلة للمتدربين الضعفاء لمساعدتهم"],ans:1},
+{q:"النظرية التي تفسر التعلم بأنه عملية \"إعادة بناء الخبرة\" من خلال مرور المتدرب بحالة من \"عدم التوازن المعرفي\" هي:",opts:["النظرية السلوكية","النظرية المعرفية","النظرية البنائية","النظرية الاجتماعية"],ans:2},
+{q:"أي المصطلحات التالية يشير إلى \"القدرة التنبؤية للاختبار\" بحيث تعبر نتائجه الحالية عن أداء المتدرب المستقبلي في الميدان؟",opts:["الصدق المحتوى","الصدق التنبئي","الثبات الخارجي","الموضوعية المطلقة"],ans:1},
+{q:"\"ترميز المعلومات\" وتحويلها من الذاكرة قصيرة المدى إلى الذاكرة طويلة المدى هو مفهوم جوهري في:",opts:["نموذج \"معالجة المعلومات\" بالنظرية المعرفية","قانون \"الأثر\" في النظرية السلوكية","مبدأ \"النمذجة\" في النظرية الاجتماعية","استراتيجية \"الاكتشاف\" في النظرية البنائية"],ans:0},
+{q:"يُعرف علم \"الأندراغوجيا\" بأنه العلم الذي يركز على:",opts:["سيكولوجية الطفل وطرق تدريسه","القياس والتقويم في العملية التعليمية","تعليم الكبار واستثمار خبراتهم الحياتية","تصميم المناهج الرقمية والتعليم عن بعد"],ans:2},
+{q:"المصطلح الذي يصف \"المسافة بين مستوى الأداء الحالي للمتدرب (بمفرده) ومستواه المحتمل (بمساعدة مدرب)\" هو:",opts:["الفجوة التدريبية","منطقة النمو الوشيك (ZPD)","عتبة التعلم الذاتي","نقل أثر التعلم"],ans:1},
+{q:"\"جدول المواصفات\" هو أداة تهدف إجرائياً إلى ضمان:",opts:["ثبات درجات المتدربين عند إعادة الاختبار","صدق محتوى الاختبار وتوزيعه العادل على الأهداف","سهولة تصحيح الأسئلة المقالية","تقليل الوقت المستغرق في الإجابة على الأسئلة"],ans:1},
+{q:"يُعرف \"التقويم التشخيصي\" بأنه التقويم الذي:",opts:["يُجرى في نهاية البرنامج لرصد الدرجات النهائية","يُجرى قبل البدء لتحديد مستوى المتدربين وأسباب قصورهم","يُجرى أثناء التدريب لتعديل الأساليب التدريبية","يُجرى بعد سنة من التدريب لقياس الأثر المهني"],ans:1},
+{q:"الاستراتيجية التي تعتمد على \"عكس\" الأدوار، بحيث يدرس المتدرب المادة في منزله ويطبقها في القاعة، تسمى:",opts:["التعلم المبرمج","التعلم المعكوس","التعلم بالاكتشاف","التعلم بالنمذجة"],ans:1},
+{q:"\"المواطنة الرقمية\" في التدريب مفهوم يشمل:",opts:["توفير إنترنت سريع في القاعات التدريبية","حماية البيانات الشخصية والالتزام بأخلاقيات التعامل عبر الإنترنت","القدرة على إصلاح الأعطال التقنية البسيطة","تحويل جميع الحقائب الورقية إلى صيغة PDF"],ans:1},
+{q:"\"التأمل المهني\" كقيمة للتطوير المستمر يعني:",opts:["تفكير المدرب في كيفية زيادة عدد المتدربين في دوراته","مراجعة المدرب لقراراته وأدائه التدريبي لنقدها وتحسينها","تأمل المدرب في الحقيبة التدريبية لزميل آخر لتقليدها","إعطاء وقت للمتدربين للتأمل في جماليات القاعة التدريبية"],ans:1},
+{q:"\"الملكية الفكرية\" في التدريب تفرض على المدرب إجرائياً:",opts:["منع المتدربين من تصوير أي شريحة عرض","عزو المقتبسات العلمية والصور لمصادرها الأصلية بدقة","كتابة اسمه على كل معلومة في الحقيبة حتى لو لم يؤلفها","بيع الحقيبة التدريبية بأعلى سعر ممكن"],ans:1},
+{q:"مفهوم \"التلعيب\" في التدريب يهدف أساساً إلى:",opts:["تحويل وقت التدريب بالكامل إلى ألعاب ترفيهية","استخدام ميكانيكيات الألعاب لرفع الدافعية وتحقيق أهداف تعلم","شراء أجهزة ألعاب إلكترونية حديثة لمركز التدريب","مكافأة المتدربين بالخروج مبكراً من القاعة"],ans:1},
+{q:"\"التفكير الناقد\" كمفهوم مستقبلي يتضمن قدرة المتدرب على:",opts:["حفظ المعلومات واسترجاعها بدقة عالية في الاختبار","التمييز بين الحقائق والآراء وتحليل الحجج المنطقية","معارضة آراء المدرب والزملاء في كل موقف تدريبي","قراءة المادة العلمية بسرعة فائقة"],ans:1},
+{q:"وفقاً لنموذج (ADDIE)، المرحلة التي يتم فيها \"وضع الخطط الزمنية واختيار الاستراتيجيات\" هي:",opts:["التحليل","التصميم","التطوير","التنفيذ"],ans:1},
+{q:"\"التعلم بالنمذجة\" هو المفهوم الرئيسي في النظرية:",opts:["السلوكية","المعرفية","الاجتماعية","الإنسانية"],ans:2},
+{q:"أي الرسوم البيانية التالية هو الأنسب لتمثيل \"خطة سير العمل\" والخطوات المتتابعة؟",opts:["الرسم الدائري","خريطة التدفق","المدرج التكراري","رسم التشتت"],ans:1},
+{q:"\"نقل أثر التعلم\" يعني:",opts:["توزيع الحقيبة التدريبية على أكبر عدد من المتدربين","قدرة المتدرب على تطبيق ما تعلمه في مواقف جديدة أو في العمل","قيام المدرب بنقل معلوماته إلى مدرب آخر","تحويل المادة التدريبية من ورقية إلى رقمية"],ans:1},
+{q:"\"التغذية الراجعة البناءة\" يجب أن تكون مفاهيمياً:",opts:["عامة وتثني على شخص المتدرب دائماً","نقدية تركز على مواطن الفشل فقط","محددة، فورية، وتركز على الأداء والسلوك","تقدم سراً فقط بعيداً عن أعين الزملاء"],ans:2},
+{q:"\"الفروق الفردية\" في التدريب مفهوم يوجب على المدرب:",opts:["تدريب كل متدرب في قاعة منفصلة","توحيد الأساليب لضمان المساواة بين الجميع","تنويع الأساليب التدريبية لتلائم الأنماط والقدرات المختلفة","استبعاد المتدربين الأقل استيعاباً من البرنامج"],ans:2},
+{q:"\"الذكاء العاطفي\" للمدرب يتضمن مفاهيمياً:",opts:["القدرة على التأثير العاطفي في المتدربين وإبكائهم","فهم المشاعر الذاتية وإدارتها وفهم مشاعر الآخرين للتعامل معها","حب المتدربين جميعاً دون استثناء","إظهار مشاعر الغضب لفرض السيطرة على القاعة"],ans:1},
+{q:"\"التعلم المستدام\" هو المفهوم الذي يركز على:",opts:["بقاء أثر التدريب في سلوك المتدرب لفترة طويلة بعد الدورة","استخدام مواد تدريبية صديقة للبيئة (خضراء)","استمرار الدورة التدريبية لعدة أشهر دون توقف","حفظ المعلومات في الذاكرة قصيرة المدى"],ans:0},
+{q:"\"تحليل الاحتياجات التدريبية\" هو إجراء يهدف إلى:",opts:["معرفة عدد المتدربين المسجلين في الدورة","تحديد الفجوة بين الأداء الحالي والأداء المستهدف","اختيار أفضل فندق لإقامة الورشة التدريبية","حساب تكلفة اليوم التدريبي الواحد"],ans:1},
+{q:"\"الوسيلة التعليمية\" في التدريب تُعرف بأنها:",opts:["الهدف النهائي للعملية التدريبية","الأداة التي تساعد في نقل الرسالة التدريبية بوضوح وسهولة","جهاز الحاسوب والبروجكتر فقط","الاختبار الذي يُعطى للمتدربين في النهاية"],ans:1},
+{q:"\"الموضوعية\" في بناء الاختبارات تعني:",opts:["أن تكون الأسئلة صعبة جداً لفرز المتميزين","عدم تأثر درجة المتدرب بذاتية أو رأي المصحح","أن تتحدث الأسئلة عن مواضيع عامة ومحايدة","أن يضع المدرب أهدافاً موضوعية للحقيبة"],ans:1},
+{q:"\"التفكير الإبداعي\" يتصف بالقدرة على:",opts:["الالتزام التام بخطوات الحقيبة التدريبية حرفياً","إنتاج أفكار تتسم بالأصالة والطلاقة والمرونة","انتقاد أفكار الآخرين بقوة وتفنيدها","حفظ أكبر قدر من المعلومات في وقت قياسي"],ans:1},
+{q:"\"الأمان المهني\" في بيئة التدريب التقني يعني:",opts:["تأمين القاعة ضد السرقة والسطو","توفير بيئة خالية من المخاطر الجسدية والنفسية للمتدربين","الحصول على شهادة تأمين من جهة العمل","وضع حراسات أمنية على باب مركز التدريب"],ans:1},
+{q:"مفهوم \"تفريد التعلم\" يعني:",opts:["تدريس المتدرب بمفرده في قاعة خاصة","تصميم مسارات تعلم تناسب وتيرة وقدرات كل فرد على حدة","إلغاء العمل الجماعي والتركيز على الواجبات الفردية","إعطاء كل متدرب درجة مختلفة في الاختبار"],ans:1},
+{q:"\"الذكاء الاصطناعي التوليدي\" في التدريب يمكن استخدامه لـ:",opts:["استبدال المدرب البشري بالكامل في القاعة","إنتاج محتوى تعليمي وصور وأنشطة تدريبية مبتكرة","إجبار المتدربين على ترك التفكير البشري","تسجيل حضور وانصراف المتدربين فقط"],ans:1},
+{q:"مفهوم \"مجتمعات التعلم المهنية\" (PLC) يهدف إلى:",opts:["تكوين مجموعات واتساب للدردشة بين المدربين","تعاون المدربين والخبراء بشكل مستمر لتحسين الممارسات التدريبية","إقامة حفلات اجتماعية دورية للموظفين","بيع الدورات التدريبية لأفراد المجتمع بأسعار مخفضة"],ans:1},
+{q:"\"الشمولية\" في التقييم تعني:",opts:["قياس جميع جوانب الشخصية (المعرفية، المهارية، الوجدانية)","إعطاء درجات شاملة لجميع المتدربين بالتساوي","أن يشمل الاختبار جميع المتدربين في القاعة","أن يكون الاختبار طويلاً جداً ليشمل صفحات الحقيبة كلها"],ans:0},
+{q:"أي المبادئ التالية يمثل جوهر \"النظرية السلوكية\" في التعامل مع عقل المتدرب؟",opts:["معالجة المعلومات وترميزها في الذاكرة","اعتبار العقل \"صندوقاً أسود\" والتركيز على السلوك الملاحظ","بناء المعرفة من خلال الصراع المعرفي","التعلم من خلال ملاحظة الأقران والنمذجة"],ans:1},
+{q:"المفهوم الذي يشير إلى \"الدعم المؤقت\" الذي يقدمه المدرب للمتدرب للوصول إلى مستوى أداء أعلى يسمى:",opts:["التعزيز الإيجابي","السقالات التعليمية","التغذية الراجعة الختامية","نقل أثر التعلم"],ans:1},
+{q:"وفقاً لخصائص الكبار (الأندراغوجيا)، فإن دافعية المتدرب الراشد تزداد عندما يكون التدريب:",opts:["نظرياً بحتاً يعتمد على التلقين","مرتبطاً بحل مشكلات واقعية يواجهها في عمله","طويلاً لضمان تغطية كافة جوانب الحقيبة","يعتمد على نظام العقوبات والجوائز المادية"],ans:1},
+{q:"\"ترميز المعلومات\" وتحويلها إلى مخازن الذاكرة طويلة المدى هو هدف رئيسي في:",opts:["النظرية المعرفية","النظرية السلوكية","النظرية البنائية","النظرية الاجتماعية"],ans:0},
+{q:"في نموذج (ADDIE)، يندرج \"تحديد الفجوة بين الأداء الحالي والمأمول\" تحت مرحلة:",opts:["التصميم","التطوير","التحليل","التنفيذ"],ans:2},
+{q:"\"جدول المواصفات\" هو أداة إجرائية تضمن للمدرب تحقيق معيار:",opts:["ثبات الاختبار","موضوعية التصحيح","صدق المحتوى (الشمولية)","سهولة التطبيق"],ans:2},
+{q:"\"التقويم التكويني\" (البنائي) هو الإجراء الذي يهدف إلى:",opts:["رصد الدرجات النهائية للمتدربين","تعديل وتجويد العملية التدريبية أثناء سيرها","تصنيف المتدربين إلى ناجح وراسب","مقارنة أداء المتدربين بزملاء في دورات أخرى"],ans:1},
+{q:"أي الأهداف التالية يعتبر هدفاً سلوكياً \"صحيحاً\" وفق معايير الجودة؟",opts:["أن يفهم المتدرب أهمية المحركات الكهربائية","أن يشرح المدرب خطوات الصيانة أمام القاعة","أن يفك المتدرب المحرك في 5 دقائق بدون أخطاء","أن يلم المتدرب بمبادئ الكهرباء العامة"],ans:2},
+{q:"ممارسة \"التأمل المهني\" تعني قيام المدرب بـ:",opts:["قراءة أحدث الكتب في تخصصه التقني","مراجعة أدائه التدريبي وقراراته لتطوير ممارساته المستقبلية","مراقبة أداء المتدربين أثناء العمل الجماعي","حضور دورات تدريبية لدى مدربين خبراء"],ans:1},
+{q:"\"الملكية الفكرية\" تفرض على المدرب عند بناء حقيبته التدريبية:",opts:["استخدام أي محتوى من الإنترنت طالما أنه للفائدة العامة","عزو المعلومات والصور والمقتبسات لأصحابها الأصليين","منع المتدربين من تصوير العروض التقديمية","تغيير عناوين الكتب المقتبس منها لتجنب الملاحقة"],ans:1},
+{q:"\"الخصوصية الرقمية\" في التدريب تعني التزام المدرب بـ:",opts:["عدم تصوير المتدربين ونشر صورهم دون إذن صريح منهم","إغلاق هاتفه المحمول أثناء الجلسة التدريبية","عدم مشاركة رابط القاعة الافتراضية مع مدربين آخرين","مسح جميع ملفات المتدربين فور انتهاء الدورة"],ans:0},
+{q:"استراتيجية \"التعلم المعكوس\" تعتمد مفهومياً على:",opts:["شرح المادة في القاعة ثم حل الواجبات في المنزل","دراسة المحتوى النظري ذاتياً قبل الجلسة، وتخصيص القاعة للتطبيق","تبديل الأدوار بحيث يصبح المتدرب مدرباً والمدرب متدرباً","استخدام السبورات التقليدية بدلاً من الشاشات الإلكترونية"],ans:1},
+{q:"يُعرف \"التفكير الناقد\" في سياق مهارات المستقبل بأنه القدرة على:",opts:["استرجاع المعلومات كما وردت في المرجع بدقة","تحليل المعلومات وتقييمها والتمييز بين الحقائق والآراء","معارضة وجهات نظر الآخرين لإظهار القوة العلمية","إنتاج أفكار إبداعية غير مسبوقة في المجال"],ans:1},
+{q:"تُعرف النظرية التي ترفض تفسير العمليات الذهنية وتعتبر العقل \"صندوقاً أسود\" وتفسر التعلم كتعديل في السلوك الظاهري بـ:",opts:["النظرية السلوكية","النظرية المعرفية","النظرية البنائية","النظرية الاجتماعية"],ans:0},
+{q:"أي من المصطلحات التالية يعبر عن \"قدرة الاختبار على قياس ما وُضع لأجله فعلياً\"؟",opts:["ثبات الاختبار","صدق الاختبار","موضوعية الاختبار","شمولية الاختبار"],ans:1},
+{q:"المفهوم الذي يشير إلى \"العلم الذي يهتم بتعليم الكبار واستثمار خبراتهم السابقة\" هو:",opts:["البيداغوجيا","الأندراغوجيا","الأنثروبولوجيا","السيكولوجيا"],ans:1},
+{q:"تعتمد \"النظرية البنائية\" في جوهرها المفاهيمي على فكرة:",opts:["تخزين المعلومات في الذاكرة قصيرة المدى","بناء المتعلم لمعانيه الخاصة من خلال نشاطه الذاتي","الارتباط بين المثير والاستجابة المعززة","محاكاة سلوك الآخرين من خلال الملاحظة"],ans:1},
+{q:"يُعرف \"الهدف السلوكي\" إجرائياً بأنه:",opts:["توقعات المدرب لما سيقوم بشرحه خلال الجلسة","تغيير مرغوب في سلوك المتدرب يمكن ملاحظته وقياسه","ملخص عام للمحتوى العلمي الموجود في الحقيبة","الرؤية الاستراتيجية البعيدة للبرنامج التدريبي"],ans:1},
+{q:"وفقاً لنموذج (ADDIE)، تسمى المرحلة التي يتم فيها \"تحديد الفجوة المهارية واحتياجات المتدربين\" بمرحلة:",opts:["التطوير","التصميم","التحليل","التقويم"],ans:2},
+{q:"المصطلح الذي يصف \"التقويم الذي يتم أثناء العملية التدريبية لتعديل المسار وتقديم التغذية الراجعة\" هو:",opts:["التقويم القبلي","التقويم التكويني","التقويم الختامي","التقويم التشخيصي"],ans:1},
+{q:"تعتمد \"النظرية الاجتماعية\" لبندورا على مفهوم مفصلي يُسمى:",opts:["الترميز الذهني","التعلم بالنمذجة والملاحظة","الارتباط الشرطي","التوازن المعرفي"],ans:1},
+{q:"المصطلح التقني الذي يشير إلى \"دمج عناصر اللعب (نقاط، أوسمة، مستويات) في سياقات غير ترفيهية\" هو:",opts:["الواقع الافتراضي","التلعيب","الذكاء الاصطناعي","التعلم السحابي"],ans:1},
+{q:"أي مما يلي يصف مفهوم \"المواطنة الرقمية\" في سياق التدريب؟",opts:["القدرة على استخدام كافة برامج الحاسوب باحترافية","مجموعة القواعد والضوابط الأخلاقية والقانونية للتعامل مع التقنية","توفير أجهزة حاسوب لكل المتدربين داخل القاعة","سرعة الاتصال بالإنترنت داخل المركز التدريبي"],ans:1},
+{q:"المفهوم الذي يعبر عن \"تقديم دعم مؤقت للمتدرب لمساعدته على إنجاز مهمة تفوق مستواه الحالي بقليل\" هو:",opts:["التعلم الذاتي","السقالات التعليمية","التغذية الراجعة السلبية","العصف الذهني"],ans:1},
+{q:"يُعرف \"التأمل المهني\" بأنه:",opts:["مراقبة المدرب لزملائه أثناء تقديمهم للدورات","عملية عقلية يقوم بها المدرب لمراجعة ممارساته وتطويرها","التفكير في المادة العلمية قبل البدء في شرحها","الانتظار لفترة صمت بعد طرح السؤال على المتدربين"],ans:1},
+{q:"في \"هرم بلوم المطور\"، يمثل \"الابتكار\" (Creating) المستوى:",opts:["القاعدي (الأدنى)","الوسط (التطبيق)","الأعلى (قمة الهرم)","الثاني (الفهم)"],ans:2},
+{q:"ما هو المصطلح الذي يصف \"القدرة على الصمود المهني والتكيف مع المستجدات والضغوط التدريبية\"؟",opts:["الذكاء العاطفي","المرونة المهنية","الكفاية العلمية","الطلاقة اللغوية"],ans:1},
+{q:"يُعرف \"التعلم المستمر\" بأنه:",opts:["حضور دورة تدريبية واحدة في السنة على الأقل","عملية تطويرية ذاتية مستمرة طوال حياة الفرد لمواكبة المتغيرات","الحصول على أعلى الدرجات العلمية (دكتوراه)","الالتزام بالتعليم المدرسي والجامعي فقط"],ans:1},
+{q:"المصطلح الذي يطلق على \"القواعد المتفق عليها بين المدرب والمتدربين في بداية البرنامج لتنظيم السلوك\" هو:",opts:["خطة الجلسة","العقد التدريبي (الاتفاقية الجماعية)","وصف البرنامج","التقرير الختامي"],ans:1},
+{q:"ماذا تعني \"الشمولية\" كأحد معايير بناء الاختبارات التدريبية؟",opts:["أن يسهل تصحيح الاختبار من قبل أي مدرب","أن تغطي الأسئلة كافة أهداف ومحتوى المادة العلمية","أن تكون لغة الاختبار مفهومة لجميع الجنسيات","أن يحتوي الاختبار على أسئلة سهلة وصعبة"],ans:1},
+{q:"تُعرف \"الاستراتيجية التدريبية\" بأنها:",opts:["الأداة التقنية المستخدمة في العرض","خطة شاملة لمجموعة من الإجراءات والأساليب لتحقيق الأهداف","الكتاب المطبوع الذي يُوزع على المتدربين","الزمن المخصص لكل تمرين داخل القاعة"],ans:1},
+{q:"أي من المفاهيم التالية يعبر عن \"التعلم الذي يحدث من خلال تفاعل المتدرب مع البيئة والزملاء\"؟",opts:["التعلم الفردي","التعلم الاجتماعي","التعلم المبرمج","التعلم التقليدي (التلقين)"],ans:1},
+{q:"يُعرف \"تحليل الفجوة\" في التدريب بأنه:",opts:["دراسة أسباب فشل الدورات السابقة","المسافة بين ما يعرفه المتدرب حالياً وما يجب أن يعرفه","الوقت الضائع بين الجلسات التدريبية","الفوارق العمرية بين المتدربين في القاعة"],ans:1},
+{q:"المصطلح الذي يشير إلى \"حق المؤلف في حماية إنتاجه الفكري من السرقة أو الانتحال\" هو:",opts:["الأمن السيبراني","الملكية الفكرية","الذكاء الاصطناعي","المواطنة الرقمية"],ans:1},
+{q:"ماذا يسمى \"الرسم البياني\" الذي يستخدم لتوضيح العلاقة بين متغيرين في التدريب؟",opts:["الرسم الدائري","رسم التشتت (Scatter Plot)","خريطة التدفق","المدرج التكراري"],ans:1},
+{q:"المفهوم الذي يعبر عن \"تخصيص التدريب ليناسب قدرات واحتياجات كل متدرب على حدة\" هو:",opts:["تفريد التدريب","التدريب الجماعي","المحاضرة التقليدية","التدريب الميداني"],ans:0},
+{q:"يُقصد بـ \"التغذية الراجعة الفورية\" (Feedback) تلك التي:",opts:["تقدم في نهاية الدورة التدريبية بأسبوع","تقدم للمتدرب عقب أدائه للمهمة مباشرة لتصحيح الخطأ","ترسل عبر البريد الإلكتروني بعد انتهاء البرنامج","تقتصر على توزيع درجات الاختبار الورقي فقط"],ans:1},
+{q:"المفهوم الذي يشير إلى \"قدرة المتدرب على توظيف ما تعلمه في مواقف عمل حقيقية\" يسمى:",opts:["الاستذكار","نقل أثر التعلم","الإدراك الحسي","التحصيل الأكاديمي"],ans:1},
+{q:"ما هو \"التفكير الناقد\" في سياق التدريب؟",opts:["البحث عن الأخطاء الشخصية للمدرب أو الزملاء","القدرة على فحص الأفكار وتحليلها وإصدار أحكام منطقية","الموافقة الدائمة على كل ما يطرح في الحقيبة التدريبية","توليد أكبر عدد ممكن من الأفكار الغريبة"],ans:1},
+{q:"المصطلح الذي يصف \"التعلم القائم على استخدام منصات الإنترنت والفصول الافتراضية\" هو:",opts:["التعلم التقليدي","التعلم الإلكتروني","التعلم الميداني","التعلم بالاستبصار"],ans:1},
+{q:"يُعرف \"الذكاء العاطفي\" للمدرب بأنه:",opts:["القدرة على إبكاء المتدربين من خلال القصص المؤثرة","القدرة على فهم وإدارة مشاعره ومشاعر المتدربين بفاعلية","إخفاء كافة المشاعر وعدم التفاعل مع المتدربين","حب الذات والافتخار بالإنجازات الشخصية أمام الجمهور"],ans:1},
+{q:"أي من الأدوات التالية تستخدم لتمثيل \"خطوات سير عملية إدارية معينة\"؟",opts:["الخريطة الذهنية","خريطة التدفق","الرسم البياني العمودي","نموذج SWOT"],ans:1},
+{q:"المفهوم الذي يشير إلى \"التزام المدرب بأعلى معايير السلوك والنزاهة في مهنته\" هو:",opts:["الذكاء التقني","أخلاقيات المهنة","المهارة اللغوية","العرض والتقديم"],ans:1},
+{q:"عند رغبتك في تدريب المتدربين على مهارة يدوية دقيقة تتطلب \"الآلية\" والسرعة، فإن الإجراء التدريبي الأنسب وفق النظرية السلوكية هو:",opts:["ترك المتدرب يكتشف الطريقة بنفسه","التكرار والممارسة المكثفة مع تقديم تعزيز فوري","شرح التاريخ النظري للمهارة قبل البدء","عرض فيديو للمهارة دون تطبيق عملي"],ans:1},
+{q:"أي من الأهداف التالية صيغ صياغة سلوكية \"إجرائية\" صحيحة وفق معايير الجودة؟",opts:["أن يدرك المتدرب أهمية صيانة الحاسب الآلي","أن يشرح المدرب خطوات فك المحرك أمام المتدربين","أن يكتب المتدرب تقريراً فنياً من صفحة واحدة بدون أخطاء لغوية","أن يفهم المتدرب كيفية عمل الدوائر الكهربائية"],ans:2},
+{q:"إذا لاحظت أن المتدربين لديهم خبرات سابقة واسعة في موضوع الدورة، فإن الإجراء الأنسب وفق مبادئ \"الأندراغوجيا\" هو:",opts:["تجاهل خبراتهم والالتزام بنص الحقيبة التدريبية","جعلهم يستعرضون خبراتهم وربطها بالمادة العلمية الجديدة","إعطاؤهم اختباراً تعجيزياً لإثبات حاجتهم للمدرب","قضاء وقت الدورة في المحاضرة والإلقاء فقط"],ans:1},
+{q:"لضمان انتقال المعلومة من الذاكرة قصيرة المدى إلى الذاكرة طويلة المدى لدى المتدربين، يجب على المدرب إجرائياً:",opts:["زيادة كمية المعلومات في الشريحة الواحدة","استخدام \"ترميز\" المعلومات عبر الصور والخرائط الذهنية والربط المنطقي","رفع صوت المدرب أثناء الشرح بصفة مستمرة","منع المتدربين من تدوين الملاحوظات لتركيز الانتباه"],ans:1},
+{q:"الرسم البياني الأنسب الذي يجب أن يختاره المدرب لتمثيل \"نسبة\" توزيع الميزانية التدريبية على البنود المختلفة هو:",opts:["الرسم البياني الخطي","الرسم الدائري","خريطة التدفق","رسم التشتت"],ans:1},
+{q:"الخطوة الإجرائية الأولى التي يجب أن يبدأ بها المدرب عند تكليفه ببناء برنامج تدريبي جديد وفق نموذج (ADDIE) هي:",opts:["كتابة المادة العلمية وتنسيقها","تحليل الاحتياجات التدريبية وخصائص المتدربين","تصميم العروض التقديمية (PowerPoint)","وضع أسئلة الاختبار النهائي"],ans:1},
+{q:"لضمان \"صدق المحتوى\" في الاختبار التحصيلي، يجب على المدرب القيام بإجراء:",opts:["توزيع الأسئلة عشوائياً بين السهل والصعب","بناء \"جدول مواصفات\" يربط الأهداف بالأوزان النسبية للمحتوى","جعل جميع الأسئلة من نوع \"اختيار من متعدد\"","تصحيح الاختبار مرتين للتأكد من الدرجة"],ans:1},
+{q:"إذا أراد المدرب قياس \"مهارة\" المتدرب في استخدام جهاز قياس الأفوميتر، فإن أداة التقويم الأنسب هي:",opts:["الاختبار التحريري (مقال)","اختبار موضوعي (صح وخطأ)","بطاقة ملاحظة الأداء العملي","المقابلة الشخصية"],ans:2},
+{q:"الإجراء الصحيح لتقديم \"تغذية راجعة\" بناءة للمتدرب بعد خطأ في التطبيق هو:",opts:["إخبار المتدرب بأنه \"فاشل\" أمام زملائه","تقديم معلومة \"محددة وفورية\" عن كيفية تصحيح الخطأ","تأجيل التصحيح إلى نهاية اليوم التدريبي","تصحيح الخطأ دون شرح السبب للمتدرب"],ans:1},
+{q:"لاحظ المدرب أن بعض المتدربين يقومون بتداول روابط برامج \"مقرصنة\" داخل مجموعة الدورة. الإجراء المهني الصحيح هو:",opts:["تجاهل الأمر طالما أنها تخدم أهداف التدريب","تشجيعهم لتوفير التكاليف المالية على زملائهم","توضيح المخاطر الأمنية والأخلاقية وتوجيههم للبدائل القانونية","تحميل البرامج واستخدامها معهم لتقليل الفجوة التقنية"],ans:2},
+{q:"عند استخدام صور من الإنترنت في حقيبة تدريبية، الإجراء الصحيح لضمان \"الأمانة العلمية\" هو:",opts:["مسح العلامة المائية من الصور لتظهر بشكل احترافي","كتابة \"منقول من الإنترنت\" تحت كل صورة","عزو الصور لمصادرها الأصلية أو استخدام صور مشاعة (Creative Commons)","عدم كتابة أي شيء طالما أن الحقيبة للاستخدام الداخلي فقط"],ans:2},
+{q:"قام مدرب بتصوير المتدربين أثناء نشاط جماعي لنشرها في \"سناب شات\" الخاص به. ما هو الإجراء المهني الذي أغفله المدرب؟",opts:["جودة إضاءة القاعة التدريبية","أخذ إذن صريح من المتدربين قبل التصوير والنشر (الخصوصية)","وضع شعار المؤسسة على الصور","اختيار زاوية تصوير تظهر جميع المتدربين"],ans:1},
+{q:"أي من الإجراءات التالية يعكس تطبيق المدرب لـ \"التأمل المهني\" بعد انتهاء الجلسة؟",opts:["مراجعة سجل الحضور والانصراف بدقة","تدوين ملاحظات حول المواقف التي لم يحقق فيها المتدربون الأهداف وكيفية تحسينها","طلب زيادة في المكافأة المالية بسبب مجهوده","ترتيب القاعة التدريبية لليوم التالي"],ans:1},
+{q:"لتطبيق استراتيجية \"التعلم المعكوس\" في دورة تقنية، يجب على المدرب:",opts:["شرح الدرس في القاعة وإعطاء تمارين صعبة في المنزل","إرسال فيديو الشرح للمتدربين قبل اللقاء، وتخصيص وقت القاعة للتطبيق والحل","جعل المتدربين يدرسون ويختبرون أنفسهم دون تدخل من المدرب","عكس ترتيب فصول الحقيبة التدريبية (البدء من الآخر)"],ans:1},
+{q:"الأداة التقنية الأنسب التي تتيح للمتدربين \"العمل الجماعي المتزامن\" على وثيقة واحدة عبر الإنترنت هي:",opts:["البريد الإلكتروني (Email)","التطبيقات السحابية (مثل Google Docs)","الرسائل النصية (SMS)","ذاكرة التخزين (Flash Memory)"],ans:1},
+{q:"عند مواجهة \"عطل تقني\" مفاجئ في جهاز العرض (Projector)، الإجراء الاحترافي السريع للمدرب هو:",opts:["إلغاء اليوم التدريبي وصرف المتدربين","الانتقال فوراً لخطة بديلة (مثل استخدام السبورة أو أنشطة ورقية)","الاستمرار في الشرح اللفظي دون الاهتمام بتفاعل المتدربين","لوم إدارة المركز التدريبي أمام المتدربين لتبرئة نفسه"],ans:1},
+{q:"لتعزيز \"التفكير الناقد\" لدى المتدربين أثناء مناقشة قضية معينة، يجب على المدرب إجرائياً:",opts:["إعطاؤهم الإجابة الصحيحة مباشرة لتوفير الوقت","طرح أسئلة تطلب منهم \"التمييز بين الحقائق والآراء\" وتحليل الأدلة","منع أي نقاش يخرج عن نص الحقيبة التدريبية","جعل المتدربين يحفظون وجهة نظر المدرب حرفياً"],ans:1},
+{q:"المقياس الإحصائي الأنسب الذي يستخدمه المدرب لمعرفة مدى \"تشتت\" درجات المتدربين عن المتوسط هو:",opts:["المتوسط الحسابي","الانحراف المعياري","الوسيط","المنوال"],ans:1},
+{q:"أي من الإجراءات التالية يتبعها المدرب لضمان \"موضوعية\" تصحيح الأسئلة المقالية؟",opts:["قراءة اسم المتدرب قبل البدء في التصحيح","وضع \"نموذج إجابة\" محدد بمعايير واضحة","تصحيح جميع أوراق المتدربين في وقت واحد دون توقف","إعطاء درجات مرتفعة لجميع المتدربين لتجنب الشكاوى"],ans:1},
+{q:"في حال وجود متدرب \"مشاغب\" يعيق سير الجلسة، الإجراء التربوي الأول للمدرب هو:",opts:["طرده من القاعة فوراً أمام زملائه","تذكير الجميع بـ \"العقد التدريبي\" المتفق عليه في بداية الدورة","تجاهل سلوكه تماماً حتى يمل ويتوقف","الدخول معه في جدال حاد لإثبات قوة شخصية المدرب"],ans:1},
+{q:"لزيادة دافعية المتدربين \"البصريين\"، يجب على المدرب إجرائياً التركيز على:",opts:["الأنشطة الحركية والفك والتركيب","التسجيلات الصوتية والمحاضرات الطويلة","الرسوم التوضيحية، مقاطع الفيديو، والخرائط الذهنية","القراءة الصامتة من الكتاب الورقي فقط"],ans:2},
+{q:"عند رغبتك في استخدام استراتيجية \"العصف الذهني\"، فإن الخطوة الإجرائية الصحيحة هي:",opts:["نقد الأفكار الضعيفة فور طرحها لاستبعادها","قبول أكبر قدر من الأفكار (الكم قبل الكيف) دون نقد في البداية","السماح للمتدربين المتميزين فقط بالمشاركة","تحديد إجابة واحدة صحيحة يجب الوصول إليها"],ans:1},
+{q:"\"التقويم التشخيصي\" يتم إجراؤه في أي مرحلة تدريبية؟",opts:["في نهاية كل جلسة تدريبية","قبل البدء في البرنامج التدريبي لتحديد نقاط القوة والضعف","بعد مرور سنة على انتهاء التدريب","أثناء أداء الاختبار النهائي"],ans:1},
+{q:"الإجراء الصحيح عند تصميم شريحة عرض (PowerPoint) فعالة هو:",opts:["حشو الشريحة بجميع المعلومات الموجودة في الحقيبة","استخدام قاعدة (6×6) أو (5×5) لتقليل الكلام وزيادة الوضوح","وضع حركات انتقالية كثيرة ومبهرة لجذب الانتباه","استخدام خطوط صغيرة جداً لتوفير مساحة للصور"],ans:1},
+{q:"لضمان \"ثبات\" نتائج الاختبار عند إعادة تطبيقه، يجب على المدرب:",opts:["تغيير الأسئلة في كل مرة يُعاد فيها الاختبار","التأكد من وضوح التعليمات وثبات ظروف التطبيق","جعل الأسئلة سهلة جداً ليحصل الجميع على نفس الدرجة","حذف الأسئلة التي رسب فيها الكثير من المتدربين"],ans:1},
+{q:"الإجراء الأنسب لتدريب المتدربين على \"حل المشكلات\" التقنية هو استخدام استراتيجية:",opts:["الإلقاء المباشر","دراسة الحالة","الحفظ والتسميع","المشاهدة الصامتة"],ans:1},
+{q:"أي الإجراءات التالية يعزز \"المواطنة الرقمية\" لدى المتدربين؟",opts:["تشجيعهم على نسخ الحقائب التدريبية وتوزيعها دون إذن","تدريبهم على كيفية التأكد من مصداقية المعلومات عبر الإنترنت","السماح لهم باستخدام الجوال أثناء المحاضرة للتسلية","منعهم من استخدام التقنية نهائياً داخل المركز"],ans:1},
+{q:"لتطبيق \"التعلم بالنمذجة\" وفق النظرية الاجتماعية، يجب على المدرب:",opts:["شرح الخطوات نظرياً فقط","أداء المهمة أمام المتدربين بدقة ليقوموا بمحاكاته","تكليف المتدربين بقراءة كتيب التعليمات","ترك المتدربين يجربون دون أي توجيه"],ans:1},
+{q:"الإجراء الصحيح الذي يتبعه المدرب عند انتهاء المتدرب من \"التقييم الذاتي\" هو:",opts:["إهمال النتائج لأنها غير موضوعية","مناقشة المتدرب في تقييمه لنفسه ومساعدته على سد فجواته","السخرية من المتدرب إذا أعطى نفسه درجة عالية","تغيير درجات المتدرب لتتطابق مع رأي المدرب"],ans:1},
+{q:"أي من الأدوات التالية تستخدم إجرائياً لتحديد \"المسار الحرج\" في مشروع تدريبي؟",opts:["خريطة التدفق","مخطط غانت","الرسم الدائري","العصف الذهني"],ans:1},
+{q:"أي مما يلي يمثل الفرق الجوهري بين \"القياس\" و\"التقويم\"؟",opts:["القياس عملية نوعية، بينما التقويم عملية كمية","القياس يعطي قيمة رقمية، بينما التقويم يشمل التشخيص والعلاج","لا يوجد فرق بينهما فهما مترادفان","التقويم يسبق عملية القياس دائماً"],ans:1},
+{q:"كل مما يلي يعد من مبادئ \"الأندراغوجيا\" (تعليم الكبار) عدا:",opts:["الحاجة لمعرفة سبب تعلم الشيء","الاعتماد الكلي على المدرب كمصدر وحيد للمعلومة","الميل نحو التعلم الموجه لحل المشكلات","امتلاك رصيد كبير من الخبرات السابقة"],ans:1},
+{q:"عند المقارنة بين النظرية \"السلوكية\" والنظرية \"المعرفية\"، نجد أن المعرفية تركز على:",opts:["المثير والاستجابة فقط","العمليات الذهنية الداخلية كالانتباه والترميز","العقاب البدني لتعديل السلوك","إهمال دور الذاكرة في التعلم"],ans:1},
+{q:"أي المصطلحات التالية يعبر عن \"الاستقرار في نتائج الاختبار عند إعادة تطبيقه\"؟",opts:["الصدق","الثبات","الموضوعية","الشمولية"],ans:1},
+{q:"كل المفاهيم التالية تنتمي لمدرسة \"بندورا\" (التعلم الاجتماعي) عدا:",opts:["النمذجة","الملاحظة","المحاكاة","الارتباط الشرطي الكلاسيكي"],ans:3},
+{q:"ما الفرق بين \"التقويم التكويني\" و\"التقويم الختامي\"؟",opts:["التكويني يهدف للتحسين أثناء التدريب، والختامي يهدف لإصدار حكم نهائي","التكويني يتم في نهاية الدورة، والختامي في بدايتها","التكويني لجمع الدرجات، والختامي لتقديم النصائح","لا فرق بينهما في التوقيت أو الهدف"],ans:0},
+{q:"كل مما يلي يعد من مواصفات \"الهدف السلوكي\" الجيد عدا:",opts:["أن يبدأ بفعل مضارع قابل للقياس","أن يصف أداء المدرب أثناء الشرح","أن يتضمن معياراً للأداء","أن يركز على ناتج تعلم واحد"],ans:1},
+{q:"أي الأدوات التالية هي الأنسب لتقييم \"الجانب الوجداني\" (الميول والاتجاهات) لدى المتدرب؟",opts:["الاختبار التحصيلي","الاستبانة أو مقياس الاتجاه","اختبار الأداء العملي","المسائل الرياضية"],ans:1},
+{q:"كل العناصر التالية تعتبر جزءاً من نموذج (ADDIE) لتصميم التدريب عدا:",opts:["التحليل","التصميم","التسويق","التنفيذ"],ans:2},
+{q:"الفرق بين \"التعلم النشط\" و\"التعلم التقليدي\" هو أن التعلم النشط:",opts:["يجعل المتدرب مستقبلاً سلبياً للمعلومة","يركز على الحفظ والاستظهار","يضع المتدرب في مركز العملية التدريبية عبر المشاركة والبحث","يعتمد كلياً على المحاضرة الطويلة"],ans:2},
+{q:"أي مما يلي يمثل الفرق بين \"الأمانة العلمية\" و\"الملكية الفكرية\"؟",opts:["الأمانة العلمية خُلق شخصي، والملكية الفكرية حماية قانونية للإنتاج","هما مصطلحان لمعنى واحد تماماً","الملكية الفكرية تسمح بالنسخ دون إذن، والأمانة تمنعه","الأمانة العلمية تخص المدرب، والملكية الفكرية تخص المتدرب"],ans:0},
+{q:"كل مما يلي يعد من ممارسات \"المواطنة الرقمية\" المسؤولة عدا:",opts:["احترام خصوصية الآخرين وبياناتهم","التأكد من صحة المعلومات قبل نشرها","مشاركة كلمات المرور الخاصة بالمنصة التدريبية مع الآخرين","الالتزام بآداب الحوار في الفصول الافتراضية"],ans:2},
+{q:"ما الذي يميز \"التأمل المهني\" عن \"التفكير العادي\"؟",opts:["التأمل المهني عملية عشوائية غير منظمة","التأمل المهني عملية هادفة لتحليل الممارسات وتجويد الأداء المستقبلي","التفكير العادي يهتم بنقد الآخرين فقط","لا يوجد فرق جوهري بينهما"],ans:1},
+{q:"كل السلوكيات التالية تعتبر \"أخلاقية\" في مهنة التدريب عدا:",opts:["العدالة في التعامل مع جميع المتدربين","استغلال المتدربين لتحقيق مصالح شخصية","التطوير المستمر للكفايات المهنية","الالتزام بالوقت والمواعيد"],ans:1},
+{q:"ما الفرق الجوهري بين \"الواقع الافتراضي\" (VR) و\"الواقع المعزز\" (AR)؟",opts:["VR ينقلك لعالم رقمي كامل، بينما AR يضيف عناصر رقمية للواقع الحقيقي","AR يتطلب نظارات مغلقة تماماً، وVR لا يتطلب أجهزة","VR يستخدم في الألعاب فقط، وAR يستخدم في التدريب فقط","هما تقنية واحدة بمسميين مختلفين"],ans:0},
+{q:"كل مما يلي يعد من مهارات \"التفكير الناقد\" عدا:",opts:["التمييز بين الحقيقة والرأي","كشف المغالطات المنطقية","قبول الأفكار كما هي دون فحص","تقييم قوة الأدلة والبراهين"],ans:2},
+{q:"المقارنة بين \"التعلم الإلكتروني المتزامن\" و\"غير المتزامن\" توضح أن المتزامن:",opts:["يتيح للمتدرب الدخول في أي وقت يشاء","يتطلب وجود المدرب والمتدربين في نفس الوقت على المنصة","يعتمد على البريد الإلكتروني فقط","لا يسمح بالتفاعل المباشر"],ans:1},
+{q:"أي العناصر التالية لا ينتمي لمجموعة \"مهارات القرن الحادي والعشرين\"؟",opts:["التفكير الإبداعي","التعاون والعمل الجماعي","الحفظ الآلي للمعلومات وتسميعها","الثقافة التقنية والمعلوماتية"],ans:2},
+{q:"ما الفرق بين \"المتوسط الحسابي\" و\"الوسيط\"؟",opts:["المتوسط هو مجموع الدرجات مقسوماً على عددها، والوسيط هو القيمة التي تتوسط الدرجات","المتوسط هو الدرجة الأكثر تكراراً، والوسيط هو أقل درجة","المتوسط يتأثر بالقيم المتطرفة، والوسيط لا يتأثر بها غالباً","لا يوجد فرق إحصائي بينهما"],ans:0},
+{q:"\"رسم التشتت\" (Scatter Plot) يستخدم لتحليل العلاقة بين متغيرين، بينما \"المدرج التكراري\" يستخدم لـ:",opts:["إظهار تسلسل العمليات","إظهار توزيع تكرار البيانات في فئات","توزيع النسب المئوية","تحديد المسار الحرج"],ans:1},
+{q:"كل الرسوم التالية تستخدم لتمثيل البيانات الكمية عدا:",opts:["الأعمدة البيانية","خريطة التدفق (Flowchart)","الخط البياني","المدرج التكراري"],ans:1},
+{q:"أي المصطلحات التالية لا ينتمي لمجموعة \"نظريات التعلم\"؟",opts:["البنائية","السلوكية","المركزية","المعرفية"],ans:2},
+{q:"أي مما يلي لا يعد من \"مستويات بلوم\" في الجانب المعرفي؟",opts:["الفهم","التحليل","الاستجابة الوجدانية","التقويم"],ans:2},
+{q:"أي من الأدوات التالية لا تنتمي لمجموعة \"وسائل العرض التقنية\"؟",opts:["السبورة الذكية","جهاز عرض الشفافيات (القديم)","المسطرة الخشبية","الحاسب الآلي"],ans:2},
+{q:"أي العناصر التالية لا ينتمي لمكونات \"الحقيبة التدريبية\"؟",opts:["دليل المدرب","دليل المتدرب","سجل الحضور والانصراف","العروض التقديمية"],ans:2},
+{q:"أي مما يلي لا يعتبر من خصائص \"التعلم الذاتي\"؟",opts:["مراعاة الفروق الفردية","حرية المتدرب في اختيار وقت التعلم","الارتباط الوثيق بوجود المدرب في كل خطوة","تحمل المتدرب مسؤولية تعلمه"],ans:2},
+{q:"أي المصطلحات التالية يخرج عن سياق \"تحليل الاحتياجات التدريبية\"؟",opts:["الفجوة الأدائية","الوضع المأمول","الوضع الراهن","التقرير الختامي للبرنامج"],ans:3},
+{q:"أي الاستراتيجيات التالية لا تنتمي لمجموعة \"استراتيجيات التدريب الجماعي\"؟",opts:["التعلم المبرمج (الذاتي)","المناقشة والحوار","تمثيل الأدوار","المجموعات الصغيرة"],ans:0},
+{q:"أي مما يلي لا يعد من شروط \"الأهداف السلوكية\" (SMART)؟",opts:["أن يكون محدداً","أن يكون قابلاً للقياس","أن يكون طويلاً ومعقداً","أن يكون مرتبطاً بزمن"],ans:2},
+{q:"أي المصطلحات التالية لا ينتمي لمجموعة \"أخلاقيات مهنة التدريب\"؟",opts:["الموضوعية","المحسوبية","النزاهة","السرية"],ans:1},
+{q:"وفقاً لمبادئ \"الملكية الفكرية\" الواردة في ميثاق المهنة، أي الإجراءات التالية يعتبر مخالفة صريحة للأنظمة؟",opts:["اقتباس نص قصير مع ذكر اسم المؤلف ودار النشر","إعادة تصميم جداول بيانات من مرجع علمي مع الإشارة للمصدر","تصوير حقيبة تدريبية كاملة لمدرب آخر ووضع شعارك الشخصي عليها","استخدام صور من مصادر المشاع الإبداعي"],ans:2},
+{q:"عند التعامل مع \"البيانات الشخصية\" للمتدربين (أرقام الهواتف، السجلات المهارية)، يفرض الجانب الأخلاقي على المدرب:",opts:["استخدامها لأغراض تسويقية لدوراته القادمة دون إذن","الحفاظ على سريتها التامة وعدم مشاركتها مع أي جهة غير مخولة","نشر قائمة بأسماء المتدربين ودرجاتهم في وسائل التواصل للتحفيز","بيع هذه البيانات لشركات التوظيف لمساعدة المتدربين"],ans:1},
+{q:"إذا اكتشف المدرب أثناء الجلسة التدريبية وجود \"تضارب مصالح\" (مثل وجود قريب له في الاختبار النهائي)، فإن الإجراء النظامي الأكمل هو:",opts:["تجاهل الأمر طالما أنه يثق في نزاهته الشخصية","الإفصاح الفوري للجهة المنظمة لاتخاذ الإجراءات التي تضمن الحياد","إعطاء المتدرب القريب أصعب الأسئلة لإثبات عدم المحاباة","الطلب من المتدرب الانسحاب من الدورة منعاً للحرج"],ans:1},
+{q:"في سياق \"المواطنة الرقمية\" والأنظمة الرسمية، أي من السلوكيات التالية يقع تحت طائلة الجرائم المعلوماتية؟",opts:["انتقاد المحتوى العلمي للحقيبة التدريبية بأسلوب منطقي","الدخول غير المصرح به على حسابات المتدربين في المنصة التدريبية","تسجيل المحاضرة بإذن رسمي من المركز التدريبي","استخدام برامج عرض مجانية بدلاً من البرامج المدفوعة"],ans:1},
+{q:"يلتزم المدرب \"مهنياً\" تجاه المتدربين بتقديم تقييم عادل بناءً على:",opts:["الانطباع الشخصي والميل النفسي لبعض المتدربين","معايير وأدوات قياس واضحة ومعلنة مسبقاً (موضوعية)","خلفياتهم الاجتماعية أو مراكزهم الوظيفية","مدى موافقة المتدرب لآراء المدرب الشخصية"],ans:1},
+{q:"وفقاً لمعايير \"النمو المهني المستمر\"، يعتبر المدرب مقصراً في واجباته إذا:",opts:["حضر مؤتمراً واحداً فقط في السنة","توقف عن تحديث مادته العلمية بناءً على المستجدات واللوائح الجديدة","طلب تغذية راجعة من المتدربين في نهاية الدورة","اعتذر عن تقديم دورة في موضوع لا يتقنه"],ans:1},
+{q:"ما هو الإجراء الصحيح الذي يجب أن يتبعه المدرب عند الرغبة في \"نشر صور\" لأنشطة المتدربين داخل القاعة؟",opts:["النشر مباشرة طالما أن الصور تظهر المتدربين بشكل لائق","الحصول على موافقة (إذن خطي أو شفوي صريح) من أصحاب الصور","طمس وجوه المتدربين ونشر الصور دون إذن","الاكتفاء بموافقة مدير المركز التدريبي فقط"],ans:1},
+{q:"\"الأمانة العلمية\" في بناء الحقائب التدريبية تلزم المدرب بـ:",opts:["تغيير صياغة الجمل لتبدو كأنها من تأليفه الخاص","توثيق المراجع والاقتباسات وفقاً للأعراف الأكاديمية المعتمدة","حذف المصادر لتسهيل القراءة على المتدربين","ذكر المراجع في نهاية الحقيبة فقط دون الإشارة إليها في المتن"],ans:1},
+{q:"أي من التصرفات التالية يتنافى مع \"ميثاق أخلاقيات المهنة\" فيما يتعلق بالعلاقة مع الزملاء؟",opts:["تبادل الخبرات والحقائب التدريبية باتفاق متبادل","نقد الأداء المهني للزملاء بشكل علني أمام المتدربين للتقليل منهم","التعاون في بناء اختبارات موحدة للمركز التدريبي","تقديم المشورة لزميل جديد في المهنة"],ans:1},
+{q:"عند تصميم \"بيئة تدريبية رقمية\"، يجب على المدرب التأكد من توافقها مع معايير \"النفاذ الرقمي\" والتي تعني:",opts:["سرعة اتصال المتدربين بالإنترنت","سهولة وصول الأشخاص ذوي الإعاقة للمحتوى (مثل النصوص البديلة للصور)","قدرة المدرب على مراقبة شاشات المتدربين عن بُعد","دفع رسوم الاشتراك في المنصة التدريبية"],ans:1},
+{q:"أي العمليات التالية تمثل مفهوم \"التقويم\" بمفهومه الشامل؟",opts:["رصد درجات المتدربين في كشف الدرجات","تحديد مواطن القوة والضعف لدى المتدربين فقط","تشخيص الأداء وبناء خطة علاجية لتطوير مستوى المتدرب","ترتيب المتدربين من الأول إلى الأخير"],ans:2},
+{q:"إذا أردت التأكد من \"ثبات\" الاختبار الذي أعددته، فما هو الإجراء الصحيح؟",opts:["عرض الاختبار على مجموعة من الخبراء لتحكيمه","إعادة تطبيق الاختبار على نفس المجموعة في ظروف مماثلة ومقارنة النتائج","التأكد من أن الأسئلة تغطي جميع فصول الحقيبة التدريبية","صياغة الأسئلة بلغة واضحة لا تقبل التأويل"],ans:1},
+{q:"\"التقويم التشخيصي\" يهدف إجرائياً إلى:",opts:["رصد الدرجات النهائية للمتدربين","تقديم تغذية راجعة أثناء الأداء","تحديد مستوى المتدربين قبل البدء لبناء الخطة التدريبية","منح شهادات الاجتياز للمبدعين"],ans:2},
+{q:"لضمان \"موضوعية\" التصحيح في الاختبارات المقالية، يجب على المدرب:",opts:["تصحيح جميع الأوراق في يوم واحد","استخدام مقاييس التقدير بمعايير واضحة للتصحيح","قراءة اسم المتدرب قبل البدء في التقييم","وضع أسئلة سهلة جداً ليجيب الجميع بنفس الطريقة"],ans:1},
+{q:"أي المقاييس التالية يستخدم لمعرفة \"الدرجة الأكثر تكراراً\" بين درجات المتدربين؟",opts:["المتوسط الحسابي","الوسيط","المنوال","الانحراف المعياري"],ans:2},
+{q:"\"جدول المواصفات\" هو الأداة الأنسب لتحقيق معيار:",opts:["ثبات الاختبار","صدق المحتوى والشمولية","سهولة التصحيح","سرعة الأداء"],ans:1},
+{q:"القيمة التي تمثل \"نقطة المنتصف\" في درجات المتدربين بعد ترتيبها تصاعدياً هي:",opts:["المنوال","المتوسط الحسابي","الوسيط","المدى"],ans:2},
+{q:"إذا كان \"الانحراف المعياري\" لدرجات المتدربين قريباً من (الصفر)، فهذا يشير إلى:",opts:["وجود فجوة كبيرة في مستويات المتدربين","تجانس كبير وتقارب في مستويات المتدربين","صعوبة الاختبار بشكل مبالغ فيه","رسوب معظم المتدربين"],ans:1},
+{q:"الأداة الأنسب لتقييم مهارة \"فك وتركيب جهاز إلكتروني\" هي:",opts:["الاختبار التحريري","بطاقة الملاحظة","الاستبانة","المقابلة"],ans:1},
+{q:"تعتبر التغذية الراجعة فعالة إذا كانت:",opts:["عامة وشاملة لجميع المتدربين في وقت واحد","فورية ومحددة تركز على السلوك وليس الشخص","تركز على نقاط الضعف فقط بلهجة حادة","تقدم في نهاية البرنامج التدريبي فقط"],ans:1},
+{q:"أي مما يلي يعد مثالاً على \"القياس\"؟",opts:["المتدرب مستواه \"ممتاز\"","حصل المتدرب على 45 درجة من 50","يحتاج المتدرب إلى دورة تقوية في الرسم الهندسي","البرنامج التدريبي حقق أهدافه بنجاح"],ans:1},
+{q:"الفرق بين \"التقييم\" و\"التقويم\" هو أن \"التقويم\":",opts:["يكتفي بوصف الحالة الراهنة","يتضمن خططاً للعلاج والتحسين وتعديل المسار","يسبق عملية القياس دائماً","يستخدم الأرقام فقط"],ans:1},
+{q:"لتقييم \"ملف إنجاز المتدرب\"، يجب على المدرب التركيز على:",opts:["سرعة إنهاء المتدرب للمهام","توثيق تطور أداء المتدرب ونتاجه عبر زمن البرنامج","الدرجة النهائية في الاختبار النظري","الحضور والانصراف اليومي"],ans:1},
+{q:"\"معامل الصعوبة\" للسؤال يحسب من خلال:",opts:["نسبة الذين أجابوا إجابة صحيحة على السؤال","الفرق بين أعلى درجة وأقل درجة","عدد الكلمات في السؤال الواحد","الوقت المستغرق في حل السؤال"],ans:0},
+{q:"إذا أردت التأكد من وجود مهارة \"تشغيل المحرك\" أو غيابها (نعم/لا) دون تدرج، نستخدم:",opts:["مقياس التقدير","قائمة الشطب","الاختبار المقالي","ملف الإنجاز"],ans:1},
+{q:"أي مقاييس التشتت التالية يعطي فكرة سريعة عن الفرق بين أعلى وأقل درجة؟",opts:["المنوال","المدى","الانحراف المعياري","الوسيط"],ans:1},
+{q:"\"التقويم التكويني\" يساهم إجرائياً في:",opts:["اتخاذ قرار بنجاح أو رسوب المتدرب","تجويد العملية التدريبية وتعديل الأنشطة أثناء سيرها","تشخيص المهارات السابقة قبل الدورة","مقارنة المركز التدريبي بمراكز أخرى"],ans:1},
+{q:"لضمان \"صدق\" الاختبار، يجب أن يقيس الاختبار:",opts:["ما وُضع لقياسه فعلياً من أهداف ومحتوى","قدرة المتدرب على الحفظ فقط","سرعة الكتابة لدى المتدربين","آراء المتدربين في شخصية المدرب"],ans:0},
+{q:"\"معامل التمييز\" المرتفع للسؤال يعني أن السؤال:",opts:["سهل جداً لدرجة أن الجميع أجاب عليه","صعب جداً لدرجة أن أحداً لم يجب عليه","يفرق بوضوح بين المتدربين المتميزين والمتعثرين","يحتوي على أخطاء لغوية واضحة"],ans:2},
+{q:"أي مما يلي يمثل تغذية راجعة \"إيجابية وبناءة\"؟",opts:["\"أداؤك سيء جداً اليوم\"","\"أحسنت، لقد قمت بفك المحرك بدقة، حاول تحسين سرعتك في المرة القادمة\"","\"انظر لزميلك كيف يعمل وتعلم منه\"","صمت المدرب عند حدوث خطأ من المتدرب"],ans:1},
+{q:"عند البدء بدورة تدريبية \"إلزامية\" من الإدارة، وجد المدرب أن أغلب المتدربين يظهرون مقاومة للتعلم. الإجراء \"الأكثر نضجاً\" هو:",opts:["تجاهل مشاعرهم والبدء فوراً في المادة العلمية لفرض السيطرة","إبلاغ قسم الموارد البشرية بأسماء المتذمرين","تخصيص وقت في البداية لتفريغ الانفعالات وتوضيح \"العائد الشخصي\" للمتدرب","تقديم وعود بمكافآت مالية خارج صلاحيات المدرب"],ans:2},
+{q:"أثناء تحليل احتياجات منظمة ما، اكتشف المدرب أن المشكلة \"سلوكية\" تتعلق بالتحفيز وليست \"معرفية\". الإجراء التصميمي الصحيح هو:",opts:["تصميم دورة تدريبية مكثفة لزيادة معلوماتهم","التوصية بحلول غير تدريبية (مثل تعديل نظام الحوافز أو البيئة) بدلاً من التدريب","إقامة ورشة عمل حول أهمية الانضباط","تجاهل التحليل والمضي قدماً في التدريب المتفق عليه"],ans:1},
+{q:"مدرب يريد تدريب فنيين على صيانة محركات طائرات \"أثناء\" العمل الفعلي، بحيث تظهر التعليمات الافتراضية فوق المحرك الحقيقي. التقنية الأنسب هي:",opts:["الواقع الافتراضي (VR)","الواقع المعزز (AR)","الفيديو التفاعلي","المحاكاة الحاسوبية التقليدية"],ans:1},
+{q:"يرغب مدرب في تقديم محتوى تدريبي لجيل (Gen Z) الذين يفضلون المعلومات السريعة. الاستراتيجية الأنسب هي:",opts:["محاضرات مدتها ساعتان لضمان العمق","كبسولات تعليمية (3-5 دقائق) تركز على هدف واحد محدد","قراءة كتب إلكترونية طويلة (PDF)","تدريب تعاوني مفتوح الوقت"],ans:1},
+{q:"لاحظ المدرب أن المتدربين يشعرون بالخمول والنعاس في القاعة التدريبية رغم جودة المحتوى. الإجراء الفني الأول الذي يجب فحصه هو:",opts:["تغيير المادة العلمية","درجة حرارة القاعة ونسبة الأكسجين (التهوية)","مستوى صوت المدرب","لون شرائح العرض"],ans:1},
+{q:"استخدم مدرب صوراً ورسومات بيانية من حقيبة مدرب آخر دون الإشارة للمصدر، معتبراً أنها \"متاحة على الإنترنت\". هذا السلوك يعبر عن:",opts:["مهارة في البحث الرقمي","ذكاء في توفير الوقت","انتهاك للملكية الفكرية وأخلاقيات المدرب","تطبيق لمبدأ الموارد التعليمية المفتوحة"],ans:2},
+{q:"اجتماع مجموعة من المدربين دورياً لمناقشة التحديات التي واجهتهم في قاعات التدريب وتبادل الحلول المبتكرة يسمى:",opts:["تدريب رسمي","مجتمع ممارسة","دورة تدريب مدربين (TOT)","إدارة الجودة الشاملة"],ans:1},
+{q:"شارك مدرب رابطاً \"لسحابة تخزين\" تحتوي على أعمال المتدربين في دورة سابقة كنموذج للاسترشاد به دون أخذ إذنهم. هذا التصرف يخالف مبدأ:",opts:["الوصول الرقمي","الخصوصية والحقوق الرقمية","الاتصال الرقمي","اللياقة الرقمية"],ans:1},
+];
+
+// ============================================================
+//  STATE
+// ============================================================
+let sessionQ = [];
+let currentIdx = 0;
+let score = 0;
+let wrongCount = 0;
+let skipCount = 0;
+let userAnswers = [];
+let timerInterval = null;
+let timerMax = 30;
+let timerLeft = 30;
+let answered = false;
+let settings = {};
+
+// ============================================================
+//  UTILS
+// ============================================================
+function shuffle(arr){ return arr.slice().sort(()=>Math.random()-0.5); }
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+// ============================================================
+//  START
+// ============================================================
+function startQuiz(){
+  settings.count = parseInt(document.getElementById('setCount').value);
+  settings.timer = parseInt(document.getElementById('setTimer').value);
+  settings.order = document.getElementById('setOrder').value;
+
+  let pool = settings.order==='random' ? shuffle(ALL_QUESTIONS) : ALL_QUESTIONS.slice();
+  sessionQ = pool.slice(0, Math.min(settings.count, pool.length));
+  currentIdx = 0; score = 0; wrongCount = 0; skipCount = 0;
+  userAnswers = new Array(sessionQ.length).fill(null);
+  showScreen('quizScreen');
+  loadQuestion();
+}
+
+// ============================================================
+//  LOAD QUESTION
+// ============================================================
+function loadQuestion(){
+  const q = sessionQ[currentIdx];
+  answered = false;
+
+  document.getElementById('qNum').textContent = (currentIdx+1) + ' / ' + sessionQ.length;
+  document.getElementById('progressFill').style.width = ((currentIdx)/sessionQ.length*100)+'%';
+  document.getElementById('liveScore').textContent = score;
+  document.getElementById('questionText').textContent = q.q;
+
+  const grid = document.getElementById('optionsGrid');
+  grid.innerHTML = '';
+  const labels = ['أ','ب','ج','د'];
+  q.opts.forEach((opt,i)=>{
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.innerHTML = `<span class="option-label">${labels[i]}</span><span>${opt}</span>`;
+    btn.onclick = ()=>selectAnswer(i, btn);
+    grid.appendChild(btn);
+  });
+
+  document.getElementById('feedbackBox').style.display='none';
+  document.getElementById('btnNext').style.display='none';
+
+  // Timer
+  clearInterval(timerInterval);
+  timerMax = settings.timer;
+  if(timerMax > 0){
+    timerLeft = timerMax;
+    updateTimerUI();
+    timerInterval = setInterval(timerTick, 1000);
+  } else {
+    document.getElementById('timerCircle').textContent = '—';
+    document.getElementById('timerCircle').style.background = 'rgba(255,255,255,0.05)';
+  }
+
+  // Animate card
+  const card = document.getElementById('quizCard');
+  card.style.animation='none'; void card.offsetWidth;
+  card.style.animation='slideIn 0.35s ease';
+}
+
+function timerTick(){
+  timerLeft--;
+  updateTimerUI();
+  if(timerLeft<=0){
+    clearInterval(timerInterval);
+    timeUp();
+  }
+}
+
+function updateTimerUI(){
+  const pct = timerLeft/timerMax;
+  const color = pct > 0.5 ? 'var(--gold)' : pct > 0.25 ? '#f39c12' : 'var(--error)';
+  const deg = pct*360;
+  document.getElementById('timerCircle').style.background =
+    `conic-gradient(${color} ${deg}deg, rgba(255,255,255,0.07) ${deg}deg)`;
+  document.getElementById('timerCircle').textContent = timerLeft;
+  document.getElementById('timerCircle').style.color = color;
+}
+
+function timeUp(){
+  if(answered) return;
+  answered = true;
+  skipCount++;
+  userAnswers[currentIdx] = -1;
+
+  const btns = document.querySelectorAll('.option-btn');
+  const q = sessionQ[currentIdx];
+  btns.forEach((b,i)=>{ b.disabled=true; if(i===q.ans) b.classList.add('correct'); });
+
+  const fb = document.getElementById('feedbackBox');
+  fb.className='feedback-box error'; fb.style.display='block';
+  fb.innerHTML=`<span class="feedback-emoji">⏩</span> <span class="feedback-msg">انتهى وقتك يابطل!</span><br>الإجابة الصحيحة: <strong>${q.opts[q.ans]}</strong>`;
+  document.getElementById('btnNext').style.display='block';
+}
+
+// ============================================================
+//  SELECT ANSWER
+// ============================================================
+function selectAnswer(idx, btn){
+  if(answered) return;
+  answered = true;
+  clearInterval(timerInterval);
+
+  const q = sessionQ[currentIdx];
+  userAnswers[currentIdx] = idx;
+  const btns = document.querySelectorAll('.option-btn');
+  btns.forEach(b=>b.disabled=true);
+
+  const fb = document.getElementById('feedbackBox');
+  if(idx === q.ans){
+    score++;
+    btn.classList.add('correct');
+    fb.className='feedback-box success'; fb.style.display='block';
+    fb.innerHTML=`<span class="feedback-emoji">🌟</span> <span class="feedback-msg">ياسلام عليك! واصل التقدم 💪</span>`;
+  } else {
+    wrongCount++;
+    btn.classList.add('wrong');
+    btns[q.ans].classList.add('correct');
+    fb.className='feedback-box error'; fb.style.display='block';
+    fb.innerHTML=`<span class="feedback-emoji">😅</span> <span class="feedback-msg">حظ أوفر! اكمل يابطل لا تتقهقر 🔥</span><br>الإجابة الصحيحة: <strong>${q.opts[q.ans]}</strong>`;
+  }
+
+  document.getElementById('liveScore').textContent = score;
+  document.getElementById('btnNext').style.display='block';
+}
+
+// ============================================================
+//  NEXT
+// ============================================================
+function nextQuestion(){
+  currentIdx++;
+  if(currentIdx >= sessionQ.length){ showResult(); }
+  else { loadQuestion(); }
+}
+
+// ============================================================
+//  RESULT
+// ============================================================
+function showResult(){
+  clearInterval(timerInterval);
+  const total = sessionQ.length;
+  const pct = Math.round(score/total*100);
+
+  document.getElementById('progressFill').style.width='100%';
+
+  let grade, emoji;
+  if(pct>=90){grade='ممتاز 🥇';emoji='🏆';}
+  else if(pct>=80){grade='جيد جداً 🥈';emoji='🎉';}
+  else if(pct>=70){grade='جيد 🥉';emoji='👍';}
+  else if(pct>=60){grade='مقبول';emoji='📚';}
+  else{grade='يحتاج مراجعة';emoji='💪';}
+
+  document.getElementById('trophyEmoji').textContent=emoji;
+  document.getElementById('resultGrade').textContent=grade;
+  document.getElementById('resultGrade').style.color = pct>=70?'var(--gold)':'var(--error)';
+  document.getElementById('resultRing').innerHTML=`${pct}%<small>من 100</small>`;
+  document.getElementById('resultRing').style.borderColor = pct>=70?'var(--gold)':'var(--error)';
+  document.getElementById('resultRing').style.color = pct>=70?'var(--gold)':'var(--error)';
+  document.getElementById('resultScore').textContent=`${score} من ${total} سؤال`;
+  document.getElementById('resCorrect').textContent=score;
+  document.getElementById('resWrong').textContent=wrongCount;
+  document.getElementById('resSkip').textContent=skipCount;
+
+  showScreen('resultScreen');
+}
+
+// ============================================================
+//  REVIEW
+// ============================================================
+function showReview(){
+  const container = document.getElementById('reviewList');
+  container.innerHTML='';
+  const labels=['أ','ب','ج','د'];
+  sessionQ.forEach((q,qi)=>{
+    const ua = userAnswers[qi];
+    const card = document.createElement('div');
+    card.className='review-card';
+    let opts='';
+    q.opts.forEach((opt,i)=>{
+      let cls='review-option neutral', icon='';
+      if(i===q.ans){cls='review-option correct-ans';icon='✅';}
+      else if(i===ua && ua!==q.ans){cls='review-option user-wrong';icon='❌';}
+      opts+=`<div class="${cls}"><span class="review-icon">${icon}</span><span>(${labels[i]}) ${opt}</span></div>`;
+    });
+    const statusIcon = ua===q.ans?'✅': ua===-1?'⏩':'❌';
+    card.innerHTML=`
+      <div class="review-q-num">سؤال ${qi+1} ${statusIcon}</div>
+      <div class="review-q-text">${q.q}</div>
+      ${opts}`;
+    container.appendChild(card);
+  });
+  showScreen('reviewScreen');
+}
+
+function backToResult(){ showScreen('resultScreen'); }
+function goHome(){ clearInterval(timerInterval); showScreen('homeScreen'); }
+function confirmHome(){
+  if(confirm("هل تريد العودة للرئيسية؟ سيتم إلغاء المسابقة الحالية.")){ clearInterval(timerInterval); showScreen("homeScreen"); }
+}
+</script>
+</body>
+</html>
