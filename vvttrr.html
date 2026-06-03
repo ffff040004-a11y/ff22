@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>اللائحة التنفيذية للموارد البشرية — الإجازات</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --teal-50:#E1F5EE;--teal-100:#9FE1CB;--teal-600:#0F6E56;--teal-800:#085041;
+  --blue-50:#E6F1FB;--blue-600:#185FA5;
+  --amber-50:#FAEEDA;--amber-600:#854F0B;--amber-100:#FAC775;
+  --coral-50:#FAECE7;--coral-600:#993C1D;
+  --purple-50:#EEEDFE;--purple-600:#3C3489;--purple-100:#CECBF6;
+  --green-50:#EAF3DE;--green-600:#3B6D11;
+  --pink-50:#FBEAF0;--pink-600:#72243E;
+  --gray-50:#F5F5F5;--gray-100:#E8E8E8;--gray-200:#D0D0D0;--gray-600:#555;--gray-800:#222;
+  --bg:#F4F6F5;--card:#fff;--text:#1a1a1a;--muted:#666;
+}
+body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+.page-wrap{max-width:960px;margin:0 auto;padding:1.5rem 1rem 3rem}
+
+/* HEADER */
+.header{background:linear-gradient(135deg,#085041 0%,#0F6E56 50%,#1D9E75 100%);border-radius:16px;padding:2rem 2.5rem;margin-bottom:1.5rem;position:relative;overflow:hidden;color:#fff}
+.header::before{content:'';position:absolute;top:-50px;left:-50px;width:200px;height:200px;background:rgba(255,255,255,0.05);border-radius:50%}
+.header::after{content:'';position:absolute;bottom:-30px;right:40px;width:130px;height:130px;background:rgba(255,255,255,0.04);border-radius:50%}
+.header-inner{position:relative;z-index:1}
+.header-sub{font-size:13px;opacity:0.75;margin-bottom:8px;font-family:'Cairo',sans-serif}
+.header h1{font-size:26px;font-weight:700;font-family:'Cairo',sans-serif;line-height:1.3;margin-bottom:6px}
+.header p{font-size:14px;opacity:0.85}
+.header-badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hbadge{background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.25);padding:4px 14px;border-radius:20px;font-size:12px}
+
+/* NAV */
+.nav{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:1.5rem}
+.nav-btn{padding:8px 16px;border-radius:22px;border:1.5px solid var(--gray-200);background:#fff;color:var(--gray-600);cursor:pointer;font-size:13px;font-family:'Tajawal',sans-serif;transition:all 0.18s;display:flex;align-items:center;gap:6px;font-weight:500}
+.nav-btn:hover{background:var(--teal-50);border-color:var(--teal-100);color:var(--teal-600)}
+.nav-btn.active{background:var(--teal-600);color:#fff;border-color:var(--teal-600);box-shadow:0 3px 10px rgba(15,110,86,0.3)}
+.nav-btn .icon{font-size:15px}
+
+/* SECTION */
+.section{display:none;animation:fadeIn 0.2s ease}
+.section.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+/* CARD */
+.card{background:var(--card);border:1px solid var(--gray-100);border-radius:14px;padding:1.4rem 1.6rem;margin-bottom:1rem;box-shadow:0 1px 4px rgba(0,0,0,0.04)}
+.card-header{display:flex;align-items:center;gap:12px;margin-bottom:1rem;padding-bottom:0.9rem;border-bottom:1px solid var(--gray-100)}
+.card-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
+.card-title{font-size:16px;font-weight:600;color:var(--text);font-family:'Cairo',sans-serif}
+.card-sub{font-size:12px;color:var(--muted);margin-top:2px}
+.art-num{font-size:11px;font-weight:600;padding:3px 10px;border-radius:12px;background:var(--gray-50);color:var(--muted);border:1px solid var(--gray-100);display:inline-block;margin-bottom:10px}
+.art-text{font-size:14.5px;line-height:1.85;color:#2a2a2a}
+.art-text strong{color:#111;font-weight:600}
+
+/* SUB-ITEMS */
+.sub-item{padding:0.6rem 1rem;border-right:3px solid var(--teal-600);margin:0.5rem 0;background:var(--teal-50);border-radius:0 10px 10px 0;font-size:14px;line-height:1.75;color:#1a3a30}
+.sub-item strong{color:#0a2a1f}
+.divider{border:none;border-top:1px solid var(--gray-100);margin:1rem 0}
+
+/* LEAVE GRID */
+.leave-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:10px;margin-top:1rem}
+.leave-card{border:1px solid var(--gray-100);border-radius:10px;padding:0.8rem 1rem;display:flex;align-items:center;gap:10px;background:var(--gray-50);transition:all 0.15s}
+.leave-card:hover{background:var(--teal-50);border-color:var(--teal-100);transform:translateY(-1px)}
+.licon{font-size:19px;width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.lname{font-size:13px;font-weight:500;color:#222}
+
+/* TABLE */
+table.tbl{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:0.6rem}
+table.tbl th{background:var(--gray-50);padding:9px 13px;font-weight:600;font-size:13px;border-bottom:2px solid var(--gray-200);color:var(--gray-600);text-align:right}
+table.tbl td{padding:9px 13px;border-bottom:1px solid var(--gray-100);line-height:1.65;vertical-align:top;text-align:right}
+table.tbl tr:last-child td{border-bottom:none}
+table.tbl tr:hover td{background:var(--gray-50)}
+
+/* SUMMARY */
+.sum-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:13px;margin-top:1rem}
+.sum-card{border-radius:12px;padding:1.1rem 1.3rem;border:1px solid transparent;transition:transform 0.15s}
+.sum-card:hover{transform:translateY(-2px)}
+.sum-card h3{font-size:14px;font-weight:600;margin-bottom:7px;font-family:'Cairo',sans-serif;display:flex;align-items:center;gap:7px}
+.sum-card p{font-size:13px;line-height:1.7}
+
+/* PRINT */
+@media print{
+  .nav{display:none}
+  .section{display:block!important}
+  .card{break-inside:avoid;page-break-inside:avoid;box-shadow:none}
+}
+
+@media(max-width:600px){
+  .page-wrap{padding:1rem 0.75rem 2rem}
+  .header{padding:1.4rem 1.3rem}
+  .header h1{font-size:20px}
+  .card{padding:1rem 1.1rem}
+  table.tbl{font-size:12.5px}
+  table.tbl th,table.tbl td{padding:7px 9px}
+}
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <div class="header">
+    <div class="header-inner">
+      <div class="header-sub">وزارة الموارد البشرية والتنمية الاجتماعية — المملكة العربية السعودية</div>
+      <h1>اللائحة التنفيذية للموارد البشرية<br>في الخدمة المدنية</h1>
+      <p>الباب السادس — الإجازات &nbsp;|&nbsp; المواد من 125 إلى 160</p>
+      <div class="header-badges">
+        <span class="hbadge">مقيّد — Strict</span>
+        <span class="hbadge">13 نوعاً من الإجازات</span>
+        <span class="hbadge">36 مادة قانونية</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav">
+    <button class="nav-btn active" onclick="showSection('overview',this)"><span class="icon">🏠</span> نظرة عامة</button>
+    <button class="nav-btn" onclick="showSection('types',this)"><span class="icon">📋</span> أنواع الإجازات</button>
+    <button class="nav-btn" onclick="showSection('annual',this)"><span class="icon">📅</span> الإجازة العادية</button>
+    <button class="nav-btn" onclick="showSection('sick',this)"><span class="icon">🏥</span> الإجازة المرضية</button>
+    <button class="nav-btn" onclick="showSection('special',this)"><span class="icon">⭐</span> إجازات خاصة</button>
+    <button class="nav-btn" onclick="showSection('holidays',this)"><span class="icon">☀️</span> العطل الرسمية</button>
+    <button class="nav-btn" onclick="showSection('rules',this)"><span class="icon">⚖️</span> أحكام عامة</button>
+    <button class="nav-btn" onclick="showSection('contractors',this)"><span class="icon">📄</span> إجازات المتعاقدين</button>
+    <button class="nav-btn" onclick="showSection('summary',this)"><span class="icon">✨</span> ملخص</button>
+  </div>
+
+  <!-- نظرة عامة -->
+  <div class="section active" id="sec-overview">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--teal-50)">📄</div>
+        <div><div class="card-title">المادة 125 — المبدأ العام</div></div>
+      </div>
+      <span class="art-num">مادة 125</span>
+      <div class="art-text">على الجهة الحكومية تحقيق التوازن بين ضمان انتظام سير العمل الحكومي واحتياجات الموظف من خلال الاستخدام العادل والأمثل للإجازات.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--teal-50)">🗂️</div>
+        <div><div class="card-title">المادة 126 — تصنيف الإجازات</div><div class="card-sub">13 نوعاً من الإجازات المنصوص عليها في اللائحة</div></div>
+      </div>
+      <span class="art-num">مادة 126</span>
+      <div class="art-text" style="margin-bottom:1rem">تصنف الإجازات على النحو الآتي:</div>
+      <div class="leave-grid">
+        <div class="leave-card"><div class="licon" style="background:var(--teal-50)">📅</div><div class="lname">الإجازة العادية</div></div>
+        <div class="leave-card"><div class="licon" style="background:var(--blue-50)">📝</div><div class="lname">إجازة الامتحان الدراسي</div></div>
+        <div class="leave-card"><div class="licon" style="background:var(--blue-50)">📚</div><div class="lname">الإجازة الدراسية</div></div>
+        <div class="leave-card"><div class="licon" style="background:var(--amber-50)">⚠️</div><div class="lname">الإجازة الاضطرارية</div></div>
+        <div class="leave-card"><div class="licon" style="background:var(--coral-50)">🏥</div><div class="lname">الإجازة المرضية</div></div>
+        <div class="leave-card"><div class="licon" style="background:var(--coral-50)">👨‍⚕️</div><div class="lname">إجازة مرافقة مريض</div></div>
+        <div class="leave-card"><div class="licon" style="background:var(--purple-50)">⭐</div><div class="lname">الإجازة الاستثنائية</div></div>
+        <div class="leave-card"><div class="licon" style="background:var(--pink-50)">🕯️</div><div class="lname">إجازة الوفاة</div></div>
+        <div class="leave-card"><div class="licon" style="background:var(--pink-50)">👶</div><div class="lname">إجازة الوضع</div></div>
+        <div class="leave-card"><div class="licon" style="background:var(--pink-50)">💝</div><div class="lname">إجازة الأمومة</div></div>
+        <div class="leave-card"><div class="licon" style="background:var(--teal-50)">👨‍👧</div><div class="lname">إجازة الأبوة</div></div>
+        <div class="leave-card"><div class="licon" style="background:var(--green-50)">🇸🇦</div><div class="lname">إجازة المشاركة الوطنية</div></div>
+        <div class="leave-card"><div class="licon" style="background:var(--amber-50)">🔄</div><div class="lname">إجازة تعويض</div></div>
+      </div>
+    </div>
+
+    <!-- بطاقة التوقيع -->
+    <div style="margin-top:1.2rem;background:linear-gradient(135deg,#0a1628 0%,#112240 60%,#1a3a5c 100%);border-radius:16px;padding:1.4rem 1.8rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;position:relative;overflow:hidden">
+      <div style="position:absolute;top:-30px;right:-30px;width:120px;height:120px;border-radius:50%;background:rgba(100,180,255,0.06)"></div>
+      <div style="position:absolute;bottom:-20px;left:20px;width:80px;height:80px;border-radius:50%;background:rgba(100,180,255,0.04)"></div>
+      <div style="position:relative;z-index:1">
+        <div style="font-size:11px;color:rgba(255,255,255,0.5);letter-spacing:1px;margin-bottom:5px">إعداد وتصميم</div>
+        <div style="font-size:20px;font-weight:700;font-family:'Cairo',sans-serif;color:#fff;letter-spacing:0.5px">د/ فواز</div>
+        <div style="width:40px;height:2px;background:linear-gradient(90deg,#64b4ff,transparent);margin-top:6px;border-radius:2px"></div>
+      </div>
+      <div style="position:relative;z-index:1;text-align:left">
+        <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-bottom:6px">تفضل للمزيد</div>
+        <a href="https://t.me/TAqhjT3MFVE1Yzk0" target="_blank" style="display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);padding:8px 18px;border-radius:30px;text-decoration:none;color:#a8d8ff;font-size:13px;font-weight:600;transition:all 0.2s">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8l-1.69 7.96c-.12.57-.45.71-.91.44l-2.5-1.84-1.2 1.16c-.13.13-.24.24-.5.24l.18-2.54 4.62-4.17c.2-.18-.04-.28-.31-.1L7.97 14.8l-2.47-.77c-.54-.17-.55-.54.11-.8l9.66-3.72c.45-.16.84.11.37 1.29z" fill="#a8d8ff"/></svg>
+          t.me/TAqhjT3MFVE1Yzk0
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- أنواع الإجازات -->
+  <div class="section" id="sec-types">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--blue-50)">📝</div>
+        <div><div class="card-title">المادة 137 — إجازة الامتحان الدراسي</div></div>
+      </div>
+      <span class="art-num">مادة 137</span>
+      <div class="art-text" style="margin-bottom:0.9rem">للموظف الحق في إجازة أداء الامتحان الدراسي براتب كامل بشرط أن يقدم ما يثبت أداءه الامتحان، على أن تحدد مدة الإجازة بالأيام الفعلية للامتحانات.</div>
+      <table class="tbl">
+        <tr><th>الحالة</th><th>المدة المستحقة</th></tr>
+        <tr><td>يوم قبل الامتحان (داخل المملكة)</td><td>يوم عمل واحد</td></tr>
+        <tr><td>يوم قبل الامتحان (خارج المملكة)</td><td>ثلاثة أيام</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--blue-50)">📚</div>
+        <div><div class="card-title">المادة 138 — الإجازة الدراسية</div></div>
+      </div>
+      <span class="art-num">مادة 138</span>
+      <div class="art-text" style="margin-bottom:0.75rem">يجوز منح الموظف إجازة دراسية <strong>بدون راتب</strong> إذا كان يحمل مؤهلاً علمياً لا يقل عن إتمام المرحلة الثانوية أو ما يعادلها، وفق الشروط الآتية:</div>
+      <div class="sub-item"><strong>أ —</strong> أن يكون قد أمضى في الخدمة ثلاث سنوات ولا يقل تقويم أدائه الوظيفي عن تقدير (جيد جداً) أو ما يعادله.</div>
+      <div class="sub-item"><strong>ب —</strong> أن يكون لموضوع دراسته علاقة بالعمل في الجهة الحكومية التي يعمل بها.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--blue-50)">↩️</div>
+        <div><div class="card-title">المادة 139 — قطع الإجازة الدراسية</div></div>
+      </div>
+      <span class="art-num">مادة 139</span>
+      <div class="art-text">يجوز للموظف قطع إجازته الدراسية والعودة إلى عمله.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--amber-50)">⚠️</div>
+        <div><div class="card-title">المادة 140 — الإجازة الاضطرارية</div></div>
+      </div>
+      <span class="art-num">مادة 140</span>
+      <div class="art-text">يجوز للموظف الذي لا يتوافر له رصيد من الإجازة العادية بعد موافقة رئيسه أن يتغيب براتب كامل لأسباب اضطرارية مدة أقصاها <strong>خمسة أيام</strong> خلال السنة المالية الواحدة.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--purple-50)">⭐</div>
+        <div><div class="card-title">المادة 148 — الإجازة الاستثنائية</div></div>
+      </div>
+      <span class="art-num">مادة 148</span>
+      <div class="art-text">يجوز بقرار من الوزير المختص منح الموظف لأسباب تقبلها الجهة الحكومية إجازة استثنائية لا تزيد مدتها على <strong>سنتين</strong> خلال (خمس) سنوات سواء كانت لمدة متصلة أو لمدد متفرقة.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--purple-50)">🌍</div>
+        <div><div class="card-title">المادة 149 — الإجازة الاستثنائية للمرافقة للخارج</div></div>
+      </div>
+      <span class="art-num">مادة 149</span>
+      <div class="art-text">تستحق الموظفة السعودية التي ترغب في مرافقة زوجها أو من يعولها شرعاً إلى الخارج إجازة استثنائية بقرار من الجهة الحكومية التي تتبعها وذلك بقدر مدة المرافقة وبحد أقصى لا يتجاوز <strong>(عشر) سنوات</strong> متصلة أو منفصلة طوال خدمتها الوظيفية. ويعامل زوج المبتعثة للدراسة في الخارج أو أحد محارمها الشرعيين إذا كان من الموظفين المشمولين بنظام الخدمة المدنية وفق ذلك.</div>
+    </div>
+  </div>
+
+  <!-- الإجازة العادية -->
+  <div class="section" id="sec-annual">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--teal-50)">📅</div>
+        <div><div class="card-title">المادة 130 — استحقاق الإجازة العادية</div></div>
+      </div>
+      <span class="art-num">مادة 130</span>
+      <div class="art-text">يستحق الموظف إجازة عادية مدتها <strong>(ستة وثلاثون) يوماً</strong> عن كل سنة من سنوات خدمته براتب كامل حسب آخر راتب تقاضاه. ويجوز صرف راتبها مقدماً إذا كانت مدة الإجازة التي سيتمتع بها (ثلاثون) يوماً فأكثر.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--teal-50)">📋</div>
+        <div><div class="card-title">المادة 131 — أحكام الإجازة العادية</div></div>
+      </div>
+      <span class="art-num">مادة 131</span>
+      <div class="sub-item"><strong>أ —</strong> يجب أن يتمتع الموظف بإجازته العادية خلال مدة لا تتجاوز (ثلاث) سنوات من نهاية سنة استحقاقها. وله — بعد موافقة الجهة الحكومية — أن يؤجل التمتع بها أو جزء منها لسنة رابعة لمتطلبات العمل وإلا سقط حقه فيها أو ما تبقى منها إذا لم يتقدم بطلب التمتع بها.</div>
+      <div class="sub-item"><strong>ب —</strong> للموظف الحق في التمتع بكامل إجازته العادية أو جزء منها في بداية سنة استحقاقها. ويكون التمتع بالإجازة العادية لفترة واحدة أو على فترات، لا يقل أي منها عن (خمسة) أيام. ويجوز استثناءً التمتع بأقل من ذلك بما لا يتجاوز (عشرة) أيام في السنة.</div>
+      <div class="sub-item"><strong>ج —</strong> يجب على الجهة التي يتبع لها الموظف — عند تقدمه بطلب التمتع بالإجازة العادية — تمكينه من التمتع بها. ويجوز للجهة — لمتطلبات العمل — تأجيل بداية التمتع بالإجازة العادية بما لا يتجاوز (تسعين) يوماً من التاريخ الذي حدده الموظف في الطلب.</div>
+      <div class="sub-item"><strong>د —</strong> يجوز — بناءً على طلب الموظف — تمديد الإجازة العادية أثناء التمتع بها اعتباراً من تاريخ انتهائها إذا كان لدى الموظف رصيد إجازة عادية.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--teal-50)">📊</div>
+        <div><div class="card-title">المادة 132 — الحد الأقصى للتمتع برصيد الإجازات سنوياً</div></div>
+      </div>
+      <span class="art-num">مادة 132</span>
+      <table class="tbl">
+        <tr><th>الفئة</th><th>الحد الأقصى للتمتع في السنة</th></tr>
+        <tr><td>الموظف العادي</td><td><strong>108 أيام</strong></td></tr>
+        <tr><td>من أتمّ 25 سنة خدمة محسوبة للتقاعد</td><td><strong>144 يوماً</strong></td></tr>
+        <tr><td>من بلغ 50 سنة فأكثر</td><td><strong>144 يوماً</strong></td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--amber-50)">💰</div>
+        <div><div class="card-title">المادة 133 — التعويض عن رصيد الإجازة عند إنهاء الخدمة</div></div>
+      </div>
+      <span class="art-num">مادة 133</span>
+      <div class="art-text" style="margin-bottom:0.9rem">يُعوَّض الموظف عن رصيده من أيام الإجازة العادية المستحقة له بحسب آخر راتب أساسي تقاضاه وفقاً للآتي:</div>
+      <table class="tbl">
+        <tr><th>سبب إنهاء الخدمة</th><th>التعويض</th></tr>
+        <tr><td>الوفاة أو العجز الصحي</td><td><strong>كامل الرصيد</strong></td></tr>
+        <tr><td>أي سبب آخر</td><td><strong>بما لا يزيد على 72 يوماً</strong> من الرصيد</td></tr>
+      </table>
+      <div class="sub-item" style="margin-top:0.75rem"><strong>ب —</strong> دون إخلال بما ورد في الفقرة (أ)، يستحق الموظف تعويضاً بما لا يزيد على (مائة وثمانين) يوماً من كامل رصيد الإجازات العادية المستحقة له قبل نفاذ قرار مجلس الوزراء رقم (350) بتاريخ 3/7/1439هـ. وفي جميع الأحوال يجب ألا يتجاوز مجموع التعويض — فيما عدا حالتَي الوفاة والعجز الصحي — (مائة وثمانين) يوماً من كامل رصيد الإجازات المستحقة له.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--coral-50)">🏛️</div>
+        <div><div class="card-title">المادة 134 — السجن واحتسابه من الإجازات</div></div>
+      </div>
+      <span class="art-num">مادة 134</span>
+      <div class="art-text">إذا حُكم على الموظف بالسجن الذي لا يستوجب الفصل حُسبت — بناءً على رغبته — المدة التي يقضيها في السجن كلها أو بعضها من إجازاته العادية أو الاستثنائية المستحقتين له.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--blue-50)">➖</div>
+        <div><div class="card-title">المادة 135 — المدد المستثناة من احتساب رصيد الإجازة العادية</div></div>
+      </div>
+      <span class="art-num">مادة 135</span>
+      <div class="art-text" style="margin-bottom:0.6rem">لا تدخل المدد الآتية في احتساب رصيد الإجازة العادية:</div>
+      <div class="sub-item">أ — مدة الإجازة بدون راتب</div>
+      <div class="sub-item">ب — مدة كف اليد وما في حكمه في حال الإدانة</div>
+      <div class="sub-item">ج — مدة الإجازة الدراسية</div>
+      <div class="sub-item">د — مدة الإعارة لغير الجهات الحكومية</div>
+      <div class="sub-item">هـ — مدة غياب الموظف بدون سند نظامي</div>
+      <div class="sub-item">و — المدة التي يقضيها الموظف في السجن وفقاً لحكم المادة (134)، ولا يدخل في ذلك المدة المستقطعة من إجازاته العادية إذا احتُسبت منها بناءً على رغبته.</div>
+      <div class="sub-item">ز — مدة الابتعاث للدراسة في الخارج أو الإيفاد للدراسة في الداخل</div>
+      <div class="sub-item">ح — مدة التدريب في الداخل أو الخارج التي لا تقل عن سنة</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--teal-50)">🎓</div>
+        <div><div class="card-title">المادة 136 — العطلة الصيفية للعاملين في التعليم</div></div>
+      </div>
+      <span class="art-num">مادة 136</span>
+      <div class="sub-item"><strong>أ —</strong> تُعدّ العطلة الصيفية للعاملين في مجال التعليم بمثابة الإجازة العادية المنصوص عليها في اللائحة. ويجوز للوزير المختص تكليف من يعمل في مجال التعليم بمهمات تتعلق بعمله أثناء الإجازة على أن لا يقل ما يتمتع به منها عن (ستة وثلاثين) يوماً.</div>
+      <div class="sub-item"><strong>ب —</strong> يجوز للوزير المختص السماح للعاملين في مجال التعليم بالتغيب عن العمل الأيام التي تحدد لإجازة ما بين الفصلين الدراسيين، باستثناء من يُرى استمرارهم في العمل.</div>
+      <div class="sub-item"><strong>ج —</strong> تحدد وزارة التعليم فئات الوظائف التي يعتبر شاغلوها عاملين في مجال التعليم ومدد إجازتهم، وذلك بالتنسيق مع وزارة الموارد البشرية والتنمية الاجتماعية.</div>
+    </div>
+  </div>
+
+  <!-- الإجازة المرضية -->
+  <div class="section" id="sec-sick">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--coral-50)">🏥</div>
+        <div><div class="card-title">المادة 141 — الإجازة المرضية</div><div class="card-sub">أنواع وترتيبات الصرف</div></div>
+      </div>
+      <span class="art-num">مادة 141</span>
+      <div class="art-text" style="margin-bottom:0.75rem"><strong>أ — الأمراض العادية</strong> — يستحق الموظف إجازة مرضية لا تتجاوز سنتين في مدة أربع سنوات خدمة، وتحتسب بداية الأربع سنوات من تاريخ بداية الإجازة المرضية:</div>
+      <table class="tbl">
+        <tr><th>المرحلة</th><th>المدة</th><th>الراتب</th></tr>
+        <tr><td>الأولى</td><td>ستة أشهر</td><td style="color:var(--teal-600);font-weight:600">راتب كامل</td></tr>
+        <tr><td>الثانية</td><td>ستة أشهر</td><td style="color:var(--amber-600);font-weight:600">نصف الراتب</td></tr>
+        <tr><td>الثالثة</td><td>سنة</td><td style="color:var(--coral-600);font-weight:600">ربع الراتب</td></tr>
+      </table>
+      <div class="art-text" style="margin-top:1.1rem;margin-bottom:0.75rem"><strong>ب — الأمراض الخطيرة</strong> — يستحق الموظف إجازة مرضية لا تتجاوز سنتين في مدة أربع سنوات خدمة إذا كان مصاباً بأحد الأمراض الخطيرة التي تحددها الجهة الطبية التي تتولى علاجه، ويبدأ تحديدها من تاريخ انقطاعه عن العمل:</div>
+      <table class="tbl">
+        <tr><th>المرحلة</th><th>المدة</th><th>الراتب</th></tr>
+        <tr><td>الأولى</td><td>سنة</td><td style="color:var(--teal-600);font-weight:600">راتب كامل</td></tr>
+        <tr><td>الثانية</td><td>ستة أشهر</td><td style="color:var(--amber-600);font-weight:600">نصف الراتب</td></tr>
+        <tr><td>الثالثة</td><td>ستة أشهر</td><td style="color:var(--coral-600);font-weight:600">ربع الراتب</td></tr>
+      </table>
+      <div class="sub-item" style="margin-top:0.75rem"><strong>ج —</strong> إذا تقرر أن لدى الموظف مرضاً خطيراً أثناء حصوله على الإجازة المرضية وفق الفقرة (أ) فتُعدَّل من تاريخ بدايتها بحسب الإجازة المستحقة وفق الفقرة (ب).</div>
+      <div class="sub-item"><strong>د — إصابة العمل —</strong> يستحق الموظف الذي يتعرض لإصابة أو مرض بسبب تأدية العمل إجازة مرضية لا تتجاوز مدتها <strong>سنة ونصف براتب كامل</strong>. فإذا لم يبرأ بعد انتهاء المدة يعرض أمره على الهيئة الطبية العامة لتقرر إما العجز أو تمديد إجازته مدة أو مدداً لا تزيد على سنة ونصف ويصرف له نصف الراتب.</div>
+      <div class="sub-item"><strong>هـ —</strong> إذا لم يتمكن الموظف من مباشرة عمله بعد انتهاء إجازته المرضية، تُبلَّغ الهيئة الطبية العامة لتحديد وضعه الصحي. في حال لم تقرر الهيئة عجزه يكون له الحق في استنفاد رصيده من الإجازة العادية أو الاستثنائية. أما إذا قررت الهيئة عجزه أو استنفد رصيده، فتنهى خدماته لعجزه الصحي. وبناءً عليه تضع الجهة الحكومية الترتيبات اللازمة بمنحه الإجازات العادية أو الاستثنائية — وفق الضوابط المحددة لتلك الإجازات — إن كان ثمة أمل في شفائه، أو إنهاء خدمته.</div>
+      <div class="sub-item"><strong>و — غسيل الكلى والعلاج الدوري —</strong> يستحق الموظف المصاب بفشل كلوي أو بأحد الأمراض التي تستلزم جلسات علاج دورية إجازة براتب كامل عن الأيام التي يتم فيها إجراء الغسيل أو حضور جلسات العلاج الدورية بما لا يزيد على <strong>(ستين) يوماً</strong> في السنة بموجب تقرير من الجهة الطبية التي تتولى علاجه. ولا تحتسب هذه الإجازة ضمن الإجازة المرضية في الفقرتين (أ) و(ب).</div>
+      <div class="sub-item"><strong>ز —</strong> تندرج الزيارات الطبية التي يقوم بها الموظف للجهات الطبية ضمن الإجازة المرضية المحددة في الفقرة (أ) وذلك بموجب تقرير من الجهة الطبية التي تتولى علاجه.</div>
+      <div class="sub-item"><strong>ح —</strong> تحتسب مدة التنويم أو الملاحظة الطبية داخل المستشفيات ضمن الإجازة المرضية.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--coral-50)">✈️</div>
+        <div><div class="card-title">المادة 142 — العلاج خارج المملكة</div></div>
+      </div>
+      <span class="art-num">مادة 142</span>
+      <div class="sub-item"><strong>أ —</strong> إذا قررت الهيئة الطبية العامة ضرورة معالجة الموظف المصاب بسبب العمل خارج المملكة فتقوم بتحديد المدة اللازمة لعلاجه، ويصرف له بدل انتداب. أما نفقات العلاج فتُصرف له لمدة لا تتجاوز سنة ونصف. ولا يجوز تمديد هذه المدة إلا بموجب تقرير طبي من الهيئة الطبية العامة ولمدة مماثلة فقط.</div>
+      <div class="sub-item"><strong>ب —</strong> إذا رأت الهيئة الطبية العامة ضرورة وجود مرافق للمريض أو كان المرافق محرماً شرعياً للمريضة، فيصرف للمرافق نفقات السفر ونفقات الإقامة بقدر بدل الانتداب المقرر لموظفي المرتبة السادسة إذا انتدبوا للبلد الذي تقرر العلاج فيه. يسري حكم هذه المادة على الموظف المريض الذي تقرر الهيئة الطبية العامة ضرورة علاجه في بلد غير التي يقيم بها في الداخل وضرورة وجود مرافق له، وتصرف المبالغ المنصوص عليها من ميزانية وزارة الصحة وفقاً للقواعد المنظمة لذلك.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--coral-50)">💵</div>
+        <div><div class="card-title">المادة 143 — صرف راتب الإجازة المرضية مقدماً</div></div>
+      </div>
+      <span class="art-num">مادة 143</span>
+      <div class="art-text">يصرف راتب الإجازة المرضية مقدماً بشرط أن لا تقل مدة الإجازة المرضية عن شهر. فإذا توفي المريض أثناء إجازته فلا يسترد منه ما صرف له.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--coral-50)">📆</div>
+        <div><div class="card-title">المادة 144 — بداية احتساب الإجازة المرضية</div></div>
+      </div>
+      <span class="art-num">مادة 144</span>
+      <div class="art-text">تحتسب الإجازة المرضية من تاريخ الانقطاع ما لم تقرر الجهة الطبية المختصة غير ذلك.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--coral-50)">🩺</div>
+        <div><div class="card-title">المادة 145 — اختصاصات اعتماد الإجازات المرضية</div></div>
+      </div>
+      <span class="art-num">مادة 145</span>
+      <table class="tbl">
+        <tr><th>المدة</th><th>جهة الاعتماد</th></tr>
+        <tr><td>لا تزيد على 30 يوماً</td><td>أطباء تحددهم وزارة الصحة</td></tr>
+        <tr><td>تزيد على 30 يوماً — جهات حكومية عامة</td><td>الهيئة الطبية العامة بوزارة الصحة</td></tr>
+        <tr><td>تزيد على 30 يوماً — مستشفى الملك فيصل</td><td>مستشفى الملك فيصل التخصصي</td></tr>
+        <tr><td>تزيد على 30 يوماً — موظفو القطاعات العسكرية</td><td>اللجان الطبية العسكرية</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--teal-50)">🔀</div>
+        <div><div class="card-title">المادة 146 — الجمع بين الإجازة المرضية والعادية</div></div>
+      </div>
+      <span class="art-num">مادة 146</span>
+      <div class="art-text">يجوز للموظف أن يطلب التمتع بإجازته العادية أثناء أو بعد إجازته المرضية.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--teal-50)">👥</div>
+        <div><div class="card-title">المادة 147 — إجازة مرافقة مريض</div></div>
+      </div>
+      <span class="art-num">مادة 147</span>
+      <div class="art-text" style="margin-bottom:0.75rem">في الحالات التي يضطر فيها الموظف إلى مرافقة أحد أقاربه لعلاجه، أو الأم إذا رغبت في مرافقة طفلها الذي لا يتجاوز عمره (اثني عشر) عاماً — علاوة على مرافق الطفل وأمه — يسمح لكل منهم التمتع برصيده من الإجازات العادية. فإذا زادت المدة اللازمة للمرافقة على ما يستحقه من الإجازات العادية فيسمح له بالغياب ويعامل عن المدة الزائدة وفقاً لأحكام الإجازة المرضية وفق الشروط الآتية:</div>
+      <div class="sub-item"><strong>أ —</strong> أن يكون المريض زوجة الموظف أو زوج الموظفة أو أحد أقاربه إلى الدرجة الثالثة. ويجوز للوزير المختص الإعفاء من هذا الشرط في الحالات التي يضطر فيها الموظف إلى مرافقة أحد أقربائه من غير تلك الدرجات.</div>
+      <div class="sub-item"><strong>ب —</strong> أن تقرر الهيئة الطبية العامة بالنسبة إلى من يعالج في الخارج، أو مدير المستشفى وأحد أطبائه لمن يعالج في الداخل، ضرورة وجود مرافق للمريض والمدد المقررة للعلاج. أو يكون الموظف محرماً شرعياً لمريضة تعالج في الخارج أو في بلد غير التي تقيم بها في الداخل.</div>
+    </div>
+  </div>
+
+  <!-- إجازات خاصة -->
+  <div class="section" id="sec-special">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--pink-50)">🕯️</div>
+        <div><div class="card-title">المادة 150 — إجازة الوفاة</div></div>
+      </div>
+      <span class="art-num">مادة 150</span>
+      <table class="tbl" style="margin-bottom:0.75rem">
+        <tr><th>الفئة</th><th>المدة</th><th>الراتب</th></tr>
+        <tr><td>وفاة الزوج/الزوجة أو أحد الأقارب حتى الدرجة الثالثة</td><td>5 أيام</td><td style="color:var(--teal-600);font-weight:600">كامل</td></tr>
+        <tr><td>الموظفة (عدة الوفاة)</td><td>فترة عدة الوفاة شرعاً</td><td style="color:var(--teal-600);font-weight:600">كامل</td></tr>
+      </table>
+      <div class="sub-item">تبدأ إجازة الوفاة اعتباراً من يوم الوفاة وتحتسب العطل الرسمية أو عطلة نهاية الأسبوع ضمنها ولا يُعوَّض عنها الموظف.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--pink-50)">👶</div>
+        <div><div class="card-title">المادة 151 — إجازة الوضع</div></div>
+      </div>
+      <span class="art-num">مادة 151</span>
+      <div class="art-text">تستحق الموظفة إجازة وضع بكامل الراتب مدتها <strong>(سبعين) يوماً</strong> توزعها كيف تشاء، تبدأ بحد أقصى بثمانية وعشرين يوماً قبل التاريخ المرجح للوضع. ويُحدَّد التاريخ المرجح للوضع بموجب شهادة طبية مصدقة من جهة صحية.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--pink-50)">💝</div>
+        <div><div class="card-title">المادة 152 — إجازة الأمومة</div></div>
+      </div>
+      <span class="art-num">مادة 152</span>
+      <div class="sub-item"><strong>أ —</strong> إذا رغبت الموظفة في التفرغ لرعاية مولودها فيجوز لها الحصول على فترة أو فترات إجازة أمومة مدتها <strong>(ثلاث) سنوات كحد أقصى</strong> طوال خدمتها الوظيفية بربع الراتب بعد نهاية إجازة الوضع، على أن لا يقل ما يصرف لها عن (ألف وخمسمائة) ريال شهرياً، وفق الضوابط:
+        <br><br>1 — أن يكون منح هذه الإجازة للموظفة خلال الثلاث سنوات الأولى من عمر الطفل.
+        <br>2 — للجهة الحكومية تأجيل منح هذه الإجازة لمدة لا تتجاوز (تسعين) يوماً إذا اقتضت مصلحة العمل ذلك. ويجوز تمديد الإجازة بشرط موافقة الجهة الحكومية في نطاق حدها الأقصى.
+      </div>
+      <div class="sub-item"><strong>ب —</strong> إذا رغبت الموظفة الحاضنة التي تكفل طفل يتيم في إجازة لرعايته فيجوز لها الحصول على إجازة الأمومة الواردة في الفقرة (أ) وفقاً لضوابطها.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--teal-50)">👨‍👧</div>
+        <div><div class="card-title">المادة 153 — إجازة الأبوة</div></div>
+      </div>
+      <span class="art-num">مادة 153</span>
+      <div class="art-text">يستحق الموظف إجازة لمدة <strong>(ثلاثة) أيام</strong> براتب كامل في حال ولادة مولود له، خلال أسبوع من تاريخ الولادة.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--green-50)">🇸🇦</div>
+        <div><div class="card-title">المادة 154 — إجازة المشاركة الوطنية</div></div>
+      </div>
+      <span class="art-num">مادة 154</span>
+      <div class="art-text">يجوز للوزير المختص منح الموظف إجازة براتب كامل للمشاركة الوطنية داخل المملكة وخارجها في المناسبات أو الأنشطة الرياضية أو البرامج الثقافية أو الاجتماعية أو لأي أسباب أخرى مشابهة لا تتعلق بعمل الجهة الحكومية التي يعمل بها الموظف، وللمشاركة بأعمال الإغاثة والدفاع المدني على أن يكون ذلك بناءً على طلب الجهات الرسمية ذات العلاقة ووفقاً لإطار العمل التنظيمي.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--green-50)">♿</div>
+        <div><div class="card-title">المادة 155 — إجازة تدريب التعامل مع الإعاقة</div></div>
+      </div>
+      <span class="art-num">مادة 155</span>
+      <div class="art-text" style="margin-bottom:0.6rem">يجوز للوزير المختص السماح للموظف أثناء أوقات الدوام الرسمي بالتدريب على طريقة التعامل مع الإعاقة وفق الضوابط الآتية:</div>
+      <div class="sub-item"><strong>أ —</strong> أن لا يكون للموظف رصيد من الإجازات العادية؛ فإن كان له رصيد منها فتحسب مدة غيابه للتدريب من هذا الرصيد.</div>
+      <div class="sub-item"><strong>ب —</strong> أن يكون المعاق أحد أولاد الموظف أو أحد والديه أو من يعوله شرعاً.</div>
+      <div class="sub-item"><strong>ج —</strong> أن تقتصر مدة الغياب على المدة اللازمة للتدريب حسبما يحددها المختصون بموجب تقرير عن حالة المعاق معتمد من أخصائي التأهيل ومصادق عليه من جهة التدريب، على أن لا تزيد مدة الغياب عن (اثنين وأربعين) يوماً.</div>
+      <div class="sub-item"><strong>د —</strong> أن تصدر شهادة مصدقة من جهة التدريب تثبت فعلاً حضور الموظف مدة التدريب وأوقاته.</div>
+    </div>
+  </div>
+
+  <!-- العطل الرسمية -->
+  <div class="section" id="sec-holidays">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--amber-50)">☀️</div>
+        <div><div class="card-title">المادة 127 — أيام العطل الرسمية</div></div>
+      </div>
+      <span class="art-num">مادة 127</span>
+      <table class="tbl">
+        <tr><th>نوع العطلة</th><th>الأيام والمواعيد</th></tr>
+        <tr><td><strong>العطلة الأسبوعية</strong></td><td>يومَي الجمعة والسبت من كل أسبوع</td></tr>
+        <tr><td><strong>اليوم الوطني</strong></td><td>اليوم الأول من الميزان (23 سبتمبر). إذا وافق السبت يُعوَّض بالأحد التالي. إذا وافق الجمعة يُعوَّض بالخميس السابق. فيما عدا ذلك لا يُعوَّض إذا وافق عطلة رسمية أخرى.</td></tr>
+        <tr><td><strong>يوم التأسيس</strong></td><td>22 فبراير من كل عام. تطبق عليه نفس قواعد التعويض المطبقة على اليوم الوطني.</td></tr>
+        <tr><td><strong>عيد الفطر</strong></td><td>من 25 رمضان حتى نهاية 5 شوال</td></tr>
+        <tr><td><strong>عيد الأضحى</strong></td><td>من 5 ذي الحجة حتى نهاية 15 ذي الحجة</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--amber-50)">📌</div>
+        <div><div class="card-title">المادة 128 — يوم العمل المنفرد بين عطلتين</div></div>
+      </div>
+      <span class="art-num">مادة 128</span>
+      <div class="art-text">إذا وافق يوم عمل واحد بين عطلتين رسميتين يكون هذا اليوم عطلة رسمية.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--amber-50)">🔄</div>
+        <div><div class="card-title">المادة 129 — التعويض عن العمل في أيام العطل الرسمية</div></div>
+      </div>
+      <span class="art-num">مادة 129</span>
+      <div class="art-text" style="margin-bottom:0.75rem">يجوز تعويض من يُكلَّف بالعمل خلال أيام العطل الرسمية بإجازة بدلاً من مكافأة العمل الإضافي وفق الضوابط الآتية:</div>
+      <table class="tbl" style="margin-bottom:0.75rem">
+        <tr><th>اليوم</th><th>معدل التعويض</th></tr>
+        <tr><td>يوم عطلة عادي</td><td><strong>يوم عمل مقابل يوم إجازة</strong></td></tr>
+        <tr><td>يوم العيد واليومان اللذان بعده</td><td><strong>يوم عمل مقابل يومَي إجازة</strong></td></tr>
+      </table>
+      <div class="sub-item">على الموظف المكلَّف أن يتمتع بإجازة التعويض خلال سنة من تاريخ نهاية التكليف، ولا يؤثر التمتع بهذه الإجازة على ما يستحقه من إجازات عادية.</div>
+      <div class="sub-item">إبلاغ الموظف المكلَّف بذلك.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--teal-50)">🚫</div>
+        <div><div class="card-title">المادة 160 — عطلة الأعياد أثناء الإجازة العادية</div></div>
+      </div>
+      <span class="art-num">مادة 160</span>
+      <div class="art-text">إذا وقعت عطلة الأعياد وعطلة اليوم الوطني وعطلة يوم التأسيس أثناء الإجازة العادية للموظف فلا تحتسب مدتها ضمن مدة إجازته العادية.</div>
+    </div>
+  </div>
+
+  <!-- أحكام عامة -->
+  <div class="section" id="sec-rules">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--purple-50)">✂️</div>
+        <div><div class="card-title">المادة 159 — قطع الإجازة العادية والعودة للعمل</div></div>
+      </div>
+      <span class="art-num">مادة 159</span>
+      <div class="sub-item"><strong>أ —</strong> يجوز قطع إجازة الموظف العادية والعودة لمباشرة عمله وفق الشروط الآتية:
+        <br>1 — موافقة جهة العمل والموظف معاً على قطع الإجازة.
+        <br>2 — أن يكون الموظف قد تمتع بما لا يقل عن (خمسة) أيام من إجازته.
+      </div>
+      <div class="sub-item"><strong>ب —</strong> يجوز قطع أي من الإجازات المنصوص عليها في هذه اللائحة بإجازة أخرى إذا كانت مستحقة نظاماً، عدا الإجازات الآتية: إجازتَي العيدين، العطلة الأسبوعية، اليوم الوطني، يوم التأسيس، الاضطرارية، الدراسية، الاستثنائية. <em>(تم تعديل هذه الفقرة بموجب القرار الوزاري رقم 109878 وتاريخ 1444/7/9هـ)</em></div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--purple-50)">📉</div>
+        <div><div class="card-title">المادة 156 — احتساب أيام الغياب من الإجازة</div></div>
+      </div>
+      <span class="art-num">مادة 156</span>
+      <div class="art-text">يجوز للجهة الحكومية حسم أيام غياب الموظف عن العمل من رصيده من الإجازات العادية إذا قدم الموظف عذراً تقبله الجهة، بعذر لا يستحق عنها راتباً. ويتم جمع ساعات غياب الموظف ومعاملتها وفق ذلك. أما إذا لم يكن له رصيد من الإجازات فتحتسب غياباً.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--purple-50)">🌪️</div>
+        <div><div class="card-title">المادة 157 — التغيب بسبب الكوارث</div></div>
+      </div>
+      <span class="art-num">مادة 157</span>
+      <div class="art-text">في حال تغيب الموظف عن العمل بسبب وقوع كارثة تحول دون وصوله إلى مقر عمله، فيجوز للوزير المختص أو من يفوضه اعتبار تغيب الموظف بعذر مشروع يستحق عنه راتباً ولا تحسم أيام التغيب من رصيد إجازته.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--purple-50)">🔁</div>
+        <div><div class="card-title">المادة 158 — أرصدة الإجازات عند تغيير الأنظمة</div></div>
+      </div>
+      <span class="art-num">مادة 158</span>
+      <div class="art-text">تكون أرصدة الإجازات المكتسبة وفق نظام الخدمة المدنية مقتصرة على المشمولين به، ولا يُعتدّ عند خضوع الموظف لنظام الخدمة المدنية بأي أرصدة إجازات مكتسبة وفق نظام آخر.</div>
+    </div>
+  </div>
+
+  <!-- ملخص -->
+  <!-- إجازات المتعاقدين -->
+  <div class="section" id="sec-contractors">
+
+    <!-- Banner -->
+    <div style="background:linear-gradient(135deg,#1a237e 0%,#283593 55%,#3949ab 100%);border-radius:14px;padding:1.5rem 1.8rem;margin-bottom:1rem;color:#fff;position:relative;overflow:hidden">
+      <div style="position:absolute;top:-20px;left:-20px;width:100px;height:100px;background:rgba(255,255,255,0.05);border-radius:50%"></div>
+      <div style="position:relative;z-index:1">
+        <div style="font-size:11px;opacity:0.7;margin-bottom:5px;letter-spacing:0.5px">نظام العمل — وزارة الموارد البشرية</div>
+        <div style="font-size:19px;font-weight:700;font-family:'Cairo',sans-serif;margin-bottom:4px">تنظيم إجازات المتعاقدين في إدارات ومكاتب التعليم</div>
+        <div style="font-size:13px;opacity:0.85">عقد أداء مهمات وظيفية بدوام كامل — وفق نظام العمل</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
+          <span style="background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);padding:3px 12px;border-radius:20px;font-size:12px">نظام العمل</span>
+          <span style="background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);padding:3px 12px;border-radius:20px;font-size:12px">متعاقدو التعليم</span>
+          <span style="background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);padding:3px 12px;border-radius:20px;font-size:12px">بدوام كامل</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- مقارنة سريعة -->
+    <div class="card" style="border-right:4px solid #3949ab">
+      <div class="card-header">
+        <div class="card-icon" style="background:#e8eaf6">⚖️</div>
+        <div><div class="card-title" style="color:#1a237e">مقارنة: إجازات الخدمة المدنية مقابل المتعاقدين</div><div class="card-sub">أبرز الفروقات في الإجازات الرئيسية</div></div>
+      </div>
+      <table class="tbl">
+        <tr>
+          <th>نوع الإجازة</th>
+          <th style="background:#E1F5EE;color:#0F6E56">موظف الخدمة المدنية</th>
+          <th style="background:#e8eaf6;color:#1a237e">المتعاقد (نظام العمل)</th>
+        </tr>
+        <tr>
+          <td><strong>الإجازة العادية</strong></td>
+          <td style="background:#f9fffe">36 يوماً سنوياً</td>
+          <td style="background:#f5f5ff">36 يوماً (العطلة الصيفية)</td>
+        </tr>
+        <tr>
+          <td><strong>الإجازة المرضية — براتب كامل</strong></td>
+          <td style="background:#f9fffe">6 أشهر</td>
+          <td style="background:#f5f5ff">30 يوماً</td>
+        </tr>
+        <tr>
+          <td><strong>الإجازة المرضية — نصف/ثلاثة أرباع</strong></td>
+          <td style="background:#f9fffe">6 أشهر بنصف الراتب</td>
+          <td style="background:#f5f5ff">60 يوماً بثلاثة أرباع الأجر</td>
+        </tr>
+        <tr>
+          <td><strong>الإجازة المرضية — بدون راتب</strong></td>
+          <td style="background:#f9fffe">سنة بربع الراتب</td>
+          <td style="background:#f5f5ff">30 يوماً بدون أجر</td>
+        </tr>
+        <tr>
+          <td><strong>إجازة الوضع</strong></td>
+          <td style="background:#f9fffe">70 يوماً براتب كامل</td>
+          <td style="background:#f5f5ff">84 يوماً (12 أسبوع) — اعتباراً من 19/02/2025م</td>
+        </tr>
+        <tr>
+          <td><strong>إجازة الأبوة</strong></td>
+          <td style="background:#f9fffe">3 أيام براتب كامل</td>
+          <td style="background:#f5f5ff">3 أيام خلال أسبوع من الولادة</td>
+        </tr>
+        <tr>
+          <td><strong>إجازة الوفاة</strong></td>
+          <td style="background:#f9fffe">5 أيام براتب كامل</td>
+          <td style="background:#f5f5ff">5 أيام من تاريخ الوفاة</td>
+        </tr>
+        <tr>
+          <td><strong>إجازة الزواج</strong></td>
+          <td style="background:#f9fffe">غير مذكورة</td>
+          <td style="background:#f5f5ff"><strong>5 أيام</strong></td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- الإجازة المرضية -->
+    <div class="card" style="border-right:4px solid #e53935">
+      <div class="card-header">
+        <div class="card-icon" style="background:#ffebee">🏥</div>
+        <div><div class="card-title" style="color:#b71c1c">الإجازة المرضية — المتعاقدون</div><div class="card-sub">وفق نظام العمل</div></div>
+      </div>
+      <div class="art-text" style="margin-bottom:0.8rem">يستحق المتعاقد إذا ثبت مرضه إجازة مرضية خلال <strong>السنة الواحدة</strong> على النحو التالي. وتُعدّ السنة من تاريخ أول إجازة مرضية سواء أكانت متصلة أم متقطعة:</div>
+      <table class="tbl">
+        <tr><th>المرحلة</th><th>المدة</th><th>الأجر</th></tr>
+        <tr><td>الأولى</td><td>30 يوماً</td><td style="color:var(--teal-600);font-weight:600">أجر كامل</td></tr>
+        <tr><td>الثانية</td><td>60 يوماً</td><td style="color:#e65100;font-weight:600">ثلاثة أرباع الأجر</td></tr>
+        <tr><td>الثالثة</td><td>30 يوماً</td><td style="color:#b71c1c;font-weight:600">بدون أجر</td></tr>
+      </table>
+    </div>
+
+    <!-- إجازة الوضع -->
+    <div class="card" style="border-right:4px solid #e91e63">
+      <div class="card-header">
+        <div class="card-icon" style="background:#fce4ec">👶</div>
+        <div><div class="card-title" style="color:#880e4f">إجازة الوضع — المتعاقدة</div><div class="card-sub">تحديث 2025م</div></div>
+      </div>
+      <div style="background:#fce4ec;border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:0.9rem;border-right:3px solid #e91e63">
+        <div style="font-size:12px;color:#880e4f;font-weight:600;margin-bottom:4px">🆕 تحديث — اعتباراً من 19/02/2025م (20/08/1446هـ)</div>
+        <div style="font-size:15px;font-weight:700;color:#880e4f">أصبحت مدة إجازة الوضع <span style="background:#e91e63;color:#fff;padding:2px 10px;border-radius:8px">12 أسبوعاً (84 يوماً)</span></div>
+      </div>
+      <table class="tbl">
+        <tr><th>البند</th><th>التفاصيل</th></tr>
+        <tr><td><strong>المدة الإجمالية</strong></td><td>84 يوماً (12 أسبوع) — كانت 70 يوماً قبل التحديث</td></tr>
+        <tr><td><strong>الحد الأقصى قبل الوضع</strong></td><td>4 أسابيع قبل التاريخ المرجح للوضع</td></tr>
+        <tr><td><strong>الأجر</strong></td><td style="color:var(--teal-600);font-weight:600">أجر كامل</td></tr>
+      </table>
+      <div style="margin-top:0.9rem">
+        <div style="font-size:13px;font-weight:600;color:#555;margin-bottom:6px">إجازة ما بعد الوضع:</div>
+        <div class="sub-item" style="background:#fce4ec;border-color:#e91e63;color:#4a0023"><strong>شهر بدون راتب</strong> — متصلة بإجازة الوضع (إذا رغبت).</div>
+        <div class="sub-item" style="background:#fce4ec;border-color:#e91e63;color:#4a0023"><strong>مولود مريض أو من ذوي الاحتياجات الخاصة —</strong> يستلزم مرافقاً مستمراً: شهر مدفوع الأجر + شهر بدون أجر، متصلة بإجازة الوضع.</div>
+      </div>
+    </div>
+
+    <!-- إجازة الزواج والوفاة والأبوة -->
+    <div class="card" style="border-right:4px solid #ff6f00">
+      <div class="card-header">
+        <div class="card-icon" style="background:#fff8e1">🎊</div>
+        <div><div class="card-title" style="color:#e65100">إجازات الأحوال الشخصية</div></div>
+      </div>
+      <table class="tbl">
+        <tr><th>نوع الإجازة</th><th>المدة</th><th>الأجر</th><th>ملاحظات</th></tr>
+        <tr><td><strong>إجازة الزواج</strong></td><td>5 أيام</td><td style="color:var(--teal-600);font-weight:600">كامل</td><td>—</td></tr>
+        <tr><td><strong>إجازة الأبوة (مولود)</strong></td><td>3 أيام</td><td style="color:var(--teal-600);font-weight:600">كامل</td><td>خلال أسبوع من تاريخ الولادة</td></tr>
+        <tr><td><strong>إجازة الوفاة</strong></td><td>5 أيام</td><td style="color:var(--teal-600);font-weight:600">كامل</td><td>من تاريخ الوفاة</td></tr>
+        <tr><td><strong>إجازة عدة الوفاة (المتعاقدة)</strong></td><td>4 أشهر وعشرة أيام</td><td style="color:var(--teal-600);font-weight:600">كامل</td><td>إذا كانت حاملاً: تمديد بدون أجر حتى الوضع</td></tr>
+      </table>
+    </div>
+
+    <!-- إجازة الامتحانات -->
+    <div class="card" style="border-right:4px solid #0288d1">
+      <div class="card-header">
+        <div class="card-icon" style="background:#e1f5fe">📝</div>
+        <div><div class="card-title" style="color:#01579b">إجازة الامتحانات الدراسية</div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:0.75rem">
+        <div style="background:#e1f5fe;border-radius:10px;padding:0.9rem 1rem;border-right:3px solid #0288d1">
+          <div style="font-size:12px;font-weight:700;color:#01579b;margin-bottom:6px">✅ بموافقة صاحب العمل</div>
+          <div style="font-size:13px;color:#01579b;line-height:1.7">إجازة بعدد أيام الاختبارات الفعلية.<br><strong>بأجر</strong> إذا كانت السنة غير معادة.<br><strong>بدون أجر</strong> إذا كانت سنة معادة.</div>
+        </div>
+        <div style="background:#fff3e0;border-radius:10px;padding:0.9rem 1rem;border-right:3px solid #ff6f00">
+          <div style="font-size:12px;font-weight:700;color:#e65100;margin-bottom:6px">⚠️ بدون موافقة صاحب العمل</div>
+          <div style="font-size:13px;color:#bf360c;line-height:1.7">إجازة بعدد أيام الامتحان الفعلية.<br>تُخصم من <strong>الإجازة السنوية</strong> إن وُجدت.<br>أو <strong>بدون أجر</strong> إذا لم تتوفر.</div>
+        </div>
+      </div>
+      <div class="sub-item" style="background:#e1f5fe;border-color:#0288d1;color:#01579b">يجب تقديم طلب الإجازة قبل موعدها بـ <strong>15 يوماً</strong> على الأقل.</div>
+      <div class="sub-item" style="background:#e1f5fe;border-color:#0288d1;color:#01579b">لصاحب العمل طلب الوثائق المؤيدة للطلب وما يدل على أدائه الامتحان. ويُحرم من أجر الإجازة إذا ثبت عدم تأدية الامتحان مع إمكانية المساءلة التأديبية.</div>
+    </div>
+
+    <!-- إجازة بدون أجر -->
+    <div class="card" style="border-right:4px solid #5e35b1">
+      <div class="card-header">
+        <div class="card-icon" style="background:#ede7f6">⏸️</div>
+        <div><div class="card-title" style="color:#311b92">الإجازة بدون أجر</div><div class="card-sub">لا تُمنح إلا بعد نفاذ رصيد الإجازة السنوية وفي الظروف الملحة</div></div>
+      </div>
+      <div class="art-text" style="margin-bottom:0.9rem">الحد الأقصى: <strong>سنتان خلال خمس سنوات</strong> سواء متصلة أو متفرقة.</div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:0.5rem">
+        <!-- نوع 1 -->
+        <div style="background:#ede7f6;border-radius:10px;padding:0.9rem 1rem;border-top:3px solid #5e35b1">
+          <div style="font-size:12px;font-weight:700;color:#311b92;margin-bottom:8px">📋 مدة تصل إلى 20 يوم عمل</div>
+          <div style="font-size:12.5px;color:#4527a0;line-height:1.7">
+            ✔ استمرار الاشتراك في التأمينات الاجتماعية<br>
+            ✘ لا تُلغى أو تُستبدل بإجازة أخرى<br>
+            ✘ لا تعويض إذا صادفت الإجازة الصيفية
+          </div>
+        </div>
+        <!-- نوع 2 -->
+        <div style="background:#e8eaf6;border-radius:10px;padding:0.9rem 1rem;border-top:3px solid #3949ab">
+          <div style="font-size:12px;font-weight:700;color:#1a237e;margin-bottom:8px">⚡ تتجاوز 20 يوم — ظروف قاهرة</div>
+          <div style="font-size:12.5px;color:#283593;line-height:1.7">
+            ✔ إتمام سنتَي خدمة<br>
+            ⏸ إيقاف الاشتراك في التأمينات<br>
+            📏 لا تقل عن فصل دراسي ولا تزيد عن سنتين<br>
+            ✘ لا تُلغى أو تُستبدل بإجازة أخرى
+          </div>
+        </div>
+        <!-- نوع 3 -->
+        <div style="background:#e8eaf6;border-radius:10px;padding:0.9rem 1rem;border-top:3px solid #1565c0">
+          <div style="font-size:12px;font-weight:700;color:#0d47a1;margin-bottom:8px">🌍 لغرض مرافقة الزوج</div>
+          <div style="font-size:12.5px;color:#1565c0;line-height:1.7">
+            ✔ إتمام سنتَي خدمة<br>
+            ⏸ إيقاف الاشتراك في التأمينات<br>
+            📎 إحضار ما يثبت غرض المرافقة (دراسة أو عمل الزوج)<br>
+            📏 لا تقل عن فصل دراسي ولا تزيد عن سنتين
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- إجازة بدون أجر للدراسة -->
+    <div class="card" style="border-right:4px solid #00695c">
+      <div class="card-header">
+        <div class="card-icon" style="background:#e0f2f1">🎓</div>
+        <div><div class="card-title" style="color:#004d40">الإجازة بدون أجر — لغرض الدراسة</div></div>
+      </div>
+      <div class="art-text" style="margin-bottom:0.8rem">يجوز منح المتعاقد إجازة دراسية بدون أجر وفق الشروط الآتية:</div>
+      <div class="sub-item" style="background:#e0f2f1;border-color:#00695c;color:#004d40">أن يحمل مؤهلاً علمياً لا يقل عن <strong>البكالوريوس</strong> أو ما يعادلها.</div>
+      <div class="sub-item" style="background:#e0f2f1;border-color:#00695c;color:#004d40">أن يكون قد أمضى في الخدمة <strong>ثلاث سنوات</strong> ولا يقل تقويم أدائه الوظيفي عن تقدير <strong>(جيد جداً)</strong> أو ما يعادله.</div>
+      <div class="sub-item" style="background:#e0f2f1;border-color:#00695c;color:#004d40">أن يكون لموضوع دراسته علاقة بالعمل.</div>
+      <div class="sub-item" style="background:#e0f2f1;border-color:#00695c;color:#004d40">استمرار مدة الاشتراك في التأمينات الاجتماعية، <strong>واشتراط سداد مبالغ الاشتراكات</strong> الخاصة بالتأمينات.</div>
+      <div class="sub-item" style="background:#e0f2f1;border-color:#00695c;color:#004d40">ألا يترتب على الإجازة الدراسية أي التزامات مالية أو إدارية على الوزارة.</div>
+      <div class="sub-item" style="background:#e0f2f1;border-color:#00695c;color:#004d40">أن تكون الجهة التعليمية معترفاً بها وضمن التصنيفات المعتمدة من الجهات ذات العلاقة (للدراسة في الداخل أو الخارج).</div>
+      <div class="sub-item" style="background:#e0f2f1;border-color:#00695c;color:#004d40">لا تُلغى ولا تُستبدل بأي إجازة أخرى. وإذا صادفت وقت الإجازة الصيفية لا يحق المطالبة بالتعويض.</div>
+    </div>
+
+    <!-- الإجازة العادية والتعويض -->
+    <div class="card" style="border-right:4px solid #2e7d32">
+      <div class="card-header">
+        <div class="card-icon" style="background:#e8f5e9">📅</div>
+        <div><div class="card-title" style="color:#1b5e20">الإجازة العادية وتعويض الإجازة الصيفية</div></div>
+      </div>
+      <div class="sub-item" style="background:#e8f5e9;border-color:#2e7d32;color:#1b5e20">تعتبر العطلة الصيفية للمعلمين المتعاقدين بمثابة الإجازة العادية ومدتها <strong>36 يوماً</strong>.</div>
+      <div style="margin-top:0.75rem">
+        <div style="font-size:13px;font-weight:600;color:#2e7d32;margin-bottom:6px">تعويض الإجازة الصيفية (رصيد إجازات عادية):</div>
+        <div class="art-text" style="margin-bottom:0.5rem">يتم التعويض إذا لم يتمتع المعلم المتعاقد بـ 36 يوماً في الإجازة الصيفية، وذلك في حال الحصول خلالها على:</div>
+        <div class="sub-item" style="background:#e8f5e9;border-color:#2e7d32;color:#1b5e20">إجازة مرضية.</div>
+        <div class="sub-item" style="background:#e8f5e9;border-color:#2e7d32;color:#1b5e20">إجازة الوضع للمعلمة المتعاقدة.</div>
+        <div class="sub-item" style="background:#e8f5e9;border-color:#2e7d32;color:#1b5e20">إجازة عدة الوفاة للمعلمة المتعاقدة.</div>
+      </div>
+    </div>
+
+    <!-- مرافقة المريض -->
+    <div class="card" style="border-right:4px solid #6a1b9a">
+      <div class="card-header">
+        <div class="card-icon" style="background:#f3e5f5">👨‍⚕️</div>
+        <div><div class="card-title" style="color:#4a148c">مرافقة المريض</div></div>
+      </div>
+      <div class="art-text">تُستنفد الإجازات العادية أولاً، وبعدها يتم الحسم من <strong>الإجازة المرضية</strong> وفق أحكام نظام العمل.</div>
+    </div>
+
+    <!-- بطاقة التوقيع -->
+    <div style="margin-top:1.2rem;background:linear-gradient(135deg,#0a1628 0%,#112240 60%,#1a3a5c 100%);border-radius:16px;padding:1.4rem 1.8rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;position:relative;overflow:hidden">
+      <div style="position:absolute;top:-30px;right:-30px;width:120px;height:120px;border-radius:50%;background:rgba(100,180,255,0.06)"></div>
+      <div style="position:absolute;bottom:-20px;left:20px;width:80px;height:80px;border-radius:50%;background:rgba(100,180,255,0.04)"></div>
+      <div style="position:relative;z-index:1">
+        <div style="font-size:11px;color:rgba(255,255,255,0.5);letter-spacing:1px;margin-bottom:5px">إعداد وتصميم</div>
+        <div style="font-size:20px;font-weight:700;font-family:'Cairo',sans-serif;color:#fff;letter-spacing:0.5px">د/ فواز</div>
+        <div style="width:40px;height:2px;background:linear-gradient(90deg,#64b4ff,transparent);margin-top:6px;border-radius:2px"></div>
+      </div>
+      <div style="position:relative;z-index:1;text-align:left">
+        <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-bottom:6px">تفضل للمزيد</div>
+        <a href="https://t.me/TAqhjT3MFVE1Yzk0" target="_blank" style="display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);padding:8px 18px;border-radius:30px;text-decoration:none;color:#a8d8ff;font-size:13px;font-weight:600">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8l-1.69 7.96c-.12.57-.45.71-.91.44l-2.5-1.84-1.2 1.16c-.13.13-.24.24-.5.24l.18-2.54 4.62-4.17c.2-.18-.04-.28-.31-.1L7.97 14.8l-2.47-.77c-.54-.17-.55-.54.11-.8l9.66-3.72c.45-.16.84.11.37 1.29z" fill="#a8d8ff"/></svg>
+          t.me/TAqhjT3MFVE1Yzk0
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section" id="sec-summary">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--teal-50)">✨</div>
+        <div><div class="card-title">أبرز نقاط لائحة الإجازات — ملخص سريع</div><div class="card-sub">أهم الأرقام والأحكام دفعةً واحدة</div></div>
+      </div>
+      <div class="sum-grid">
+        <div class="sum-card" style="background:var(--teal-50);border-color:var(--teal-100)">
+          <h3 style="color:var(--teal-800)">📅 الإجازة العادية</h3>
+          <p style="color:var(--teal-600)">36 يوماً سنوياً براتب كامل. الحد الأقصى للتمتع برصيد الإجازات 108 أيام سنوياً (144 يوماً للأكبر سناً أو خدمةً).</p>
+        </div>
+        <div class="sum-card" style="background:var(--coral-50);border-color:#F5C4B3">
+          <h3 style="color:#4A1B0C">🏥 الإجازة المرضية</h3>
+          <p style="color:var(--coral-600)">حتى سنتين في كل 4 سنوات. 6 أشهر براتب كامل، ثم 6 بنصف الراتب، ثم سنة بربع الراتب للأمراض العادية.</p>
+        </div>
+        <div class="sum-card" style="background:var(--pink-50);border-color:#F4C0D1">
+          <h3 style="color:#4B1528">👶 إجازة الوضع والأمومة</h3>
+          <p style="color:var(--pink-600)">70 يوماً براتب كامل للوضع، ثم إجازة أمومة حتى 3 سنوات بربع الراتب (1500 ريال كحد أدنى شهرياً).</p>
+        </div>
+        <div class="sum-card" style="background:var(--amber-50);border-color:var(--amber-100)">
+          <h3 style="color:#412402">☀️ العطل الرسمية</h3>
+          <p style="color:var(--amber-600)">الجمعة والسبت أسبوعياً + عيد الفطر (11 يوماً) + عيد الأضحى (11 يوماً) + اليوم الوطني + يوم التأسيس.</p>
+        </div>
+        <div class="sum-card" style="background:var(--blue-50);border-color:#B5D4F4">
+          <h3 style="color:#042C53">🕯️ إجازة الوفاة</h3>
+          <p style="color:var(--blue-600)">5 أيام براتب كامل للموظف. وللموظفة عدة الوفاة الشرعية كاملة براتب كامل.</p>
+        </div>
+        <div class="sum-card" style="background:var(--purple-50);border-color:var(--purple-100)">
+          <h3 style="color:#26215C">⭐ الإجازة الاستثنائية</h3>
+          <p style="color:var(--purple-600)">سنتان كحد أقصى خلال 5 سنوات. ولمرافقة الزوج للخارج 10 سنوات طوال الخدمة الوظيفية.</p>
+        </div>
+        <div class="sum-card" style="background:var(--green-50);border-color:#C0DD97">
+          <h3 style="color:#173404">👨‍👧 إجازة الأبوة</h3>
+          <p style="color:var(--green-600)">3 أيام براتب كامل عند الولادة يجب أن تُؤخذ خلال أسبوع من تاريخ الولادة.</p>
+        </div>
+        <div class="sum-card" style="background:var(--coral-50);border-color:#F5C4B3">
+          <h3 style="color:#4A1B0C">💰 تعويض الإجازة</h3>
+          <p style="color:var(--coral-600)">عند إنهاء الخدمة: 72 يوماً كحد أقصى. وعند الوفاة أو العجز الصحي: كامل الرصيد. الحد المطلق 180 يوماً.</p>
+        </div>
+        <div class="sum-card" style="background:#e8eaf6;border-color:#9fa8da">
+          <h3 style="color:#1a237e">📄 إجازات المتعاقدين</h3>
+          <p style="color:#283593">إجازة مرضية: 30 يوم كامل + 60 يوم ثلاثة أرباع + 30 بدون أجر. وضع: 84 يوماً (تحديث 2025م). زواج: 5 أيام.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="background:var(--teal-50);border-color:var(--teal-100)">
+      <div style="text-align:center;padding:0.5rem 0">
+        <div style="font-size:13px;color:var(--teal-600);margin-bottom:4px">للاستفسار والمزيد من المعلومات</div>
+        <div style="font-size:15px;font-weight:600;color:var(--teal-800)">www.hrsd.gov.sa</div>
+        <div style="font-size:12px;color:var(--teal-600);margin-top:6px">وزارة الموارد البشرية والتنمية الاجتماعية</div>
+      </div>
+    </div>
+
+    <!-- بطاقة التوقيع -->
+    <div style="margin-top:1rem;background:linear-gradient(135deg,#0a1628 0%,#112240 60%,#1a3a5c 100%);border-radius:16px;padding:1.4rem 1.8rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;position:relative;overflow:hidden">
+      <div style="position:absolute;top:-30px;right:-30px;width:120px;height:120px;border-radius:50%;background:rgba(100,180,255,0.06)"></div>
+      <div style="position:absolute;bottom:-20px;left:20px;width:80px;height:80px;border-radius:50%;background:rgba(100,180,255,0.04)"></div>
+      <div style="position:relative;z-index:1">
+        <div style="font-size:11px;color:rgba(255,255,255,0.5);letter-spacing:1px;margin-bottom:5px">إعداد وتصميم</div>
+        <div style="font-size:20px;font-weight:700;font-family:'Cairo',sans-serif;color:#fff;letter-spacing:0.5px">د/ فواز</div>
+        <div style="width:40px;height:2px;background:linear-gradient(90deg,#64b4ff,transparent);margin-top:6px;border-radius:2px"></div>
+      </div>
+      <div style="position:relative;z-index:1;text-align:left">
+        <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-bottom:6px">تفضل للمزيد</div>
+        <a href="https://t.me/TAqhjT3MFVE1Yzk0" target="_blank" style="display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);padding:8px 18px;border-radius:30px;text-decoration:none;color:#a8d8ff;font-size:13px;font-weight:600">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8l-1.69 7.96c-.12.57-.45.71-.91.44l-2.5-1.84-1.2 1.16c-.13.13-.24.24-.5.24l.18-2.54 4.62-4.17c.2-.18-.04-.28-.31-.1L7.97 14.8l-2.47-.77c-.54-.17-.55-.54.11-.8l9.66-3.72c.45-.16.84.11.37 1.29z" fill="#a8d8ff"/></svg>
+          t.me/TAqhjT3MFVE1Yzk0
+        </a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function showSection(name, btn){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('sec-'+name).classList.add('active');
+  if(btn) btn.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
