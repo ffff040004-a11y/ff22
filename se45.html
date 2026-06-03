@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة تقييم الجدارات الرقمية الفخمة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2e7d32;
+            --primary-light: #e8f5e9;
+            --primary-dark: #1b5e20;
+            --accent: #388e3c;
+            --bg: #f8fafc;
+            --surface: #ffffff;
+            --text: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --danger: #ef4444;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --goal-primary: #1565c0;
+            --goal-light: #e3f2fd;
+            --goal-dark: #0d47a1;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', 'Segoe UI', Tahoma, sans-serif; }
+
+        body { background-color: var(--bg); color: var(--text); padding: 30px 20px; line-height: 1.6; }
+
+        .container { max-width: 1200px; margin: 0 auto; }
+
+        /* التبويبات */
+        .tabs-wrapper {
+            display: flex;
+            gap: 0;
+            margin-bottom: 0;
+            border-bottom: 3px solid var(--border);
+        }
+
+        .tab-btn {
+            padding: 14px 28px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-bottom: none;
+            color: var(--text-muted);
+            border-radius: 10px 10px 0 0;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .tab-btn:not(.active):hover {
+            background: var(--primary-light);
+            color: var(--primary-dark);
+        }
+
+        .tab-btn.goal-tab.active {
+            background: var(--goal-primary);
+            border-color: var(--goal-primary);
+        }
+
+        .tab-content { display: none; padding-top: 25px; }
+        .tab-content.active { display: block; }
+
+        /* شريط الأدوات */
+        .toolbar {
+            background: var(--surface);
+            padding: 15px 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            border: 1px solid var(--border);
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 10px;
+        }
+
+        header { margin-bottom: 30px; border-right: 5px solid var(--primary); padding-right: 15px; }
+        header h1 { color: var(--primary-dark); font-size: 24px; margin-bottom: 5px; }
+        header p { color: var(--text-muted); font-size: 14px; }
+
+        .goal-header { border-right-color: var(--goal-primary); }
+        .goal-header h1 { color: var(--goal-dark); }
+
+        /* لوحة المؤشرات */
+        .dashboard-grid { display: flex; gap: 15px; margin-bottom: 30px; width: 100%; }
+
+        .kpi-card {
+            flex: 1;
+            background: var(--surface);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            border: 1px solid var(--border);
+        }
+
+        .kpi-card.highlight {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            color: white;
+            border: none;
+        }
+
+        .kpi-card.highlight-blue {
+            background: linear-gradient(135deg, var(--goal-dark), var(--goal-primary));
+            color: white;
+            border: none;
+        }
+
+        .kpi-title { font-size: 13px; color: var(--text-muted); font-weight: 600; margin-bottom: 8px; }
+        .highlight .kpi-title, .highlight-blue .kpi-title { color: rgba(255,255,255,0.8); }
+        .kpi-value { font-size: 28px; font-weight: 700; color: var(--primary-dark); }
+        .highlight .kpi-value, .highlight-blue .kpi-value { color: white; }
+
+        /* أزرار */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            font-size: 13px;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary { background-color: var(--primary); }
+        .btn-primary:hover { background-color: var(--primary-dark); }
+        .btn-blue { background-color: var(--goal-primary); }
+        .btn-blue:hover { background-color: var(--goal-dark); }
+        .btn-print { background-color: #0f172a; }
+        .btn-print:hover { background-color: #1e293b; }
+
+        /* جداول */
+        .table-container {
+            background: var(--surface);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            border: 1px solid var(--border);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        table { width: 100%; border-collapse: collapse; text-align: right; }
+
+        th { background-color: var(--primary); color: white; padding: 16px; font-size: 14px; font-weight: 700; }
+        .goal-table th { background-color: var(--goal-primary); }
+
+        td { padding: 12px 16px; border-bottom: 1px solid var(--border); font-size: 14px; vertical-align: middle; }
+        tr:nth-child(even) td { background-color: #f8fafc; }
+
+        input, textarea, select {
+            width: 100%;
+            border: 1px solid transparent;
+            background: transparent;
+            padding: 6px 10px;
+            font-size: 14px;
+            border-radius: 6px;
+            color: var(--text);
+            transition: all 0.2s;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        input:hover, textarea:hover, select:hover { border-color: var(--border); background: #fff; }
+        input:focus, textarea:focus, select:focus {
+            border-color: var(--accent);
+            background: #fff;
+            outline: none;
+            box-shadow: 0 0 0 3px var(--primary-light);
+        }
+
+        .num-input { text-align: center; font-weight: 700; }
+        textarea { resize: vertical; min-height: 40px; }
+
+        /* أعمدة جدول الجدارات */
+        .col-id { width: 4%; text-align: center; }
+        .col-name { width: 16%; }
+        .col-desc { width: 32%; }
+        .col-weight { width: 8%; text-align: center; }
+        .col-req { width: 9%; text-align: center; }
+        .col-act { width: 9%; text-align: center; }
+        .col-total { width: 10%; text-align: center; font-weight: bold; color: var(--primary-dark); }
+
+        /* أعمدة جدول الأهداف */
+        .gc-id { width: 4%; text-align: center; }
+        .gc-name { width: 14%; }
+        .gc-measure { width: 14%; }
+        .gc-weight { width: 8%; text-align: center; }
+        .gc-target { width: 9%; text-align: center; }
+        .gc-actual { width: 9%; text-align: center; }
+        .gc-diff { width: 9%; text-align: center; font-weight: 700; }
+        .gc-score { width: 10%; text-align: center; font-weight: 700; color: var(--goal-dark); }
+
+        /* سطر المجاميع */
+        .total-row td {
+            background-color: var(--primary-light) !important;
+            font-weight: 700;
+            color: var(--primary-dark);
+            border-top: 2px solid var(--primary);
+            border-bottom: 2px double var(--primary);
+            padding: 16px;
+        }
+
+        .goal-total-row td {
+            background-color: var(--goal-light) !important;
+            font-weight: 700;
+            color: var(--goal-dark);
+            border-top: 2px solid var(--goal-primary);
+            border-bottom: 2px double var(--goal-primary);
+            padding: 16px;
+        }
+
+        /* بادج الفرق */
+        .diff-badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .diff-positive { background: #e8f5e9; color: #1b5e20; }
+        .diff-zero { background: #fff9c4; color: #f59e0b; }
+        .diff-negative { background: #ffebee; color: #c62828; }
+
+        /* بادج درجة التقييم */
+        .score-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .score-full { background: linear-gradient(135deg, #1b5e20, #2e7d32); color: white; }
+        .score-good { background: #e8f5e9; color: #1b5e20; }
+        .score-low { background: #fff9c4; color: #e65100; }
+        .score-poor { background: #ffebee; color: #c62828; }
+
+        /* توقيعات وبيانات */
+        .metadata-section {
+            display: flex;
+            gap: 30px;
+            background: var(--surface);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            margin-bottom: 20px;
+        }
+
+        .meta-col { flex: 1; display: flex; flex-direction: column; gap: 12px; }
+        .meta-item { display: flex; align-items: center; }
+        .meta-item label { font-weight: 600; color: var(--text-muted); width: 140px; flex-shrink: 0; }
+        .meta-item input { border-bottom: 1px dashed var(--border); border-radius: 0; }
+
+        .delete-btn { color: var(--danger); cursor: pointer; font-weight: bold; font-size: 16px; background: none; border: none; padding-top: 5px; }
+
+        /* تنبيه مجموع الأوزان */
+        .weight-warning {
+            background: #fff3e0;
+            border: 1px solid #ff9800;
+            border-radius: 8px;
+            padding: 10px 16px;
+            font-size: 13px;
+            color: #e65100;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: none;
+        }
+
+        .weight-warning.show { display: block; }
+
+        /* الفوتر */
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 15px;
+            color: var(--text-muted);
+            font-size: 13px;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer a { color: var(--primary); text-decoration: none; font-weight: 700; }
+
+        /* طباعة */
+        @media print {
+            body { background: white !important; padding: 0 !important; margin: 0 !important; }
+            .tabs-wrapper, .toolbar, .btn, .delete-btn, .tab-btn { display: none !important; }
+            .tab-content { display: block !important; padding-top: 10px; }
+            .container { max-width: 100% !important; padding: 0 !important; }
+            .table-container { box-shadow: none !important; border: 1px solid #000 !important; border-radius: 0 !important; }
+            th { background-color: #f1f5f9 !important; color: #000 !important; border-bottom: 2px solid #000 !important; }
+            td, th { padding: 8px !important; border-bottom: 1px solid #cbd5e1 !important; }
+            .total-row td, .goal-total-row td { background-color: #f8fafc !important; color: black !important; }
+            input, textarea, select { border: none !important; background: transparent !important; box-shadow: none !important; padding: 0 !important; }
+            .kpi-card { box-shadow: none !important; border: 1px solid #cbd5e1 !important; background: #f8fafc !important; color: black !important; }
+            .kpi-card.highlight, .kpi-card.highlight-blue { background: #e2e8f0 !important; color: black !important; }
+            .highlight .kpi-title, .highlight .kpi-value, .highlight-blue .kpi-title, .highlight-blue .kpi-value { color: black !important; }
+            .metadata-section { box-shadow: none !important; border: 1px solid #cbd5e1 !important; }
+        }
+
+        @page { size: A4 portrait; margin: 12mm; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- التبويبات -->
+    <div class="tabs-wrapper">
+        <button class="tab-btn active" onclick="switchTab('competency')">
+            ⭐ تقييم الجدارات
+        </button>
+        <button class="tab-btn goal-tab" onclick="switchTab('goals')">
+            🎯 حاسبة الأهداف
+        </button>
+    </div>
+
+    <!-- ===== تبويب الجدارات ===== -->
+    <div id="tab-competency" class="tab-content active">
+
+        <div class="toolbar">
+            <button class="btn btn-primary" onclick="addNewRow()">＋ إضافة جدارة</button>
+            <button class="btn btn-print" onclick="triggerPrint()">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="margin-left:5px;">
+                    <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 4v1a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h8zm1.5-4a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1z"/>
+                </svg>
+                طباعة / تصدير PDF
+            </button>
+        </div>
+
+        <header>
+            <h1>المنصة الذكية الرقمية لتقييم الجدارات</h1>
+            <p>نظام تفاعلي متقدم مجهز بالمعادلات المقاسة على مقياس خماسي (5 = الدرجة الكاملة، و 4 يبدأ من عنده الخصم والنقص تلقائياً).</p>
+        </header>
+
+        <div class="dashboard-grid">
+            <div class="kpi-card">
+                <div class="kpi-title">عدد الجدارات النشطة</div>
+                <div class="kpi-value" id="kpi-count">4</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-title">مجموع الأوزان النسبية</div>
+                <div class="kpi-value" id="kpi-weight-total">100%</div>
+            </div>
+            <div class="kpi-card highlight">
+                <div class="kpi-title">النتيجة الإجمالية الموزونة</div>
+                <div class="kpi-value" id="kpi-final-score">100.0%</div>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="col-id">م</th>
+                        <th class="col-name">الجدارة</th>
+                        <th class="col-desc">تعريف الجدارة وفق مستوى الإتقان</th>
+                        <th class="col-weight">الوزن النسبي</th>
+                        <th class="col-req">المستهدف</th>
+                        <th class="col-act">التقييم الفعلي</th>
+                        <th class="col-total">الدرجة الموزونة</th>
+                        <th style="width: 4%"></th>
+                    </tr>
+                </thead>
+                <tbody id="competency-rows">
+                    <tr>
+                        <td class="col-id" style="text-align:center; padding-top:18px;">1</td>
+                        <td><input type="text" value="المسؤولية" class="comp-name"></td>
+                        <td><textarea class="comp-desc">الالتزام بتحمل المسؤولية الفردية لتحقيق الأهداف بالجودة المطلوبة وفي الوقت المحدد.</textarea></td>
+                        <td><input type="number" value="20" class="num-input comp-weight" oninput="calculateMatrix()"></td>
+                        <td><input type="number" value="4" class="num-input comp-req" oninput="calculateMatrix()"></td>
+                        <td><input type="number" value="5" class="num-input comp-actual" oninput="calculateMatrix()"></td>
+                        <td class="col-total row-result">20.0%</td>
+                        <td><button class="delete-btn" onclick="deleteRow(this)">&times;</button></td>
+                    </tr>
+                    <tr>
+                        <td class="col-id" style="text-align:center; padding-top:18px;">2</td>
+                        <td><input type="text" value="العمل الجماعي" class="comp-name"></td>
+                        <td><textarea class="comp-desc">القدرة على العمل بشكل جماعي وبروح الفريق الواحد والمحافظة على علاقات جيدة داخل المنظمة.</textarea></td>
+                        <td><input type="number" value="25" class="num-input comp-weight" oninput="calculateMatrix()"></td>
+                        <td><input type="number" value="4" class="num-input comp-req" oninput="calculateMatrix()"></td>
+                        <td><input type="number" value="5" class="num-input comp-actual" oninput="calculateMatrix()"></td>
+                        <td class="col-total row-result">25.0%</td>
+                        <td><button class="delete-btn" onclick="deleteRow(this)">&times;</button></td>
+                    </tr>
+                    <tr>
+                        <td class="col-id" style="text-align:center; padding-top:18px;">3</td>
+                        <td><input type="text" value="المرونة للتغيير" class="comp-name"></td>
+                        <td><textarea class="comp-desc">القدرة على التكيف والعمل بشكل فعال في مختلف الظروف وفهم وجهات النظر والتطوير المستمر.</textarea></td>
+                        <td><input type="number" value="30" class="num-input comp-weight" oninput="calculateMatrix()"></td>
+                        <td><input type="number" value="4" class="num-input comp-req" oninput="calculateMatrix()"></td>
+                        <td><input type="number" value="5" class="num-input comp-actual" oninput="calculateMatrix()"></td>
+                        <td class="col-total row-result">30.0%</td>
+                        <td><button class="delete-btn" onclick="deleteRow(this)">&times;</button></td>
+                    </tr>
+                    <tr>
+                        <td class="col-id" style="text-align:center; padding-top:18px;">4</td>
+                        <td><input type="text" value="المبادرة" class="comp-name"></td>
+                        <td><textarea class="comp-desc">إظهار الحرص الكافي لتحقيق الأهداف والرغبة في انجاز مهام إضافية لخدمة مصلحة العمل دون طلب.</textarea></td>
+                        <td><input type="number" value="25" class="num-input comp-weight" oninput="calculateMatrix()"></td>
+                        <td><input type="number" value="4" class="num-input comp-req" oninput="calculateMatrix()"></td>
+                        <td><input type="number" value="5" class="num-input comp-actual" oninput="calculateMatrix()"></td>
+                        <td class="col-total row-result">25.0%</td>
+                        <td><button class="delete-btn" onclick="deleteRow(this)">&times;</button></td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr class="total-row">
+                        <td></td>
+                        <td colspan="2">المجموع الإجمالي لجدارات التقييم</td>
+                        <td id="total-weight-cell" style="text-align: center;">100%</td>
+                        <td></td>
+                        <td></td>
+                        <td id="total-score-cell" style="text-align: center;">100.0%</td>
+                        <td></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <div class="metadata-section">
+            <div class="meta-col">
+                <div class="meta-item">
+                    <label>اسم الموظف المقيّم:</label>
+                    <input type="text" placeholder="اسم الموظف رباعي...">
+                </div>
+                <div class="meta-item">
+                    <label>المدير المقيّم المباشر:</label>
+                    <input type="text" placeholder="اسم صاحب الصلاحية...">
+                </div>
+            </div>
+            <div class="meta-col">
+                <div class="meta-item">
+                    <label>تاريخ السند الرقمي:</label>
+                    <input type="date" value="2026-06-03">
+                </div>
+                <div class="meta-item">
+                    <label>اعتماد الشؤون الإدارية:</label>
+                    <input type="text" value="معتمد ومحسوب فورياً">
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- نهاية تبويب الجدارات -->
+
+
+    <!-- ===== تبويب حاسبة الأهداف ===== -->
+    <div id="tab-goals" class="tab-content">
+
+        <div class="toolbar">
+            <button class="btn btn-blue" onclick="addGoalRow()">＋ إضافة هدف</button>
+            <button class="btn btn-print" onclick="triggerPrint()">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="margin-left:5px;">
+                    <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 4v1a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1h8zm1.5-4a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1z"/>
+                </svg>
+                طباعة / تصدير PDF
+            </button>
+        </div>
+
+        <header class="goal-header">
+            <h1>🎯 حاسبة الأهداف الذكية</h1>
+            <p>حاسبة تفاعلية لتقييم الأهداف بالأوزان النسبية — الناتج الفعلي ≥ المستهدف يحصل على الوزن كاملاً | المجموع الكلي للأوزان = 100%</p>
+        </header>
+
+        <div id="goal-weight-warning" class="weight-warning">
+            ⚠️ تنبيه: مجموع الأوزان النسبية للأهداف = <span id="goal-weight-warn-val">0</span>% وليس 100%. يرجى تعديل الأوزان حتى يصبح المجموع 100%.
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="kpi-card">
+                <div class="kpi-title">عدد الأهداف النشطة</div>
+                <div class="kpi-value" id="g-kpi-count">3</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-title">مجموع الأوزان النسبية</div>
+                <div class="kpi-value" id="g-kpi-weight">100%</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-title">الأهداف المحققة بالكامل</div>
+                <div class="kpi-value" id="g-kpi-achieved" style="color: var(--success);">0</div>
+            </div>
+            <div class="kpi-card highlight-blue">
+                <div class="kpi-title">درجة التقييم النهائي الإجمالي</div>
+                <div class="kpi-value" id="g-kpi-final">0.0%</div>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table class="goal-table">
+                <thead>
+                    <tr>
+                        <th class="gc-id">م</th>
+                        <th class="gc-name">اسم الهدف</th>
+                        <th class="gc-measure">معيار القياس</th>
+                        <th class="gc-weight">الوزن النسبي %</th>
+                        <th class="gc-target">الناتج المستهدف</th>
+                        <th class="gc-actual">الناتج الفعلي</th>
+                        <th class="gc-diff">الفرق</th>
+                        <th class="gc-score">درجة التقييم</th>
+                        <th style="width: 4%"></th>
+                    </tr>
+                </thead>
+                <tbody id="goal-rows">
+                    <!-- صفوف الأهداف ستضاف هنا -->
+                </tbody>
+                <tfoot>
+                    <tr class="goal-total-row">
+                        <td></td>
+                        <td colspan="2" style="font-weight:700;">المجموع الإجمالي للأهداف</td>
+                        <td id="g-total-weight" style="text-align:center;">100%</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td id="g-total-score" style="text-align:center; font-weight:700; color:var(--goal-dark);">0.0%</td>
+                        <td></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <div class="metadata-section">
+            <div class="meta-col">
+                <div class="meta-item">
+                    <label>اسم الموظف:</label>
+                    <input type="text" id="g-employee" placeholder="اسم الموظف رباعي...">
+                </div>
+                <div class="meta-item">
+                    <label>المشرف المباشر:</label>
+                    <input type="text" id="g-supervisor" placeholder="اسم المشرف...">
+                </div>
+            </div>
+            <div class="meta-col">
+                <div class="meta-item">
+                    <label>الفترة الزمنية:</label>
+                    <input type="text" id="g-period" placeholder="مثال: الفصل الدراسي الأول 1446هـ">
+                </div>
+                <div class="meta-item">
+                    <label>تاريخ التقييم:</label>
+                    <input type="date" id="g-date" value="2026-06-03">
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- نهاية تبويب الأهداف -->
+
+    <!-- الفوتر -->
+    <div class="footer">
+        تصميم د/فواز &nbsp;|&nbsp; <a href="https://t.me/TAqhjT3MFVE1Yzk0" target="_blank">📲 قناة التيليجرام</a>
+    </div>
+
+</div>
+
+<script>
+    // ============================
+    // تبديل التبويبات
+    // ============================
+    function switchTab(tab) {
+        document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById('tab-' + tab).classList.add('active');
+        event.currentTarget.classList.add('active');
+    }
+
+    function triggerPrint() { window.print(); }
+
+    // ============================
+    // منطق تقييم الجدارات
+    // ============================
+    function calculateMatrix() {
+        const rows = document.querySelectorAll("#competency-rows tr");
+        let totalWeight = 0, finalScore = 0, count = 0;
+
+        rows.forEach((row) => {
+            count++;
+            row.querySelector(".col-id").innerText = count;
+            const weightInput = row.querySelector(".comp-weight");
+            const reqInput    = row.querySelector(".comp-req");
+            const actInput    = row.querySelector(".comp-actual");
+            const resultCell  = row.querySelector(".row-result");
+
+            let weight = parseFloat(weightInput.value) || 0;
+            let act    = parseFloat(actInput.value)    || 0;
+            totalWeight += weight;
+
+            let rowCalc = act >= 5 ? weight : (act / 5) * weight;
+            if (rowCalc < 0) rowCalc = 0;
+            finalScore += rowCalc;
+            resultCell.innerText = rowCalc.toFixed(1) + "%";
+
+            if (act >= 5) {
+                actInput.style.backgroundColor = "#e8f5e9"; actInput.style.color = "#1b5e20";
+            } else if (act == 4) {
+                actInput.style.backgroundColor = "#fff9c4"; actInput.style.color = "#f59e0b";
+            } else {
+                actInput.style.backgroundColor = "#ffebee"; actInput.style.color = "#c62828";
+            }
+        });
+
+        document.getElementById("kpi-count").innerText = count;
+        document.getElementById("kpi-weight-total").innerText = totalWeight + "%";
+        document.getElementById("kpi-final-score").innerText = finalScore.toFixed(1) + "%";
+        document.getElementById("total-weight-cell").innerText = totalWeight + "%";
+        document.getElementById("total-score-cell").innerText = finalScore.toFixed(1) + "%";
+
+        const weightKPI = document.getElementById("kpi-weight-total");
+        const weightColor = totalWeight !== 100 ? "var(--danger)" : "var(--primary-dark)";
+        weightKPI.style.color = weightColor;
+        document.getElementById("total-weight-cell").style.color = weightColor;
+    }
+
+    function addNewRow() {
+        const tbody = document.getElementById("competency-rows");
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td class="col-id" style="text-align:center; padding-top:18px;"></td>
+            <td><input type="text" value="جدارة إضافية جديدة" class="comp-name"></td>
+            <td><textarea class="comp-desc">قم بكتابة تعريف ومؤشر الجدارة الوظيفي هنا...</textarea></td>
+            <td><input type="number" value="0" class="num-input comp-weight" oninput="calculateMatrix()"></td>
+            <td><input type="number" value="4" class="num-input comp-req" oninput="calculateMatrix()"></td>
+            <td><input type="number" value="5" class="num-input comp-actual" oninput="calculateMatrix()"></td>
+            <td class="col-total row-result">0.0%</td>
+            <td><button class="delete-btn" onclick="deleteRow(this)">&times;</button></td>`;
+        tbody.appendChild(row);
+        calculateMatrix();
+    }
+
+    function deleteRow(btn) {
+        btn.closest('tr').remove();
+        calculateMatrix();
+    }
+
+    // ============================
+    // منطق حاسبة الأهداف
+    // ============================
+
+    // بيانات الأهداف الافتراضية
+    const defaultGoals = [
+        { name: 'تحسين نتائج الطلاب', measure: 'تقرير', weight: 40, target: 80, actual: 85 },
+        { name: 'تنفيذ ورش العمل',    measure: 'تقارير ورش عمل', weight: 35, target: 4, actual: 4 },
+        { name: 'الزيارات الإشرافية', measure: 'تقرير', weight: 25, target: 10, actual: 8 },
+    ];
+
+    function buildGoalRow(data = {}) {
+        const name    = data.name    || 'هدف جديد';
+        const measure = data.measure || 'تقرير';
+        const weight  = data.weight  !== undefined ? data.weight  : 0;
+        const target  = data.target  !== undefined ? data.target  : 10;
+        const actual  = data.actual  !== undefined ? data.actual  : 0;
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td class="gc-id" style="text-align:center; font-weight:700;"></td>
+            <td><input type="text" value="${name}" class="goal-name"></td>
+            <td>
+                <select class="goal-measure" onchange="calculateGoals()">
+                    <option value="تقرير"            ${measure === 'تقرير'            ? 'selected' : ''}>تقرير</option>
+                    <option value="تقارير"           ${measure === 'تقارير'           ? 'selected' : ''}>تقارير</option>
+                    <option value="تقارير ورش عمل"  ${measure === 'تقارير ورش عمل'  ? 'selected' : ''}>تقارير ورش عمل</option>
+                    <option value="ورش عمل"          ${measure === 'ورش عمل'          ? 'selected' : ''}>ورش عمل</option>
+                    <option value="زيارات"           ${measure === 'زيارات'           ? 'selected' : ''}>زيارات</option>
+                    <option value="نسبة مئوية"       ${measure === 'نسبة مئوية'       ? 'selected' : ''}>نسبة مئوية</option>
+                    <option value="عدد"              ${measure === 'عدد'              ? 'selected' : ''}>عدد</option>
+                </select>
+            </td>
+            <td><input type="number" value="${weight}" class="num-input goal-weight" min="0" max="100" oninput="calculateGoals()"></td>
+            <td><input type="number" value="${target}" class="num-input goal-target" min="0" oninput="calculateGoals()"></td>
+            <td><input type="number" value="${actual}" class="num-input goal-actual" min="0" oninput="calculateGoals()"></td>
+            <td class="gc-diff goal-diff-cell"><span class="diff-badge diff-zero">—</span></td>
+            <td class="gc-score goal-score-cell"><span class="score-badge score-good">—</span></td>
+            <td><button class="delete-btn" onclick="deleteGoalRow(this)">&times;</button></td>`;
+        return tr;
+    }
+
+    function addGoalRow(data) {
+        const tbody = document.getElementById('goal-rows');
+        tbody.appendChild(buildGoalRow(data));
+        calculateGoals();
+    }
+
+    function deleteGoalRow(btn) {
+        btn.closest('tr').remove();
+        calculateGoals();
+    }
+
+    function calculateGoals() {
+        const rows = document.querySelectorAll('#goal-rows tr');
+        let totalWeight = 0, totalScore = 0, achievedCount = 0, count = 0;
+
+        rows.forEach(row => {
+            count++;
+            row.querySelector('.gc-id').innerText = count;
+
+            const weight = parseFloat(row.querySelector('.goal-weight').value) || 0;
+            const target = parseFloat(row.querySelector('.goal-target').value) || 0;
+            const actual = parseFloat(row.querySelector('.goal-actual').value) || 0;
+
+            totalWeight += weight;
+
+            // حساب الفرق
+            const diff = actual - target;
+
+            // منطق الدرجة:
+            // إذا الفعلي > المستهدف (فرق موجب) → الوزن كاملاً (5/5)
+            // إذا الفعلي = المستهدف (فرق صفر)  → 80% من الوزن (4/5)
+            // إذا الفعلي < المستهدف (فرق سالب)  → نسبة (فعلي / مستهدف) × الوزن
+            let rowScore = 0;
+            if (target > 0) {
+                if (actual > target) {
+                    rowScore = weight;                   // 5/5 الوزن كاملاً
+                } else if (actual === target) {
+                    rowScore = (4 / 5) * weight;         // 4/5 = 80% من الوزن
+                } else {
+                    rowScore = (actual / target) * weight;
+                }
+            } else {
+                rowScore = 0;
+            }
+            if (rowScore < 0) rowScore = 0;
+
+            totalScore += rowScore;
+            if (actual > target && target > 0) achievedCount++;
+
+            // عرض الفرق
+            const diffCell = row.querySelector('.goal-diff-cell');
+            let diffClass = diff > 0 ? 'diff-positive' : (diff === 0 ? 'diff-zero' : 'diff-negative');
+            let diffSign  = diff > 0 ? '+' : '';
+            diffCell.innerHTML = `<span class="diff-badge ${diffClass}">${diffSign}${diff}</span>`;
+
+            // عرض درجة التقييم
+            const scoreCell = row.querySelector('.goal-score-cell');
+            let scoreClass = actual > target ? 'score-full' : (actual === target ? 'score-good' : (rowScore / weight >= 0.5 ? 'score-low' : 'score-poor'));
+            scoreCell.innerHTML = `<span class="score-badge ${scoreClass}">${rowScore.toFixed(1)}%</span>`;
+
+            // تلوين الفعلي
+            const actualInput = row.querySelector('.goal-actual');
+            if (actual > target && target > 0) {
+                actualInput.style.backgroundColor = "#e8f5e9"; actualInput.style.color = "#1b5e20";
+            } else if (target > 0 && actual / target >= 0.8) {
+                actualInput.style.backgroundColor = "#fff9c4"; actualInput.style.color = "#e65100";
+            } else {
+                actualInput.style.backgroundColor = "#ffebee"; actualInput.style.color = "#c62828";
+            }
+        });
+
+        // تحديث KPI
+        document.getElementById('g-kpi-count').innerText    = count;
+        document.getElementById('g-kpi-achieved').innerText  = achievedCount;
+        document.getElementById('g-kpi-final').innerText    = totalScore.toFixed(1) + '%';
+        document.getElementById('g-total-score').innerText  = totalScore.toFixed(1) + '%';
+
+        const gWeightEl   = document.getElementById('g-kpi-weight');
+        const gTotalWEl   = document.getElementById('g-total-weight');
+        const gWarning    = document.getElementById('goal-weight-warning');
+        const gWarnVal    = document.getElementById('goal-weight-warn-val');
+
+        gWeightEl.innerText = totalWeight + '%';
+        gTotalWEl.innerText = totalWeight + '%';
+        gWarnVal.innerText  = totalWeight;
+
+        if (totalWeight !== 100 && count > 0) {
+            gWeightEl.style.color   = 'var(--danger)';
+            gTotalWEl.style.color   = 'var(--danger)';
+            gWarning.classList.add('show');
+        } else {
+            gWeightEl.style.color   = 'var(--goal-dark)';
+            gTotalWEl.style.color   = 'var(--goal-dark)';
+            gWarning.classList.remove('show');
+        }
+    }
+
+    // التهيئة
+    window.onload = function () {
+        calculateMatrix();
+        // إضافة الأهداف الافتراضية
+        defaultGoals.forEach(g => addGoalRow(g));
+    };
+</script>
+
+</body>
+</html>
