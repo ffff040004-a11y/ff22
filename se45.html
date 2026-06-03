@@ -376,6 +376,155 @@
         .bc-blue  { color: var(--goal-dark); }
         .bc-purple{ color: #6a1b9a; }
 
+
+        /* ============================================================
+           تجاوب الشاشات - Responsive Design
+           ============================================================ */
+
+        /* تابلت: 768px - 1024px */
+        @media (max-width: 1024px) {
+            body { padding: 20px 15px; }
+            .container { max-width: 100%; }
+
+            .tab-btn { padding: 10px 18px; font-size: 14px; }
+
+            .dashboard-grid { flex-wrap: wrap; gap: 10px; }
+            .kpi-card { flex: 1 1 calc(50% - 10px); min-width: 140px; }
+
+            th { padding: 12px 10px; font-size: 13px; }
+            td { padding: 10px 10px; font-size: 13px; }
+
+            .col-desc { width: 28%; }
+
+            .result-big { font-size: 56px; }
+            .breakdown-card { padding: 14px; }
+            .bc-value { font-size: 28px; }
+        }
+
+        /* جوال كبير: 480px - 768px */
+        @media (max-width: 768px) {
+            body { padding: 12px 10px; }
+
+            /* التبويبات */
+            .tabs-wrapper { flex-wrap: wrap; border-bottom: 2px solid var(--border); }
+            .tab-btn {
+                flex: 1 1 auto;
+                padding: 10px 12px;
+                font-size: 13px;
+                border-radius: 8px 8px 0 0;
+                justify-content: center;
+                gap: 5px;
+            }
+
+            /* الهيدر */
+            header { margin-bottom: 16px; }
+            header h1 { font-size: 18px; }
+            header p { font-size: 12px; }
+
+            /* KPI */
+            .dashboard-grid { flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+            .kpi-card { flex: 1 1 calc(50% - 8px); padding: 12px; min-width: 120px; }
+            .kpi-title { font-size: 11px; }
+            .kpi-value { font-size: 20px; }
+
+            /* الشريط */
+            .toolbar { padding: 10px 14px; flex-wrap: wrap; gap: 8px; justify-content: center; }
+            .btn { padding: 9px 14px; font-size: 12px; }
+
+            /* الجداول: تحويل لتمرير أفقي */
+            .table-container { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            table { min-width: 600px; }
+
+            th { padding: 10px 8px; font-size: 12px; }
+            td { padding: 8px 8px; font-size: 12px; }
+
+            .col-desc { width: 22%; }
+            .col-id   { width: 5%; }
+
+            input, textarea, select { font-size: 12px; }
+            textarea { min-height: 34px; }
+
+            /* سطر المجاميع */
+            .total-row td, .goal-total-row td { padding: 10px 8px; font-size: 12px; }
+
+            /* بادجات */
+            .diff-badge { padding: 2px 7px; font-size: 11px; }
+            .score-badge { padding: 3px 8px; font-size: 11px; }
+
+            /* بيانات التوقيع */
+            .metadata-section { flex-direction: column; gap: 14px; padding: 14px; }
+            .meta-item { flex-wrap: wrap; gap: 4px; }
+            .meta-item label { width: 100%; font-size: 12px; }
+            .meta-item input { font-size: 12px; }
+
+            /* تنبيه الأوزان */
+            .weight-warning { font-size: 12px; padding: 8px 12px; }
+
+            /* النتيجة الكلية */
+            .result-box { padding: 20px 14px; }
+            .result-big { font-size: 48px; }
+            .result-label { font-size: 13px; }
+            .result-grade { font-size: 15px; padding: 6px 20px; }
+
+            .result-breakdown {
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            .result-breakdown > .breakdown-card:nth-child(2),
+            .result-breakdown > .breakdown-card:nth-child(4) {
+                flex: 0 0 30px;
+                font-size: 24px;
+                padding: 8px 4px;
+            }
+            .breakdown-card { flex: 1 1 calc(50% - 8px); padding: 10px; }
+            .bc-value { font-size: 22px; }
+            .bc-label { font-size: 11px; }
+
+            .formula-box { padding: 12px 14px; font-size: 12px; line-height: 1.8; }
+            .formula-box strong { font-size: 13px; }
+
+            /* لوحة الطباعة */
+            .print-panel { padding: 14px; }
+            .print-options { flex-wrap: wrap; gap: 12px; }
+            .print-option-group { flex-wrap: wrap; gap: 8px; }
+            .print-orient-btns { flex-wrap: wrap; gap: 6px; }
+            .orient-btn { padding: 7px 12px; font-size: 12px; }
+            .btn-print-main { width: 100%; justify-content: center; padding: 12px; font-size: 14px; }
+            .print-hint { font-size: 11px; }
+
+            /* الفوتر */
+            .footer { font-size: 12px; margin-top: 20px; padding: 12px; }
+        }
+
+        /* جوال صغير: أقل من 480px */
+        @media (max-width: 480px) {
+            body { padding: 8px 8px; }
+
+            .tab-btn { padding: 8px 8px; font-size: 12px; gap: 3px; }
+
+            header h1 { font-size: 16px; }
+            header p { font-size: 11px; }
+
+            .kpi-card { flex: 1 1 calc(50% - 6px); padding: 10px; }
+            .kpi-title { font-size: 10px; }
+            .kpi-value { font-size: 18px; }
+
+            table { min-width: 520px; }
+            th { font-size: 11px; padding: 8px 6px; }
+            td { font-size: 11px; padding: 6px 6px; }
+            input, textarea, select { font-size: 11px; }
+
+            .result-big { font-size: 40px; }
+            .bc-value { font-size: 18px; }
+
+            .btn { font-size: 11px; padding: 8px 12px; }
+        }
+
+        /* إضافة شريط تمرير جميل للجداول في الجوال */
+        .table-container::-webkit-scrollbar { height: 4px; }
+        .table-container::-webkit-scrollbar-track { background: #f1f5f9; }
+        .table-container::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 2px; }
+
         @media print {
 
             /* ========== إعداد الصفحة ========== */
