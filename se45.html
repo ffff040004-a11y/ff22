@@ -821,9 +821,11 @@
 
     // بيانات الأهداف الافتراضية
     const defaultGoals = [
-        { name: 'تحسين نتائج الطلاب', measure: 'تقرير', weight: 40, target: 80, actual: 85 },
-        { name: 'تنفيذ ورش العمل',    measure: 'تقارير ورش عمل', weight: 35, target: 4, actual: 4 },
-        { name: 'الزيارات الإشرافية', measure: 'تقرير', weight: 25, target: 10, actual: 8 },
+        { name: 'إعداد 4 تقارير في خطة التحسين',                   measure: 'تقارير',          weight: 20, target: 4, actual: 0 },
+        { name: 'إعداد 3 تقارير ورش في الممارسات الإشرافية',        measure: 'تقارير ورش عمل',  weight: 20, target: 3, actual: 0 },
+        { name: 'إعداد 3 تقارير عن تحليل واقع المدارس',             measure: 'تقارير',          weight: 20, target: 3, actual: 0 },
+        { name: 'إعداد 4 تقارير عن تنفيذ البرامج',                  measure: 'تقارير',          weight: 20, target: 4, actual: 0 },
+        { name: 'إعداد 2 تقرير عن دعم مجال نواتج التعلم نافس',      measure: 'تقارير',          weight: 20, target: 2, actual: 0 },
     ];
 
     function buildGoalRow(data = {}) {
