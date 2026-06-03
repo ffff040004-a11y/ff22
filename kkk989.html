@@ -1,0 +1,2536 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>منصة خطة الاختبارات</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #1a3a5c;
+  --primary-dark: #0f2440;
+  --primary-light: #2a5a8c;
+  --gold: #c8a84b;
+  --gold-light: #e8c96a;
+  --gold-dark: #a07830;
+  --bg: #f0f4f8;
+  --bg-card: #ffffff;
+  --text: #1a2a3a;
+  --text-muted: #5a7090;
+  --border: #d0dce8;
+  --success: #2e7d52;
+  --danger: #c0392b;
+  --shadow: 0 4px 20px rgba(26,58,92,0.12);
+  --radius: 12px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Tajawal', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  direction: rtl;
+}
+
+/* ===== HEADER ===== */
+.main-header {
+  background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 60%, var(--primary-light) 100%);
+  color: #fff;
+  padding: 0;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.25);
+  position: relative;
+  overflow: hidden;
+}
+.main-header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.header-inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 20px;
+  padding: 18px 28px;
+}
+.header-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.header-logo .emblem {
+  width: 56px;
+  height: 56px;
+  background: rgba(200,168,75,0.2);
+  border: 2px solid var(--gold);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+}
+.header-center {
+  text-align: center;
+}
+.header-title-main {
+  font-size: 1.7rem;
+  font-weight: 900;
+  letter-spacing: -0.5px;
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+.header-title-sub {
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: rgba(255,255,255,0.75);
+  margin-top: 3px;
+}
+.header-gold-line {
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin-top: 12px;
+}
+.header-meta {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.meta-badge {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(200,168,75,0.4);
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.9);
+  text-align: center;
+}
+.meta-badge span { display: block; font-weight: 700; color: var(--gold-light); }
+
+/* ===== SETTINGS BAR ===== */
+.settings-bar {
+  background: #fff;
+  border-bottom: 2px solid var(--gold);
+  padding: 12px 24px;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+}
+.settings-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.settings-group label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--primary);
+  white-space: nowrap;
+}
+.settings-input {
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 5px 10px;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 0.85rem;
+  color: var(--text);
+  background: var(--bg);
+  min-width: 130px;
+  transition: border-color 0.2s;
+}
+.settings-input:focus { outline: none; border-color: var(--gold); background: #fff; }
+.settings-select {
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 5px 10px;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 0.85rem;
+  color: var(--text);
+  background: var(--bg);
+  cursor: pointer;
+}
+.settings-select:focus { outline: none; border-color: var(--gold); }
+.settings-divider { width: 1px; height: 30px; background: var(--border); }
+.btn-action {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 18px;
+  border-radius: 9px;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+}
+.btn-print {
+  background: var(--primary);
+  color: #fff;
+}
+.btn-print:hover { background: var(--primary-dark); transform: translateY(-1px); }
+.btn-pdf {
+  background: var(--gold);
+  color: var(--primary-dark);
+}
+.btn-pdf:hover { background: var(--gold-dark); color: #fff; transform: translateY(-1px); }
+.btn-icon { font-size: 1rem; }
+.settings-attr {
+  margin-right: auto;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+.settings-attr a { color: var(--primary-light); text-decoration: none; font-weight: 700; }
+.settings-attr a:hover { color: var(--gold-dark); }
+
+/* ===== NAV TABS ===== */
+.nav-container {
+  background: var(--primary-dark);
+  padding: 0 20px;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--gold) transparent;
+}
+.nav-tabs {
+  display: flex;
+  gap: 2px;
+  padding: 8px 0;
+  list-style: none;
+  white-space: nowrap;
+}
+.nav-tab {
+  padding: 7px 16px;
+  border-radius: 8px 8px 0 0;
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.65);
+  transition: all 0.2s;
+  border-bottom: 3px solid transparent;
+  user-select: none;
+}
+.nav-tab:hover { color: #fff; background: rgba(255,255,255,0.08); }
+.nav-tab.active {
+  color: var(--gold-light);
+  background: rgba(200,168,75,0.15);
+  border-bottom-color: var(--gold);
+}
+
+/* ===== MAIN CONTENT ===== */
+.main-content {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ===== FORM CARD ===== */
+.form-card {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin-bottom: 20px;
+  overflow: hidden;
+  display: none;
+}
+.form-card.visible { display: block; }
+
+.card-header {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+  color: #fff;
+  padding: 14px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.card-header-title {
+  font-size: 1rem;
+  font-weight: 800;
+}
+.card-header-num {
+  background: rgba(200,168,75,0.25);
+  border: 1px solid var(--gold);
+  border-radius: 8px;
+  padding: 3px 12px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--gold-light);
+}
+.card-body { padding: 20px; }
+.card-save-note {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  padding: 8px 20px;
+  background: #f8fafc;
+  border-top: 1px solid var(--border);
+  text-align: left;
+}
+
+/* ===== LETTERHEAD ===== */
+.letterhead {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 16px;
+  background: linear-gradient(135deg, #f8fbff 0%, #eef4fb 100%);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 20px;
+  margin-bottom: 18px;
+}
+.letterhead-right { font-size: 0.78rem; line-height: 1.9; color: var(--primary); font-weight: 600; text-align: right; }
+.lh-right-field {
+  font-size: 0.78rem; line-height: 1.9; color: var(--primary); font-weight: 600;
+  text-align: right; font-family: 'Tajawal', sans-serif; width: 100%;
+  border: none; background: transparent; resize: none; min-height: 90px; direction: rtl;
+}
+.lh-right-field:focus {
+  outline: 2px dashed var(--gold); outline-offset: 4px; border-radius: 4px;
+  background: rgba(200,168,75,0.05);
+}
+/* Print: hide input borders in letterhead */
+@media print {
+  .lh-right-field {
+    border: none !important;
+    outline: none !important;
+    background: transparent !important;
+    resize: none !important;
+  }
+  .letterhead-right::before { display: none !important; }
+}
+.letterhead-right {
+  position: relative;
+}
+.letterhead-right::before {
+  content: '✏️ قابل للتعديل';
+  position: absolute;
+  top: -18px;
+  right: 0;
+  font-size: 0.68rem;
+  color: var(--gold-dark);
+  background: #fffbef;
+  padding: 1px 6px;
+  border-radius: 4px;
+  border: 1px solid var(--gold);
+  white-space: nowrap;
+  pointer-events: none;
+}
+.letterhead-center { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.letterhead-emblem { width: 52px; height: 52px; border: 2px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px; background: rgba(200,168,75,0.1); }
+.letterhead-left { font-size: 0.82rem; line-height: 1.9; }
+.lh-row { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; flex-wrap: wrap; }
+.lh-label { font-weight: 700; color: var(--primary); white-space: nowrap; font-size: 0.8rem; }
+.lh-input { border: none; border-bottom: 1.5px solid var(--gold); padding: 2px 6px; font-family: 'Tajawal', sans-serif; font-size: 0.82rem; color: var(--text); background: transparent; flex: 1; min-width: 80px; }
+.lh-input:focus { outline: none; border-bottom-color: var(--primary); }
+
+/* ===== MODEL TITLE ROW ===== */
+.model-title-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  gap: 12px;
+  align-items: center;
+  background: var(--primary-dark);
+  color: #fff;
+  border-radius: 8px;
+  padding: 10px 16px;
+  margin-bottom: 16px;
+}
+.model-title-row .label { font-size: 0.78rem; color: rgba(255,255,255,0.6); }
+.model-title-row .value { font-size: 0.9rem; font-weight: 700; color: var(--gold-light); }
+
+/* ===== SECTION INTRO ===== */
+.section-intro {
+  background: #f8fbff;
+  border-right: 4px solid var(--gold);
+  border-radius: 0 8px 8px 0;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  font-size: 0.88rem;
+  line-height: 1.9;
+  color: var(--text);
+}
+.section-intro strong { color: var(--primary); }
+
+/* ===== TABLES ===== */
+.form-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.84rem;
+  margin-bottom: 14px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.form-table th {
+  background: var(--primary);
+  color: #fff;
+  padding: 8px 10px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 0.82rem;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+.form-table td {
+  border: 1px solid var(--border);
+  padding: 4px 6px;
+  vertical-align: middle;
+  background: #fff;
+}
+.form-table tr:nth-child(even) td { background: #f8fafc; }
+.form-table tr:hover td { background: #eef4fb; }
+.form-table .td-label {
+  background: #eef4fb;
+  font-weight: 700;
+  color: var(--primary);
+  white-space: nowrap;
+  text-align: right;
+}
+.form-table input[type=text],
+.form-table input[type=date],
+.form-table select,
+.form-table textarea {
+  width: 100%;
+  border: none;
+  background: transparent;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 0.82rem;
+  color: var(--text);
+  padding: 4px 6px;
+  resize: vertical;
+}
+.form-table input:focus,
+.form-table select:focus,
+.form-table textarea:focus { outline: none; background: #fffbef; }
+.form-table .center { text-align: center; }
+.form-table .gold-header th { background: var(--gold-dark); }
+
+/* ===== TASKS LIST ===== */
+.tasks-section { margin-bottom: 16px; }
+.tasks-title {
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: var(--primary);
+  padding: 8px 12px;
+  background: #eef4fb;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  border-right: 4px solid var(--primary);
+}
+.task-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 7px 12px;
+  border-radius: 6px;
+  margin-bottom: 4px;
+  background: #f8fafc;
+  border: 1px solid transparent;
+  transition: all 0.15s;
+}
+.task-item:hover { border-color: var(--gold); background: #fffbef; }
+.task-bullet {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--gold);
+  flex-shrink: 0;
+  margin-top: 7px;
+}
+.task-text { font-size: 0.84rem; line-height: 1.8; color: var(--text); flex: 1; }
+
+/* ===== SIGNATURE ROW ===== */
+.sig-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 16px;
+}
+.sig-box {
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 14px;
+  background: #f8fafc;
+}
+.sig-box label { font-size: 0.8rem; font-weight: 700; color: var(--primary); display: block; margin-bottom: 4px; }
+.sig-box input {
+  width: 100%;
+  border: none;
+  border-bottom: 1.5px solid var(--border);
+  background: transparent;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 0.85rem;
+  padding: 4px 0;
+}
+.sig-box input:focus { outline: none; border-bottom-color: var(--gold); }
+.sig-row-3 { grid-template-columns: 1fr 1fr 1fr; }
+.sig-row-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+
+/* ===== CHECKBOX ROW ===== */
+.checklist-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.83rem;
+  margin-bottom: 14px;
+}
+.checklist-table th {
+  background: var(--primary);
+  color: #fff;
+  padding: 7px 10px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 0.8rem;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+.checklist-table td {
+  border: 1px solid var(--border);
+  padding: 5px 8px;
+  vertical-align: middle;
+}
+.checklist-table tr:nth-child(even) td { background: #f8fafc; }
+.checklist-table .task-col { font-size: 0.82rem; line-height: 1.6; }
+.checklist-table .check-col { text-align: center; width: 50px; }
+.checklist-table input[type=checkbox] { width: 16px; height: 16px; cursor: pointer; accent-color: var(--primary); }
+.checklist-table input[type=text] {
+  width: 100%;
+  border: none;
+  background: transparent;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 0.82rem;
+}
+.checklist-table input[type=text]:focus { outline: none; background: #fffbef; }
+
+/* ===== SECTION DIVIDER ===== */
+.section-divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 16px 0 10px;
+}
+.section-divider::before,
+.section-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+.section-divider span {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--primary);
+  white-space: nowrap;
+  padding: 3px 10px;
+  background: #eef4fb;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+}
+
+/* ===== FORM FIELD ===== */
+.field-group { margin-bottom: 10px; }
+.field-group label { font-size: 0.82rem; font-weight: 700; color: var(--primary); display: block; margin-bottom: 4px; }
+.field-input {
+  width: 100%;
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  padding: 7px 10px;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 0.85rem;
+  color: var(--text);
+  background: #f8fafc;
+  transition: border-color 0.2s;
+}
+.field-input:focus { outline: none; border-color: var(--gold); background: #fffbef; }
+.field-textarea { resize: vertical; min-height: 70px; }
+
+/* ===== RADIO GROUP ===== */
+.radio-group { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 6px; }
+.radio-item { display: flex; align-items: center; gap: 5px; font-size: 0.84rem; cursor: pointer; }
+.radio-item input { accent-color: var(--primary); width: 15px; height: 15px; }
+
+/* ===== INFO BOX ===== */
+.info-box {
+  background: #e8f4fd;
+  border: 1px solid #bee3f8;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 0.82rem;
+  line-height: 1.8;
+  color: var(--primary-dark);
+  margin-bottom: 14px;
+}
+.warn-box {
+  background: #fff8e1;
+  border: 1px solid var(--gold);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 0.82rem;
+  line-height: 1.8;
+  color: #704000;
+  margin-bottom: 14px;
+}
+
+/* ===== TIME TABLE ===== */
+.time-table-wrap { overflow-x: auto; margin-bottom: 14px; }
+.time-table {
+  min-width: 700px;
+  border-collapse: collapse;
+  font-size: 0.78rem;
+  width: 100%;
+}
+.time-table th {
+  background: var(--primary);
+  color: #fff;
+  padding: 7px 8px;
+  text-align: center;
+  border: 1px solid rgba(255,255,255,0.15);
+  font-size: 0.78rem;
+}
+.time-table td {
+  border: 1px solid var(--border);
+  padding: 4px 5px;
+  text-align: center;
+  vertical-align: middle;
+}
+.time-table .day-cell {
+  background: #eef4fb;
+  font-weight: 700;
+  color: var(--primary);
+  font-size: 0.8rem;
+}
+.time-table input[type=text], .time-table input[type=time] {
+  width: 100%;
+  border: none;
+  background: transparent;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 0.78rem;
+  text-align: center;
+}
+.time-table input:focus { outline: none; background: #fffbef; }
+.time-table .gold-row td { background: #fffbef; font-weight: 600; }
+
+/* ===== OVERVIEW GRID ===== */
+.overview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.overview-card {
+  background: var(--bg-card);
+  border-radius: 10px;
+  padding: 14px;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 2px solid transparent;
+  border-top: 4px solid var(--primary);
+}
+.overview-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(26,58,92,0.18);
+  border-color: var(--gold);
+}
+.overview-card .ov-num {
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: var(--primary);
+  line-height: 1;
+}
+.overview-card .ov-name {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-top: 5px;
+  line-height: 1.4;
+}
+.ov-group-title {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--primary-dark);
+  margin: 16px 0 8px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--gold);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ===== PRINT STYLES ===== */
+@media print {
+  /* إخفاء كل شيء ما عدا النموذج المستهدف */
+  body { background: #fff !important; margin: 0 !important; padding: 0 !important; }
+  .main-header,
+  .settings-bar,
+  .nav-container,
+  .card-save-note,
+  .no-print { display: none !important; }
+
+  #section-overview { display: none !important; }
+
+  .main-content {
+    padding: 0 !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+  }
+
+  /* إخفاء كل النماذج */
+  .form-card { display: none !important; }
+
+  /* إظهار النموذج المستهدف فقط */
+  .form-card.print-target {
+    display: block !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+    page-break-inside: avoid;
+  }
+
+  /* تنسيق النموذج للطباعة */
+  .form-card.print-target .card-header {
+    background: var(--primary) !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .form-table th {
+    background: var(--primary) !important;
+    color: #fff !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .letterhead {
+    background: #f8fbff !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .model-title-row {
+    background: var(--primary-dark) !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* إخفاء حواف الإدخال في الطباعة */
+  input, textarea, select {
+    border: none !important;
+    outline: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+  .lh-input { border-bottom: 1px solid #999 !important; }
+}
+
+/* Print orientation */
+@page { margin: 12mm; size: A4 portrait; }
+@page landscape { size: A4 landscape; margin: 12mm; }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .header-inner { grid-template-columns: 1fr; text-align: center; }
+  .settings-bar { padding: 10px 14px; }
+  .sig-row-4 { grid-template-columns: 1fr 1fr; }
+  .model-title-row { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="main-header">
+  <div class="header-inner">
+    <div class="header-logo">
+      <div class="emblem">📋</div>
+    </div>
+    <div class="header-center">
+      <div class="header-title-main">منصة خطة الاختبارات</div>
+      <div class="header-title-sub">المملكة العربية السعودية – وزارة التعليم | إدارة تقويم التحصيل المعرفي والمهاري</div>
+    </div>
+    <div class="header-meta">
+      <div class="meta-badge">إصدار<span>1447هـ</span></div>
+      <div class="meta-badge">النماذج<span>50 نموذجًا</span></div>
+    </div>
+  </div>
+  <div class="header-gold-line"></div>
+</header>
+
+<!-- SETTINGS BAR -->
+<div class="settings-bar no-print">
+  <div class="settings-group">
+    <label>🏛️ الإدارة/المنطقة:</label>
+    <input type="text" class="settings-input" id="orgName" placeholder="مثال: الإدارة العامة للتعليم بالمدينة المنورة" style="min-width:220px" oninput="applyGlobalSettings()">
+  </div>
+  <div class="settings-group">
+    <label>📌 المدرسة:</label>
+    <input type="text" class="settings-input" id="schoolName" placeholder="اسم المدرسة" oninput="applyGlobalSettings()">
+  </div>
+  <div class="settings-group">
+    <label>📅 العام الدراسي:</label>
+    <input type="text" class="settings-input" id="schoolYear" value="144 / 144هـ" style="width:110px" oninput="applyGlobalSettings()">
+  </div>
+  <div class="settings-group">
+    <label>📖 الفصل:</label>
+    <select class="settings-select" id="schoolTerm" onchange="applyGlobalSettings()">
+      <option>الأول</option><option>الثاني</option><option>الثالث</option>
+    </select>
+  </div>
+  <div class="settings-group">
+    <label>🔄 الدور:</label>
+    <select class="settings-select" id="schoolRound" onchange="applyGlobalSettings()">
+      <option>الأول</option><option>الثاني</option>
+    </select>
+  </div>
+  <div class="settings-divider"></div>
+  <div class="settings-group">
+    <label>🖨️ اتجاه الطباعة:</label>
+    <select class="settings-select" id="printOrientation">
+      <option value="portrait">A4 عمودي</option>
+      <option value="landscape">A4 أفقي</option>
+    </select>
+  </div>
+  <button class="btn-action btn-print" onclick="printCurrentForm()">
+    <span class="btn-icon">🖨️</span> طباعة النموذج
+  </button>
+  <button class="btn-action btn-pdf" onclick="savePDF()">
+    <span class="btn-icon">📄</span> حفظ PDF
+  </button>
+  <div class="settings-attr">
+    تصميم د/فواز &nbsp;|&nbsp;
+    <a href="https://t.me/TAqhjT3MFVE1Yzk0" target="_blank">تفضل للمزيد هنا 📲</a>
+  </div>
+</div>
+
+<!-- NAV TABS -->
+<div class="nav-container no-print">
+  <ul class="nav-tabs" id="navTabs">
+    <li class="nav-tab active" onclick="showSection('overview')">🏠 الرئيسية</li>
+    <li class="nav-tab" onclick="showForm(1)">1 – لجنة التحصيل</li>
+    <li class="nav-tab" onclick="showForm(2)">2 – التحكم والضبط</li>
+    <li class="nav-tab" onclick="showForm(3)">3 – الإشراف والملاحظة</li>
+    <li class="nav-tab" onclick="showForm(4)">4 – التصحيح والمراجعة</li>
+    <li class="nav-tab" onclick="showForm(5)">5 – الرصد والنتائج</li>
+    <li class="nav-tab" onclick="showForm(6)">6 – لجان التصحيح</li>
+    <li class="nav-tab" onclick="showForm(7)">7 – تكليف معلم</li>
+    <li class="nav-tab" onclick="showForm(8)">8 – متابعة الأسئلة</li>
+    <li class="nav-tab" onclick="showForm(9)">9 – بيانات ورقة الأسئلة</li>
+    <li class="nav-tab" onclick="showForm(10)">10 – جدول الابتدائي</li>
+    <li class="nav-tab" onclick="showForm(11)">11 – جدول المتوسط</li>
+    <li class="nav-tab" onclick="showForm(12)">12 – جدول الثانوي</li>
+    <li class="nav-tab" onclick="showForm(13)">13 – الاحتياجات</li>
+    <li class="nav-tab" onclick="showForm(14)">14 – استعدادات قبل</li>
+    <li class="nav-tab" onclick="showForm(15)">15 – أثناء الاختبارات</li>
+    <li class="nav-tab" onclick="showForm(16)">16 – بعد الاختبارات</li>
+    <li class="nav-tab" onclick="showForm(17)">17 – إقرار إنهاء المقرر</li>
+    <li class="nav-tab" onclick="showForm(18)">18 – متابعة سجلات التقويم</li>
+    <li class="nav-tab" onclick="showForm(19)">19 – ظرف أصل الأسئلة</li>
+    <li class="nav-tab" onclick="showForm(20)">20 – ظرف الإجابة</li>
+    <li class="nav-tab" onclick="showForm(21)">21 – ظرف أسئلة الطلبة</li>
+    <li class="nav-tab" onclick="showForm(22)">22 – أعداد الطلبة باللجان</li>
+    <li class="nav-tab" onclick="showForm(23)">23 – كشف أسماء اللجنة</li>
+    <li class="nav-tab" onclick="showForm(24)">24 – توزيع الملاحظين</li>
+    <li class="nav-tab" onclick="showForm(25)">25 – الملاحظون اليومي</li>
+    <li class="nav-tab" onclick="showForm(26)">26 – ملاحظ بديل</li>
+    <li class="nav-tab" onclick="showForm(27)">27 – فتح مظروف الأسئلة</li>
+    <li class="nav-tab" onclick="showForm(28)">28 – إخلال بالسرية</li>
+    <li class="nav-tab" onclick="showForm(29)">29 – إخلال بالسير</li>
+    <li class="nav-tab" onclick="showForm(30)">30 – تعهد تأخر (≤15د)</li>
+    <li class="nav-tab" onclick="showForm(31)">31 – بيان المتأخرين (≤15د)</li>
+    <li class="nav-tab" onclick="showForm(32)">32 – محضر تأخر (>15د)</li>
+    <li class="nav-tab" onclick="showForm(33)">33 – بيان المتأخرين (>15د)</li>
+    <li class="nav-tab" onclick="showForm(34)">34 – محضر مخالفة</li>
+    <li class="nav-tab" onclick="showForm(35)">35 – محضر غياب</li>
+    <li class="nav-tab" onclick="showForm(36)">36 – كشف الغياب اليومي</li>
+    <li class="nav-tab" onclick="showForm(37)">37 – بيان الغائبين</li>
+    <li class="nav-tab" onclick="showForm(38)">38 – كشف تسليم الإجابة</li>
+    <li class="nav-tab" onclick="showForm(39)">39 – استلام الأوراق</li>
+    <li class="nav-tab" onclick="showForm(40)">40 – ظرف أوراق الإجابة</li>
+    <li class="nav-tab" onclick="showForm(41)">41 – متابعة سير الأوراق</li>
+    <li class="nav-tab" onclick="showForm(42)">42 – المصححون والمراجعون</li>
+    <li class="nav-tab" onclick="showForm(43)">43 – خطأ في الأسئلة</li>
+    <li class="nav-tab" onclick="showForm(44)">44 – خطأ في الإجابة</li>
+    <li class="nav-tab" onclick="showForm(45)">45 – ملاحظات التدقيق</li>
+    <li class="nav-tab" onclick="showForm(46)">46 – طلب مراجعة ورقة</li>
+    <li class="nav-tab" onclick="showForm(47)">47 – تعديل درجة (قبل الإغلاق)</li>
+    <li class="nav-tab" onclick="showForm(48)">48 – تعديل درجة (بعد الإغلاق)</li>
+    <li class="nav-tab" onclick="showForm(49)">49 – رصد درجة غائب بعذر</li>
+    <li class="nav-tab" onclick="showForm(50)">50 – دفتر رصد الدرجات</li>
+  </ul>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main-content" id="mainContent">
+
+<!-- ===== OVERVIEW PAGE ===== -->
+<div id="section-overview" class="visible">
+  <div style="background:var(--bg-card);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);margin-bottom:20px;">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+      <div style="width:48px;height:48px;background:var(--primary);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#fff;">📋</div>
+      <div>
+        <div style="font-size:1.1rem;font-weight:900;color:var(--primary);">منصة نماذج خطة الاختبارات</div>
+        <div style="font-size:0.85rem;color:var(--text-muted);margin-top:2px;">يحفظ كل نموذج يُستخدم بملف أعمال الاختبارات • إصدار 1447هـ</div>
+      </div>
+    </div>
+    <div style="background:#f0f7ff;border-radius:8px;padding:12px 16px;font-size:0.84rem;line-height:2;color:var(--primary-dark);">
+      💡 <strong>تعليمات الاستخدام:</strong> اختر النموذج من القائمة أعلاه، أو انقر على بطاقة النموذج أدناه. أدخل بيانات المدرسة في شريط الإعدادات ثم اطبع أو احفظ كـ PDF.
+    </div>
+  </div>
+
+  <div class="ov-group-title">📂 اللجان التنظيمية (نماذج 1–6)</div>
+  <div class="overview-grid">
+    <div class="overview-card" onclick="showForm(1)"><div class="ov-num">1</div><div class="ov-name">قرار تشكيل لجنة التحصيل الدراسي</div></div>
+    <div class="overview-card" onclick="showForm(2)"><div class="ov-num">2</div><div class="ov-name">قرار تشكيل لجنة التحكم والضبط</div></div>
+    <div class="overview-card" onclick="showForm(3)"><div class="ov-num">3</div><div class="ov-name">قرار تشكيل لجنة الإشراف والملاحظة</div></div>
+    <div class="overview-card" onclick="showForm(4)"><div class="ov-num">4</div><div class="ov-name">قرار تشكيل لجنة التصحيح والمراجعة</div></div>
+    <div class="overview-card" onclick="showForm(5)"><div class="ov-num">5</div><div class="ov-name">قرار تشكيل لجنة الرصد وإخراج النتائج</div></div>
+    <div class="overview-card" onclick="showForm(6)"><div class="ov-num">6</div><div class="ov-name">قرار تشكيل لجان التصحيح حسب التخصص</div></div>
+  </div>
+
+  <div class="ov-group-title">📝 الأسئلة والجداول (نماذج 7–12)</div>
+  <div class="overview-grid">
+    <div class="overview-card" onclick="showForm(7)"><div class="ov-num">7</div><div class="ov-name">تكليف معلم بإعداد الأسئلة ونماذج الإجابة</div></div>
+    <div class="overview-card" onclick="showForm(8)"><div class="ov-num">8</div><div class="ov-name">متابعة تسليم واستلام الأسئلة</div></div>
+    <div class="overview-card" onclick="showForm(9)"><div class="ov-num">9</div><div class="ov-name">البيانات الأولية لورقة الأسئلة</div></div>
+    <div class="overview-card" onclick="showForm(10)"><div class="ov-num">10</div><div class="ov-name">جدول الاختبارات – المرحلة الابتدائية</div></div>
+    <div class="overview-card" onclick="showForm(11)"><div class="ov-num">11</div><div class="ov-name">جدول الاختبارات – المرحلة المتوسطة</div></div>
+    <div class="overview-card" onclick="showForm(12)"><div class="ov-num">12</div><div class="ov-name">جدول الاختبارات – المرحلة الثانوية</div></div>
+  </div>
+
+  <div class="ov-group-title">✅ بطاقات المتابعة (نماذج 13–16)</div>
+  <div class="overview-grid">
+    <div class="overview-card" onclick="showForm(13)"><div class="ov-num">13</div><div class="ov-name">بطاقة تأمين الاحتياجات والإمكانيات</div></div>
+    <div class="overview-card" onclick="showForm(14)"><div class="ov-num">14</div><div class="ov-name">بطاقة متابعة الاستعدادات قبل الاختبارات</div></div>
+    <div class="overview-card" onclick="showForm(15)"><div class="ov-num">15</div><div class="ov-name">بطاقة متابعة الأعمال أثناء الاختبارات</div></div>
+    <div class="overview-card" onclick="showForm(16)"><div class="ov-num">16</div><div class="ov-name">بطاقة متابعة الأعمال بعد الاختبارات</div></div>
+  </div>
+
+  <div class="ov-group-title">📋 نماذج متفرقة (17–50)</div>
+  <div class="overview-grid">
+    <div class="overview-card" onclick="showForm(17)"><div class="ov-num">17</div><div class="ov-name">إقرار إنهاء المقرر الدراسي</div></div>
+    <div class="overview-card" onclick="showForm(18)"><div class="ov-num">18</div><div class="ov-name">متابعة تسليم سجلات التقويم</div></div>
+    <div class="overview-card" onclick="showForm(19)"><div class="ov-num">19</div><div class="ov-name">ظرف أصل الأسئلة</div></div>
+    <div class="overview-card" onclick="showForm(20)"><div class="ov-num">20</div><div class="ov-name">ظرف أصل الإجابة النموذجية</div></div>
+    <div class="overview-card" onclick="showForm(21)"><div class="ov-num">21</div><div class="ov-name">ظرف أسئلة الطلبة</div></div>
+    <div class="overview-card" onclick="showForm(22)"><div class="ov-num">22</div><div class="ov-name">أعداد الطلبة في اللجان</div></div>
+    <div class="overview-card" onclick="showForm(23)"><div class="ov-num">23</div><div class="ov-name">كشف بأسماء الطلبة وفق اللجان</div></div>
+    <div class="overview-card" onclick="showForm(24)"><div class="ov-num">24</div><div class="ov-name">الجدول العام لتوزيع الملاحظين</div></div>
+    <div class="overview-card" onclick="showForm(25)"><div class="ov-num">25</div><div class="ov-name">كشف أسماء الملاحظين اليومي</div></div>
+    <div class="overview-card" onclick="showForm(26)"><div class="ov-num">26</div><div class="ov-name">محضر دخول ملاحظ بديل</div></div>
+    <div class="overview-card" onclick="showForm(27)"><div class="ov-num">27</div><div class="ov-name">محضر فتح مظروف الأسئلة</div></div>
+    <div class="overview-card" onclick="showForm(28)"><div class="ov-num">28</div><div class="ov-name">محضر الإخلال بسرية الأسئلة</div></div>
+    <div class="overview-card" onclick="showForm(29)"><div class="ov-num">29</div><div class="ov-name">محضر الإخلال بسير الاختبارات</div></div>
+    <div class="overview-card" onclick="showForm(30)"><div class="ov-num">30</div><div class="ov-name">تعهد تأخر (لا يتجاوز 15 دقيقة)</div></div>
+    <div class="overview-card" onclick="showForm(31)"><div class="ov-num">31</div><div class="ov-name">بيان المتأخرين (لا يتجاوز 15 دقيقة)</div></div>
+    <div class="overview-card" onclick="showForm(32)"><div class="ov-num">32</div><div class="ov-name">محضر تأخر (أكثر من 15 دقيقة)</div></div>
+    <div class="overview-card" onclick="showForm(33)"><div class="ov-num">33</div><div class="ov-name">بيان المتأخرين (أكثر من 15 دقيقة)</div></div>
+    <div class="overview-card" onclick="showForm(34)"><div class="ov-num">34</div><div class="ov-name">محضر مخالفة الأنظمة والتعليمات</div></div>
+    <div class="overview-card" onclick="showForm(35)"><div class="ov-num">35</div><div class="ov-name">محضر غياب طالب عن الاختبار</div></div>
+    <div class="overview-card" onclick="showForm(36)"><div class="ov-num">36</div><div class="ov-name">كشف الغياب اليومي أيام الاختبارات</div></div>
+    <div class="overview-card" onclick="showForm(37)"><div class="ov-num">37</div><div class="ov-name">بيان حصر الغائبين حسب المواد</div></div>
+    <div class="overview-card" onclick="showForm(38)"><div class="ov-num">38</div><div class="ov-name">كشف تسليم الطلبة أوراق الإجابة</div></div>
+    <div class="overview-card" onclick="showForm(39)"><div class="ov-num">39</div><div class="ov-name">كشف استلام أوراق الإجابة من اللجان</div></div>
+    <div class="overview-card" onclick="showForm(40)"><div class="ov-num">40</div><div class="ov-name">ظرف أوراق إجابات الطلبة</div></div>
+    <div class="overview-card" onclick="showForm(41)"><div class="ov-num">41</div><div class="ov-name">متابعة سير أوراق الإجابة</div></div>
+    <div class="overview-card" onclick="showForm(42)"><div class="ov-num">42</div><div class="ov-name">بيان المصححين والمراجعين والمدققين</div></div>
+    <div class="overview-card" onclick="showForm(43)"><div class="ov-num">43</div><div class="ov-name">محضر اكتشاف خطأ في الأسئلة</div></div>
+    <div class="overview-card" onclick="showForm(44)"><div class="ov-num">44</div><div class="ov-name">محضر اكتشاف خطأ في الإجابة</div></div>
+    <div class="overview-card" onclick="showForm(45)"><div class="ov-num">45</div><div class="ov-name">ملاحظات لجنة التدقيق</div></div>
+    <div class="overview-card" onclick="showForm(46)"><div class="ov-num">46</div><div class="ov-name">طلب مراجعة ورقة طالب</div></div>
+    <div class="overview-card" onclick="showForm(47)"><div class="ov-num">47</div><div class="ov-name">تعديل درجة (قبل إغلاق الدرجات)</div></div>
+    <div class="overview-card" onclick="showForm(48)"><div class="ov-num">48</div><div class="ov-name">تعديل درجة (بعد إغلاق الدرجات)</div></div>
+    <div class="overview-card" onclick="showForm(49)"><div class="ov-num">49</div><div class="ov-name">طلب رصد درجة غائب بعذر</div></div>
+    <div class="overview-card" onclick="showForm(50)"><div class="ov-num">50</div><div class="ov-name">دفتر رصد الدرجات النهائي</div></div>
+  </div>
+</div>
+
+<!-- ===== FORMS ===== -->
+
+<!-- FORM 1 -->
+<div class="form-card" id="form-1">
+  <div class="card-header"><span class="card-header-title">قرار تشكيل لجنة التحصيل الدراسي</span><span class="card-header-num">نموذج رقم 1</span></div>
+  <div class="card-body">
+    <div class="letterhead">
+      <div class="letterhead-right"><textarea class="lh-right-field g-org" rows="4">المملكة العربية السعودية
+وزارة التعليم
+الإدارة العامة للتعليم
+إدارة تقويم التحصيل المعرفي والمهاري</textarea></div>
+      <div class="letterhead-center"><div class="letterhead-emblem">🏛️</div></div>
+      <div class="letterhead-left">
+        <div class="lh-row"><span class="lh-label">مدرسة:</span><input class="lh-input g-school" type="text" placeholder="اسم المدرسة"></div>
+        <div class="lh-row"><span class="lh-label">العام الدراسي:</span><input class="lh-input g-year" type="text" placeholder="144/144هـ" style="width:90px"></div>
+        <div class="lh-row"><span class="lh-label">الفصل الدراسي:</span><input class="lh-input g-term" type="text" style="width:60px"></div>
+        <div class="lh-row"><span class="lh-label">الدور:</span><input class="lh-input g-round" type="text" style="width:60px"></div>
+      </div>
+    </div>
+    <div class="model-title-row">
+      <span class="label">اسم النموذج</span><span class="value">قرار تشكيل لجنة التحصيل الدراسي</span>
+      <span class="label">رقم النموذج</span><span class="value">1</span>
+    </div>
+    <div class="section-intro">إن مدير المدرسة، وبناء على الصلاحيات الممنوحة له، وبناء على ما تقتضيه المصلحة العامة.<br><strong>يقرر تشكيل لجنة التحصيل الدراسي بالمدرسة على النحو التالي:</strong></div>
+    <table class="form-table">
+      <thead><tr><th>الاسم</th><th>العمل</th><th>الصفة</th><th>التوقيع</th></tr></thead>
+      <tbody id="f1-members">
+        <tr><td><input type="text"></td><td class="td-label">مدير المدرسة</td><td class="td-label">رئيساً</td><td><input type="text"></td></tr>
+        <tr><td><input type="text"></td><td class="td-label">وكيل الشؤون التعليمية</td><td class="td-label">نائباً للرئيس</td><td><input type="text"></td></tr>
+        <tr><td><input type="text"></td><td class="td-label">وكيل شؤون الطلاب</td><td class="td-label">عضواً</td><td><input type="text"></td></tr>
+        <tr><td><input type="text"></td><td class="td-label">الموجه الطلابي</td><td class="td-label">مقرراً</td><td><input type="text"></td></tr>
+        <tr><td><input type="text"></td><td class="td-label">رائد النشاط</td><td class="td-label">عضواً</td><td><input type="text"></td></tr>
+        <tr><td><input type="text"></td><td><input type="text" placeholder="معلم / منسب آخر"></td><td><input type="text" placeholder="الصفة"></td><td><input type="text"></td></tr>
+        <tr><td><input type="text"></td><td><input type="text" placeholder="معلم / منسب آخر"></td><td><input type="text" placeholder="الصفة"></td><td><input type="text"></td></tr>
+        <tr><td><input type="text"></td><td><input type="text" placeholder="معلم / منسب آخر"></td><td><input type="text" placeholder="الصفة"></td><td><input type="text"></td></tr>
+      </tbody>
+    </table>
+    <div class="tasks-section">
+      <div class="tasks-title">▸ مهام اللجنة الرئيسية</div>
+      <div class="task-item"><div class="task-bullet"></div><div class="task-text">تشكيل فرق العمل / اللجان الفرعية للاختبارات الفترية والنهائية وتحديد مهام ومسؤوليات جميع أعضائها وفقاً للإجراءات المتبعة.</div></div>
+      <div class="task-item"><div class="task-bullet"></div><div class="task-text">تكليف المعلمين بإعداد كافة أسئلة الاختبارات، ونماذج الإجابة وتسليمها قبل مواعيد الاختبارات بما لا يقل عن أسبوعين.</div></div>
+      <div class="task-item"><div class="task-bullet"></div><div class="task-text">إعداد الملفات المتعلقة بالاختبارات في المدرسة وتحديثها بصفة مستمرة.</div></div>
+      <div class="task-item"><div class="task-bullet"></div><div class="task-text">إعداد جداول الاختبارات الفترية والنهائية ومتابعة إدخالها في نظام نور.</div></div>
+      <div class="task-item"><div class="task-bullet"></div><div class="task-text">الإشراف على سير الاختبارات بمختلف أنواعها والتأكد من سلامتها.</div></div>
+      <div class="task-item"><div class="task-bullet"></div><div class="task-text">متابعة عمليات التصحيح والمراجعة وتدقيق النتائج وإخراجها وتسليمها وحفظها.</div></div>
+      <div class="task-item"><div class="task-bullet"></div><div class="task-text">متابعة المستوى التحصيلي للطلبة بشكل دوري وتحليله وإعداد التقارير اللازمة.</div></div>
+      <div class="task-item"><div class="task-bullet"></div><div class="task-text">اقتراح برامج معالجة التأخر الدراسي وإشعار أولياء الأمور بالبرامج.</div></div>
+      <div class="task-item"><div class="task-bullet"></div><div class="task-text">القيام بأي مهام أخرى يتم التكليف بها في مجال اختصاصها.</div></div>
+    </div>
+    <p style="text-align:center;font-weight:700;color:var(--primary);margin:12px 0 8px;">والله الموفق،،،</p>
+    <div class="sig-row">
+      <div class="sig-box"><label>مدير المدرسة:</label><input type="text"></div>
+      <div class="sig-box"><label>التوقيع:</label><input type="text"></div>
+    </div>
+  </div>
+  <div class="card-save-note">📁 يحفظ بملف أعمال الاختبارات.</div>
+</div>
+
+<!-- FORM 2 -->
+<div class="form-card" id="form-2">
+  <div class="card-header"><span class="card-header-title">قرار تشكيل لجنة التحكم والضبط</span><span class="card-header-num">نموذج رقم 2</span></div>
+  <div class="card-body">
+    <div class="letterhead">
+      <div class="letterhead-right"><textarea class="lh-right-field g-org" rows="4">المملكة العربية السعودية
+وزارة التعليم
+الإدارة العامة للتعليم
+إدارة تقويم التحصيل المعرفي والمهاري</textarea></div>
+      <div class="letterhead-center"><div class="letterhead-emblem">🏛️</div></div>
+      <div class="letterhead-left">
+        <div class="lh-row"><span class="lh-label">مدرسة:</span><input class="lh-input g-school" type="text"></div>
+        <div class="lh-row"><span class="lh-label">العام الدراسي:</span><input class="lh-input g-year" type="text" style="width:90px"></div>
+        <div class="lh-row"><span class="lh-label">الفصل الدراسي:</span><input class="lh-input g-term" type="text" style="width:60px"></div>
+        <div class="lh-row"><span class="lh-label">الدور:</span><input class="lh-input g-round" type="text" style="width:60px"></div>
+      </div>
+    </div>
+    <div class="model-title-row"><span class="label">اسم النموذج</span><span class="value">قرار تشكيل لجنة التحكم والضبط</span><span class="label">رقم النموذج</span><span class="value">2</span></div>
+    <div class="section-intro">إن مدير المدرسة، وبناء على الصلاحيات الممنوحة له، وبناء على ما تقتضيه المصلحة العامة.<br><strong>يقرر تشكيل لجنة التحكم والضبط على النحو التالي:</strong></div>
+    <table class="form-table">
+      <thead><tr><th>م</th><th>الاسم</th><th>العمل</th><th>الصفة</th><th>المهمة</th><th>التوقيع</th></tr></thead>
+      <tbody>
+        <tr><td class="center">1</td><td><input type="text"></td><td class="td-label">وكيل الشؤون المدرسية</td><td class="td-label">رئيساً</td><td><input type="text"></td><td><input type="text"></td></tr>
+        <tr><td class="center">2</td><td><input type="text"></td><td><input type="text" placeholder="العمل"></td><td><input type="text" placeholder="عضواً"></td><td><input type="text"></td><td><input type="text"></td></tr>
+        <tr><td class="center">3</td><td><input type="text"></td><td><input type="text"></td><td><input type="text" placeholder="عضواً"></td><td><input type="text"></td><td><input type="text"></td></tr>
+        <tr><td class="center">4</td><td><input type="text"></td><td><input type="text"></td><td><input type="text" placeholder="عضواً"></td><td><input type="text"></td><td><input type="text"></td></tr>
+      </tbody>
+    </table>
+    <div class="tasks-section">
+      <div class="tasks-title">▸ مهام اللجنة</div>
+      <div class="task-item"><div class="task-bullet"></div><div class="task-text">تحديد عدد الطلبة في كل لجنة وتحديد غرف اللجان.</div></div>
+      <div class="task-item"><div class="task-bullet"></div><div class="task-text">طباعة قوائم بأسماء الطلبة لكل لجنة من نظام نور.</div></div>
+      <div class="task-item"><div class="task-bullet"></div><div class="task-text">تثبيت أرقام الجلوس على طاولات الطلبة بحسب نظام التسلسل المعمول به.</div></div>
+      <div class="task-item"><div class="task-bullet"></div><div class="task-text">استلام أوراق الإجابة من الملاحظين على اللجان.</div></div>
+      <div class="task-item"><div class="task-bullet"></div><div class="task-text">وضع أوراق الإجابة وصورة من الإجابة النموذجية في الظرف الخاص بالمادة.</div></div>
+      <div class="task-item"><div class="task-bullet"></div><div class="task-text">تسليم مظروف أوراق الإجابة لرئيس لجنة التصحيح والمراجعة.</div></div>
+      <div class="task-item"><div class="task-bullet"></div><div class="task-text">حفظ كشوف الرصد النهائية مكتملة التوقيعات في الملفات الخاصة.</div></div>
+      <div class="task-item"><div class="task-bullet"></div><div class="task-text">مطابقة درجات الكشف مع درجات أوراق الإجابة والمصادقة والتوقيع.</div></div>
+    </div>
+    <p style="text-align:center;font-weight:700;color:var(--primary);margin:12px 0 8px;">والله الموفق،،،</p>
+    <div class="sig-row">
+      <div class="sig-box"><label>مدير المدرسة:</label><input type="text"></div>
+      <div class="sig-box"><label>التوقيع:</label><input type="text"></div>
+    </div>
+  </div>
+  <div class="card-save-note">📁 يحفظ بملف أعمال الاختبارات.</div>
+</div>
+
+<!-- FORM 3 -->
+<div class="form-card" id="form-3">
+  <div class="card-header"><span class="card-header-title">قرار تشكيل لجنة الإشراف والملاحظة</span><span class="card-header-num">نموذج رقم 3</span></div>
+  <div class="card-body">
+    <div class="letterhead">
+      <div class="letterhead-right"><textarea class="lh-right-field g-org" rows="4">المملكة العربية السعودية
+وزارة التعليم
+الإدارة العامة للتعليم
+إدارة تقويم التحصيل المعرفي والمهاري</textarea></div>
+      <div class="letterhead-center"><div class="letterhead-emblem">🏛️</div></div>
+      <div class="letterhead-left">
+        <div class="lh-row"><span class="lh-label">مدرسة:</span><input class="lh-input g-school" type="text"></div>
+        <div class="lh-row"><span class="lh-label">العام الدراسي:</span><input class="lh-input g-year" type="text" style="width:90px"></div>
+        <div class="lh-row"><span class="lh-label">الفصل الدراسي:</span><input class="lh-input g-term" type="text" style="width:60px"></div>
+        <div class="lh-row"><span class="lh-label">الدور:</span><input class="lh-input g-round" type="text" style="width:60px"></div>
+      </div>
+    </div>
+    <div class="model-title-row"><span class="label">اسم النموذج</span><span class="value">قرار تشكيل لجنة الإشراف والملاحظة</span><span class="label">رقم النموذج</span><span class="value">3</span></div>
+    <div class="section-intro">إن مدير المدرسة، وبناء على الصلاحيات الممنوحة له، وبناء على ما تقتضيه المصلحة العامة.<br><strong>يقرر تشكيل لجنة الإشراف والملاحظة على النحو التالي:</strong></div>
+    <table class="form-table">
+      <thead><tr><th>م</th><th>الاسم</th><th>العمل</th><th>الصفة</th><th>المهمة</th><th>التوقيع</th></tr></thead>
+      <tbody>
+        <tr><td class="center">1</td><td><input type="text"></td><td class="td-label">وكيل شؤون الطلاب</td><td class="td-label">رئيساً</td><td><input type="text"></td><td><input type="text"></td></tr>
+        <tr><td class="center">2</td><td><input type="text"></td><td><input type="text"></td><td><input type="text" placeholder="عضواً"></td><td><input type="text"></td><td><input type="text"></td></tr>
+        <tr><td class="center">3</td><td><input type="text"></td><td><input type="text"></td><td><input type="text" placeholder="عضواً"></td><td><input type="text"></td><td><input type="text"></td></tr>
+        <tr><td class="center">4</td><td><input type="text"></td><td><input type="text"></td><td><input type="text" placeholder="عضواً"></td><td><input type="text"></td><td><input type="text"></td></tr>
+      </tbody>
+    </table>
+    <div class="tasks-section">
+      <div class="tasks-title">▸ مهام اللجنة</div>
+      <div class="task-item"><div class="task-bullet"></div><div class="task-text">إعداد الجداول الخاصة بالملاحظين والإشراف اليومي.</div></div>
+      <div class="task-item"><div class="task-bullet"></div><div class="task-text">تأمين الملاحظ البديل عند تأخر أو غياب أحد الملاحظين قبل بدء الاختبار.</div></div>
+      <div class="task-item"><div class="task-bullet"></div><div class="task-text">فتح مظاريف الأسئلة والتأكد من سلامتها قبل 15 دقيقة من بدء الاختبار.</div></div>
+      <div class="task-item"><div class="task-bullet"></div><div class="task-text">إعداد محضر رسمي عند الإخلال بسرية الأسئلة أو سير الاختبارات.</div></div>
+      <div class="task-item"><div class="task-bullet"></div><div class="task-text">التعامل مع الطلبة المتأخرين عن الاختبار حسب زمن حضورهم.</div></div>
+      <div class="task-item"><div class="task-bullet"></div><div class="task-text">التعامل مع الحالات المخالفة للأنظمة والتعليمات.</div></div>
+      <div class="task-item"><div class="task-bullet"></div><div class="task-text">متابعة غياب الطلبة أثناء الاختبارات وحصر الغائبين.</div></div>
+    </div>
+    <p style="text-align:center;font-weight:700;color:var(--primary);margin:12px 0 8px;">والله الموفق،،،</p>
+    <div class="sig-row">
+      <div class="sig-box"><label>مدير المدرسة:</label><input type="text"></div>
+      <div class="sig-box"><label>التوقيع:</label><input type="text"></div>
+    </div>
+  </div>
+  <div class="card-save-note">📁 يحفظ بملف أعمال الاختبارات.</div>
+</div>
+
+<!-- FORM 4 -->
+<div class="form-card" id="form-4">
+  <div class="card-header"><span class="card-header-title">قرار تشكيل لجنة التصحيح والمراجعة</span><span class="card-header-num">نموذج رقم 4</span></div>
+  <div class="card-body">
+    <div class="letterhead">
+      <div class="letterhead-right"><textarea class="lh-right-field g-org" rows="4">المملكة العربية السعودية
+وزارة التعليم
+الإدارة العامة للتعليم
+إدارة تقويم التحصيل المعرفي والمهاري</textarea></div>
+      <div class="letterhead-center"><div class="letterhead-emblem">🏛️</div></div>
+      <div class="letterhead-left">
+        <div class="lh-row"><span class="lh-label">مدرسة:</span><input class="lh-input g-school" type="text"></div>
+        <div class="lh-row"><span class="lh-label">العام الدراسي:</span><input class="lh-input g-year" type="text" style="width:90px"></div>
+        <div class="lh-row"><span class="lh-label">الفصل الدراسي:</span><input class="lh-input g-term" type="text" style="width:60px"></div>
+        <div class="lh-row"><span class="lh-label">الدور:</span><input class="lh-input g-round" type="text" style="width:60px"></div>
+      </div>
+    </div>
+    <div class="model-title-row"><span class="label">اسم النموذج</span><span class="value">قرار تشكيل لجنة التصحيح والمراجعة</span><span class="label">رقم النموذج</span><span class="value">4</span></div>
+    <div class="section-intro">إن مدير المدرسة، وبناء على الصلاحيات الممنوحة له، وبناء على ما تقتضيه المصلحة العامة.<br><strong>يقرر تشكيل لجنة التصحيح والمراجعة على النحو التالي:</strong></div>
+    <table class="form-table">
+      <thead><tr><th>م</th><th>الاسم</th><th>العمل</th><th>الصفة</th><th>المهمة</th><th>التوقيع</th></tr></thead>
+      <tbody>
+        <tr><td class="center">1</td><td><input type="text"></td><td class="td-label">وكيل الشؤون التعليمية</td><td class="td-label">رئيساً</td><td><input type="text"></td><td><input type="text"></td></tr>
+        <tr><td class="center">2</td><td><input type="text"></td><td><input type="text"></td><td><input type="text" placeholder="عضواً"></td><td><input type="text"></td><td><input type="text"></td></tr>
+        <tr><td class="center">3</td><td><input type="text"></td><td><input type="text"></td><td><input type="text" placeholder="عضواً"></td><td><input type="text"></td><td><input type="text"></td></tr>
+      </tbody>
+    </table>
+    <div class="tasks-section">
+      <div class="tasks-title">▸ مهام اللجنة</div>
+      <div class="task-item"><div class="task-bullet"></div><div class="task-text">استلام أوراق إجابات الطلبة مع صور من نماذج الإجابة من لجنة التحكم والضبط وتسليمها للجان التصحيح وفقاً للتخصص.</div></div>
+      <div class="task-item"><div class="task-bullet"></div><div class="task-text">تحديد أسماء وتواقيع المصححين والمراجعين والمدققين لكل مادة دراسية.</div></div>
+      <div class="task-item"><div class="task-bullet"></div><div class="task-text">في حالة اكتشاف خطأ في الأسئلة أو الإجابة النموذجية يتم إعداد محضر بذلك.</div></div>
+      <div class="task-item"><div class="task-bullet"></div><div class="task-text">تدقيق عملية التصحيح وتدقيق عملية الرصد.</div></div>
+      <div class="task-item"><div class="task-bullet"></div><div class="task-text">مطابقة درجات الكشف المستخرج من نظام نور مع درجات أوراق الإجابة والمصادقة عليها.</div></div>
+    </div>
+    <p style="text-align:center;font-weight:700;color:var(--primary);margin:12px 0 8px;">والله الموفق،،،</p>
+    <div class="sig-row">
+      <div class="sig-box"><label>مدير المدرسة:</label><input type="text"></div>
+      <div class="sig-box"><label>التوقيع:</label><input type="text"></div>
+    </div>
+  </div>
+  <div class="card-save-note">📁 يحفظ بملف أعمال الاختبارات.</div>
+</div>
+
+<!-- FORM 5 -->
+<div class="form-card" id="form-5">
+  <div class="card-header"><span class="card-header-title">قرار تشكيل لجنة الرصد وإخراج النتائج</span><span class="card-header-num">نموذج رقم 5</span></div>
+  <div class="card-body">
+    <div class="letterhead">
+      <div class="letterhead-right"><textarea class="lh-right-field g-org" rows="4">المملكة العربية السعودية
+وزارة التعليم
+الإدارة العامة للتعليم
+إدارة تقويم التحصيل المعرفي والمهاري</textarea></div>
+      <div class="letterhead-center"><div class="letterhead-emblem">🏛️</div></div>
+      <div class="letterhead-left">
+        <div class="lh-row"><span class="lh-label">مدرسة:</span><input class="lh-input g-school" type="text"></div>
+        <div class="lh-row"><span class="lh-label">العام الدراسي:</span><input class="lh-input g-year" type="text" style="width:90px"></div>
+        <div class="lh-row"><span class="lh-label">الفصل الدراسي:</span><input class="lh-input g-term" type="text" style="width:60px"></div>
+        <div class="lh-row"><span class="lh-label">الدور:</span><input class="lh-input g-round" type="text" style="width:60px"></div>
+      </div>
+    </div>
+    <div class="model-title-row"><span class="label">اسم النموذج</span><span class="value">قرار تشكيل لجنة الرصد وإخراج النتائج</span><span class="label">رقم النموذج</span><span class="value">5</span></div>
+    <div class="section-intro">إن مدير المدرسة، وبناء على الصلاحيات الممنوحة له، وبناء على ما تقتضيه المصلحة العامة.<br><strong>يقرر تشكيل لجنة الرصد وإخراج النتائج على النحو التالي:</strong></div>
+    <table class="form-table">
+      <thead><tr><th>م</th><th>الاسم</th><th>العمل</th><th>الصفة</th><th>المهمة</th><th>التوقيع</th></tr></thead>
+      <tbody>
+        <tr><td class="center">1</td><td><input type="text"></td><td class="td-label">وكيل الشؤون التعليمية</td><td class="td-label">رئيساً</td><td><input type="text"></td><td><input type="text"></td></tr>
+        <tr><td class="center">2</td><td><input type="text"></td><td><input type="text"></td><td><input type="text" placeholder="عضواً"></td><td><input type="text"></td><td><input type="text"></td></tr>
+        <tr><td class="center">3</td><td><input type="text"></td><td class="td-label">معلم كل مادة دراسية</td><td class="td-label">عضواً</td><td><input type="text"></td><td><input type="text"></td></tr>
+      </tbody>
+    </table>
+    <div class="tasks-section">
+      <div class="tasks-title">▸ مهام اللجنة</div>
+      <div class="task-item"><div class="task-bullet"></div><div class="task-text">التأكد من رصد جميع الدرجات المستحقة للطلبة في نظام نور قبل بدء اختبارات نهاية الفصل الدراسي.</div></div>
+      <div class="task-item"><div class="task-bullet"></div><div class="task-text">يرصد المعلم درجات مادته في نظام نور من أوراق إجابات الطلبة بعد الانتهاء من التصحيح مباشرة.</div></div>
+      <div class="task-item"><div class="task-bullet"></div><div class="task-text">استخراج النتيجة الأولية من نظام نور وتطبيق قواعد المراجعة النهائية.</div></div>
+      <div class="task-item"><div class="task-bullet"></div><div class="task-text">إغلاق رصد الدرجات في نظام نور ونشر كشوف الدرجات.</div></div>
+      <div class="task-item"><div class="task-bullet"></div><div class="task-text">إعداد سجلات النتيجة النهائية (المبيضة) للمدرسة بعد إعلان نتيجة الدور الثاني.</div></div>
+    </div>
+    <div class="section-divider"><span>بيانات ذيل الكشف</span></div>
+    <table class="form-table" style="width:280px">
+      <tbody>
+        <tr><td class="td-label">رصده:</td><td><input type="text"></td><td class="td-label">التوقيع:</td><td><input type="text"></td></tr>
+        <tr><td class="td-label">أملأه:</td><td><input type="text"></td><td class="td-label">التوقيع:</td><td><input type="text"></td></tr>
+        <tr><td class="td-label">راجعه:</td><td><input type="text"></td><td class="td-label">التوقيع:</td><td><input type="text"></td></tr>
+      </tbody>
+    </table>
+    <p style="text-align:center;font-weight:700;color:var(--primary);margin:12px 0 8px;">والله الموفق،،،</p>
+    <div class="sig-row">
+      <div class="sig-box"><label>مدير المدرسة:</label><input type="text"></div>
+      <div class="sig-box"><label>التوقيع:</label><input type="text"></div>
+    </div>
+  </div>
+  <div class="card-save-note">📁 يحفظ بملف أعمال الاختبارات.</div>
+</div>
+
+<!-- FORM 6 -->
+<div class="form-card" id="form-6">
+  <div class="card-header"><span class="card-header-title">قرار تشكيل لجان التصحيح والمراجعة وفقاً للتخصص</span><span class="card-header-num">نموذج رقم 6</span></div>
+  <div class="card-body">
+    <div class="letterhead">
+      <div class="letterhead-right"><textarea class="lh-right-field g-org" rows="4">المملكة العربية السعودية
+وزارة التعليم
+الإدارة العامة للتعليم
+إدارة تقويم التحصيل المعرفي والمهاري</textarea></div>
+      <div class="letterhead-center"><div class="letterhead-emblem">🏛️</div></div>
+      <div class="letterhead-left">
+        <div class="lh-row"><span class="lh-label">مدرسة:</span><input class="lh-input g-school" type="text"></div>
+        <div class="lh-row"><span class="lh-label">العام الدراسي:</span><input class="lh-input g-year" type="text" style="width:90px"></div>
+        <div class="lh-row"><span class="lh-label">الفصل الدراسي:</span><input class="lh-input g-term" type="text" style="width:60px"></div>
+        <div class="lh-row"><span class="lh-label">الدور:</span><input class="lh-input g-round" type="text" style="width:60px"></div>
+      </div>
+    </div>
+    <div class="model-title-row"><span class="label">اسم النموذج</span><span class="value">قرار تشكيل لجان التصحيح والمراجعة وفقاً للتخصص</span><span class="label">رقم النموذج</span><span class="value">6</span></div>
+    <div class="section-intro">إن مدير المدرسة، وبناء على الصلاحيات الممنوحة له، وبناء على ما تقتضيه المصلحة العامة.</div>
+    <div class="sig-row" style="margin-bottom:12px">
+      <div class="sig-box"><label>يقرر تشكيل لجنة تصحيح مادة:</label><input type="text"></div>
+      <div class="sig-box"><label>مقرها:</label><input type="text"></div>
+    </div>
+    <table class="form-table">
+      <thead><tr><th>م</th><th>أعضاء اللجنة</th><th>الصفة</th><th>التوقيع</th></tr></thead>
+      <tbody>
+        <tr><td class="center">1</td><td><input type="text"></td><td class="td-label">رئيساً</td><td><input type="text"></td></tr>
+        <tr><td class="center">2</td><td><input type="text"></td><td class="td-label">عضواً</td><td><input type="text"></td></tr>
+        <tr><td class="center">3</td><td><input type="text"></td><td class="td-label">عضواً</td><td><input type="text"></td></tr>
+        <tr><td class="center">4</td><td><input type="text"></td><td class="td-label">عضواً</td><td><input type="text"></td></tr>
+      </tbody>
+    </table>
+    <div class="tasks-section">
+      <div class="tasks-title">▸ تعليمات التصحيح والمراجعة</div>
+      <div class="task-item"><div class="task-bullet"></div><div class="task-text">يكون تقدير الدرجات طبقاً لنماذج الإجابة. يُمنع فتح أظرف نماذج الإجابة إلا بعد التأكد من استلام جميع أوراق الإجابة من الطلبة.</div></div>
+      <div class="task-item"><div class="task-bullet"></div><div class="task-text">تُصحح أوراق إجابات الطلبة أولاً بأول بالمدرسة في المكان المخصص. التصحيح بالقلم الأحمر والمراجعة والتدقيق بلون مغاير (الأسود).</div></div>
+      <div class="task-item"><div class="task-bullet"></div><div class="task-text">توضع إشارة (✓) على السؤال المتروك في حقل الدرجة وتُدوّن كلمة (متروك) في حقل الكتابة.</div></div>
+      <div class="task-item"><div class="task-bullet"></div><div class="task-text">يُكتب في حقلي الدرجة (صفر) كتابةً إذا كانت درجة الطالب في السؤال صفراً.</div></div>
+      <div class="task-item"><div class="task-bullet"></div><div class="task-text">يُمنع القيام بتصوير إجابات الطلبة أو أجزاء منها بأي وسيلة إلا للدواعي الرسمية.</div></div>
+    </div>
+    <p style="text-align:center;font-weight:700;color:var(--primary);margin:12px 0 8px;">والله الموفق،،،</p>
+    <div class="sig-row">
+      <div class="sig-box"><label>مدير المدرسة:</label><input type="text"></div>
+      <div class="sig-box"><label>التوقيع:</label><input type="text"></div>
+    </div>
+  </div>
+  <div class="card-save-note">📁 يحفظ بملف أعمال الاختبارات.</div>
+</div>
+
+<!-- FORM 7 -->
+<div class="form-card" id="form-7">
+  <div class="card-header"><span class="card-header-title">قرار تكليف معلم بإعداد أسئلة اختبار مادة ونماذج الإجابة وتصويرها وتغليفها</span><span class="card-header-num">نموذج رقم 7</span></div>
+  <div class="card-body">
+    <div class="letterhead">
+      <div class="letterhead-right"><textarea class="lh-right-field g-org" rows="4">المملكة العربية السعودية
+وزارة التعليم
+الإدارة العامة للتعليم
+إدارة تقويم التحصيل المعرفي والمهاري</textarea></div>
+      <div class="letterhead-center"><div class="letterhead-emblem">🏛️</div></div>
+      <div class="letterhead-left">
+        <div class="lh-row"><span class="lh-label">مدرسة:</span><input class="lh-input g-school" type="text"></div>
+        <div class="lh-row"><span class="lh-label">العام الدراسي:</span><input class="lh-input g-year" type="text" style="width:90px"></div>
+        <div class="lh-row"><span class="lh-label">الفصل الدراسي:</span><input class="lh-input g-term" type="text" style="width:60px"></div>
+        <div class="lh-row"><span class="lh-label">الدور:</span><input class="lh-input g-round" type="text" style="width:60px"></div>
+      </div>
+    </div>
+    <div class="model-title-row"><span class="label">اسم النموذج</span><span class="value">تكليف معلم بإعداد أسئلة اختبار ونماذج الإجابة</span><span class="label">رقم النموذج</span><span class="value">7</span></div>
+    <div style="display:flex;gap:10px;align-items:center;background:#f8fbff;border-radius:8px;padding:10px 14px;margin-bottom:14px;">
+      <span style="font-weight:700;color:var(--primary);white-space:nowrap;">المكرم الأستاذ /</span>
+      <input type="text" class="field-input" style="flex:1;" placeholder="اسم المعلم">
+      <span style="font-weight:700;color:var(--primary);white-space:nowrap;">وفقه الله</span>
+    </div>
+    <div class="section-intro">السلام عليكم ورحمة الله وبركاته ... وبعد:<br>نظراً لقرب اختبارات الفصل الدراسي <input type="text" style="border:none;border-bottom:1px solid #aaa;width:40px;font-family:Tajawal;font-size:0.85rem;"> لعام <input type="text" style="border:none;border-bottom:1px solid #aaa;width:80px;font-family:Tajawal;font-size:0.85rem;"> فقد تقرر تكليفكم بوضع الأسئلة (الأساسية والبديلة) ونماذج الإجابة وفق الآتي:</div>
+    <table class="form-table">
+      <thead><tr><th>م</th><th>المادة</th><th>الصف</th><th>م</th><th>المادة</th><th>الصف</th></tr></thead>
+      <tbody>
+        <tr><td class="center">1</td><td><input type="text"></td><td><input type="text"></td><td class="center">2</td><td><input type="text"></td><td><input type="text"></td></tr>
+        <tr><td class="center">3</td><td><input type="text"></td><td><input type="text"></td><td class="center">4</td><td><input type="text"></td><td><input type="text"></td></tr>
+        <tr><td class="center">5</td><td><input type="text"></td><td><input type="text"></td><td class="center">6</td><td><input type="text"></td><td><input type="text"></td></tr>
+      </tbody>
+    </table>
+    <div class="warn-box">⚠️ الالتزام بالمحافظة على <strong>سرية الأسئلة</strong> وعدم إفشائها أو التلميح بها بأي طريقة كانت أو تكرار أسئلة سابقة.</div>
+    <div class="section-divider"><span>جدول زمن الاختبار حسب عدد الحصص</span></div>
+    <table class="form-table">
+      <thead>
+        <tr><th rowspan="2">م</th><th rowspan="2">عدد الحصص</th><th colspan="2">الزمن</th></tr>
+        <tr><th>الابتدائي والمتوسط</th><th>المرحلة الثانوية</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="center">1</td><td>من 1 إلى 2 حصة</td><td class="center">ساعة واحدة</td><td class="center">ساعة ونصف</td></tr>
+        <tr><td class="center">2</td><td>من 3 إلى 4 حصص</td><td class="center">ساعة ونصف</td><td class="center">ساعتان</td></tr>
+        <tr><td class="center">3</td><td>5 حصص فما فوق</td><td class="center">ساعتان</td><td class="center">ساعتان ونصف</td></tr>
+        <tr><td colspan="4" style="font-size:0.8rem;color:#555;text-align:center;">المواد ذات الجانبين التي يكون فيها الجانب العملي نصف الدرجة أو أكثر: ساعة واحدة للجانب التحريري</td></tr>
+      </tbody>
+    </table>
+    <p style="text-align:center;font-weight:700;color:var(--primary);margin:12px 0 8px;">والله الموفق،،،</p>
+    <div class="sig-row">
+      <div class="sig-box"><label>مدير المدرسة:</label><input type="text"></div>
+      <div class="sig-box"><label>التوقيع:</label><input type="text"></div>
+    </div>
+    <div style="margin-top:10px;font-size:0.8rem;color:var(--text-muted);">▸ توقيع المعلم في النموذج رقم (8) متابعة تسليم واستلام أسئلة ونماذج الإجابة وتصويرها وتغليفها.<br>▸ يحفظ صورة بملف أعمال الاختبارات.</div>
+  </div>
+  <div class="card-save-note">📁 يحفظ بملف أعمال الاختبارات.</div>
+</div>
+
+<!-- FORM 8 -->
+<div class="form-card" id="form-8">
+  <div class="card-header"><span class="card-header-title">متابعة تسليم واستلام أسئلة ونماذج الإجابة وتصويرها وتغليفها</span><span class="card-header-num">نموذج رقم 8</span></div>
+  <div class="card-body">
+    <div class="letterhead">
+      <div class="letterhead-right"><textarea class="lh-right-field g-org" rows="4">المملكة العربية السعودية
+وزارة التعليم
+الإدارة العامة للتعليم
+إدارة تقويم التحصيل المعرفي والمهاري</textarea></div>
+      <div class="letterhead-center"><div class="letterhead-emblem">🏛️</div></div>
+      <div class="letterhead-left">
+        <div class="lh-row"><span class="lh-label">مدرسة:</span><input class="lh-input g-school" type="text"></div>
+        <div class="lh-row"><span class="lh-label">العام الدراسي:</span><input class="lh-input g-year" type="text" style="width:90px"></div>
+        <div class="lh-row"><span class="lh-label">الفصل الدراسي:</span><input class="lh-input g-term" type="text" style="width:60px"></div>
+        <div class="lh-row"><span class="lh-label">الدور:</span><input class="lh-input g-round" type="text" style="width:60px"></div>
+      </div>
+    </div>
+    <div class="model-title-row"><span class="label">اسم النموذج</span><span class="value">متابعة تسليم واستلام أسئلة ونماذج الإجابة</span><span class="label">رقم النموذج</span><span class="value">8</span></div>
+    <div class="time-table-wrap">
+      <table class="time-table">
+        <thead>
+          <tr>
+            <th rowspan="2">اسم المعلم</th><th rowspan="2">المادة</th><th rowspan="2">الصف</th><th rowspan="2">المسار</th>
+            <th rowspan="2">تاريخ استلام التكليف</th><th rowspan="2">توقيع المعلم</th>
+            <th colspan="3">مظاريف التسليم</th>
+            <th rowspan="2">تاريخ التسليم</th><th rowspan="2">التوقيع</th><th rowspan="2">ملاحظات</th>
+          </tr>
+          <tr><th>أصل الأسئلة</th><th>أصل الإجابة</th><th>أسئلة الطلاب</th></tr>
+        </thead>
+        <tbody id="f8-body">
+          <tr><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text" placeholder="/  /144هـ"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text" placeholder="/  /144هـ"></td><td><input type="text"></td><td><input type="text"></td></tr>
+          <tr><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text" placeholder="/  /144هـ"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text" placeholder="/  /144هـ"></td><td><input type="text"></td><td><input type="text"></td></tr>
+          <tr><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text" placeholder="/  /144هـ"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text" placeholder="/  /144هـ"></td><td><input type="text"></td><td><input type="text"></td></tr>
+          <tr><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text" placeholder="/  /144هـ"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text" placeholder="/  /144هـ"></td><td><input type="text"></td><td><input type="text"></td></tr>
+          <tr><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text" placeholder="/  /144هـ"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text" placeholder="/  /144هـ"></td><td><input type="text"></td><td><input type="text"></td></tr>
+          <tr><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text" placeholder="/  /144هـ"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text" placeholder="/  /144هـ"></td><td><input type="text"></td><td><input type="text"></td></tr>
+          <tr><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text" placeholder="/  /144هـ"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text" placeholder="/  /144هـ"></td><td><input type="text"></td><td><input type="text"></td></tr>
+          <tr><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text" placeholder="/  /144هـ"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text" placeholder="/  /144هـ"></td><td><input type="text"></td><td><input type="text"></td></tr>
+          <tr><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text" placeholder="/  /144هـ"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text" placeholder="/  /144هـ"></td><td><input type="text"></td><td><input type="text"></td></tr>
+          <tr><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text" placeholder="/  /144هـ"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text" placeholder="/  /144هـ"></td><td><input type="text"></td><td><input type="text"></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="card-save-note">📁 يحفظ بملف أعمال الاختبارات.</div>
+</div>
+
+<!-- FORM 9 -->
+<div class="form-card" id="form-9">
+  <div class="card-header"><span class="card-header-title">البيانات الأولية لورقة الأسئلة</span><span class="card-header-num">نموذج رقم 9</span></div>
+  <div class="card-body">
+    <div class="letterhead">
+      <div class="letterhead-right"><textarea class="lh-right-field g-org" rows="4">المملكة العربية السعودية
+وزارة التعليم
+الإدارة العامة للتعليم
+إدارة تقويم التحصيل المعرفي والمهاري</textarea></div>
+      <div class="letterhead-center"><div class="letterhead-emblem">🏛️</div></div>
+      <div class="letterhead-left"><div class="lh-row"><span class="lh-label">مدرسة:</span><input class="lh-input g-school" type="text"></div></div>
+    </div>
+    <div class="model-title-row"><span class="label">اسم النموذج</span><span class="value">البيانات الأولية لورقة الأسئلة</span><span class="label">رقم النموذج</span><span class="value">9</span></div>
+    <table class="form-table" style="max-width:400px">
+      <tbody>
+        <tr><td class="td-label">العام الدراسي</td><td><input type="text" class="g-year" placeholder="144 / 144هـ"></td></tr>
+        <tr><td class="td-label">الفصل الدراسي</td><td><input type="text" class="g-term"></td></tr>
+        <tr><td class="td-label">الدور</td><td><input type="text" class="g-round"></td></tr>
+        <tr><td class="td-label">الصف / المستوى</td><td><input type="text"></td></tr>
+        <tr><td class="td-label">المسار</td><td><input type="text"></td></tr>
+        <tr><td class="td-label">المادة</td><td><input type="text"></td></tr>
+        <tr><td class="td-label">الزمن</td><td><input type="text"></td></tr>
+        <tr><td class="td-label">عدد الأسئلة</td><td><input type="text"></td></tr>
+        <tr><td class="td-label">عدد الأوراق</td><td><input type="text"></td></tr>
+      </tbody>
+    </table>
+    <div class="sig-row" style="margin-top:14px">
+      <div class="sig-box"><label>اسم الطالب:</label><input type="text"></div>
+      <div class="sig-box"><label>رقم الجلوس:</label><input type="text"></div>
+    </div>
+    <div class="section-divider"><span>بيان تقدير الدرجات</span></div>
+    <table class="form-table">
+      <thead>
+        <tr><th rowspan="2">رقم السؤال</th><th colspan="2">الدرجة المستحقة</th><th colspan="2">المصحح</th><th colspan="2">المراجع</th></tr>
+        <tr><th>رقماً</th><th>كتابة</th><th>الاسم</th><th>التوقيع</th><th>الاسم</th><th>التوقيع</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="center td-label">1</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+        <tr><td class="center td-label">2</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+        <tr><td class="center td-label">3</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+        <tr><td class="center td-label">4</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+        <tr><td class="center td-label">5</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+        <tr><td class="center td-label">6</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+        <tr><td class="td-label center">المجموع</td><td colspan="2"><input type="text"></td><td colspan="2">جمعه: <input type="text" style="width:80px"></td><td colspan="2">راجعه: <input type="text" style="width:80px"></td></tr>
+        <tr><td class="td-label">الدرجة بعد المراجعة</td><td colspan="3"><input type="text"></td><td colspan="3">التوقيع: <input type="text" style="width:80px"></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- FORMS 10-12: Exam Timetables -->
+<div class="form-card" id="form-10">
+  <div class="card-header"><span class="card-header-title">جدول الاختبارات العام للمرحلة الابتدائية</span><span class="card-header-num">نموذج رقم 10</span></div>
+  <div class="card-body">
+    <div class="letterhead">
+      <div class="letterhead-right"><textarea class="lh-right-field g-org" rows="4">المملكة العربية السعودية
+وزارة التعليم
+الإدارة العامة للتعليم
+إدارة تقويم التحصيل المعرفي والمهاري</textarea></div>
+      <div class="letterhead-center"><div class="letterhead-emblem">🏛️</div></div>
+      <div class="letterhead-left">
+        <div class="lh-row"><span class="lh-label">مدرسة:</span><input class="lh-input g-school" type="text"></div>
+        <div class="lh-row"><span class="lh-label">العام الدراسي:</span><input class="lh-input g-year" type="text" style="width:90px"></div>
+        <div class="lh-row"><span class="lh-label">الفصل الدراسي:</span><input class="lh-input g-term" type="text" style="width:60px"></div>
+        <div class="lh-row"><span class="lh-label">الدور:</span><input class="lh-input g-round" type="text" style="width:60px"></div>
+      </div>
+    </div>
+    <div class="model-title-row"><span class="label">اسم النموذج</span><span class="value">جدول الاختبارات العام – المرحلة الابتدائية</span><span class="label">رقم النموذج</span><span class="value">10</span></div>
+    <div class="time-table-wrap">
+      <table class="time-table">
+        <thead>
+          <tr>
+            <th rowspan="2">اليوم / التاريخ</th><th rowspan="2">الفترة</th>
+            <th colspan="3">الصف الثالث</th><th colspan="3">الصف الرابع</th>
+            <th colspan="3">الصف الخامس</th><th colspan="3">الصف السادس</th>
+          </tr>
+          <tr>
+            <th>من</th><th>إلى</th><th>المادة</th><th>من</th><th>إلى</th><th>المادة</th>
+            <th>من</th><th>إلى</th><th>المادة</th><th>من</th><th>إلى</th><th>المادة</th>
+          </tr>
+        </thead>
+        <tbody id="tbl10">
+          <tr><td class="day-cell">الأحد<br><input type="text" placeholder="/  /144هـ" style="width:80px;font-size:0.72rem;"></td><td class="day-cell">الأولى</td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td></tr>
+          <tr><td></td><td class="day-cell">الثانية</td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td></tr>
+          <tr><td class="day-cell">الاثنين<br><input type="text" placeholder="/  /144هـ" style="width:80px;font-size:0.72rem;"></td><td class="day-cell">الأولى</td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td></tr>
+          <tr><td></td><td class="day-cell">الثانية</td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td></tr>
+          <tr><td class="day-cell">الثلاثاء<br><input type="text" placeholder="/  /144هـ" style="width:80px;font-size:0.72rem;"></td><td class="day-cell">الأولى</td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td></tr>
+          <tr><td></td><td class="day-cell">الثانية</td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td></tr>
+          <tr><td class="day-cell">الأربعاء<br><input type="text" placeholder="/  /144هـ" style="width:80px;font-size:0.72rem;"></td><td class="day-cell">الأولى</td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td></tr>
+          <tr><td></td><td class="day-cell">الثانية</td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td></tr>
+          <tr><td class="day-cell">الخميس<br><input type="text" placeholder="/  /144هـ" style="width:80px;font-size:0.72rem;"></td><td class="day-cell">الأولى</td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td></tr>
+          <tr><td></td><td class="day-cell">الثانية</td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="sig-row sig-row-3" style="margin-top:12px">
+      <div class="sig-box"><label>وكيل الشؤون التعليمية – الاسم:</label><input type="text"><label style="margin-top:6px">التوقيع:</label><input type="text"></div>
+      <div class="sig-box"><label>وكيل شؤون الطلاب – الاسم:</label><input type="text"><label style="margin-top:6px">التوقيع:</label><input type="text"></div>
+      <div class="sig-box"><label>مدير المدرسة – الاسم:</label><input type="text"><label style="margin-top:6px">التوقيع:</label><input type="text"></div>
+    </div>
+  </div>
+  <div class="card-save-note">📁 يحفظ بملف أعمال الاختبارات.</div>
+</div>
+
+<!-- FORM 11 - Middle School -->
+<div class="form-card" id="form-11">
+  <div class="card-header"><span class="card-header-title">جدول الاختبارات العام للمرحلة المتوسطة</span><span class="card-header-num">نموذج رقم 11</span></div>
+  <div class="card-body">
+    <div class="letterhead">
+      <div class="letterhead-right"><textarea class="lh-right-field g-org" rows="4">المملكة العربية السعودية
+وزارة التعليم
+الإدارة العامة للتعليم
+إدارة تقويم التحصيل المعرفي والمهاري</textarea></div>
+      <div class="letterhead-center"><div class="letterhead-emblem">🏛️</div></div>
+      <div class="letterhead-left">
+        <div class="lh-row"><span class="lh-label">مدرسة:</span><input class="lh-input g-school" type="text"></div>
+        <div class="lh-row"><span class="lh-label">العام الدراسي:</span><input class="lh-input g-year" type="text" style="width:90px"></div>
+        <div class="lh-row"><span class="lh-label">الفصل الدراسي:</span><input class="lh-input g-term" type="text" style="width:60px"></div>
+        <div class="lh-row"><span class="lh-label">الدور:</span><input class="lh-input g-round" type="text" style="width:60px"></div>
+      </div>
+    </div>
+    <div class="model-title-row"><span class="label">اسم النموذج</span><span class="value">جدول الاختبارات العام – المرحلة المتوسطة</span><span class="label">رقم النموذج</span><span class="value">11</span></div>
+    <div class="time-table-wrap">
+      <table class="time-table">
+        <thead>
+          <tr><th rowspan="2">اليوم / التاريخ</th><th rowspan="2">الفترة</th>
+          <th colspan="3">الصف الأول متوسط</th><th colspan="3">الصف الثاني متوسط</th><th colspan="3">الصف الثالث متوسط</th></tr>
+          <tr><th>من</th><th>إلى</th><th>المادة</th><th>من</th><th>إلى</th><th>المادة</th><th>من</th><th>إلى</th><th>المادة</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="day-cell">الأحد<br><input type="text" placeholder="/  /144هـ" style="width:80px;font-size:0.72rem;"></td><td class="day-cell">الأولى</td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td></tr>
+          <tr><td></td><td class="day-cell">الثانية</td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td></tr>
+          <tr><td class="day-cell">الاثنين<br><input type="text" placeholder="/  /144هـ" style="width:80px;font-size:0.72rem;"></td><td class="day-cell">الأولى</td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td></tr>
+          <tr><td></td><td class="day-cell">الثانية</td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td></tr>
+          <tr><td class="day-cell">الثلاثاء<br><input type="text" placeholder="/  /144هـ" style="width:80px;font-size:0.72rem;"></td><td class="day-cell">الأولى</td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td></tr>
+          <tr><td></td><td class="day-cell">الثانية</td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td></tr>
+          <tr><td class="day-cell">الأربعاء<br><input type="text" placeholder="/  /144هـ" style="width:80px;font-size:0.72rem;"></td><td class="day-cell">الأولى</td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td></tr>
+          <tr><td></td><td class="day-cell">الثانية</td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td></tr>
+          <tr><td class="day-cell">الخميس<br><input type="text" placeholder="/  /144هـ" style="width:80px;font-size:0.72rem;"></td><td class="day-cell">الأولى</td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td></tr>
+          <tr><td></td><td class="day-cell">الثانية</td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="sig-row sig-row-3" style="margin-top:12px">
+      <div class="sig-box"><label>وكيل الشؤون التعليمية – الاسم:</label><input type="text"><label style="margin-top:6px">التوقيع:</label><input type="text"></div>
+      <div class="sig-box"><label>وكيل شؤون الطلاب – الاسم:</label><input type="text"><label style="margin-top:6px">التوقيع:</label><input type="text"></div>
+      <div class="sig-box"><label>مدير المدرسة – الاسم:</label><input type="text"><label style="margin-top:6px">التوقيع:</label><input type="text"></div>
+    </div>
+  </div>
+  <div class="card-save-note">📁 يحفظ بملف أعمال الاختبارات.</div>
+</div>
+
+<!-- FORM 12 - Secondary -->
+<div class="form-card" id="form-12">
+  <div class="card-header"><span class="card-header-title">جدول الاختبارات العام للمرحلة الثانوية (نظام المسارات)</span><span class="card-header-num">نموذج رقم 12</span></div>
+  <div class="card-body">
+    <div class="letterhead">
+      <div class="letterhead-right"><textarea class="lh-right-field g-org" rows="4">المملكة العربية السعودية
+وزارة التعليم
+الإدارة العامة للتعليم
+إدارة تقويم التحصيل المعرفي والمهاري</textarea></div>
+      <div class="letterhead-center"><div class="letterhead-emblem">🏛️</div></div>
+      <div class="letterhead-left">
+        <div class="lh-row"><span class="lh-label">مدرسة:</span><input class="lh-input g-school" type="text"></div>
+        <div class="lh-row"><span class="lh-label">العام الدراسي:</span><input class="lh-input g-year" type="text" style="width:90px"></div>
+        <div class="lh-row"><span class="lh-label">الفصل الدراسي:</span><input class="lh-input g-term" type="text" style="width:60px"></div>
+        <div class="lh-row"><span class="lh-label">الدور:</span><input class="lh-input g-round" type="text" style="width:60px"></div>
+      </div>
+    </div>
+    <div class="model-title-row"><span class="label">اسم النموذج</span><span class="value">جدول الاختبارات – المرحلة الثانوية (نظام المسارات)</span><span class="label">رقم النموذج</span><span class="value">12</span></div>
+    <div style="display:flex;gap:10px;margin-bottom:10px;flex-wrap:wrap;">
+      <div class="sig-box" style="flex:1"><label>اسم المسار الأول:</label><input type="text"></div>
+      <div class="sig-box" style="flex:1"><label>اسم المسار الثاني:</label><input type="text"></div>
+    </div>
+    <div class="time-table-wrap">
+      <table class="time-table">
+        <thead>
+          <tr><th rowspan="2">اليوم / التاريخ</th><th rowspan="2">الفترة</th>
+          <th colspan="3">السنة الأولى المشتركة</th><th colspan="3">المسار الأول</th><th colspan="3">المسار الثاني</th></tr>
+          <tr><th>من</th><th>إلى</th><th>المادة</th><th>من</th><th>إلى</th><th>المادة</th><th>من</th><th>إلى</th><th>المادة</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="day-cell">الأحد<br><input type="text" placeholder="/  /144هـ" style="width:80px;font-size:0.72rem;"></td><td class="day-cell">الأولى</td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td></tr>
+          <tr><td></td><td class="day-cell">الثانية</td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td></tr>
+          <tr><td class="day-cell">الاثنين<br><input type="text" placeholder="/  /144هـ" style="width:80px;font-size:0.72rem;"></td><td class="day-cell">الأولى</td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td></tr>
+          <tr><td></td><td class="day-cell">الثانية</td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td></tr>
+          <tr><td class="day-cell">الثلاثاء<br><input type="text" placeholder="/  /144هـ" style="width:80px;font-size:0.72rem;"></td><td class="day-cell">الأولى</td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td></tr>
+          <tr><td></td><td class="day-cell">الثانية</td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td></tr>
+          <tr><td class="day-cell">الأربعاء<br><input type="text" placeholder="/  /144هـ" style="width:80px;font-size:0.72rem;"></td><td class="day-cell">الأولى</td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td></tr>
+          <tr><td></td><td class="day-cell">الثانية</td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td></tr>
+          <tr><td class="day-cell">الخميس<br><input type="text" placeholder="/  /144هـ" style="width:80px;font-size:0.72rem;"></td><td class="day-cell">الأولى</td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td></tr>
+          <tr><td></td><td class="day-cell">الثانية</td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td><td><input type="time"></td><td><input type="time"></td><td><input type="text"></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="sig-row sig-row-3" style="margin-top:12px">
+      <div class="sig-box"><label>وكيل الشؤون التعليمية – الاسم:</label><input type="text"><label style="margin-top:6px">التوقيع:</label><input type="text"></div>
+      <div class="sig-box"><label>وكيل شؤون الطلاب – الاسم:</label><input type="text"><label style="margin-top:6px">التوقيع:</label><input type="text"></div>
+      <div class="sig-box"><label>مدير المدرسة – الاسم:</label><input type="text"><label style="margin-top:6px">التوقيع:</label><input type="text"></div>
+    </div>
+  </div>
+  <div class="card-save-note">📁 يحفظ بملف أعمال الاختبارات.</div>
+</div>
+
+<!-- FORMS 13-16: Checklist Forms - Generated dynamically below -->
+<!-- FORMS 17-50: Additional forms generated dynamically -->
+
+</div><!-- /main-content -->
+
+<script>
+// ===== GLOBAL STATE =====
+let currentForm = null;
+
+// ===== GENERATE REMAINING FORMS =====
+function generateRemainingForms() {
+  const container = document.getElementById('mainContent');
+
+  // Forms 13-16: Checklist bitmapped forms
+  const checklistForms = [
+    { id: 13, title: 'بطاقة تأمين الاحتياجات والإمكانيات اللازمة للاختبارات', items: [
+      'تخصيص مكان آمن خاص لإدارة أعمال الاختبارات',
+      'تأمين ماكينة تصوير جيدة والتأكد من سلامتها للعمل',
+      'توفير الكمية المطلوبة من أحبار ومستلزمات ماكينة التصوير',
+      'تأمين ورق تصوير بالعدد الكافي للأسئلة والنماذج',
+      'تأمين ظروف بمقاسات مختلفة للأسئلة والإجابات',
+      'تأمين وحدة تخزين خارجية لحفظ البيانات من نظام نور',
+      'تأمين دباسات وأقلام وملصقات بالعدد الكافي',
+      'تأمين أوراق لاصقة بأرقام الجلوس من نظام نور',
+      'تأمين أقلام ألوان (أزرق للطلبة، أحمر للتصحيح، أسود للمراجعة)',
+      'إعداد ملف عام للاختبارات وتحديثه باللوائح والأدلة',
+      'إعداد ملف أعمال الاختبارات الفترية والنهائية',
+      'إعداد ملفات للاختبارات الشفوية/العملية',
+      'إعداد ملفات لأصل الأسئلة وأصل الإجابة النموذجية لكل صف',
+      'إعداد ملف لصور الأسئلة والإجابات لإرسالها لمكتب التعليم',
+      'طباعة نموذج معلومات ظروف الأسئلة والإجابات',
+      'تصوير نماذج تنظيم الاختبارات بالعدد المطلوب',
+      'بيان بأسماء الطلبة وهواتف أولياء أمورهم',
+      'توفير الإسعافات الأولية وتهيئة المكان للحالات الصحية',
+      'توفير الماء البارد لجميع اللجان'
+    ]},
+    { id: 14, title: 'بطاقة متابعة الاستعدادات قبل الاختبارات', items: [
+      'إصدار قرار تشكيل لجنة التحصيل الدراسي (نموذج 1)',
+      'الاجتماع بلجنة التحصيل الدراسي',
+      'إصدار قرارات تشكيل لجان الاختبارات الفرعية (نماذج 2، 3، 4، 5، 6)',
+      'إعداد كشف بأسماء معدي الأسئلة والمصححين والمراجعين',
+      'إصدار قرار تكاليف المعلمين بإعداد الأسئلة (نموذج 7)',
+      'استلام أسئلة المواد من المعلمين بعد تصويرها وتغليفها (نموذج 8)',
+      'إعداد جداول الاختبارات وإعلانها (نماذج 10، 11، 12)',
+      'التأكد من اكتمال تأمين الاحتياجات والإمكانيات (نموذج 13)',
+      'الحصول على موافقة استخدام التصحيح الآلي إن وجدت',
+      'تدقيق بيانات الطلبة في نظام نور ومطابقتها مع وثائقهم الرسمية',
+      'أخذ إقرارات المعلمين بإنهاء المقررات (نموذج 17)',
+      'متابعة تسليم المعلمين سجلات متابعة التقويم (نموذج 18)',
+      'تجهيز ظروف الأسئلة والإجابات (نماذج 19، 20، 21)',
+      'متابعة رصد درجات الاختبارات الفترية وأعمال السنة',
+      'عمل بيان باللجان وأعداد الطلبة (نموذج 22)',
+      'طباعة كشف أسماء طلبة اللجان من نظام نور (نموذج 23)',
+      'تهيئة مقار لجان الاختبار (أرقام، كشوف، إضاءة، تهوية، نظافة)',
+      'تجهيز مقاعد الطلبة ووضع أرقام الجلوس',
+      'إعداد الجدول العام لتوزيع الملاحظين (نموذج 24)',
+      'الاجتماع العام بجميع العاملين بالمدرسة'
+    ]},
+    { id: 15, title: 'بطاقة متابعة الأعمال أثناء الاختبارات', isDays: true, items: [
+      'متابعة دخول الطلبة لفناء المدرسة ومقار اللجان',
+      'متابعة حضور المعلمين للمدرسة',
+      'متابعة توقيع المعلمين على كشف الملاحظة اليومي',
+      'التأكد من وجود الملاحظين في اللجان قبل دخول الطلبة',
+      'فتح ظروف الأسئلة قبل 15 دقيقة (نموذج 27)',
+      'تسليم مظاريف أسئلة الاختبار للملاحظين قبل 5 دقائق',
+      'إعلان بدء الاختبار وتوزيع الأسئلة',
+      'تدوين أسماء الطلبة المتأخرين (نماذج 30، 31، 32، 33)',
+      'حصر الطلبة الغائبين والاتصال بأولياء أمورهم',
+      'متابعة حضور الطلبة الغائبين (نماذج 35، 36، 37)',
+      'استلام أوراق الإجابة من الملاحظين مرتبة (نماذج 39، 40، 41)',
+      'تسليم ظروف المواد لرئيس لجنة التصحيح (نموذج 41)',
+      'متابعة تفعيل نموذج المصححين والمراجعين (نموذج 42)',
+      'الاطلاع على أعمال لجان التصحيح بأخذ عينة عشوائية',
+      'إعلام الطلاب بموعد الاستعلام عن النتائج من نظام نور'
+    ]},
+    { id: 16, title: 'بطاقة متابعة الأعمال بعد الاختبارات', items: [
+      'استخراج بيانات المراجعة النهائية من نظام نور',
+      'تدقيق النتائج واعتمادها وفق أنظمة الاختبارات',
+      'إغلاق الدرجات واعتمادها في نظام نور',
+      'طباعة إشعارات الفصل الدراسي وحفظ نسخة إلكترونية',
+      'طباعة الشهادات من نظام نور وتوقيعها وختمها',
+      'طباعة أسماء الطلبة الناجحين والأوائل',
+      'إدخال جدول الدور الثاني في نظام نور',
+      'طباعة إشعارات الطلبة المكملين وتسليمها لهم',
+      'طباعة إشعارات الطلبة الراسبين وتسليمها لهم',
+      'حفظ شهادات الطلبة بصيغة pdf في وحدة تخزين خارجية',
+      'طباعة إحصائيات الاختبار لجميع الصفوف',
+      'إعداد خطة اختبارات الدور الثاني',
+      'طباعة مبيضة نتائج الطلبة وتغليفها وحفظها',
+      'تزويد مكتب التعليم بنسخة من الأسئلة والإجابة النموذجية'
+    ]}
+  ];
+
+  checklistForms.forEach(f => {
+    const div = document.createElement('div');
+    div.className = 'form-card';
+    div.id = `form-${f.id}`;
+    let rows = '';
+    if (f.isDays) {
+      rows = f.items.map(item => `
+        <tr>
+          <td class="task-col">${item}</td>
+          <td class="check-col"><input type="checkbox"></td>
+          <td class="check-col"><input type="checkbox"></td>
+          <td class="check-col"><input type="checkbox"></td>
+          <td class="check-col"><input type="checkbox"></td>
+          <td class="check-col"><input type="checkbox"></td>
+          <td><input type="text" placeholder="ملاحظة"></td>
+        </tr>`).join('');
+      div.innerHTML = `
+        <div class="card-header"><span class="card-header-title">${f.title}</span><span class="card-header-num">نموذج رقم ${f.id}</span></div>
+        <div class="card-body">
+          ${lhHTML(f.id)}
+          <div class="model-title-row"><span class="label">اسم النموذج</span><span class="value">${f.title}</span><span class="label">رقم النموذج</span><span class="value">${f.id}</span></div>
+          <div class="time-table-wrap">
+          <table class="checklist-table">
+            <thead>
+              <tr><th style="width:40%">العمل المطلوب</th><th>الأحد</th><th>الاثنين</th><th>الثلاثاء</th><th>الأربعاء</th><th>الخميس</th><th>ملاحظات</th></tr>
+            </thead>
+            <tbody>${rows}</tbody>
+          </table></div>
+        </div>
+        <div class="card-save-note">📁 يحفظ بملف أعمال الاختبارات.</div>`;
+    } else {
+      rows = f.items.map(item => `
+        <tr>
+          <td class="task-col">${item}</td>
+          <td class="check-col"><input type="checkbox" title="تم"></td>
+          <td class="check-col"><input type="checkbox" title="لا"></td>
+          <td><input type="text" placeholder="ملاحظة"></td>
+        </tr>`).join('');
+      div.innerHTML = `
+        <div class="card-header"><span class="card-header-title">${f.title}</span><span class="card-header-num">نموذج رقم ${f.id}</span></div>
+        <div class="card-body">
+          ${lhHTML(f.id)}
+          <div class="model-title-row"><span class="label">اسم النموذج</span><span class="value">${f.title}</span><span class="label">رقم النموذج</span><span class="value">${f.id}</span></div>
+          <table class="checklist-table">
+            <thead><tr><th style="width:50%">العمل المطلوب</th><th>تم ✓</th><th>لا ✗</th><th>ملاحظات على التنفيذ</th></tr></thead>
+            <tbody>${rows}</tbody>
+          </table>
+        </div>
+        <div class="card-save-note">📁 يحفظ بملف أعمال الاختبارات.</div>`;
+    }
+    container.appendChild(div);
+  });
+
+  // Form 17: Teacher pledge
+  appendForm(17, 'إقرار معلم المادة بإنهاء المقررات الدراسية في وقتها المحدد', `
+    <table class="form-table" style="max-width:500px">
+      <tbody>
+        <tr><td class="td-label">م</td><td class="td-label">المادة</td><td class="td-label">الصف / المستوى</td><td class="td-label">المسار</td></tr>
+        ${[1,2,3,4].map(i=>`<tr><td class="center">${i}</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>`).join('')}
+      </tbody>
+    </table>
+    <div class="warn-box" style="margin-top:12px">
+      <div style="margin-bottom:8px">أُقر أنا المعلم / <input type="text" style="border:none;border-bottom:1px solid #aaa;min-width:200px;font-family:Tajawal;font-size:0.85rem;"> بأنني:</div>
+      <div class="radio-group">
+        <label class="radio-item"><input type="radio" name="complete_${17}" value="yes"> أنهيت تدريس كامل المقررات الدراسية في الوقت المحدد.</label>
+        <label class="radio-item"><input type="radio" name="complete_${17}" value="no"> لم أنهِ تدريس كامل المقرر للأسباب التالية:</label>
+      </div>
+      <textarea class="field-input field-textarea" style="margin-top:8px" placeholder="اذكر الأسباب..."></textarea>
+    </div>
+    <div class="sig-row sig-row-3">
+      <div class="sig-box"><label>معلم المادة:</label><input type="text"></div>
+      <div class="sig-box"><label>التوقيع:</label><input type="text"></div>
+      <div class="sig-box"><label>التاريخ:</label><input type="text" placeholder="/  /144هـ"></div>
+    </div>
+    <div style="font-size:0.8rem;color:var(--text-muted);margin-top:8px">▸ يُسلّم الإقرار لوكيل الشؤون التعليمية.</div>
+  `);
+
+  // Form 18: Follow-up teacher assessment records
+  appendForm(18, 'متابعة تسليم المعلمين لسجلات متابعة تقويم الطلبة نهاية كل فصل دراسي', `
+    <table class="form-table">
+      <thead><tr><th>م</th><th>اسم المعلم</th><th>التاريخ</th><th>توقيع المعلم</th><th>توقيع المستلم</th><th>ملاحظات</th></tr></thead>
+      <tbody>
+        ${Array.from({length:20},(_,i)=>`<tr><td class="center">${i+1}</td><td><input type="text"></td><td><input type="text" placeholder="/  /144هـ"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>`).join('')}
+      </tbody>
+    </table>
+  `);
+
+  // Envelope forms 19-21
+  const envelopes = [
+    {id:19, title:'ظرف أصل الأسئلة', fields:['العام الدراسي','الفصل الدراسي','الدور','نوع الأسئلة','المادة','الصف / المستوى','المسار','اسم المعلم','توقيع المعلم']},
+    {id:20, title:'ظرف أصل الإجابة النموذجية', fields:['العام الدراسي','الفصل الدراسي','الدور','نوع الأسئلة','المادة','الصف / المستوى','المسار','اسم المعلم','توقيع المعلم']},
+    {id:21, title:'ظرف أسئلة الطلبة', fields:['العام الدراسي','الفصل الدراسي','الدور','المادة','الصف / المستوى','المسار','اليوم','التاريخ']}
+  ];
+  envelopes.forEach(e=>{
+    appendForm(e.id, e.title, `
+      <div style="border:3px dashed var(--gold);border-radius:12px;padding:20px;max-width:450px;margin:0 auto;">
+        <div style="text-align:center;font-weight:800;font-size:1rem;color:var(--primary);margin-bottom:14px;border-bottom:2px solid var(--border);padding-bottom:8px;">
+          🏛️ المملكة العربية السعودية – وزارة التعليم<br>
+          <span style="font-size:0.85rem;font-weight:600;color:var(--text-muted)">إدارة تقويم التحصيل المعرفي والمهاري</span>
+        </div>
+        <table class="form-table">
+          <tbody>
+            ${e.fields.map(f=>`<tr><td class="td-label" style="width:35%">${f}</td><td><input type="text" ${f==='العام الدراسي'?'class="g-year" placeholder="144/144هـ"':''}${f==='الفصل الدراسي'?'class="g-term"':''}${f==='الدور'?'class="g-round"':''}></td></tr>`).join('')}
+            ${e.id===21?`<tr><td class="td-label">الفترة</td><td><input type="text"></td></tr><tr><td class="td-label">رقم اللجنة</td><td><input type="text"></td></tr><tr><td class="td-label">عدد طلبة اللجنة</td><td><input type="text"></td></tr>`:''}
+          </tbody>
+        </table>
+        ${e.id!==21?`<div class="radio-group" style="margin-top:10px">
+          <span style="font-weight:700;font-size:0.82rem;color:var(--primary);">الفصل الدراسي: </span>
+          <label class="radio-item"><input type="radio" name="term_${e.id}" value="1"> الأول</label>
+          <label class="radio-item"><input type="radio" name="term_${e.id}" value="2"> الثاني</label>
+          <label class="radio-item"><input type="radio" name="term_${e.id}" value="3"> الثالث</label>
+        </div>
+        <div class="radio-group" style="margin-top:6px">
+          <span style="font-weight:700;font-size:0.82rem;color:var(--primary);">نوع الأسئلة: </span>
+          <label class="radio-item"><input type="radio" name="qtype_${e.id}" value="main"> الأساسية</label>
+          <label class="radio-item"><input type="radio" name="qtype_${e.id}" value="alt"> البديلة</label>
+        </div>`:''}
+      </div>
+    `);
+  });
+
+  // Form 22: Students in committees
+  appendForm(22, 'أعداد الطلبة في اللجان', `
+    <div class="time-table-wrap">
+    <table class="form-table">
+      <thead>
+        <tr>
+          <th colspan="2">الصف: <input type="text" style="width:80px;color:#fff;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,0.5)"></th>
+          <th colspan="2">الصف: <input type="text" style="width:80px;color:#fff;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,0.5)"></th>
+          <th colspan="2">الصف: <input type="text" style="width:80px;color:#fff;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,0.5)"></th>
+          <th colspan="2">الصف: <input type="text" style="width:80px;color:#fff;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,0.5)"></th>
+        </tr>
+        <tr>
+          <th>رقم اللجنة</th><th>عدد الطلبة</th>
+          <th>رقم اللجنة</th><th>عدد الطلبة</th>
+          <th>رقم اللجنة</th><th>عدد الطلبة</th>
+          <th>رقم اللجنة</th><th>عدد الطلبة</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${Array.from({length:15},()=>`<tr>${Array.from({length:8},()=>`<td><input type="text"></td>`).join('')}</tr>`).join('')}
+        <tr>${Array.from({length:4},()=>`<td class="td-label center">المجموع</td><td><input type="text"></td>`).join('')}</tr>
+      </tbody>
+    </table></div>
+  `);
+
+  // Form 23: Student list by committee
+  appendForm(23, 'كشف بأسماء الطلبة وفق اللجان', `
+    <div class="sig-row" style="margin-bottom:12px">
+      <div class="sig-box"><label>اسم اللجنة:</label><input type="text"></div>
+      <div class="sig-box"><label>مقر اللجنة:</label><input type="text"></div>
+    </div>
+    <table class="form-table">
+      <thead><tr><th>م</th><th>اسم الطالب</th><th>الصف / المستوى</th><th>المسار</th><th>رقم الجلوس</th><th>ملاحظات</th></tr></thead>
+      <tbody>
+        ${Array.from({length:20},(_,i)=>`<tr><td class="center">${i+1}</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>`).join('')}
+      </tbody>
+    </table>
+  `);
+
+  // Form 24: Observer schedule
+  appendForm(24, 'الجدول العام لتوزيع الملاحظين على لجان الاختبارات', `
+    <div class="time-table-wrap">
+    <table class="time-table">
+      <thead>
+        <tr><th rowspan="3">م</th><th rowspan="3">اسم الملاحظ</th>
+          <th colspan="10">أيام الأسبوع</th></tr>
+        <tr><th colspan="2">الأحد</th><th colspan="2">الاثنين</th><th colspan="2">الثلاثاء</th><th colspan="2">الأربعاء</th><th colspan="2">الخميس</th></tr>
+        <tr><th>أولى</th><th>ثانية</th><th>أولى</th><th>ثانية</th><th>أولى</th><th>ثانية</th><th>أولى</th><th>ثانية</th><th>أولى</th><th>ثانية</th></tr>
+      </thead>
+      <tbody>
+        ${Array.from({length:18},(_,i)=>`<tr><td class="center">${i+1}</td><td><input type="text"></td>${Array.from({length:10},()=>`<td><input type="text"></td>`).join('')}</tr>`).join('')}
+      </tbody>
+    </table></div>
+    <div class="sig-row" style="margin-top:12px">
+      <div class="sig-box"><label>مدير المدرسة:</label><input type="text"></div>
+      <div class="sig-box"><label>التوقيع:</label><input type="text"></div>
+    </div>
+  `);
+
+  // Form 25: Daily observer list
+  appendForm(25, 'كشف بأسماء الملاحظين اليومي', `
+    <div class="sig-row sig-row-3" style="margin-bottom:12px">
+      <div class="sig-box"><label>اليوم:</label><input type="text"></div>
+      <div class="sig-box"><label>التاريخ:</label><input type="text" placeholder="/  /144هـ"></div>
+      <div class="sig-box"><label>الفترة:</label><input type="text"></div>
+    </div>
+    <table class="form-table">
+      <thead><tr><th>رقم اللجنة</th><th>مقر اللجنة</th><th>المادة</th><th>زمن الاختبار</th><th>اسم الملاحظ</th><th>التوقيع</th></tr></thead>
+      <tbody>
+        ${Array.from({length:14},()=>`<tr><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>`).join('')}
+      </tbody>
+    </table>
+    <div class="section-divider"><span>الاحتياط</span></div>
+    <table class="form-table" style="max-width:500px">
+      <thead><tr><th>#</th><th>الاحتياط</th><th>اسم الملاحظ</th><th>التوقيع</th></tr></thead>
+      <tbody>
+        ${[1,2,3].map(i=>`<tr><td class="center">${i}</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>`).join('')}
+      </tbody>
+    </table>
+    <div class="sig-row" style="margin-top:10px">
+      <div class="sig-box"><label>مدير المدرسة:</label><input type="text"></div>
+      <div class="sig-box"><label>التوقيع:</label><input type="text"></div>
+    </div>
+  `);
+
+  // Form 26: Substitute observer
+  appendForm(26, 'محضر دخول معلم ملاحظ بديل', `
+    <div class="info-box">إنه في يوم: <input type="text" style="border:none;border-bottom:1px solid #88a;min-width:100px;font-family:Tajawal;"> وتاريخ: <input type="text" style="border:none;border-bottom:1px solid #88a;width:80px;font-family:Tajawal;" placeholder="/  /144هـ"> الفترة: <input type="text" style="border:none;border-bottom:1px solid #88a;min-width:80px;font-family:Tajawal;"> تم تأمين:</div>
+    <table class="form-table" style="max-width:550px">
+      <tbody>
+        <tr><td class="td-label">الملاحظ (احتياط) /</td><td><input type="text"></td></tr>
+        <tr><td class="td-label">لدخول لجنة اختبار رقم:</td><td><input type="text"></td></tr>
+        <tr><td class="td-label">مقرها:</td><td><input type="text"></td></tr>
+        <tr><td class="td-label">بديلاً عن المعلم (أساسي) /</td><td><input type="text"></td></tr>
+        <tr><td class="td-label">وذلك بسبب:</td><td><input type="text"></td></tr>
+      </tbody>
+    </table>
+    <div class="section-divider"><span>لجنة الإشراف والملاحظة</span></div>
+    <div class="sig-row sig-row-3">
+      <div class="sig-box"><label>الاسم:</label><input type="text"><label style="margin-top:5px">الصفة: رئيس اللجنة</label><label style="margin-top:5px">التوقيع:</label><input type="text"></div>
+      <div class="sig-box"><label>الاسم:</label><input type="text"><label style="margin-top:5px">الصفة: عضو</label><label style="margin-top:5px">التوقيع:</label><input type="text"></div>
+      <div class="sig-box"><label>الاسم (المعلم البديل):</label><input type="text"><label style="margin-top:5px">التوقيع:</label><input type="text"></div>
+    </div>
+    <div class="sig-row" style="margin-top:10px">
+      <div class="sig-box"><label>مدير المدرسة:</label><input type="text"></div>
+      <div class="sig-box"><label>التوقيع:</label><input type="text"></div>
+    </div>
+  `);
+
+  // Form 27: Envelope opening record
+  appendForm(27, 'محضر فتح مظروف أسئلة', `
+    <div class="warn-box">⚠️ تُفتح مظاريف الأسئلة قبل بدء الاختبار بـ (15) دقيقة. <strong>يُمنع فتح أظرف نماذج الإجابة إلا بعد التأكد من استلام جميع أوراق الإجابة من الطلبة.</strong></div>
+    ${[1,2].map(p=>`
+    <div class="section-divider"><span>الفترة ${p===1?'الأولى':'الثانية'}</span></div>
+    <table class="form-table" style="max-width:600px">
+      <tbody>
+        <tr><td class="td-label">اليوم</td><td><input type="text"></td><td class="td-label">التاريخ</td><td><input type="text" placeholder="/  /144هـ"></td><td class="td-label">المادة</td><td><input type="text"></td></tr>
+        <tr><td class="td-label">الصف / المستوى</td><td><input type="text"></td><td class="td-label">الفترة</td><td class="td-label">${p===1?'الأولى':'الثانية'}</td><td class="td-label">حالة المظروف</td><td>
+          <label class="radio-item" style="display:inline-flex"><input type="radio" name="env_${p}"> سليم</label>
+          <label class="radio-item" style="display:inline-flex"><input type="radio" name="env_${p}"> غير سليم</label>
+        </td></tr>
+        <tr><td class="td-label">وقت الفتح</td><td colspan="5"><input type="text"></td></tr>
+      </tbody>
+    </table>
+    <table class="form-table" style="max-width:600px">
+      <thead><tr><th>م</th><th>الاسم</th><th>عمله</th><th>الصفة</th><th>التوقيع</th></tr></thead>
+      <tbody>
+        <tr><td class="center">1</td><td><input type="text"></td><td class="td-label">وكيل شؤون الطلاب</td><td class="td-label">رئيساً</td><td><input type="text"></td></tr>
+        <tr><td class="center">2</td><td><input type="text"></td><td class="td-label">وكيل الشؤون التعليمية</td><td class="td-label">عضواً</td><td><input type="text"></td></tr>
+        <tr><td class="center">3</td><td><input type="text"></td><td><input type="text"></td><td class="td-label">عضواً</td><td><input type="text"></td></tr>
+        <tr><td class="center">4</td><td><input type="text"></td><td><input type="text"></td><td class="td-label">عضواً</td><td><input type="text"></td></tr>
+      </tbody>
+    </table>`).join('')}
+    <div class="sig-row" style="margin-top:10px">
+      <div class="sig-box"><label>مدير المدرسة:</label><input type="text"></div>
+      <div class="sig-box"><label>التوقيع:</label><input type="text"></div>
+    </div>
+  `);
+
+  // Forms 28-29: Violation records
+  [{id:28,title:'محضر الإخلال بسرية الأسئلة',extra:'مادة'},{id:29,title:'محضر الإخلال بسير الاختبارات',extra:''}].forEach(f=>{
+    appendForm(f.id, f.title, `
+      <table class="form-table" style="max-width:500px">
+        <tbody>
+          <tr><td class="td-label">اليوم</td><td><input type="text"></td><td class="td-label">التاريخ</td><td><input type="text" placeholder="/  /144هـ"></td></tr>
+          ${f.extra?`<tr><td class="td-label">المادة</td><td><input type="text"></td><td class="td-label">الصف / المستوى</td><td><input type="text"></td></tr>`:''}
+        </tbody>
+      </table>
+      <div class="section-divider"><span>أولاً: وصف الخلل</span></div>
+      <textarea class="field-input field-textarea" placeholder="اذكر وصف الخلل..." style="min-height:80px"></textarea>
+      <div class="section-divider"><span>وقد تبين لنا ذلك من خلال:</span></div>
+      <textarea class="field-input field-textarea" placeholder="اذكر كيفية الاكتشاف..." style="min-height:60px"></textarea>
+      <div class="section-divider"><span>لجنة الإشراف والملاحظة</span></div>
+      <div class="sig-row sig-row-3">
+        <div class="sig-box"><label>الاسم – الرئيس:</label><input type="text"><label style="margin-top:5px">التوقيع:</label><input type="text"></div>
+        <div class="sig-box"><label>الاسم – عضو:</label><input type="text"><label style="margin-top:5px">التوقيع:</label><input type="text"></div>
+        <div class="sig-box"><label>الاسم – عضو:</label><input type="text"><label style="margin-top:5px">التوقيع:</label><input type="text"></div>
+      </div>
+      <div class="section-divider"><span>ثانياً: الإجراءات المتخذة</span></div>
+      <textarea class="field-input field-textarea" placeholder="اذكر الإجراءات المتخذة..."></textarea>
+      <div class="section-divider"><span>لجنة التحصيل الدراسي</span></div>
+      <div class="sig-row sig-row-3">
+        <div class="sig-box"><label>الاسم:</label><input type="text"><label style="margin-top:5px">الصفة:</label><input type="text"><label style="margin-top:5px">التوقيع:</label><input type="text"></div>
+        <div class="sig-box"><label>الاسم:</label><input type="text"><label style="margin-top:5px">الصفة:</label><input type="text"><label style="margin-top:5px">التوقيع:</label><input type="text"></div>
+        <div class="sig-box"><label>الاسم:</label><input type="text"><label style="margin-top:5px">الصفة:</label><input type="text"><label style="margin-top:5px">التوقيع:</label><input type="text"></div>
+      </div>
+      <div class="sig-row" style="margin-top:10px">
+        <div class="sig-box"><label>مدير المدرسة:</label><input type="text"></div>
+        <div class="sig-box"><label>التوقيع:</label><input type="text"></div>
+      </div>
+    `);
+  });
+
+  // Form 30: Student pledge - late by ≤15 min
+  appendForm(30, 'تعهد طالب تأخر عن الاختبار بما لا يتجاوز خمس عشرة دقيقة', `
+    <table class="form-table" style="max-width:500px">
+      <tbody>
+        <tr><td class="td-label">اسم الطالب</td><td colspan="3"><input type="text"></td></tr>
+        <tr><td class="td-label">الصف / المستوى</td><td><input type="text"></td><td class="td-label">المسار</td><td><input type="text"></td></tr>
+        <tr><td class="td-label">اليوم</td><td><input type="text"></td><td class="td-label">التاريخ</td><td><input type="text" placeholder="/  /144هـ"></td></tr>
+        <tr><td class="td-label">الفترة</td><td><input type="text"></td><td class="td-label">المادة</td><td><input type="text"></td></tr>
+        <tr><td class="td-label">وقت بدء الاختبار</td><td><input type="text"></td><td class="td-label">وقت حضور الطالب</td><td><input type="text"></td></tr>
+        <tr><td class="td-label">مقدار التأخر</td><td colspan="3"><input type="text"></td></tr>
+      </tbody>
+    </table>
+    <div class="warn-box" style="margin-top:10px">
+      أتعهد أنا الطالب / <input type="text" style="border:none;border-bottom:1px solid #aaa;min-width:150px;font-family:Tajawal;"> بالالتزام بالحضور المبكر أيام الاختبارات وعدم تكرار التأخر. 
+      وأشعرت أنه في حال التكرار يتم حسم درجة من درجات المواظبة عن كل تأخر.<br>
+      <strong>توقيع الطالب:</strong> <input type="text" style="border:none;border-bottom:1px solid #aaa;min-width:120px;font-family:Tajawal;">
+    </div>
+    <div class="sig-row" style="margin-top:10px">
+      <div class="sig-box"><label>رئيس لجنة الإشراف – الاسم:</label><input type="text"><label style="margin-top:5px">التوقيع:</label><input type="text"></div>
+      <div class="sig-box"><label>رئيس لجنة التحكم – الاسم:</label><input type="text"><label style="margin-top:5px">التوقيع:</label><input type="text"></div>
+    </div>
+  `);
+
+  // Form 31-33: Late student lists + Form 32 individual record
+  appendForm(31, 'بيان بأسماء الطلبة المتأخرين (لا يتجاوز 15 دقيقة)', buildStudentList(31));
+  appendForm(32, 'محضر تأخر طالب (أكثر من 15 دقيقة وحتى نصف الزمن / تكرار)', `
+    <table class="form-table" style="max-width:500px">
+      <tbody>
+        <tr><td class="td-label">اسم الطالب</td><td colspan="3"><input type="text"></td></tr>
+        <tr><td class="td-label">رقم الهوية</td><td><input type="text"></td><td class="td-label">عدد مرات التأخير</td><td><input type="text"></td></tr>
+        <tr><td class="td-label">الصف / المستوى</td><td><input type="text"></td><td class="td-label">المسار</td><td><input type="text"></td></tr>
+        <tr><td class="td-label">اليوم</td><td><input type="text"></td><td class="td-label">التاريخ</td><td><input type="text" placeholder="/  /144هـ"></td></tr>
+        <tr><td class="td-label">الفترة</td><td><input type="text"></td><td class="td-label">المادة</td><td><input type="text"></td></tr>
+        <tr><td class="td-label">وقت بدء الاختبار</td><td><input type="text"></td><td class="td-label">وقت حضور الطالب</td><td><input type="text"></td></tr>
+        <tr><td class="td-label">مقدار التأخر</td><td><input type="text"></td><td class="td-label">توقيع الطالب</td><td><input type="text"></td></tr>
+        <tr><td class="td-label">اسم الملاحظ</td><td><input type="text"></td><td class="td-label">توقيع الملاحظ</td><td><input type="text"></td></tr>
+      </tbody>
+    </table>
+    <div class="section-divider"><span>أسباب التأخر حسب إفادة الطالب</span></div>
+    <textarea class="field-input field-textarea" placeholder="اذكر الأسباب..."></textarea>
+    <div class="section-divider"><span>قرار لجنة التحكم والضبط</span></div>
+    <div class="radio-group">
+      <label class="radio-item"><input type="radio" name="accept_32"> قبول العذر ويدخل الاختبار</label>
+      <label class="radio-item"><input type="radio" name="accept_32"> عدم قبول العذر ولا يدخل الاختبار</label>
+      <label class="radio-item"><input type="radio" name="accept_32"> يحسم درجة من درجات السلوك</label>
+    </div>
+    <div class="sig-row sig-row-3" style="margin-top:10px">
+      <div class="sig-box"><label>رئيس لجنة التحكم – الاسم:</label><input type="text"><label>التوقيع:</label><input type="text"></div>
+      <div class="sig-box"><label>اعتماد مدير المدرسة – الاسم:</label><input type="text"><label>التوقيع:</label><input type="text"></div>
+      <div class="sig-box"><label>التاريخ:</label><input type="text" placeholder="/  /144هـ"></div>
+    </div>
+    <div class="sig-row" style="margin-top:8px">
+      <div class="sig-box"><label>توقيع الطالب بالعلم:</label><input type="text"></div>
+      <div class="sig-box"><label>توقيع ولي أمره بالعلم:</label><input type="text"></div>
+    </div>
+  `);
+  appendForm(33, 'بيان بأسماء الطلبة المتأخرين (أكثر من 15 دقيقة)', buildStudentList(33));
+
+  // Form 34: Violation record
+  appendForm(34, 'محضر مخالفة الأنظمة والتعليمات', `
+    <table class="form-table" style="max-width:500px">
+      <tbody>
+        <tr><td class="td-label">اليوم</td><td><input type="text"></td><td class="td-label">التاريخ</td><td><input type="text" placeholder="/  /144هـ"></td></tr>
+        <tr><td class="td-label">الفترة</td><td><input type="text"></td><td class="td-label">المادة</td><td><input type="text"></td></tr>
+        <tr><td class="td-label">اسم الطالب</td><td><input type="text"></td><td class="td-label">رقم الجلوس</td><td><input type="text"></td></tr>
+        <tr><td class="td-label">الصف / المستوى</td><td><input type="text"></td><td class="td-label">التوقيع</td><td><input type="text"></td></tr>
+      </tbody>
+    </table>
+    <div class="section-divider"><span>تكرار المخالفة</span></div>
+    <div class="radio-group">
+      <label class="radio-item"><input type="radio" name="viol_rep"> المرة الأولى</label>
+      <label class="radio-item"><input type="radio" name="viol_rep"> المرة الثانية</label>
+      <label class="radio-item"><input type="radio" name="viol_rep"> المرة الثالثة</label>
+    </div>
+    <div class="section-divider"><span>وصف المخالفة</span></div>
+    <div class="radio-group" style="margin-bottom:8px">
+      <label class="radio-item"><input type="radio" name="viol_type"> فردي</label>
+      <label class="radio-item"><input type="radio" name="viol_type"> جماعي</label>
+    </div>
+    <textarea class="field-input field-textarea" placeholder="وصف المخالفة التفصيلي..."></textarea>
+    <div class="section-divider"><span>الإجراءات المتخذة</span></div>
+    <textarea class="field-input field-textarea" placeholder="الإجراءات المتخذة..."></textarea>
+    <div class="section-divider"><span>المصادقة</span></div>
+    <div class="sig-row sig-row-3">
+      <div class="sig-box"><label>الاسم:</label><input type="text"><label>الصفة:</label><input type="text"><label>التوقيع:</label><input type="text"></div>
+      <div class="sig-box"><label>الاسم:</label><input type="text"><label>الصفة:</label><input type="text"><label>التوقيع:</label><input type="text"></div>
+      <div class="sig-box"><label>الاسم:</label><input type="text"><label>الصفة:</label><input type="text"><label>التوقيع:</label><input type="text"></div>
+    </div>
+    <div class="sig-row" style="margin-top:10px">
+      <div class="sig-box"><label>مدير المدرسة:</label><input type="text"></div>
+      <div class="sig-box"><label>التوقيع:</label><input type="text"></div>
+    </div>
+  `);
+
+  // Form 35: Absence record
+  appendForm(35, 'محضر غياب طالب عن الاختبار', `
+    <table class="form-table" style="max-width:500px">
+      <tbody>
+        <tr><td class="td-label">اسم الطالب</td><td><input type="text"></td><td class="td-label">رقم الجلوس</td><td><input type="text"></td></tr>
+        <tr><td class="td-label">اليوم</td><td><input type="text"></td><td class="td-label">التاريخ</td><td><input type="text" placeholder="/  /144هـ"></td></tr>
+        <tr><td class="td-label">الفترة</td><td><input type="text"></td><td class="td-label">اللجنة</td><td><input type="text"></td></tr>
+        <tr><td class="td-label">المادة</td><td><input type="text"></td><td class="td-label">الصف / المستوى</td><td><input type="text"></td></tr>
+      </tbody>
+    </table>
+    <div class="section-divider"><span>المصادقة</span></div>
+    <div class="sig-row sig-row-3">
+      <div class="sig-box"><label>الاسم – رئيس لجنة الإشراف:</label><input type="text"><label>التوقيع:</label><input type="text"></div>
+      <div class="sig-box"><label>الاسم – عضو لجنة الإشراف:</label><input type="text"><label>التوقيع:</label><input type="text"></div>
+      <div class="sig-box"><label>الاسم – ملاحظ اللجنة:</label><input type="text"><label>التوقيع:</label><input type="text"></div>
+    </div>
+    <div class="sig-row" style="margin-top:10px">
+      <div class="sig-box"><label>مدير المدرسة:</label><input type="text"></div>
+      <div class="sig-box"><label>التوقيع:</label><input type="text"></div>
+    </div>
+    <div style="font-size:0.8rem;color:var(--text-muted);margin-top:8px">▸ يُوضع محضر الغياب حسب رقم جلوس الطالب في تسلسل أوراق الإجابة. ▸ يُسجل في بيان الغائبين.</div>
+  `);
+
+  // Form 36: Daily absence sheet
+  appendForm(36, 'كشف الغياب اليومي للطلبة أيام الاختبارات', `
+    <div class="sig-row" style="margin-bottom:12px">
+      <div class="sig-box"><label>اليوم:</label><input type="text"></div>
+      <div class="sig-box"><label>التاريخ:</label><input type="text" placeholder="/  /144هـ"></div>
+    </div>
+    <table class="form-table">
+      <thead><tr><th>الصف / المستوى</th><th>المسار</th><th>عدد المتقدمين</th><th>عدد الغائبين</th><th>اسم الطالب</th><th>رقم الجلوس</th><th>الفترة</th><th>المادة</th></tr></thead>
+      <tbody>
+        ${Array.from({length:15},()=>`<tr><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>`).join('')}
+      </tbody>
+    </table>
+  `);
+
+  // Form 37: Absent student list
+  appendForm(37, 'بيان حصر الطلبة الغائبين عن الاختبارات حسب المواد الدراسية', `
+    <table class="form-table">
+      <thead><tr><th>م</th><th>اسم الطالب</th><th>الصف / المستوى</th><th>المسار</th><th>رقم الجلوس</th><th>المادة</th></tr></thead>
+      <tbody>
+        ${Array.from({length:15},(_,i)=>`<tr><td class="center">${i+1}</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>`).join('')}
+      </tbody>
+    </table>
+    <div class="section-divider"><span>الخلاصة</span></div>
+    <table class="form-table" style="max-width:600px">
+      <tbody>
+        <tr>
+          ${Array.from({length:6},()=>`<td class="td-label">المادة:</td><td><input type="text"></td>`).join('')}
+        </tr>
+        <tr>
+          ${Array.from({length:6},()=>`<td class="td-label">عدد الغائبين:</td><td><input type="text"></td>`).join('')}
+        </tr>
+      </tbody>
+    </table>
+  `);
+
+  // Form 38: Answer sheet submission list
+  appendForm(38, 'كشف تسليم الطلبة أوراق الإجابة (كشف المناداة)', `
+    <div class="sig-row" style="margin-bottom:12px">
+      <div class="sig-box"><label>رقم اللجنة:</label><input type="text"></div>
+      <div class="sig-box"><label>الصف / المستوى:</label><input type="text"></div>
+    </div>
+    <div class="info-box">الأسبوع من: <input type="text" style="border:none;border-bottom:1px solid #88a;width:80px;font-family:Tajawal;" placeholder="/  /144هـ"> إلى: <input type="text" style="border:none;border-bottom:1px solid #88a;width:80px;font-family:Tajawal;" placeholder="/  /144هـ"></div>
+    <div class="time-table-wrap">
+    <table class="time-table">
+      <thead>
+        <tr><th rowspan="2">م</th><th rowspan="2">اسم الطالب</th>
+          <th colspan="2">الأحد</th><th colspan="2">الاثنين</th><th colspan="2">الثلاثاء</th><th colspan="2">الأربعاء</th><th colspan="2">الخميس</th></tr>
+        <tr><th>مادة</th><th>توقيع</th><th>مادة</th><th>توقيع</th><th>مادة</th><th>توقيع</th><th>مادة</th><th>توقيع</th><th>مادة</th><th>توقيع</th></tr>
+      </thead>
+      <tbody>
+        ${Array.from({length:16},(_,i)=>`<tr><td class="center">${i+1}</td><td><input type="text"></td>${Array.from({length:10},()=>`<td><input type="text"></td>`).join('')}</tr>`).join('')}
+        <tr><td colspan="2" class="td-label">اسم الملاحظ</td>${Array.from({length:10},()=>`<td><input type="text"></td>`).join('')}</tr>
+        <tr><td colspan="2" class="td-label">التوقيع</td>${Array.from({length:10},()=>`<td><input type="text"></td>`).join('')}</tr>
+      </tbody>
+    </table></div>
+  `);
+
+  // Form 39: Receiving answer sheets from committees
+  appendForm(39, 'كشف استلام أوراق الإجابة من اللجان', `
+    <div class="sig-row sig-row-3" style="margin-bottom:12px">
+      <div class="sig-box"><label>الصف / المستوى:</label><input type="text"></div>
+      <div class="sig-box"><label>المادة:</label><input type="text"></div>
+      <div class="sig-box"><label>اليوم / التاريخ:</label><input type="text" placeholder="/  /144هـ"></div>
+    </div>
+    <table class="form-table">
+      <thead><tr><th>م</th><th>رقم اللجنة</th><th>المتقدمون</th><th>الحاضرون</th><th>الغائبون</th><th>المجموع</th><th>عدد المحاضر</th><th>الملاحظات</th></tr></thead>
+      <tbody>
+        ${Array.from({length:12},(_,i)=>`<tr><td class="center">${i+1}</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>`).join('')}
+        <tr><td colspan="2" class="td-label center">المجموع</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td></td></tr>
+      </tbody>
+    </table>
+    <div class="sig-row" style="margin-top:10px">
+      <div class="sig-box"><label>المستلم (عضو لجنة التحكم والضبط) – الاسم:</label><input type="text"></div>
+      <div class="sig-box"><label>التوقيع:</label><input type="text"></div>
+    </div>
+  `);
+
+  // Form 40: Answer sheet envelope
+  appendForm(40, 'ظرف أوراق إجابات الطلبة', `
+    <div style="border:3px dashed var(--gold);border-radius:12px;padding:20px;max-width:450px;margin:0 auto;">
+      <div style="text-align:center;font-weight:800;font-size:1rem;color:var(--primary);margin-bottom:14px;border-bottom:2px solid var(--border);padding-bottom:8px;">
+        🏛️ المملكة العربية السعودية – وزارة التعليم<br>
+        <span style="font-size:0.85rem;font-weight:600;color:var(--text-muted)">إدارة تقويم التحصيل المعرفي والمهاري</span>
+      </div>
+      <table class="form-table">
+        <tbody>
+          <tr><td class="td-label">العام الدراسي</td><td><input type="text" class="g-year" placeholder="144/144هـ"></td></tr>
+          <tr><td class="td-label">الفصل الدراسي</td><td><input type="text" class="g-term"></td></tr>
+          <tr><td class="td-label">الدور</td><td><input type="text" class="g-round"></td></tr>
+          <tr><td class="td-label">المادة</td><td><input type="text"></td></tr>
+          <tr><td class="td-label">الصف / المستوى</td><td><input type="text"></td></tr>
+          <tr><td class="td-label">المسار</td><td><input type="text"></td></tr>
+          <tr><td class="td-label">اليوم</td><td><input type="text"></td></tr>
+          <tr><td class="td-label">التاريخ</td><td><input type="text" placeholder="/  /144هـ"></td></tr>
+          <tr><td class="td-label">الفترة</td><td><input type="text"></td></tr>
+          <tr><td class="td-label">عدد ظروف المادة</td><td><input type="text"></td></tr>
+          <tr><td class="td-label">ظرف المادة رقم</td><td><input type="text"></td></tr>
+          <tr><td class="td-label">عدد المتقدمين</td><td><input type="text"></td></tr>
+          <tr><td class="td-label">عدد الحاضرين</td><td><input type="text"></td></tr>
+          <tr><td class="td-label">عدد الغائبين</td><td><input type="text"></td></tr>
+        </tbody>
+      </table>
+    </div>
+  `);
+
+  // Form 41: Answer sheet tracking
+  appendForm(41, 'متابعة سير أوراق الإجابة', `
+    <div class="sig-row" style="margin-bottom:12px">
+      <div class="sig-box"><label>الصف / المستوى:</label><input type="text"></div>
+      <div class="sig-box"><label>المسار:</label><input type="text"></div>
+    </div>
+    <div class="time-table-wrap">
+    <table class="time-table" style="font-size:0.72rem">
+      <thead>
+        <tr>
+          <th rowspan="2">اليوم</th><th rowspan="2">المادة</th><th rowspan="2">عدد الأوراق</th>
+          <th colspan="3">لجنة التصحيح</th>
+          <th colspan="2">لجنة التحكم</th>
+          <th colspan="3">لجنة الرصد</th>
+          <th colspan="2">لجنة التحكم</th>
+          <th colspan="2">لجنة التصحيح</th>
+          <th colspan="2">لجنة التحكم</th>
+        </tr>
+        <tr>
+          <th>الاستلام</th><th>التصحيح ✓</th><th>التدقيق ✓</th>
+          <th>استلام من التصحيح</th><th>استلام من التحكم</th>
+          <th>الرصد</th><th>طباعة الكشف</th><th>استلام</th>
+          <th>استلام من الرصد</th><th>مطابقة</th>
+          <th>الاستلام النهائي</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس'].map(day=>`
+          <tr><td class="day-cell" rowspan="2">${day}</td><td><input type="text"></td><td><input type="text"></td>
+          ${Array.from({length:11},()=>`<td><input type="text" style="width:60px"></td>`).join('')}</tr>
+          <tr><td><input type="text"></td><td><input type="text"></td>
+          ${Array.from({length:11},()=>`<td><input type="text" style="width:60px"></td>`).join('')}</tr>`).join('')}
+      </tbody>
+    </table></div>
+  `);
+
+  // Form 42: Correctors/reviewers list
+  appendForm(42, 'بيان بأسماء المصححين والمراجعين والمدققين', `
+    <div class="sig-row sig-row-3" style="margin-bottom:12px">
+      <div class="sig-box"><label>المادة:</label><input type="text"></div>
+      <div class="sig-box"><label>الصف / المستوى:</label><input type="text"></div>
+      <div class="sig-box"><label>المسار:</label><input type="text"></div>
+    </div>
+    <table class="form-table" style="max-width:550px">
+      <thead><tr><th>م</th><th>الاسم</th><th>تصحيح السؤال رقم</th><th>مراجعة السؤال رقم</th><th>التوقيع</th></tr></thead>
+      <tbody>
+        ${[1,2,3].map(i=>`<tr><td class="center">${i}</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>`).join('')}
+        <tr><td colspan="5" style="text-align:center;font-size:0.8rem;background:#eef4fb;color:var(--primary);font-weight:700">تدقيق أوراق الإجابة وفق النموذج رقم (45)</td></tr>
+      </tbody>
+    </table>
+    <div class="sig-row" style="margin-top:10px">
+      <div class="sig-box"><label>رئيس لجنة التصحيح والمراجعة:</label><input type="text"></div>
+      <div class="sig-box"><label>التوقيع:</label><input type="text"></div>
+    </div>
+  `);
+
+  // Forms 43-44: Error records
+  [{id:43,title:'محضر اكتشاف خطأ في الأسئلة'},{id:44,title:'محضر اكتشاف خطأ في الإجابة النموذجية'}].forEach(f=>{
+    appendForm(f.id, f.title, `
+      <div class="info-box">إنه في يوم: <input type="text" style="border:none;border-bottom:1px solid #88a;min-width:100px;font-family:Tajawal;"> الموافق <input type="text" style="border:none;border-bottom:1px solid #88a;width:80px;font-family:Tajawal;" placeholder="/  /144هـ"> 
+      تم اكتشاف خطأ في أسئلة مادة: <input type="text" style="border:none;border-bottom:1px solid #88a;min-width:100px;font-family:Tajawal;">
+      للصف / المستوى: <input type="text" style="border:none;border-bottom:1px solid #88a;min-width:80px;font-family:Tajawal;">
+      المسار: <input type="text" style="border:none;border-bottom:1px solid #88a;min-width:80px;font-family:Tajawal;"></div>
+      <table class="form-table">
+        <thead><tr><th>السؤال رقم</th><th>فقرة رقم</th><th>الدرجة</th><th>نوع الخطأ</th><th>الإجراء المتخذ</th></tr></thead>
+        <tbody>
+          ${Array.from({length:6},()=>`<tr><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>`).join('')}
+        </tbody>
+      </table>
+      <div class="section-divider"><span>لجنة التصحيح والمراجعة</span></div>
+      <div class="sig-row sig-row-3">
+        <div class="sig-box"><label>الاسم – الرئيس:</label><input type="text"><label>التوقيع:</label><input type="text"></div>
+        <div class="sig-box"><label>الاسم – عضو:</label><input type="text"><label>التوقيع:</label><input type="text"></div>
+        <div class="sig-box"><label>الاسم – عضو:</label><input type="text"><label>التوقيع:</label><input type="text"></div>
+      </div>
+      <div class="sig-row" style="margin-top:10px">
+        <div class="sig-box"><label>مدير المدرسة:</label><input type="text"></div>
+        <div class="sig-box"><label>التوقيع:</label><input type="text"></div>
+      </div>
+    `);
+  });
+
+  // Form 45: Auditing notes
+  appendForm(45, 'ملاحظات لجنة التدقيق على أوراق إجابات الطلبة', `
+    <div class="sig-row sig-row-3" style="margin-bottom:12px">
+      <div class="sig-box"><label>اسم المادة:</label><input type="text"></div>
+      <div class="sig-box"><label>الصف / المستوى:</label><input type="text"></div>
+      <div class="sig-box"><label>المسار:</label><input type="text"></div>
+    </div>
+    <div class="time-table-wrap">
+    <table class="time-table" style="font-size:0.72rem">
+      <thead>
+        <tr>
+          <th rowspan="2">م</th><th rowspan="2">اسم الطالب</th><th rowspan="2">رقم الجلوس</th>
+          <th rowspan="2">موقع الملاحظة</th>
+          <th colspan="5">نوع الملاحظة</th>
+          <th colspan="2">المجموع النهائي</th>
+          <th rowspan="2">معلم المادة – الاسم</th><th rowspan="2">التوقيع</th>
+        </tr>
+        <tr><th>التصحيح</th><th>جمع الفقرات</th><th>نقل الدرجة</th><th>جمع المرايا</th><th>أخرى</th><th>قبل</th><th>بعد</th></tr>
+      </thead>
+      <tbody>
+        ${Array.from({length:8},(_,i)=>`<tr><td class="center">${i+1}</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>`).join('')}
+      </tbody>
+    </table></div>
+    <div class="sig-row" style="margin-top:10px">
+      <div class="sig-box"><label>مدقق المادة – الاسم:</label><input type="text"></div>
+      <div class="sig-box"><label>التوقيع:</label><input type="text"></div>
+    </div>
+  `);
+
+  // Form 46: Review request
+  appendForm(46, 'طلب مراجعة ورقة طالب', `
+    <table class="form-table" style="max-width:500px">
+      <tbody>
+        <tr><td class="td-label">اسم الطالب</td><td><input type="text"></td><td class="td-label">رقم الهوية</td><td><input type="text"></td></tr>
+        <tr><td class="td-label">الصف / المستوى</td><td colspan="3"><input type="text"></td></tr>
+        <tr><td class="td-label">اسم مقدم الطلب</td><td><input type="text"></td><td class="td-label">تاريخ الطلب</td><td><input type="text" placeholder="/  /144هـ"></td></tr>
+      </tbody>
+    </table>
+    <div class="info-box">آمل التكرم بمراجعة أوراق الطالب المذكور أعلاه حسب المواد الموضحة في الجدول أدناه وتسجيل نتيجة المراجعة.</div>
+    <div class="sig-row" style="margin-bottom:12px">
+      <div class="sig-box"><label>مدير المدرسة:</label><input type="text"></div>
+      <div class="sig-box"><label>التوقيع:</label><input type="text"></div>
+    </div>
+    <table class="form-table">
+      <thead><tr><th>م</th><th>المادة</th><th>اختبارات فصل 1</th><th>الفصل الأول</th><th>اختبارات فصل 2</th><th>الفصل الثاني</th><th>اختبارات فصل 3</th><th>الفصل الثالث</th><th>النتيجة</th><th>توقيع المعلم</th></tr></thead>
+      <tbody>
+        ${Array.from({length:6},(_,i)=>`<tr><td class="center">${i+1}</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>`).join('')}
+      </tbody>
+    </table>
+    <div class="sig-row" style="margin-top:10px">
+      <div class="sig-box"><label>رئيس لجنة التصحيح والمراجعة:</label><input type="text"></div>
+      <div class="sig-box"><label>التوقيع:</label><input type="text"></div>
+    </div>
+  `);
+
+  // Form 47: Grade edit (before close)
+  appendForm(47, 'تعديل درجة طالب في نظام نور (قبل إغلاق الدرجات)', `
+    <div class="info-box">آمل التكرم بالموافقة على تعديل الدرجة للطلبة التالية أسماؤهم:</div>
+    <table class="form-table">
+      <thead>
+        <tr><th rowspan="2">م</th><th rowspan="2">المادة</th><th rowspan="2">اسم الطالب</th><th rowspan="2">الصف</th><th rowspan="2">المسار</th>
+        <th colspan="2">الدرجة</th><th rowspan="2">سبب التعديل</th><th colspan="2">مسجل المعلومات</th></tr>
+        <tr><th>قبل التعديل</th><th>بعد التعديل</th><th>تاريخ التعديل</th><th>التوقيع</th></tr>
+      </thead>
+      <tbody>
+        ${Array.from({length:8},(_,i)=>`<tr><td class="center">${i+1}</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>`).join('')}
+      </tbody>
+    </table>
+    <div class="sig-row" style="margin-top:10px">
+      <div class="sig-box"><label>الاسم:</label><input type="text"><label>التوقيع:</label><input type="text"></div>
+      <div class="sig-box"><label>التاريخ:</label><input type="text" placeholder="/  /144هـ"></div>
+    </div>
+    <div class="section-divider"><span>رأي مدير المدرسة</span></div>
+    <div class="radio-group" style="margin-bottom:10px">
+      <label class="radio-item"><input type="radio" name="approve_47"> الموافقة</label>
+      <label class="radio-item"><input type="radio" name="approve_47"> عدم الموافقة</label>
+    </div>
+    <div class="sig-row">
+      <div class="sig-box"><label>الاسم:</label><input type="text"></div>
+      <div class="sig-box"><label>التوقيع:</label><input type="text"></div>
+      <div class="sig-box"><label>التاريخ:</label><input type="text" placeholder="/  /144هـ"></div>
+    </div>
+  `);
+
+  // Form 48: Grade edit (after close)
+  appendForm(48, 'تعديل درجة طالب في نظام نور (بعد إغلاق الدرجات)', `
+    <table class="form-table" style="max-width:500px">
+      <tbody>
+        <tr><td class="td-label">اسم الطالب (رباعياً)</td><td><input type="text"></td></tr>
+        <tr><td class="td-label">رقم الهوية</td><td><input type="text"></td></tr>
+        <tr><td class="td-label">الصف / المستوى</td><td><input type="text"></td></tr>
+      </tbody>
+    </table>
+    <div class="time-table-wrap">
+    <table class="time-table" style="font-size:0.76rem">
+      <thead>
+        <tr><th rowspan="2">المواد الدراسية</th><th rowspan="2">الدرجة</th>
+        <th colspan="5">توزيع الدرجات</th></tr>
+        <tr><th>المهام الأدائية</th><th>المشاركة</th><th>الاختبارات القصيرة</th><th>شفهي/عملي</th><th>تحريري</th></tr>
+      </thead>
+      <tbody>
+        ${Array.from({length:4},()=>`
+          <tr><td><input type="text"></td><td class="td-label">المرصودة</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>
+          <tr><td></td><td class="td-label">المستحقة</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>`).join('')}
+      </tbody>
+    </table></div>
+    <div class="section-divider"><span>إفادات ومرفقات</span></div>
+    <div class="field-group"><label>إفادة معلم المادة عن أسباب التعديل:</label><textarea class="field-input field-textarea" placeholder="اذكر الأسباب..."></textarea></div>
+    <div class="sig-row sig-row-3">
+      <div class="sig-box"><label>اسم معلم المادة:</label><input type="text"><label>التوقيع:</label><input type="text"></div>
+      <div class="sig-box"><label>اسم رئيس لجنة التصحيح:</label><input type="text"><label>التوقيع:</label><input type="text"></div>
+      <div class="sig-box"><label>اسم مدير المدرسة:</label><input type="text"><label>التوقيع + الختم:</label><input type="text"></div>
+    </div>
+  `);
+
+  // Form 49: Absent student grade entry
+  appendForm(49, 'طلب رصد درجة طالب غائب عن اختبار نهاية الفصل/الدور الثاني بعذر في نظام نور', `
+    <div class="info-box">آمل إتاحة فتح إدخال الدرجات في نظام نور حسب الصفوف المحددة أدناه:</div>
+    <div class="sig-row" style="margin-bottom:12px">
+      <div class="sig-box"><label>اسم مدير المدرسة:</label><input type="text"></div>
+      <div class="sig-box"><label>التوقيع:</label><input type="text"></div>
+      <div class="sig-box"><label>التاريخ:</label><input type="text" placeholder="/  /144هـ"></div>
+    </div>
+    <table class="form-table">
+      <thead><tr><th>اسم الطالب (رباعياً)</th><th>رقم الهوية</th><th>الصف</th><th>المواد</th><th>الدرجة المستحقة</th></tr></thead>
+      <tbody>
+        ${Array.from({length:10},()=>`<tr><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>`).join('')}
+      </tbody>
+    </table>
+    <div class="warn-box" style="font-size:0.78rem;margin-top:12px">
+      📌 <strong>تعليمات:</strong> خاص للطلبة من الصف الثالث الابتدائي حتى الصف الثالث المتوسط. يُجرى الاختبار البديل لاختبار الفصلين الدراسيين في الأسبوع الأول من بداية الفصل التالي. 
+      بعد منح الصلاحية يتم الرصد من حساب مدير المدرسة من صفحة بيانات الطالب.
+    </div>
+  `);
+
+  // Form 50: Final grade record
+  appendForm(50, 'دفتر رصد درجات أعمال السنة واختبار نهاية الفصول الدراسية الثلاثة', `
+    <div style="background:linear-gradient(135deg,var(--primary),var(--primary-light));border-radius:10px;padding:16px;color:#fff;margin-bottom:16px;text-align:center;">
+      <div style="font-size:1.1rem;font-weight:900;margin-bottom:6px;">دفتر رصد درجات أعمال السنة واختبار نهاية الفصول الدراسية الثلاثة</div>
+      <div style="font-size:0.85rem;opacity:0.85">وفق ما ورد في مهام لجنة الرصد وإخراج النتائج الفقرة رقم (15) من الخطة</div>
+    </div>
+    <table class="form-table" style="max-width:400px">
+      <tbody>
+        <tr><td class="td-label">العام الدراسي</td><td><input type="text" class="g-year" placeholder="144/144هـ"></td></tr>
+        <tr><td class="td-label">الدور</td><td><input type="text" placeholder="الأول والثاني"></td></tr>
+        <tr><td class="td-label">الصف / المستوى</td><td><input type="text"></td></tr>
+        <tr><td class="td-label">المسار</td><td><input type="text"></td></tr>
+      </tbody>
+    </table>
+    <div class="info-box" style="margin-top:12px">
+      📋 ملاحظة: يتم إعداد وطباعة سجل نتائج الطلبة (المبيضة) وفق ما ورد في مهام لجنة الرصد وإخراج النتائج.
+      <br>يُحفظ في خزانة المدرسة كعهدة على مدير المدرسة، وعلى الحاسب الآلي بتنسيق (pdf) وفي وحدة تخزين خارجية.
+    </div>
+    <div class="section-divider"><span>تسلسل الكشف</span></div>
+    <div class="task-item"><div class="task-bullet"></div><div class="task-text">أسماء ودرجات الطلبة الناجحين في الدور الأول المنتظمين ثم المنتسبين كلياً.</div></div>
+    <div class="task-item"><div class="task-bullet"></div><div class="task-text">أسماء ودرجات الطلبة الناجحين في الدور الثاني المنتظمين ثم المنتسبين كلياً.</div></div>
+    <div class="task-item"><div class="task-bullet"></div><div class="task-text">أسماء ودرجات الطلبة الراسبين المنتظمين ثم المنتسبين كلياً.</div></div>
+    <div class="sig-row" style="margin-top:14px">
+      <div class="sig-box"><label>مدير المدرسة:</label><input type="text"></div>
+      <div class="sig-box"><label>التوقيع + الختم:</label><input type="text"></div>
+    </div>
+  `);
+}
+
+function lhHTML(id) {
+  return `<div class="letterhead">
+    <div class="letterhead-right"><textarea class="lh-right-field g-org" rows="4">المملكة العربية السعودية
+وزارة التعليم
+الإدارة العامة للتعليم
+إدارة تقويم التحصيل المعرفي والمهاري</textarea></div>
+    <div class="letterhead-center"><div class="letterhead-emblem">🏛️</div></div>
+    <div class="letterhead-left">
+      <div class="lh-row"><span class="lh-label">مدرسة:</span><input class="lh-input g-school" type="text"></div>
+      <div class="lh-row"><span class="lh-label">العام الدراسي:</span><input class="lh-input g-year" type="text" style="width:90px"></div>
+      <div class="lh-row"><span class="lh-label">الفصل الدراسي:</span><input class="lh-input g-term" type="text" style="width:60px"></div>
+      <div class="lh-row"><span class="lh-label">الدور:</span><input class="lh-input g-round" type="text" style="width:60px"></div>
+    </div>
+  </div>`;
+}
+
+function appendForm(id, title, bodyHTML) {
+  const container = document.getElementById('mainContent');
+  const div = document.createElement('div');
+  div.className = 'form-card';
+  div.id = `form-${id}`;
+  div.innerHTML = `
+    <div class="card-header"><span class="card-header-title">${title}</span><span class="card-header-num">نموذج رقم ${id}</span></div>
+    <div class="card-body">
+      ${id >= 17 ? lhHTML(id) : ''}
+      <div class="model-title-row"><span class="label">اسم النموذج</span><span class="value">${title}</span><span class="label">رقم النموذج</span><span class="value">${id}</span></div>
+      ${bodyHTML}
+    </div>
+    <div class="card-save-note">📁 يحفظ بملف أعمال الاختبارات.</div>`;
+  container.appendChild(div);
+}
+
+function buildStudentList(id) {
+  return `<table class="form-table">
+    <thead><tr><th>م</th><th>اسم الطالب</th><th>الصف / المستوى</th><th>المسار</th><th>اليوم</th><th>التاريخ</th><th>الفترة</th><th>المادة</th><th>مقدار التأخر</th><th>إيضاحات</th></tr></thead>
+    <tbody>
+      ${Array.from({length:15},(_,i)=>`<tr><td class="center">${i+1}</td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text" placeholder="/  /144هـ"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td></tr>`).join('')}
+    </tbody>
+  </table>`;
+}
+
+// ===== NAVIGATION =====
+function showSection(name) {
+  document.querySelectorAll('.form-card').forEach(f => f.classList.remove('visible'));
+  const ov = document.getElementById('section-overview');
+  ov.style.display = name === 'overview' ? 'block' : 'none';
+  currentForm = null;
+  document.querySelectorAll('.nav-tab').forEach((t,i) => t.classList.toggle('active', i===0));
+}
+
+function showForm(num) {
+  document.getElementById('section-overview').style.display = 'none';
+  document.querySelectorAll('.form-card').forEach(f => f.classList.remove('visible'));
+  const target = document.getElementById(`form-${num}`);
+  if (target) { target.classList.add('visible'); target.scrollIntoView({behavior:'smooth',block:'start'}); }
+  currentForm = num;
+  document.querySelectorAll('.nav-tab').forEach((t,i) => t.classList.toggle('active', i === num));
+}
+
+// ===== GLOBAL SETTINGS =====
+function applyGlobalSettings() {
+  const school = document.getElementById('schoolName').value;
+  const year = document.getElementById('schoolYear').value;
+  const term = document.getElementById('schoolTerm').value;
+  const round = document.getElementById('schoolRound').value;
+  const org = document.getElementById('orgName').value;
+  document.querySelectorAll('.g-school').forEach(el => { if (!el._touched) el.value = school; });
+  document.querySelectorAll('.g-year').forEach(el => { if (!el._touched) el.value = year; });
+  document.querySelectorAll('.g-term').forEach(el => { if (!el._touched) el.value = term; });
+  document.querySelectorAll('.g-round').forEach(el => { if (!el._touched) el.value = round; });
+  if (org) {
+    document.querySelectorAll('.g-org').forEach(el => { if (!el._touched) el.value = org; });
+  }
+}
+
+// ===== PRINT =====
+function printCurrentForm() {
+  if (!currentForm) {
+    alert('الرجاء اختيار نموذج أولاً قبل الطباعة.');
+    return;
+  }
+  const orient = document.getElementById('printOrientation').value;
+
+  // تطبيق اتجاه الصفحة
+  let orientStyle = document.getElementById('print-orient-style');
+  if (!orientStyle) {
+    orientStyle = document.createElement('style');
+    orientStyle.id = 'print-orient-style';
+    document.head.appendChild(orientStyle);
+  }
+  orientStyle.textContent = `@page { size: A4 ${orient}; margin: 12mm; }`;
+
+  // تحديد النموذج المستهدف
+  document.querySelectorAll('.form-card').forEach(f => f.classList.remove('print-target'));
+  const t = document.getElementById('form-' + currentForm);
+  if (t) t.classList.add('print-target');
+
+  // تأخير بسيط لضمان تطبيق CSS
+  setTimeout(() => {
+    window.print();
+    setTimeout(() => {
+      document.querySelectorAll('.form-card').forEach(f => f.classList.remove('print-target'));
+    }, 1500);
+  }, 100);
+}
+
+function savePDF() {
+  if (!currentForm) {
+    alert('الرجاء اختيار نموذج أولاً.');
+    return;
+  }
+  printCurrentForm();
+}
+
+// ===== INIT =====
+generateRemainingForms();
+applyGlobalSettings();
+
+// Mark touched inputs
+document.addEventListener('input', function(e) {
+  if (e.target.classList.contains('g-school') || e.target.classList.contains('g-year') ||
+      e.target.classList.contains('g-term') || e.target.classList.contains('g-round') ||
+      e.target.classList.contains('g-org')) {
+    e.target._touched = true;
+  }
+});
+</script>
+</body>
+</html>
