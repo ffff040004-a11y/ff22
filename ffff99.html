@@ -1,0 +1,1561 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>منصة تحليل الدرجات الإحصائية المتقدمة</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root {
+  --navy:   #1B2A4A;
+  --navy2:  #243358;
+  --teal:   #0E7C7B;
+  --teal2:  #0A9B9A;
+  --gold:   #C9A84C;
+  --gold2:  #F5D78E;
+  --cream:  #FDF8EE;
+  --light:  #E8EBF2;
+  --white:  #FFFFFF;
+  --red:    #C0392B;
+  --green:  #1E8449;
+  --orange: #D35400;
+  --shadow: 0 8px 32px rgba(27,42,74,0.13);
+  --radius: 16px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Cairo', sans-serif;
+  background: linear-gradient(135deg, #0D1B35 0%, #1B2A4A 40%, #0E3A3A 100%);
+  min-height: 100vh;
+  color: var(--navy);
+}
+
+/* ── TOP HEADER ── */
+.site-header {
+  background: linear-gradient(90deg, var(--navy) 0%, #0E3A3A 100%);
+  border-bottom: 3px solid var(--gold);
+  padding: 0 2rem;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 100;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+}
+.site-header .logo {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 0;
+}
+.site-header .logo-icon {
+  width: 52px; height: 52px;
+  background: var(--gold);
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px;
+}
+.site-header h1 {
+  color: var(--white);
+  font-size: 1.3rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+.site-header h1 span { color: var(--gold2); display: block; font-size: 0.8rem; font-weight: 400; }
+.header-meta {
+  color: var(--gold2);
+  font-size: 0.75rem;
+  text-align: left;
+  line-height: 1.8;
+}
+
+/* ── TABS ── */
+.tabs-bar {
+  background: rgba(255,255,255,0.05);
+  border-bottom: 1px solid rgba(201,168,76,0.3);
+  padding: 0 2rem;
+  display: flex; gap: 4px;
+  overflow-x: auto;
+}
+.tab-btn {
+  padding: 14px 20px;
+  background: transparent;
+  border: none; border-bottom: 3px solid transparent;
+  color: rgba(255,255,255,0.6);
+  font-family: 'Cairo', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.3s;
+  display: flex; align-items: center; gap: 8px;
+}
+.tab-btn:hover { color: var(--gold2); }
+.tab-btn.active {
+  color: var(--gold);
+  border-bottom-color: var(--gold);
+  background: rgba(201,168,76,0.1);
+}
+
+/* ── PANELS ── */
+.panel { display: none; padding: 2rem; }
+.panel.active { display: block; }
+
+/* ── CARDS ── */
+.card {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+.card-header {
+  background: linear-gradient(90deg, var(--navy) 0%, var(--teal) 100%);
+  padding: 16px 24px;
+  color: var(--white);
+  font-size: 1.05rem;
+  font-weight: 700;
+  display: flex; align-items: center; gap: 10px;
+}
+.card-body { padding: 24px; }
+
+/* ── IMPORT SECTION ── */
+.import-zone {
+  background: linear-gradient(135deg, var(--cream) 0%, #EAF6F6 100%);
+  border: 2px dashed var(--teal);
+  border-radius: var(--radius);
+  padding: 3rem 2rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+}
+.import-zone:hover, .import-zone.drag-over {
+  background: #E0F5F5;
+  border-color: var(--gold);
+  transform: translateY(-2px);
+}
+.import-zone .icon { font-size: 3.5rem; margin-bottom: 1rem; }
+.import-zone h3 { color: var(--navy); font-size: 1.3rem; margin-bottom: 0.5rem; }
+.import-zone p { color: #666; font-size: 0.9rem; }
+#fileInput { display: none; }
+.import-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: linear-gradient(135deg, var(--teal), var(--teal2));
+  color: white;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 50px;
+  font-family: 'Cairo', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: all 0.3s;
+  box-shadow: 0 4px 15px rgba(14,124,123,0.3);
+}
+.import-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(14,124,123,0.4); }
+
+/* ── STATS GRID ── */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.stat-card {
+  background: var(--white);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: var(--shadow);
+  text-align: center;
+  border-top: 4px solid var(--teal);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s;
+}
+.stat-card:hover { transform: translateY(-4px); }
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 80px; height: 80px;
+  background: radial-gradient(circle, rgba(14,124,123,0.08) 0%, transparent 70%);
+  border-radius: 50%;
+}
+.stat-card .stat-icon { font-size: 2rem; margin-bottom: 8px; }
+.stat-card .stat-value {
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--navy);
+  line-height: 1;
+}
+.stat-card .stat-label {
+  font-size: 0.8rem;
+  color: #666;
+  margin-top: 4px;
+}
+.stat-card.gold { border-top-color: var(--gold); }
+.stat-card.red { border-top-color: var(--red); }
+.stat-card.green { border-top-color: var(--green); }
+.stat-card.orange { border-top-color: var(--orange); }
+
+/* ── TABLES ── */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+.data-table th {
+  background: var(--navy);
+  color: var(--white);
+  padding: 10px 12px;
+  text-align: center;
+  font-weight: 600;
+}
+.data-table td {
+  padding: 9px 12px;
+  text-align: center;
+  border-bottom: 1px solid #EEE;
+}
+.data-table tr:nth-child(even) td { background: #F8FAFF; }
+.data-table tr:hover td { background: #EEF6F6; }
+
+/* ── GRADE BADGE ── */
+.grade-badge {
+  display: inline-block;
+  padding: 3px 12px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+.grade-ممتاز   { background: #D4EFDF; color: #1E8449; }
+.grade-جيد_جداً { background: #D6EAF8; color: #1A5276; }
+.grade-جيد     { background: #D5F5E3; color: #1D6A2E; }
+.grade-مقبول   { background: #FEF9E7; color: #B7950B; }
+.grade-ضعيف    { background: #FADBD8; color: #922B21; }
+
+/* ── CHARTS ── */
+.charts-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+@media (max-width: 768px) { .charts-grid { grid-template-columns: 1fr; } }
+.chart-box {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow);
+}
+.chart-box h4 {
+  color: var(--navy);
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--teal);
+}
+
+
+
+/* ── INFOGRAPHIC SECTION ── */
+.infographic-section {
+  background: linear-gradient(135deg, #F8F9FA, #EEF2FF);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  margin-bottom: 1.5rem;
+}
+.info-hero {
+  background: linear-gradient(135deg, var(--navy) 0%, #0E3A3A 100%);
+  padding: 3rem 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.info-hero::before {
+  content: '';
+  position: absolute;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: radial-gradient(ellipse, rgba(201,168,76,0.08) 0%, transparent 60%);
+}
+.info-hero h2 {
+  color: var(--gold2);
+  font-size: 2.2rem;
+  font-weight: 900;
+  font-family: 'Amiri', serif;
+  position: relative; z-index: 1;
+}
+.info-hero .subtitle {
+  color: rgba(255,255,255,0.8);
+  font-size: 1rem;
+  margin-top: 8px;
+  position: relative; z-index: 1;
+}
+.info-hero .badge-row {
+  display: flex; justify-content: center; gap: 1rem; margin-top: 1.5rem;
+  flex-wrap: wrap;
+  position: relative; z-index: 1;
+}
+.info-badge {
+  background: rgba(201,168,76,0.2);
+  border: 1px solid var(--gold);
+  color: var(--gold2);
+  padding: 6px 18px;
+  border-radius: 20px;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+@media (max-width:700px) { .info-grid { grid-template-columns: 1fr; } }
+.info-block {
+  padding: 2rem;
+  border-right: 1px solid #DDE;
+  border-bottom: 1px solid #DDE;
+}
+.info-block:nth-child(even) { border-right: none; }
+.info-block h3 {
+  color: var(--navy);
+  font-size: 1.05rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  display: flex; align-items: center; gap: 8px;
+}
+.info-block h3 .num {
+  background: var(--teal);
+  color: white;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.85rem;
+}
+.info-block ul { list-style: none; }
+.info-block ul li {
+  padding: 6px 0;
+  color: #444;
+  font-size: 0.88rem;
+  border-bottom: 1px dashed #EEE;
+  display: flex; align-items: flex-start; gap: 8px;
+}
+.info-block ul li::before { content: '◆'; color: var(--gold); font-size: 0.6rem; margin-top: 4px; flex-shrink: 0; }
+.formula-box {
+  background: var(--navy);
+  color: var(--gold2);
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-family: 'Amiri', serif;
+  font-size: 1rem;
+  text-align: center;
+  margin: 12px 0;
+  direction: rtl;
+}
+.formula-box .frac {
+  display: inline-flex; flex-direction: column; align-items: center; gap: 2px;
+}
+.formula-box .frac-num { border-bottom: 2px solid var(--gold); padding-bottom: 2px; }
+
+/* Distribution charts */
+.dist-chart-container {
+  display: flex; gap: 1.5rem; flex-wrap: wrap;
+  padding: 1.5rem 2rem;
+  background: #F8F9FA;
+}
+.dist-chart {
+  flex: 1; min-width: 200px;
+  background: white;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  text-align: center;
+}
+.dist-chart h4 { font-size: 0.85rem; color: var(--navy); font-weight: 800; margin-bottom: 12px; }
+.dist-chart .bars {
+  display: flex; align-items: flex-end; justify-content: center;
+  gap: 4px; height: 80px;
+}
+.dist-chart .bar {
+  width: 20px; border-radius: 4px 4px 0 0;
+  position: relative;
+}
+.dist-chart .bar-label { font-size: 0.65rem; color: #888; margin-top: 4px; }
+.dist-chart .caption { font-size: 0.75rem; color: #666; margin-top: 8px; }
+
+/* causes grid */
+.causes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  padding: 1.5rem 2rem;
+  background: #F0F4FF;
+}
+.cause-card {
+  background: white;
+  border-radius: 10px;
+  padding: 16px;
+  border-top: 4px solid;
+}
+.cause-card.edu   { border-top-color: var(--teal); }
+.cause-card.admin { border-top-color: var(--gold); }
+.cause-card.tech  { border-top-color: var(--red); }
+.cause-card h4 { font-size: 0.9rem; font-weight: 800; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+.cause-card ul { list-style: none; }
+.cause-card ul li { font-size: 0.8rem; color: #555; padding: 3px 0; }
+.cause-card ul li::before { content: '• '; }
+
+/* solutions */
+.solutions-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+  padding: 1.5rem 2rem;
+}
+.solution-item {
+  display: flex; gap: 12px;
+  background: white;
+  border-radius: 10px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+}
+.solution-item .sol-num {
+  background: var(--navy);
+  color: var(--gold2);
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 900; font-size: 0.9rem;
+  flex-shrink: 0;
+}
+.solution-item .sol-text { font-size: 0.85rem; color: var(--navy); font-weight: 600; line-height: 1.6; }
+
+/* footer credit */
+.ministry-footer {
+  background: linear-gradient(90deg, var(--navy) 0%, #0E3A3A 100%);
+  color: rgba(255,255,255,0.9);
+  padding: 2rem;
+  text-align: center;
+}
+.ministry-footer .credit-main {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--gold2);
+}
+.ministry-footer .credit-sub { font-size: 0.85rem; margin-top: 6px; opacity: 0.8; }
+.ministry-footer .designer { font-size: 0.9rem; margin-top: 10px; }
+.ministry-footer .designer strong { color: var(--gold); }
+
+/* ── LOADING OVERLAY ── */
+.loading {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(27,42,74,0.85);
+  z-index: 9999;
+  align-items: center; justify-content: center;
+  flex-direction: column;
+  gap: 1rem;
+}
+.loading.show { display: flex; }
+.spinner {
+  width: 60px; height: 60px;
+  border: 5px solid rgba(201,168,76,0.3);
+  border-top-color: var(--gold);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading p { color: var(--gold2); font-size: 1.1rem; }
+
+/* ── ALERT ── */
+.alert {
+  padding: 14px 20px;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  display: flex; align-items: center; gap: 10px;
+}
+.alert.info  { background: #EAF6F6; border-right: 4px solid var(--teal); color: var(--navy); }
+.alert.warn  { background: #FEF9E7; border-right: 4px solid var(--gold); color: #7D6608; }
+.alert.err   { background: #FADBD8; border-right: 4px solid var(--red); color: #7B241C; }
+
+/* ── DIAGNOSIS PANEL ── */
+.diagnosis-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+}
+.diag-card {
+  border-radius: 12px;
+  padding: 20px;
+  background: white;
+  box-shadow: var(--shadow);
+  border-right: 6px solid;
+}
+.diag-card.positive  { border-right-color: var(--green); }
+.diag-card.warning   { border-right-color: var(--orange); }
+.diag-card.negative  { border-right-color: var(--red); }
+.diag-card h4 { font-size: 0.95rem; font-weight: 800; margin-bottom: 8px; }
+.diag-card p  { font-size: 0.85rem; color: #555; line-height: 1.7; }
+
+/* download btn */
+.download-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: linear-gradient(135deg, var(--gold), #E8C060);
+  color: var(--navy);
+  border: none;
+  padding: 12px 28px;
+  border-radius: 50px;
+  font-family: 'Cairo', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 4px 15px rgba(201,168,76,0.3);
+  text-decoration: none;
+}
+.download-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(201,168,76,0.4); }
+
+/* search input */
+.search-row {
+  display: flex; gap: 1rem; align-items: center; margin-bottom: 1rem; flex-wrap: wrap;
+}
+.search-input {
+  flex: 1; min-width: 200px;
+  padding: 10px 16px;
+  border: 2px solid #DDE;
+  border-radius: 50px;
+  font-family: 'Cairo', sans-serif;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.3s;
+}
+.search-input:focus { border-color: var(--teal); }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="logo">
+    <div class="logo-icon">📊</div>
+    <h1>منصة تحليل الدرجات الإحصائية المتقدمة
+      <span>التحليل الشامل • معامل الصعوبة • معامل التمييز</span>
+    </h1>
+  </div>
+  <div class="header-meta">
+    إدارة التعليم بمحافظة جدة<br>
+    1447هـ
+  </div>
+</header>
+
+<!-- TABS -->
+<nav class="tabs-bar">
+  <button class="tab-btn active" onclick="showTab('tab-import')">📥 استيراد الدرجات</button>
+  <button class="tab-btn" onclick="showTab('tab-stats')">📊 التحليل الإحصائي</button>
+  <button class="tab-btn" onclick="showTab('tab-students')">👥 جدول الطلاب</button>
+
+  <button class="tab-btn" onclick="showTab('tab-diagnosis')">🩺 التشخيص والتوصيات</button>
+  <button class="tab-btn" onclick="showTab('tab-infographic')">📋 النشرة التربوية</button>
+  <button onclick="clearAll()" title="مسح جميع البيانات والبدء من جديد" style="margin-right:auto;margin-left:10px;background:rgba(255,107,107,0.12);border:1.5px solid rgba(255,107,107,0.5);color:#FF6B6B;border-radius:8px;padding:9px 18px;font-family:'Cairo',sans-serif;font-size:0.88rem;font-weight:700;cursor:pointer;transition:all 0.3s;white-space:nowrap;display:flex;align-items:center;gap:6px;" onmouseover="this.style.background='rgba(255,107,107,0.25)'" onmouseout="this.style.background='rgba(255,107,107,0.12)'">
+    🗑 مسح وتفريغ
+  </button>
+</nav>
+
+<!-- LOADING -->
+<div class="loading" id="loading">
+  <div class="spinner"></div>
+  <p>جاري معالجة البيانات...</p>
+</div>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- TAB 1: IMPORT -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div class="panel active" id="tab-import">
+  <div class="card">
+    <div class="card-header">📥 استيراد ملف الدرجات من Excel</div>
+    <div class="card-body">
+      <div class="alert info">💡 يمكنك استيراد ملف Excel الذي يحتوي على درجات الطلاب. يجب أن يحتوي العمود الأول على الأسماء والعمود الثاني على الدرجات، أو استخدام نموذج Excel المرفق.</div>
+
+      <div class="import-zone" id="dropZone" onclick="document.getElementById('fileInput').click()">
+        <div class="icon">📂</div>
+        <h3>اسحب ملف Excel هنا أو انقر للاختيار</h3>
+        <p>يدعم ملفات .xlsx و .xls و .csv</p>
+        <button class="import-btn" onclick="event.stopPropagation(); document.getElementById('fileInput').click()">
+          📤 اختر الملف
+        </button>
+      </div>
+      <input type="file" id="fileInput" accept=".xlsx,.xls,.csv" onchange="handleFile(event)">
+
+      <div style="margin-top:1.5rem; display:flex; gap:1rem; flex-wrap:wrap; align-items:center;">
+        <div>
+          <label style="font-weight:700; color:var(--navy); font-size:0.9rem;">الدرجة القصوى للاختبار:</label>
+          <input type="number" id="maxGrade" value="100" min="1" max="1000"
+            style="margin-right:8px; width:80px; padding:8px; border:2px solid #DDE; border-radius:8px; font-family:Cairo; text-align:center; font-size:1rem;">
+        </div>
+        <div>
+          <label style="font-weight:700; color:var(--navy); font-size:0.9rem;">اسم المادة:</label>
+          <input type="text" id="subjectName" placeholder="مثال: الرياضيات"
+            style="margin-right:8px; padding:8px 14px; border:2px solid #DDE; border-radius:8px; font-family:Cairo; font-size:0.9rem; width:180px;">
+        </div>
+        <div>
+          <label style="font-weight:700; color:var(--navy); font-size:0.9rem;">الصف والفصل:</label>
+          <input type="text" id="classInfo" placeholder="مثال: الثاني المتوسط أ"
+            style="margin-right:8px; padding:8px 14px; border:2px solid #DDE; border-radius:8px; font-family:Cairo; font-size:0.9rem; width:200px;">
+        </div>
+      </div>
+
+      <div style="margin-top:1.5rem; padding:1.5rem; background:var(--light); border-radius:12px;">
+        <h4 style="color:var(--navy); margin-bottom:1rem;">🔢 أو أدخل الدرجات يدوياً:</h4>
+        <div class="alert warn">أدخل الدرجات مفصولة بفواصل أو فراغات أو في كل سطر درجة واحدة</div>
+        <textarea id="manualInput" rows="4" placeholder="مثال: 85, 90, 72, 65, 88, 95, 78, 82, 70, 91..."
+          style="width:100%; padding:12px; border:2px solid #DDE; border-radius:10px; font-family:Cairo; font-size:0.95rem; resize:vertical; direction:ltr;"></textarea>
+        <button class="import-btn" style="margin-top:10px;" onclick="parseManualInput()">
+          ▶ تحليل الدرجات المُدخلة
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick guide -->
+  <div class="card">
+    <div class="card-header">📌 دليل الاستخدام السريع</div>
+    <div class="card-body">
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1rem;">
+        <div style="background:#EAF6F6; border-radius:10px; padding:16px; text-align:center;">
+          <div style="font-size:2rem;">1️⃣</div>
+          <p style="font-size:0.85rem; color:var(--navy); font-weight:700; margin-top:8px;">استورد ملف الدرجات أو أدخلها يدوياً</p>
+        </div>
+        <div style="background:#EEF2FF; border-radius:10px; padding:16px; text-align:center;">
+          <div style="font-size:2rem;">2️⃣</div>
+          <p style="font-size:0.85rem; color:var(--navy); font-weight:700; margin-top:8px;">اطلع على التحليل الإحصائي الشامل</p>
+        </div>
+        <div style="background:#FEF9E7; border-radius:10px; padding:16px; text-align:center;">
+          <div style="font-size:2rem;">3️⃣</div>
+          <p style="font-size:0.85rem; color:var(--navy); font-weight:700; margin-top:8px;">أدخل درجات الفقرات لتحليلها</p>
+        </div>
+        <div style="background:#FDF2F8; border-radius:10px; padding:16px; text-align:center;">
+          <div style="font-size:2rem;">4️⃣</div>
+          <p style="font-size:0.85rem; color:var(--navy); font-weight:700; margin-top:8px;">اقرأ التشخيص وخطط للتدخل</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- TAB 2: STATISTICS -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div class="panel" id="tab-stats">
+  <div id="statsContent">
+    <div class="alert info">📥 يرجى استيراد بيانات الدرجات أولاً من تبويب "استيراد الدرجات"</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- TAB 3: STUDENTS TABLE -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div class="panel" id="tab-students">
+  <div id="studentsContent">
+    <div class="alert info">📥 يرجى استيراد بيانات الدرجات أولاً</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════ -->
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- TAB 5: DIAGNOSIS -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div class="panel" id="tab-diagnosis">
+  <div id="diagnosisContent">
+    <div class="alert info">📥 يرجى استيراد بيانات الدرجات أولاً</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- TAB 6: INFOGRAPHIC (النشرة التربوية) -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div class="panel" id="tab-infographic">
+  <div class="infographic-section">
+
+    <!-- HERO -->
+    <div class="info-hero">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:1rem; flex-wrap:wrap; gap:1rem;">
+        <div style="text-align:right;">
+          <div style="color:rgba(255,255,255,0.6); font-size:0.75rem;">إصدار خاص • ذو القعدة 1447هـ</div>
+          <div style="color:rgba(255,255,255,0.9); font-size:0.8rem; font-weight:700;">وزارة التعليم</div>
+          <div style="color:rgba(255,255,255,0.7); font-size:0.75rem;">الإدارة العامة للتعليم بمحافظة جدة</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.1); padding:8px 16px; border-radius:8px; color:rgba(255,255,255,0.8); font-size:0.75rem;">
+          إضاءات في تقويم التحصيل الدراسي
+        </div>
+      </div>
+      <h2>تضخـم الدرجـات</h2>
+      <p class="subtitle">المفهوم • الأسباب • الآثار • الحلول</p>
+      <div class="badge-row">
+        <span class="info-badge">📖 ما المقصود بتضخم الدرجات؟</span>
+        <span class="info-badge">🔍 كيف نكتشفه؟</span>
+        <span class="info-badge">📉 الرسوم البيانية</span>
+        <span class="info-badge">⚠ الأسباب</span>
+        <span class="info-badge">💡 الحلول</span>
+      </div>
+      <div style="margin-top:1.5rem; padding:14px 20px; background:rgba(255,255,255,0.08); border-radius:10px; border-right:3px solid var(--gold); text-align:right;">
+        <p style="color:rgba(255,255,255,0.85); font-size:0.85rem; line-height:1.8;">
+          استناداً إلى دليل الاختبارات والأسس الفنية والعمليات الإجرائية 2025 الصادر عن وزارة التعليم، والذي يؤكد أهمية التقويم الموضوعي القادر على كشف الفروق الفردية وتحقيق العدالة التعليمية.
+        </p>
+      </div>
+    </div>
+
+    <!-- SECTION 1+2: ما هو تضخم الدرجات + كيف نكتشفه -->
+    <div class="info-grid">
+      <div class="info-block">
+        <h3><span class="num">1</span> ما المقصود بتضخم الدرجات؟</h3>
+        <p style="font-size:0.88rem; color:#444; line-height:1.8; margin-bottom:1rem;">
+          يُقصد بتضخم الدرجات: ارتفاع درجات الطلاب بصورة لا تعكس المستوى الحقيقي للتحصيل والأداء، مما يؤدي إلى ضعف دقة نتائج التقويم وفقدان الاختبارات لقدرتها على التمييز بين مستويات الطلاب.
+        </p>
+        <p style="font-size:0.85rem; color:#555; font-weight:700; margin-bottom:6px;">ويخالف ذلك خصائص التقويم الفعال التي أكد عليها الدليل:</p>
+        <ul>
+          <li>الموضوعية في وضع الأسئلة وتقييمها</li>
+          <li>الصدق: قياس ما وُضع الاختبار لقياسه فعلاً</li>
+          <li>الثبات: اتساق النتائج عند التطبيق المتعدد</li>
+          <li>التمييز بين مستويات الطلاب المختلفة</li>
+        </ul>
+      </div>
+      <div class="info-block">
+        <h3><span class="num" style="background:var(--gold);color:var(--navy);">2</span> كيف نكتشف تضخم الدرجات؟</h3>
+        <ul>
+          <li>ارتفاع نسبة الدرجات الكاملة بصورة مبالغ فيها</li>
+          <li>تقارب درجات جميع الطلاب رغم تفاوت مستوياتهم الحقيقية</li>
+          <li>ضعف نتائج الطلاب في الاختبارات المعيارية رغم ارتفاع درجاتهم المدرسية</li>
+          <li>غياب التوزيع الطبيعي المتوقع للدرجات</li>
+          <li>سهولة الاختبارات بشكل لا يقيس مهارات التفكير والتحليل</li>
+          <li>الانحراف المعياري المنخفض جداً يشير إلى التضخم</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- SECTION 3: توزيع الدرجات -->
+    <div style="background:#F8F9FA; padding:1.5rem 2rem; border-top:1px solid #DDE;">
+      <h3 style="color:var(--navy); font-size:1.05rem; font-weight:800; margin-bottom:1.5rem; text-align:center;">
+        ثالثاً: الرسوم البيانية المرتبطة بتوزيع الدرجات
+      </h3>
+      <div class="dist-chart-container">
+        <!-- Normal distribution -->
+        <div class="dist-chart">
+          <h4 style="color:var(--teal);">① التوزيع الطبيعي (المثالي)</h4>
+          <div class="bars">
+            <div class="bar" style="height:15px; background:#ccc;"></div>
+            <div class="bar" style="height:30px; background:#aaa;"></div>
+            <div class="bar" style="height:55px; background:#888;"></div>
+            <div class="bar" style="height:75px; background:var(--teal);"></div>
+            <div class="bar" style="height:75px; background:var(--teal);"></div>
+            <div class="bar" style="height:55px; background:#888;"></div>
+            <div class="bar" style="height:30px; background:#aaa;"></div>
+            <div class="bar" style="height:15px; background:#ccc;"></div>
+          </div>
+          <div style="display:flex; justify-content:space-between; font-size:0.6rem; color:#888; margin-top:4px;">
+            <span>مقبول</span><span>جيد</span><span>ممتاز</span>
+          </div>
+          <p class="caption">✔ يمثل التقويم العادل والمتوازن. أغلب الطلاب في المستوى المتوسط، وقلة في المستويات العالية والمنخفضة.</p>
+          <div style="margin-top:8px; font-size:0.75rem;">
+            <div>✔ اختبار متوازن</div>
+            <div>✔ قياس حقيقي للفروق</div>
+            <div>✔ مصداقية النتائج</div>
+          </div>
+        </div>
+
+        <!-- Positive skew -->
+        <div class="dist-chart">
+          <h4 style="color:#B7950B;">② التوزيع الموجب (صعوبة مرتفعة)</h4>
+          <div class="bars">
+            <div class="bar" style="height:75px; background:var(--navy);"></div>
+            <div class="bar" style="height:60px; background:var(--navy);"></div>
+            <div class="bar" style="height:45px; background:var(--teal);"></div>
+            <div class="bar" style="height:30px; background:var(--teal);"></div>
+            <div class="bar" style="height:18px; background:#aaa;"></div>
+            <div class="bar" style="height:10px; background:#ccc;"></div>
+            <div class="bar" style="height:6px; background:#eee;"></div>
+            <div class="bar" style="height:3px; background:#eee;"></div>
+          </div>
+          <div style="display:flex; justify-content:space-between; font-size:0.6rem; color:#888; margin-top:4px;">
+            <span>مقبول</span><span>جيد</span><span>ممتاز</span>
+          </div>
+          <p class="caption">⬆ يحدث عندما تكون أغلب الدرجات منخفضة. توزيع موجب يعكس حالة الخفض الشديد.</p>
+          <div style="margin-top:8px; font-size:0.75rem;">
+            <div style="color:var(--red);">⚠ اختبار صعب جداً</div>
+            <div style="color:var(--red);">⚠ أو وجود ضعف تعلمي</div>
+            <div style="color:var(--red);">⚠ إحباط الطلاب</div>
+          </div>
+        </div>
+
+        <!-- Negative skew (inflation) -->
+        <div class="dist-chart">
+          <h4 style="color:var(--red);">③ التوزيع السالب (تضخم الدرجات)</h4>
+          <div class="bars">
+            <div class="bar" style="height:3px; background:#eee;"></div>
+            <div class="bar" style="height:6px; background:#eee;"></div>
+            <div class="bar" style="height:10px; background:#ccc;"></div>
+            <div class="bar" style="height:18px; background:#aaa;"></div>
+            <div class="bar" style="height:35px; background:#e88;"></div>
+            <div class="bar" style="height:60px; background:var(--red);"></div>
+            <div class="bar" style="height:75px; background:var(--red);"></div>
+            <div class="bar" style="height:70px; background:var(--red);"></div>
+          </div>
+          <div style="display:flex; justify-content:space-between; font-size:0.6rem; color:#888; margin-top:4px;">
+            <span>مقبول</span><span>جيد</span><span>ممتاز</span>
+          </div>
+          <p class="caption">⬅ الأكثر ارتباطاً بتضخم الدرجات. توزيع سالب يعكس حالة تضخم.</p>
+          <div style="margin-top:8px; font-size:0.75rem;">
+            <div style="color:var(--red);">✗ فقدان العدالة في التقويم</div>
+            <div style="color:var(--red);">✗ صعوبة كشف المتفوقين الحقيقيين</div>
+            <div style="color:var(--red);">✗ نتائج غير واقعية</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 4+5: Causes and Effects -->
+    <div style="background:white; padding:1.5rem 2rem; border-top:1px solid #DDE;">
+      <h3 style="color:var(--navy); font-size:1.05rem; font-weight:800; margin-bottom:1rem;">
+        رابعاً: أسباب تضخم الدرجات
+      </h3>
+      <div class="causes-grid">
+        <div class="cause-card edu">
+          <h4 style="color:var(--teal);">📚 <span>أسباب تربوية</span></h4>
+          <ul>
+            <li>التركيز على الحفظ أكثر من الفهم</li>
+            <li>ضعف بناء الأسئلة العليا (تطبيق، تحليل، تقييم)</li>
+            <li>الاعتماد على أسئلة مباشرة ومتوقعة</li>
+            <li>قلة تنوع أدوات التقويم</li>
+          </ul>
+        </div>
+        <div class="cause-card admin">
+          <h4 style="color:#7D6608;">🏫 <span>أسباب إدارية واجتماعية</span></h4>
+          <ul>
+            <li>الضغط لرفع نسب النجاح</li>
+            <li>الخوف من شكاوى أولياء الأمور</li>
+            <li>ربط التميز بارتفاع المتوسطات فقط</li>
+            <li>غياب ثقافة التقويم الموضوعي</li>
+          </ul>
+        </div>
+        <div class="cause-card tech">
+          <h4 style="color:var(--red);">⚙ <span>أسباب فنية</span></h4>
+          <ul>
+            <li>ضعف تحليل النتائج الإحصائية</li>
+            <li>غياب معايير التصحيح الدقيقة</li>
+            <li>عدم مراعاة خصائص الاختبار الجيد</li>
+            <li>إهمال مؤشرات معامل الصعوبة والتمييز</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div style="background:#FFF8EE; padding:1.5rem 2rem; border-top:1px solid #DDE;">
+      <h3 style="color:var(--navy); font-size:1.05rem; font-weight:800; margin-bottom:1rem;">
+        خامساً: الآثار التربوية لتضخم الدرجات
+      </h3>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1rem;">
+        <div style="background:white; border-radius:10px; padding:16px; border-top:4px solid var(--teal);">
+          <h4 style="color:var(--teal); font-size:0.9rem; margin-bottom:8px;">👨‍🎓 على الطالب</h4>
+          <ul style="list-style:none; font-size:0.82rem; color:#555;">
+            <li>• ضعف المهارات الحقيقية</li>
+            <li>• صدمة في المراحل المتقدمة</li>
+            <li>• انخفاض القدرة على التفكير والتحليل</li>
+          </ul>
+        </div>
+        <div style="background:white; border-radius:10px; padding:16px; border-top:4px solid var(--gold);">
+          <h4 style="color:#7D6608; font-size:0.9rem; margin-bottom:8px;">👩‍🏫 على المعلم</h4>
+          <ul style="list-style:none; font-size:0.82rem; color:#555;">
+            <li>• صعوبة معرفة مواطن الضعف الحقيقية</li>
+            <li>• ضعف التغذية الراجعة للتحسين</li>
+          </ul>
+        </div>
+        <div style="background:white; border-radius:10px; padding:16px; border-top:4px solid var(--navy);">
+          <h4 style="color:var(--navy); font-size:0.9rem; margin-bottom:8px;">🏫 على المدرسة</h4>
+          <ul style="list-style:none; font-size:0.82rem; color:#555;">
+            <li>• قرارات تطوير غير دقيقة</li>
+            <li>• صورة غير واقعية عن مستوى التحصيل</li>
+          </ul>
+        </div>
+        <div style="background:white; border-radius:10px; padding:16px; border-top:4px solid var(--red);">
+          <h4 style="color:var(--red); font-size:0.9rem; margin-bottom:8px;">🏛 على المنظومة</h4>
+          <ul style="list-style:none; font-size:0.82rem; color:#555;">
+            <li>• ضعف جودة المخرجات</li>
+            <li>• انخفاض موثوقية التقويم الوطني</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- المؤشرات الإحصائية المهمة -->
+    <div style="background:var(--light); padding:1.5rem 2rem; border-top:1px solid #DDE;">
+      <h3 style="color:var(--navy); font-size:1.05rem; font-weight:800; margin-bottom:1.5rem; text-align:center;">
+        المؤشرات الإحصائية المهمة في تحليل الدرجات
+      </h3>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.5rem;">
+        
+        <!-- معامل الصعوبة -->
+        <div style="background:white; border-radius:12px; padding:20px;">
+          <h4 style="color:var(--navy); font-size:1rem; font-weight:800; margin-bottom:10px;">أ) معامل الصعوبة</h4>
+          <p style="font-size:0.85rem; color:#444; margin-bottom:10px;">النسبة المئوية لمن أجاب إجابة <strong>خاطئة</strong> من بين الطلاب</p>
+          <div class="formula-box">
+            معامل الصعوبة = 
+            <span class="frac">
+              <span class="frac-num">عدد الطلاب الذين أجابوا خطأ</span>
+              <span>مجموع الطلاب</span>
+            </span>
+            × 100
+          </div>
+          <div style="margin-top:10px; font-size:0.8rem;">
+            <div style="display:flex; gap:6px; margin-bottom:4px;"><span style="background:#D5F5E3;color:#1E8449;padding:2px 8px;border-radius:10px;font-weight:700;">مقبول</span> <span>معامل الصعوبة بين 30% و70%</span></div>
+            <div style="display:flex; gap:6px; margin-bottom:4px;"><span style="background:#FDEBD0;color:#D35400;padding:2px 8px;border-radius:10px;font-weight:700;">سهل</span> <span>أكثر من 70% (يُراجع)</span></div>
+            <div style="display:flex; gap:6px;"><span style="background:#FADBD8;color:#922B21;padding:2px 8px;border-radius:10px;font-weight:700;">صعب</span> <span>أقل من 30% (يُراجع)</span></div>
+          </div>
+        </div>
+
+        <!-- معامل التمييز -->
+        <div style="background:white; border-radius:12px; padding:20px;">
+          <h4 style="color:var(--navy); font-size:1rem; font-weight:800; margin-bottom:10px;">ب) معامل التمييز</h4>
+          <p style="font-size:0.85rem; color:#444; margin-bottom:10px;">قدرة الفقرة على التمييز بين الطالب المتمكن والأقل تمكناً (الفئتان العليا والدنيا 27%)</p>
+          <div class="formula-box" style="font-size:0.82rem;">
+            معامل التمييز = 
+            <span class="frac">
+              <span class="frac-num">مجموع الفئة العليا − مجموع الفئة الدنيا</span>
+              <span>عدد الطلاب في إحدى الفئتين × درجة السؤال</span>
+            </span>
+          </div>
+          <div style="margin-top:10px; font-size:0.8rem;">
+            <div style="display:flex; gap:6px; margin-bottom:4px;"><span style="background:#D4EFDF;color:#1E8449;padding:2px 8px;border-radius:10px;font-weight:700;">ممتاز</span> <span>0.40 فأكثر ✔✔</span></div>
+            <div style="display:flex; gap:6px; margin-bottom:4px;"><span style="background:#D6EAF8;color:#1A5276;padding:2px 8px;border-radius:10px;font-weight:700;">جيد</span> <span>0.30 - 0.39 ✔</span></div>
+            <div style="display:flex; gap:6px; margin-bottom:4px;"><span style="background:#FEF9E7;color:#B7950B;padding:2px 8px;border-radius:10px;font-weight:700;">مقبول</span> <span>0.20 - 0.29</span></div>
+            <div style="display:flex; gap:6px;"><span style="background:#FADBD8;color:#922B21;padding:2px 8px;border-radius:10px;font-weight:700;">ضعيف</span> <span>أقل من 0.20 ⚠</span></div>
+          </div>
+        </div>
+
+        <!-- مقاييس التشتت -->
+        <div style="background:white; border-radius:12px; padding:20px;">
+          <h4 style="color:var(--navy); font-size:1rem; font-weight:800; margin-bottom:10px;">ج) مقاييس التشتت</h4>
+          <div style="font-size:0.85rem; color:#444;">
+            <div style="margin-bottom:10px;">
+              <strong style="color:var(--teal);">الانحراف المعياري:</strong>
+              <div class="formula-box" style="font-size:0.8rem; margin:6px 0;">
+                ع = √ (مجموع مربعات الانحرافات ÷ عدد القيم)
+              </div>
+              <span>يقيس تشتت الدرجات حول المتوسط</span>
+            </div>
+            <div style="margin-bottom:8px;"><strong style="color:var(--teal);">التباين:</strong> مربع الانحراف المعياري — أفضل مقاييس التشتت للمقارنات</div>
+            <div><strong style="color:var(--teal);">المدى:</strong> الفرق بين أعلى وأدنى درجة — يعطي فكرة عن حجم التشتت</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SECTION 6: Solutions -->
+    <div style="background:white; padding:1.5rem 2rem; border-top:1px solid #DDE;">
+      <h3 style="color:var(--navy); font-size:1.05rem; font-weight:800; margin-bottom:1rem; text-align:center;">
+        سادساً: الحلول المقترحة
+      </h3>
+      <div class="solutions-list">
+        <div class="solution-item">
+          <div class="sol-num">1</div>
+          <div class="sol-text">تحسين بناء الاختبارات: تنويع مستويات الأسئلة، وقياس الفهم والتطبيق والتحليل، وتقليل التذكرة المباشرة.</div>
+        </div>
+        <div class="solution-item">
+          <div class="sol-num">2</div>
+          <div class="sol-text">استخدام أدوات تقويم متنوعة كما أشار الدليل إلى أهمية تنوع أدوات التقويم المستخدمة.</div>
+        </div>
+        <div class="solution-item">
+          <div class="sol-num">3</div>
+          <div class="sol-text">تحليل النتائج إحصائياً: حساب المتوسط الحسابي، الانحراف المعياري، تحليل شكل التوزيع البياني.</div>
+        </div>
+        <div class="solution-item">
+          <div class="sol-num">4</div>
+          <div class="sol-text">تعزيز التقويم التكويني الذي يساعد على كشف مواطن القوة والضعف أثناء التعلم وليس فقط بعده.</div>
+        </div>
+        <div class="solution-item">
+          <div class="sol-num">5</div>
+          <div class="sol-text">نشر ثقافة العدالة في التقويم: الهدف ليس رفع الدرجات بل رفع مستوى التعلم الحقيقي الفعلي.</div>
+        </div>
+      </div>
+
+      <div style="background:var(--navy); border-radius:12px; padding:20px; margin-top:1rem; color:white; text-align:center;">
+        <div style="font-size:1.1rem; font-weight:800; color:var(--gold2); margin-bottom:8px;">الخلاصة</div>
+        <p style="font-size:0.88rem; line-height:1.8; opacity:0.9;">
+          التقويم الحقيقي لا يُقاس بارتفاع النتائج، بل بصدق النتائج وقدرتها على تمثيل مستوى الطالب الفعلي. والتوزيع الطبيعي للدرجات دليل مُشرِّف على جودة التقويم، بينما ما يُشير إليه التوزيع السالب قد يكون تضخم درجات يحتاج إلى معالجة تربوية وفنية دقيقة.
+        </p>
+        <div style="color:var(--gold); font-size:0.8rem; margin-top:8px; font-style:italic;">
+          المرجع: دليل الاختبارات والأسس الفنية والعمليات الإجرائية 2025 — إدارة تقويم الأداء المعرفي والمهاري
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="ministry-footer">
+      <div class="credit-main">إدارة التعليم بمحافظة جدة</div>
+      <div class="credit-sub">إضاءات في تقويم التحصيل الدراسي • إصدار خاص ذو القعدة 1447هـ</div>
+      <div class="designer">إعداد وتصميم: <strong>أ/فاطمة الأسمري</strong></div>
+      <div style="margin-top:12px; font-size:0.75rem; opacity:0.6;">مَعاً نتشارك المعرفة</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════ JS ════════════════════════════════════════ -->
+<script>
+// ── Global State ──────────────────────────────────────────────────────
+let students = [];
+let charts = {};
+
+function showTab(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+
+// ── File Import ────────────────────────────────────────────────────────
+const dropZone = document.getElementById('dropZone');
+dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+dropZone.addEventListener('drop', e => { e.preventDefault(); dropZone.classList.remove('drag-over'); handleFile({ target: { files: e.dataTransfer.files } }); });
+
+function handleFile(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  showLoading();
+  const ext = file.name.split('.').pop().toLowerCase();
+  const reader = new FileReader();
+  
+  reader.onload = function(ev) {
+    try {
+      let data;
+      if (ext === 'csv') {
+        const text = ev.target.result;
+        data = parseCSV(text);
+      } else {
+        const workbook = XLSX.read(ev.target.result, { type: 'binary' });
+        const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+        data = XLSX.utils.sheet_to_json(firstSheet, { header: 1 });
+      }
+      processData(data);
+    } catch(err) {
+      hideLoading();
+      alert('خطأ في قراءة الملف: ' + err.message);
+    }
+  };
+  
+  if (ext === 'csv') reader.readAsText(file, 'UTF-8');
+  else reader.readAsBinaryString(file);
+}
+
+function parseCSV(text) {
+  return text.split('\n').map(line => line.split(',').map(c => c.trim()));
+}
+
+function processData(data) {
+  students = [];
+  const maxGrade = parseFloat(document.getElementById('maxGrade').value) || 100;
+  
+  // Try to detect if first row is header
+  let startRow = 0;
+  if (data[0] && isNaN(parseFloat(data[0][1])) && isNaN(parseFloat(data[0][0]))) {
+    startRow = 1; // skip header
+  }
+  
+  for (let i = startRow; i < data.length; i++) {
+    const row = data[i];
+    if (!row || row.length === 0) continue;
+    
+    let name, grade;
+    // Try different column arrangements
+    if (row.length >= 2) {
+      // Check if first col is number (serial) then name + grade
+      if (!isNaN(parseFloat(row[0])) && isNaN(parseFloat(row[1]))) {
+        name = String(row[1] || '').trim();
+        grade = parseFloat(row[2]);
+      } else if (isNaN(parseFloat(row[0]))) {
+        name = String(row[0] || '').trim();
+        grade = parseFloat(row[1]);
+      } else {
+        // Only numbers - treat as grades only
+        grade = parseFloat(row[0]);
+        name = `طالب ${i - startRow + 1}`;
+      }
+    } else if (row.length === 1) {
+      grade = parseFloat(row[0]);
+      name = `طالب ${i - startRow + 1}`;
+    }
+    
+    if (!isNaN(grade) && grade >= 0) {
+      students.push({ name: name || `طالب ${i - startRow + 1}`, grade, maxGrade });
+    }
+  }
+  
+  if (students.length === 0) {
+    hideLoading();
+    alert('لم يتم العثور على بيانات صالحة. تأكد من أن الملف يحتوي على أسماء ودرجات.');
+    return;
+  }
+  
+  enrichStudentData();
+  renderStats();
+  renderStudentsTable();
+  renderDiagnosis();
+  hideLoading();
+  
+  // Auto switch to stats tab
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-stats').classList.add('active');
+  document.querySelectorAll('.tab-btn')[1].classList.add('active');
+  
+  showAlert(`✅ تم تحميل ${students.length} طالباً بنجاح!`, 'info');
+}
+
+function parseManualInput() {
+  const text = document.getElementById('manualInput').value.trim();
+  if (!text) return alert('أدخل الدرجات أولاً');
+  
+  const maxGrade = parseFloat(document.getElementById('maxGrade').value) || 100;
+  const parts = text.split(/[\n,،\s]+/).filter(x => x.trim());
+  students = [];
+  
+  parts.forEach((p, i) => {
+    const grade = parseFloat(p.replace(/[^\d.]/g, ''));
+    if (!isNaN(grade) && grade >= 0) {
+      students.push({ name: `طالب ${i+1}`, grade, maxGrade });
+    }
+  });
+  
+  if (students.length === 0) return alert('لم يتم العثور على أرقام صالحة');
+  
+  showLoading();
+  setTimeout(() => {
+    enrichStudentData();
+    renderStats();
+    renderStudentsTable();
+    renderDiagnosis();
+    hideLoading();
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-stats').classList.add('active');
+    document.querySelectorAll('.tab-btn')[1].classList.add('active');
+  }, 300);
+}
+
+function enrichStudentData() {
+  const grades = students.map(s => s.grade);
+  const maxG = students[0].maxGrade;
+  const avg = calcMean(grades);
+  const std = calcStd(grades);
+  const sorted = [...grades].sort((a,b) => b-a);
+  const n27 = Math.round(grades.length * 0.27);
+  const upperThreshold = sorted[n27-1] || 0;
+  const lowerThreshold = sorted[sorted.length - n27] || 0;
+  
+  students.forEach((s, i) => {
+    const pct = (s.grade / maxG) * 100;
+    s.percentage = pct;
+    s.gradeLabel = pct >= 90 ? 'ممتاز' : pct >= 80 ? 'جيد جداً' : pct >= 70 ? 'جيد' : pct >= 60 ? 'مقبول' : 'ضعيف';
+    s.deviation = s.grade - avg;
+    s.rank = grades.filter(g => g > s.grade).length + 1;
+    s.zScore = std > 0 ? (s.grade - avg) / std : 0;
+    s.isUpper = s.grade >= upperThreshold;
+    s.isLower = s.grade <= lowerThreshold && s.grade < upperThreshold;
+  });
+}
+
+// ── Statistics ─────────────────────────────────────────────────────────
+function calcMean(arr) { return arr.length ? arr.reduce((a,b)=>a+b,0)/arr.length : 0; }
+function calcMedian(arr) {
+  const s = [...arr].sort((a,b)=>a-b);
+  const m = Math.floor(s.length/2);
+  return s.length%2 ? s[m] : (s[m-1]+s[m])/2;
+}
+function calcMode(arr) {
+  const freq = {};
+  arr.forEach(v => freq[v] = (freq[v]||0)+1);
+  let max=0, mode=arr[0];
+  Object.entries(freq).forEach(([k,v]) => { if(v>max){max=v;mode=parseFloat(k);} });
+  return mode;
+}
+function calcStd(arr) {
+  if(arr.length < 2) return 0;
+  const m = calcMean(arr);
+  return Math.sqrt(arr.reduce((a,b)=>a+(b-m)**2,0)/arr.length);
+}
+function calcSkewness(arr) {
+  const m = calcMean(arr), s = calcStd(arr), n = arr.length;
+  if(s===0) return 0;
+  return arr.reduce((a,b)=>a+(((b-m)/s)**3),0) * (n/((n-1)*(n-2)));
+}
+
+function renderStats() {
+  if (!students.length) return;
+  const grades = students.map(s => s.grade);
+  const maxG = students[0].maxGrade;
+  const avg = calcMean(grades);
+  const med = calcMedian(grades);
+  const mode = calcMode(grades);
+  const std = calcStd(grades);
+  const variance = std ** 2;
+  const range = Math.max(...grades) - Math.min(...grades);
+  const cv = avg > 0 ? (std/avg)*100 : 0;
+  const skew = calcSkewness(grades);
+
+  const countByGrade = label => students.filter(s => s.gradeLabel === label).length;
+  const mm = countByGrade('ممتاز');
+  const jj = countByGrade('جيد جداً');
+  const j  = countByGrade('جيد');
+  const m  = countByGrade('مقبول');
+  const d  = countByGrade('ضعيف');
+  const total = students.length;
+
+  document.getElementById('statsContent').innerHTML = `
+    <!-- KPI GRID -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon">👥</div>
+        <div class="stat-value">${total}</div>
+        <div class="stat-label">عدد الطلاب</div>
+      </div>
+      <div class="stat-card gold">
+        <div class="stat-icon">📈</div>
+        <div class="stat-value">${avg.toFixed(1)}</div>
+        <div class="stat-label">المتوسط الحسابي</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">📊</div>
+        <div class="stat-value">${med.toFixed(1)}</div>
+        <div class="stat-label">الوسيط</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🔢</div>
+        <div class="stat-value">${mode.toFixed(1)}</div>
+        <div class="stat-label">المنوال</div>
+      </div>
+      <div class="stat-card orange">
+        <div class="stat-icon">📉</div>
+        <div class="stat-value">${std.toFixed(2)}</div>
+        <div class="stat-label">الانحراف المعياري</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">↔</div>
+        <div class="stat-value">${range.toFixed(0)}</div>
+        <div class="stat-label">المدى</div>
+      </div>
+      <div class="stat-card green">
+        <div class="stat-icon">⬆</div>
+        <div class="stat-value">${Math.max(...grades).toFixed(0)}</div>
+        <div class="stat-label">أعلى درجة</div>
+      </div>
+      <div class="stat-card red">
+        <div class="stat-icon">⬇</div>
+        <div class="stat-value">${Math.min(...grades).toFixed(0)}</div>
+        <div class="stat-label">أدنى درجة</div>
+      </div>
+    </div>
+
+    <div class="charts-grid">
+      <div class="chart-box">
+        <h4>📊 توزيع التقديرات</h4>
+        <canvas id="gradeDistChart" height="200"></canvas>
+      </div>
+      <div class="chart-box">
+        <h4>📈 التوزيع الطبيعي للدرجات</h4>
+        <canvas id="histChart" height="200"></canvas>
+      </div>
+    </div>
+
+    <!-- Detailed stats table -->
+    <div class="card">
+      <div class="card-header">📐 مقاييس التشتت والنزعة المركزية</div>
+      <div class="card-body">
+        <table class="data-table">
+          <tr><th>المؤشر</th><th>القيمة</th><th>التفسير</th></tr>
+          <tr><td>المتوسط الحسابي</td><td><strong>${avg.toFixed(2)}</strong></td><td>${(avg/maxG*100).toFixed(1)}% من الدرجة الكاملة</td></tr>
+          <tr><td>الوسيط</td><td><strong>${med.toFixed(2)}</strong></td><td>نصف الطلاب أعلى من هذه الدرجة</td></tr>
+          <tr><td>المنوال</td><td><strong>${mode.toFixed(2)}</strong></td><td>الدرجة الأكثر تكراراً</td></tr>
+          <tr><td>الانحراف المعياري</td><td><strong>${std.toFixed(2)}</strong></td><td>${std < 10 ? 'تشتت منخفض (قد يشير لتضخم)' : std < 20 ? 'تشتت معتدل ✔' : 'تشتت مرتفع'}</td></tr>
+          <tr><td>التباين</td><td><strong>${variance.toFixed(2)}</strong></td><td>مربع الانحراف المعياري</td></tr>
+          <tr><td>معامل الاختلاف</td><td><strong>${cv.toFixed(1)}%</strong></td><td>${cv < 15 ? 'تجانس عالٍ (مشبوه)' : cv < 30 ? 'تجانس معتدل' : 'تباين كبير'}</td></tr>
+          <tr><td>الالتواء (Skewness)</td><td><strong>${skew.toFixed(3)}</strong></td><td>${skew > 0.5 ? 'التواء موجب (صعوبة مرتفعة)' : skew < -0.5 ? 'التواء سالب ⚠ (تضخم محتمل)' : 'توزيع قريب من الطبيعي ✔'}</td></tr>
+          <tr><td>نسبة النجاح</td><td><strong>${((mm+jj+j+m)/total*100).toFixed(1)}%</strong></td><td>${students.filter(s=>s.percentage>=60).length} من ${total} طلاب</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- Grade distribution table -->
+    <div class="card">
+      <div class="card-header">🏆 جدول توزيع التقديرات</div>
+      <div class="card-body">
+        <table class="data-table">
+          <tr><th>التقدير</th><th>النطاق</th><th>العدد</th><th>النسبة %</th><th>شريط بياني</th></tr>
+          ${[
+            ['ممتاز','90-100%', mm, '#1E8449'],
+            ['جيد جداً','80-89%', jj, '#1A5276'],
+            ['جيد','70-79%', j, '#0E7C7B'],
+            ['مقبول','60-69%', m, '#B7950B'],
+            ['ضعيف','أقل من 60%', d, '#922B21'],
+          ].map(([lbl,range,cnt,clr]) => `
+            <tr>
+              <td><span class="grade-badge grade-${lbl.replace(' ','_')}">${lbl}</span></td>
+              <td>${range}</td>
+              <td><strong>${cnt}</strong></td>
+              <td>${(cnt/total*100).toFixed(1)}%</td>
+              <td>
+                <div style="background:#EEE;border-radius:4px;overflow:hidden;height:14px;width:150px;margin:0 auto;">
+                  <div style="background:${clr};height:100%;width:${cnt/total*100}%;"></div>
+                </div>
+              </td>
+            </tr>
+          `).join('')}
+        </table>
+      </div>
+    </div>
+  `;
+
+  // Render charts
+  setTimeout(() => {
+    renderGradeDistChart(mm, jj, j, m, d);
+    renderHistChart(grades, maxG);
+  }, 100);
+}
+
+function renderGradeDistChart(mm, jj, j, m, d) {
+  if (charts.gradeDist) charts.gradeDist.destroy();
+  const ctx = document.getElementById('gradeDistChart');
+  if (!ctx) return;
+  charts.gradeDist = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: ['ممتاز', 'جيد جداً', 'جيد', 'مقبول', 'ضعيف'],
+      datasets: [{
+        data: [mm, jj, j, m, d],
+        backgroundColor: ['#1E8449','#1A5276','#0E7C7B','#B7950B','#922B21'],
+        borderWidth: 2, borderColor: '#fff'
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: true,
+      plugins: { legend: { position: 'bottom', labels: { font: { family: 'Cairo', size: 11 } } } }
+    }
+  });
+}
+
+function renderHistChart(grades, maxG) {
+  if (charts.hist) charts.hist.destroy();
+  const ctx = document.getElementById('histChart');
+  if (!ctx) return;
+  
+  // Create buckets
+  const buckets = 10;
+  const step = maxG / buckets;
+  const counts = new Array(buckets).fill(0);
+  const labels = [];
+  for (let i = 0; i < buckets; i++) {
+    labels.push(`${Math.round(i*step)}-${Math.round((i+1)*step)}`);
+    grades.forEach(g => { if (g >= i*step && g < (i+1)*step) counts[i]++; });
+  }
+  // Last bucket inclusive
+  grades.forEach(g => { if (g === maxG) counts[buckets-1]++; });
+
+  charts.hist = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{
+        label: 'عدد الطلاب',
+        data: counts,
+        backgroundColor: counts.map((_,i) => {
+          const pct = (i+0.5)/buckets;
+          return pct >= 0.9 ? '#1E8449' : pct >= 0.8 ? '#1A5276' : pct >= 0.7 ? '#0E7C7B' : pct >= 0.6 ? '#B7950B' : '#922B21';
+        }),
+        borderRadius: 4
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: true,
+      plugins: { legend: { display: false } },
+      scales: {
+        y: { beginAtZero: true, ticks: { font: { family: 'Cairo' } } },
+        x: { ticks: { font: { family: 'Cairo', size: 10 }, maxRotation: 45 } }
+      }
+    }
+  });
+}
+
+// ── Students Table ─────────────────────────────────────────────────────
+function renderStudentsTable(filter = '') {
+  if (!students.length) return;
+  const filtered = filter ? students.filter(s => s.name.includes(filter) || String(s.grade).includes(filter)) : students;
+  
+  document.getElementById('studentsContent').innerHTML = `
+    <div class="card">
+      <div class="card-header">👥 جدول بيانات الطلاب (${students.length} طالب)</div>
+      <div class="card-body">
+        <div class="search-row">
+          <input type="text" class="search-input" placeholder="🔍 ابحث عن طالب..." oninput="renderStudentsTable(this.value)">
+          <span style="color:#666; font-size:0.85rem;">${filtered.length} نتيجة</span>
+        </div>
+        <div style="overflow-x:auto;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>م</th><th>اسم الطالب</th><th>الدرجة</th><th>النسبة %</th>
+                <th>التقدير</th><th>الانحراف</th><th>الترتيب</th>
+                <th>معامل Z</th><th>الفئة</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${filtered.map((s,i) => `
+                <tr>
+                  <td>${i+1}</td>
+                  <td style="text-align:right; font-weight:600;">${s.name}</td>
+                  <td style="font-weight:700; font-size:1rem;">${s.grade}</td>
+                  <td>${s.percentage.toFixed(1)}%</td>
+                  <td><span class="grade-badge grade-${s.gradeLabel.replace(' ','_')}">${s.gradeLabel}</span></td>
+                  <td style="color:${s.deviation >= 0 ? 'green' : 'red'}; font-weight:600;">${s.deviation >= 0 ? '+' : ''}${s.deviation.toFixed(1)}</td>
+                  <td><strong>${s.rank}</strong></td>
+                  <td style="font-size:0.85rem;">${s.zScore.toFixed(2)}</td>
+                  <td style="font-size:0.78rem;">${s.isUpper ? '⬆ فئة عليا' : s.isLower ? '⬇ فئة دنيا' : '-'}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+
+// ── Diagnosis ──────────────────────────────────────────────────────────
+function renderDiagnosis() {
+  if (!students.length) return;
+  const grades = students.map(s => s.grade);
+  const maxG = students[0].maxGrade;
+  const avg = calcMean(grades);
+  const med = calcMedian(grades);
+  const std = calcStd(grades);
+  const skew = calcSkewness(grades);
+  const cv = avg > 0 ? (std/avg)*100 : 0;
+  const failCount = students.filter(s => s.percentage < 60).length;
+  const successRate = ((students.length - failCount) / students.length * 100);
+  
+  let distribType, distribColor, distribClass;
+  if (skew > 0.5) {
+    distribType = 'توزيع موجب — صعوبة الاختبار مرتفعة أو ضعف تعلمي لدى الطلاب';
+    distribColor = '#D35400'; distribClass = 'warning';
+  } else if (skew < -0.5) {
+    distribType = 'توزيع سالب — محتمل وجود تضخم في الدرجات ⚠';
+    distribColor = '#C0392B'; distribClass = 'negative';
+  } else {
+    distribType = 'توزيع طبيعي متوازن ✔ — يعكس تقويماً جيداً';
+    distribColor = '#1E8449'; distribClass = 'positive';
+  }
+  
+  const testJudgment = avg/maxG >= 0.85 ? { label: 'الاختبار سهل جداً — مراجعة مستوى الأسئلة', cls: 'warning' }
+    : avg/maxG >= 0.70 ? { label: 'الاختبار في المستوى الجيد ✔', cls: 'positive' }
+    : avg/maxG >= 0.55 ? { label: 'الاختبار متوازن ✔', cls: 'positive' }
+    : { label: 'الاختبار صعب جداً — مراجعة مستوى الطلاب والأسئلة', cls: 'negative' };
+  
+  document.getElementById('diagnosisContent').innerHTML = `
+    <div class="card">
+      <div class="card-header">🩺 التشخيص والتوصيات</div>
+      <div class="card-body">
+        <div class="diagnosis-cards">
+          <div class="diag-card ${distribClass}">
+            <h4>📊 نوع التوزيع</h4>
+            <p style="color:${distribColor}; font-weight:700;">${distribType}</p>
+            <p style="margin-top:8px;">قيمة الالتواء: <strong>${skew.toFixed(3)}</strong></p>
+          </div>
+          <div class="diag-card ${testJudgment.cls}">
+            <h4>📝 تقييم مستوى الاختبار</h4>
+            <p>${testJudgment.label}</p>
+            <p style="margin-top:8px;">المتوسط = ${(avg/maxG*100).toFixed(1)}% من الدرجة الكاملة</p>
+          </div>
+          <div class="diag-card ${successRate >= 80 ? 'positive' : successRate >= 60 ? 'warning' : 'negative'}">
+            <h4>✅ نسبة النجاح</h4>
+            <p style="font-size:1.8rem; font-weight:900; color:var(--navy);">${successRate.toFixed(1)}%</p>
+            <p>${students.length - failCount} ناجح من ${students.length}</p>
+          </div>
+          <div class="diag-card ${cv < 15 ? 'negative' : cv < 30 ? 'positive' : 'warning'}">
+            <h4>📏 تجانس الدرجات</h4>
+            <p>معامل الاختلاف: <strong>${cv.toFixed(1)}%</strong></p>
+            <p style="margin-top:8px;">${cv < 15 ? '⚠ تجانس مرتفع جداً — قد يشير لتضخم الدرجات' : cv < 30 ? '✔ تجانس معقول يعكس اختباراً جيداً' : 'تباين كبير في مستويات الطلاب'}</p>
+          </div>
+        </div>
+
+        <div style="margin-top:1.5rem; padding:1.5rem; background:var(--light); border-radius:12px;">
+          <h4 style="color:var(--navy); font-weight:800; margin-bottom:1rem;">💡 التوصيات المبنية على البيانات</h4>
+          ${generateRecommendations(skew, cv, avg/maxG, successRate)}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function generateRecommendations(skew, cv, avgRatio, successRate) {
+  const recs = [];
+  if (skew < -0.5) recs.push('⚠ التوزيع السالب يشير لتضخم محتمل — راجع مستوى صعوبة الأسئلة وتنويع أدوات التقويم');
+  if (cv < 15) recs.push('⚠ الانحراف المعياري المنخفض يشير لتضخم محتمل — قد تحتاج لإضافة أسئلة تمييزية');
+  if (avgRatio > 0.88) recs.push('⚠ المتوسط مرتفع جداً — أضف أسئلة من مستوى التحليل والتطبيق والتقييم لزيادة التمييز');
+  if (successRate > 95) recs.push('💡 نسبة نجاح شبه كاملة — تأكد من وجود أسئلة تميز المستويات المختلفة');
+  if (successRate < 60) recs.push('⚠ نسبة نجاح منخفضة — راجع مستوى الأسئلة ومدى تغطيتها للمحتوى المُدرَّس');
+  if (skew > 0.5) recs.push('⬆ التوزيع الموجب يشير لصعوبة مرتفعة — راجع مدى ملاءمة الأسئلة للمرحلة');
+  recs.push('✔ احسب معامل الصعوبة والتمييز لكل سؤال لتحسين الاختبارات القادمة');
+  recs.push('✔ احتفظ بالأسئلة التي معامل صعوبتها بين 30-70% ومعامل تمييزها 0.30 فأكثر');
+  
+  return `<ul style="list-style:none;">
+    ${recs.map(r => `<li style="padding:8px 0; border-bottom:1px dashed #CCC; font-size:0.88rem; color:#333; display:flex; gap:8px; align-items:flex-start;">
+      <span style="flex-shrink:0;">${r.slice(0,2)}</span>
+      <span>${r.slice(2)}</span>
+    </li>`).join('')}
+  </ul>`;
+}
+
+function clearAll() {
+  if (!confirm('هل أنت متأكد من مسح جميع البيانات والبدء من جديد؟')) return;
+  // Reset data
+  students = [];
+  Object.values(charts).forEach(c => { try { c.destroy(); } catch(e){} });
+  charts = {};
+  // Reset inputs
+  document.getElementById('manualInput').value = '';
+  document.getElementById('fileInput').value = '';
+  document.getElementById('maxGrade').value = '100';
+  document.getElementById('subjectName').value = '';
+  document.getElementById('classInfo').value = '';
+  // Reset panels
+  document.getElementById('statsContent').innerHTML = '<div class="alert info">📥 يرجى استيراد بيانات الدرجات أولاً من تبويب "استيراد الدرجات"</div>';
+  document.getElementById('studentsContent').innerHTML = '<div class="alert info">📥 يرجى استيراد بيانات الدرجات أولاً</div>';
+  document.getElementById('diagnosisContent').innerHTML = '<div class="alert info">📥 يرجى استيراد بيانات الدرجات أولاً</div>';
+  // Go to import tab
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-import').classList.add('active');
+  document.querySelectorAll('.tab-btn')[0].classList.add('active');
+  showAlert('✅ تم مسح جميع البيانات. المنصة جاهزة للاستخدام من جديد.', 'info');
+}
+
+function showAlert(msg, type) {
+  const a = document.createElement('div');
+  a.className = `alert ${type}`;
+  a.textContent = msg;
+  document.getElementById('tab-import').prepend(a);
+  setTimeout(() => a.remove(), 4000);
+}
+
+function showLoading() { document.getElementById('loading').classList.add('show'); }
+function hideLoading() { document.getElementById('loading').classList.remove('show'); }
+</script>
+
+<!-- SITE FOOTER -->
+<footer style="background:linear-gradient(90deg,#1B2A4A 0%,#0E3A3A 100%);border-top:3px solid #C9A84C;padding:18px 2rem;text-align:center;color:rgba(255,255,255,0.85);font-family:'Cairo',sans-serif;font-size:0.95rem;">
+  إعداد وتصميم &nbsp;<strong style="color:#F5D78E;font-size:1.05rem;">أ/فاطمة الأسمري</strong>&nbsp;|&nbsp;إدارة التعليم بمحافظة جدة&nbsp;|&nbsp;1447هـ
+</footer>
+
+</body>
+</html>
