@@ -1,0 +1,1662 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مسابقة الرخصة الإشرافية التربوية</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap');
+
+  :root {
+    --primary: #1a237e;
+    --secondary: #0d47a1;
+    --accent: #ffd600;
+    --success: #2e7d32;
+    --error: #c62828;
+    --bg: #0a0a2e;
+    --card-bg: rgba(255,255,255,0.05);
+    --text: #ffffff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Tajawal', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ===== خلفية متحركة ===== */
+  .bg-animation {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .bg-animation::before {
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    top: -50%;
+    left: -50%;
+    background: radial-gradient(ellipse at center, #1a237e 0%, #0a0a2e 50%, #000 100%);
+    animation: rotateBg 20s linear infinite;
+  }
+  @keyframes rotateBg {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  /* نجوم متحركة */
+  .stars {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 0;
+    pointer-events: none;
+  }
+  .star {
+    position: absolute;
+    background: #fff;
+    border-radius: 50%;
+    animation: twinkle var(--duration) ease-in-out infinite;
+    opacity: 0;
+  }
+  @keyframes twinkle {
+    0%, 100% { opacity: 0; transform: scale(0.5); }
+    50% { opacity: 1; transform: scale(1); }
+  }
+
+  /* ===== الحاوية الرئيسية ===== */
+  .container {
+    position: relative;
+    z-index: 10;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  /* ===== الهيدر ===== */
+  .header {
+    text-align: center;
+    padding: 40px 20px 30px;
+    position: relative;
+  }
+  .header .logo-icon {
+    font-size: 60px;
+    display: block;
+    margin-bottom: 15px;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+  }
+  .header h1 {
+    font-size: 2.2rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, #ffd600, #ff6f00, #ffd600);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmer 3s linear infinite;
+    margin-bottom: 8px;
+  }
+  @keyframes shimmer {
+    0% { background-position: 0% center; }
+    100% { background-position: 200% center; }
+  }
+  .header h2 {
+    font-size: 1.2rem;
+    color: #90caf9;
+    font-weight: 400;
+    margin-bottom: 5px;
+  }
+  .header .subtitle {
+    font-size: 0.95rem;
+    color: #b0bec5;
+  }
+
+  /* ===== شريط التقدم ===== */
+  .progress-bar-container {
+    background: rgba(255,255,255,0.1);
+    border-radius: 50px;
+    height: 12px;
+    margin: 20px 0;
+    overflow: hidden;
+    position: relative;
+  }
+  .progress-bar {
+    height: 100%;
+    border-radius: 50px;
+    background: linear-gradient(90deg, #ffd600, #ff6f00);
+    transition: width 0.5s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .progress-bar::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    animation: progressShine 1.5s ease-in-out infinite;
+  }
+  @keyframes progressShine {
+    0% { left: -100%; }
+    100% { left: 200%; }
+  }
+
+  /* ===== معلومات الاختبار ===== */
+  .quiz-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+  .info-badge {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 50px;
+    padding: 8px 18px;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    backdrop-filter: blur(10px);
+  }
+  .info-badge .icon { font-size: 1.1rem; }
+  .info-badge .value { font-weight: 700; color: #ffd600; }
+
+  /* ===== المجال الحالي ===== */
+  .domain-badge {
+    text-align: center;
+    margin-bottom: 15px;
+  }
+  .domain-badge span {
+    background: linear-gradient(135deg, #1565c0, #0d47a1);
+    border: 1px solid #42a5f5;
+    border-radius: 50px;
+    padding: 6px 20px;
+    font-size: 0.9rem;
+    color: #90caf9;
+  }
+
+  /* ===== بطاقة السؤال ===== */
+  .question-card {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px;
+    padding: 35px;
+    margin-bottom: 25px;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    position: relative;
+    overflow: hidden;
+    animation: slideIn 0.4s ease;
+  }
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .question-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 5px; height: 100%;
+    background: linear-gradient(180deg, #ffd600, #ff6f00);
+    border-radius: 20px 0 0 20px;
+  }
+  .question-number {
+    font-size: 0.85rem;
+    color: #ffd600;
+    font-weight: 700;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .question-text {
+    font-size: 1.2rem;
+    font-weight: 600;
+    line-height: 1.8;
+    color: #e3f2fd;
+  }
+
+  /* ===== خيارات الإجابة ===== */
+  .options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 25px;
+  }
+  @media (max-width: 600px) {
+    .options-grid { grid-template-columns: 1fr; }
+  }
+
+  .option-btn {
+    background: rgba(255,255,255,0.06);
+    border: 2px solid rgba(255,255,255,0.15);
+    border-radius: 15px;
+    padding: 16px 20px;
+    color: #e0e0e0;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: right;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+    overflow: hidden;
+  }
+  .option-btn::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+    transition: left 0.5s ease;
+  }
+  .option-btn:hover::before { left: 100%; }
+  .option-btn:hover:not(:disabled) {
+    background: rgba(255,214,0,0.1);
+    border-color: #ffd600;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(255,214,0,0.2);
+    color: #fff;
+  }
+  .option-btn .option-letter {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700;
+    font-size: 1rem;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+  }
+  .option-btn:hover:not(:disabled) .option-letter {
+    background: #ffd600;
+    color: #000;
+  }
+  .option-btn.correct {
+    background: rgba(46,125,50,0.3);
+    border-color: #4caf50;
+    color: #a5d6a7;
+    animation: correctPulse 0.5s ease;
+  }
+  .option-btn.correct .option-letter {
+    background: #4caf50;
+    color: #fff;
+  }
+  @keyframes correctPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.03); }
+    100% { transform: scale(1); }
+  }
+  .option-btn.wrong {
+    background: rgba(198,40,40,0.3);
+    border-color: #ef5350;
+    color: #ef9a9a;
+    animation: shake 0.4s ease;
+  }
+  .option-btn.wrong .option-letter {
+    background: #ef5350;
+    color: #fff;
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-8px); }
+    40%, 80% { transform: translateX(8px); }
+  }
+  .option-btn:disabled { cursor: not-allowed; }
+
+  /* ===== رسالة التغذية الراجعة ===== */
+  .feedback-message {
+    text-align: center;
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    font-size: 1.3rem;
+    font-weight: 700;
+    display: none;
+    animation: fadeInUp 0.4s ease;
+  }
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .feedback-message.correct-msg {
+    background: rgba(46,125,50,0.2);
+    border: 2px solid #4caf50;
+    color: #a5d6a7;
+  }
+  .feedback-message.wrong-msg {
+    background: rgba(198,40,40,0.2);
+    border: 2px solid #ef5350;
+    color: #ef9a9a;
+  }
+  .feedback-message .feedback-icon { font-size: 2rem; display: block; margin-bottom: 8px; }
+  .feedback-message .correct-answer { font-size: 0.95rem; color: #90caf9; margin-top: 8px; }
+
+  /* ===== زر التالي ===== */
+  .next-btn {
+    display: none;
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, #ffd600, #ff6f00);
+    border: none;
+    border-radius: 15px;
+    color: #000;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .next-btn::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.5s ease;
+  }
+  .next-btn:hover::before { left: 100%; }
+  .next-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(255,214,0,0.4);
+  }
+
+  /* ===== شاشة البداية ===== */
+  .start-screen {
+    text-align: center;
+    padding: 40px 20px;
+  }
+  .start-screen .big-icon { font-size: 80px; display: block; margin-bottom: 20px; animation: bounce 2s ease-in-out infinite; }
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+  }
+  .start-screen h2 {
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: #ffd600;
+    margin-bottom: 15px;
+  }
+  .start-screen p {
+    font-size: 1.05rem;
+    color: #b0bec5;
+    line-height: 1.8;
+    margin-bottom: 30px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    margin-bottom: 35px;
+  }
+  .stat-card {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 15px;
+    padding: 20px 15px;
+    text-align: center;
+  }
+  .stat-card .stat-icon { font-size: 2rem; display: block; margin-bottom: 8px; }
+  .stat-card .stat-value { font-size: 1.8rem; font-weight: 900; color: #ffd600; display: block; }
+  .stat-card .stat-label { font-size: 0.85rem; color: #90caf9; }
+  .start-btn {
+    padding: 18px 60px;
+    background: linear-gradient(135deg, #ffd600, #ff6f00);
+    border: none;
+    border-radius: 50px;
+    color: #000;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 900;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(255,214,0,0.3);
+  }
+  .start-btn:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 20px 40px rgba(255,214,0,0.4);
+  }
+
+  /* ===== شاشة النتائج ===== */
+  .result-screen {
+    text-align: center;
+    padding: 40px 20px;
+    display: none;
+  }
+  .result-icon { font-size: 100px; display: block; margin-bottom: 20px; animation: resultBounce 1s ease; }
+  @keyframes resultBounce {
+    0% { transform: scale(0); opacity: 0; }
+    60% { transform: scale(1.2); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  .result-title {
+    font-size: 2.5rem;
+    font-weight: 900;
+    margin-bottom: 10px;
+  }
+  .result-score {
+    font-size: 5rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, #ffd600, #ff6f00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: block;
+    margin: 20px 0;
+    animation: countUp 1s ease;
+  }
+  @keyframes countUp {
+    from { opacity: 0; transform: scale(0.5); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  .result-message {
+    font-size: 1.3rem;
+    color: #b0bec5;
+    margin-bottom: 30px;
+    line-height: 1.8;
+  }
+  .result-details {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-bottom: 35px;
+  }
+  .result-detail-card {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 15px;
+    padding: 20px 10px;
+  }
+  .result-detail-card .detail-icon { font-size: 2rem; display: block; margin-bottom: 8px; }
+  .result-detail-card .detail-value { font-size: 1.8rem; font-weight: 900; display: block; }
+  .result-detail-card .detail-label { font-size: 0.8rem; color: #90caf9; }
+  .restart-btn {
+    padding: 16px 50px;
+    background: linear-gradient(135deg, #1565c0, #0d47a1);
+    border: 2px solid #42a5f5;
+    border-radius: 50px;
+    color: #fff;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 0 10px;
+  }
+  .restart-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(21,101,192,0.4);
+  }
+
+  /* ===== تأثير الاحتفال ===== */
+  .confetti-container {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 1000;
+    overflow: hidden;
+  }
+  .confetti-piece {
+    position: absolute;
+    width: 10px; height: 10px;
+    top: -20px;
+    animation: confettiFall var(--fall-duration) linear forwards;
+  }
+  @keyframes confettiFall {
+    0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+  }
+
+  /* ===== المؤقت ===== */
+  .timer-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .timer-circle {
+    width: 50px; height: 50px;
+    border-radius: 50%;
+    border: 3px solid rgba(255,255,255,0.2);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 900;
+    font-size: 1.1rem;
+    position: relative;
+    transition: border-color 0.3s ease;
+  }
+  .timer-circle.warning { border-color: #ff6f00; color: #ff6f00; animation: timerPulse 0.5s ease-in-out infinite; }
+  .timer-circle.danger { border-color: #ef5350; color: #ef5350; animation: timerPulse 0.3s ease-in-out infinite; }
+  @keyframes timerPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+  }
+
+  /* ===== زر العودة ===== */
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 22px;
+    background: rgba(255,255,255,0.08);
+    border: 1.5px solid rgba(255,255,255,0.2);
+    border-radius: 50px;
+    color: #90caf9;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 18px;
+  }
+  .back-btn:hover {
+    background: rgba(255,214,0,0.12);
+    border-color: #ffd600;
+    color: #ffd600;
+    transform: translateX(4px);
+  }
+  .back-btn-row {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 5px;
+  }
+
+  /* ===== الفوتر ===== */
+  .footer {
+    text-align: center;
+    padding: 25px 20px;
+    margin-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+  .footer p {
+    color: #90caf9;
+    font-size: 0.95rem;
+    margin-bottom: 8px;
+  }
+  .footer a {
+    color: #ffd600;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .footer a:hover {
+    color: #ff6f00;
+    text-shadow: 0 0 10px rgba(255,214,0,0.5);
+  }
+  .footer .telegram-icon {
+    background: #0088cc;
+    border-radius: 50%;
+    width: 28px; height: 28px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 0.9rem;
+  }
+
+  /* ===== شريط المجالات ===== */
+  .domains-bar {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  .domain-pill {
+    padding: 5px 14px;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #90caf9;
+    background: rgba(255,255,255,0.05);
+  }
+  .domain-pill.active {
+    background: rgba(255,214,0,0.15);
+    border-color: #ffd600;
+    color: #ffd600;
+  }
+
+  /* ===== تأثير الجسيمات ===== */
+  .particles {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 1;
+    pointer-events: none;
+  }
+  .particle {
+    position: absolute;
+    border-radius: 50%;
+    animation: floatParticle var(--duration) ease-in-out infinite;
+    opacity: 0.3;
+  }
+  @keyframes floatParticle {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    33% { transform: translateY(-30px) rotate(120deg); }
+    66% { transform: translateY(20px) rotate(240deg); }
+  }
+</style>
+</head>
+<body>
+
+<!-- خلفية متحركة -->
+<div class="bg-animation"></div>
+
+<!-- نجوم -->
+<div class="stars" id="stars"></div>
+
+<!-- جسيمات -->
+<div class="particles" id="particles"></div>
+
+<!-- احتفال -->
+<div class="confetti-container" id="confetti"></div>
+
+<!-- الحاوية الرئيسية -->
+<div class="container">
+
+  <!-- الهيدر -->
+  <div class="header">
+    <span class="logo-icon">🏆</span>
+    <h1>مسابقة الرخصة الإشرافية</h1>
+    <h2>اختبار المعايير المهنية للمشرفين التربويين</h2>
+    <p class="subtitle">هيئة تقويم التعليم والتدريب | المملكة العربية السعودية</p>
+  </div>
+
+  <!-- شاشة البداية -->
+  <div id="startScreen" class="start-screen">
+    <span class="big-icon">📚</span>
+    <h2>مرحباً بك في مسابقة الرخصة الإشرافية!</h2>
+    <p>
+      اختبر معلوماتك في معايير الإشراف التربوي المهنية<br>
+      المستخرجة من وثيقة المعايير ودليل المشرفين التربويين<br>
+      أجب عن الأسئلة واحصل على أعلى درجة ممكنة
+    </p>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <span class="stat-icon">❓</span>
+        <span class="stat-value">40</span>
+        <span class="stat-label">سؤالاً</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-icon">📋</span>
+        <span class="stat-value">4</span>
+        <span class="stat-label">مجالات</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-icon">⏱️</span>
+        <span class="stat-value">30</span>
+        <span class="stat-label">ثانية/سؤال</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-icon">⭐</span>
+        <span class="stat-value">15</span>
+        <span class="stat-label">معياراً</span>
+      </div>
+    </div>
+    <button class="start-btn" onclick="startQuiz()">🚀 ابدأ المسابقة الآن!</button>
+  </div>
+
+  <!-- شاشة الاختبار -->
+  <div id="quizScreen" style="display:none;">
+    <!-- زر العودة للقائمة الرئيسية -->
+    <div class="back-btn-row">
+      <button class="back-btn" onclick="goHome()">🏠 القائمة الرئيسية</button>
+    </div>
+    <!-- شريط المجالات -->
+    <div class="domains-bar" id="domainsBar">
+      <div class="domain-pill active" data-domain="0">القيادة والإشراف</div>
+      <div class="domain-pill" data-domain="1">التطوير المهني</div>
+      <div class="domain-pill" data-domain="2">دعم التعليم والتعلم</div>
+      <div class="domain-pill" data-domain="3">القيم وأخلاقيات المهنة</div>
+    </div>
+
+    <!-- معلومات الاختبار -->
+    <div class="quiz-info">
+      <div class="info-badge">
+        <span class="icon">📝</span>
+        <span>السؤال</span>
+        <span class="value" id="questionCounter">1/40</span>
+      </div>
+      <div class="info-badge timer-container">
+        <span class="icon">⏱️</span>
+        <div class="timer-circle" id="timerCircle">30</div>
+      </div>
+      <div class="info-badge">
+        <span class="icon">✅</span>
+        <span>الإجابات الصحيحة</span>
+        <span class="value" id="scoreDisplay">0</span>
+      </div>
+    </div>
+
+    <!-- شريط التقدم -->
+    <div class="progress-bar-container">
+      <div class="progress-bar" id="progressBar" style="width:0%"></div>
+    </div>
+
+    <!-- المجال الحالي -->
+    <div class="domain-badge">
+      <span id="currentDomain">القيادة والإشراف</span>
+    </div>
+
+    <!-- بطاقة السؤال -->
+    <div class="question-card" id="questionCard">
+      <div class="question-number" id="questionNumber">
+        <span>🔷</span>
+        <span>السؤال الأول</span>
+      </div>
+      <p class="question-text" id="questionText">...</p>
+    </div>
+
+    <!-- خيارات الإجابة -->
+    <div class="options-grid" id="optionsGrid"></div>
+
+    <!-- رسالة التغذية الراجعة -->
+    <div class="feedback-message" id="feedbackMessage">
+      <span class="feedback-icon" id="feedbackIcon"></span>
+      <span id="feedbackText"></span>
+      <div class="correct-answer" id="correctAnswerText"></div>
+    </div>
+
+    <!-- زر التالي -->
+    <button class="next-btn" id="nextBtn" onclick="nextQuestion()">السؤال التالي ←</button>
+  </div>
+
+  <!-- شاشة النتائج -->
+  <div id="resultScreen" class="result-screen">
+    <span class="result-icon" id="resultIcon">🏆</span>
+    <div class="result-title" id="resultTitle">أداء رائع!</div>
+    <span class="result-score" id="resultScore">0%</span>
+    <p class="result-message" id="resultMessage"></p>
+    <div class="result-details">
+      <div class="result-detail-card">
+        <span class="detail-icon">✅</span>
+        <span class="detail-value" id="correctCount" style="color:#4caf50">0</span>
+        <span class="detail-label">إجابة صحيحة</span>
+      </div>
+      <div class="result-detail-card">
+        <span class="detail-icon">❌</span>
+        <span class="detail-value" id="wrongCount" style="color:#ef5350">0</span>
+        <span class="detail-label">إجابة خاطئة</span>
+      </div>
+      <div class="result-detail-card">
+        <span class="detail-icon">⏭️</span>
+        <span class="detail-value" id="skippedCount" style="color:#ff9800">0</span>
+        <span class="detail-label">لم يُجب عنها</span>
+      </div>
+    </div>
+    <div>
+      <button class="restart-btn" onclick="restartQuiz()">🔄 إعادة المسابقة</button>
+    </div>
+  </div>
+
+  <!-- الفوتر -->
+  <div class="footer">
+    <p>تصميم د/فواز</p>
+    <a href="https://t.me/TAqhjT3MFVE1Yzk0" target="_blank">
+      <span class="telegram-icon">✈️</span>
+      تفضل للمزيد هنا
+    </a>
+  </div>
+
+</div>
+
+<script>
+// ===== بيانات الأسئلة =====
+const quizData = [
+  // ===== المجال الأول: القيادة والإشراف =====
+  {
+    domain: "القيادة والإشراف",
+    domainIndex: 0,
+    standard: "المعيار 1.25.6: الإسهام في تمكين الرؤية الإستراتيجية الوزارية",
+    question: "تتكون معايير المشرف التربوي من كم معياراً موزعة على مجالات؟",
+    options: ["10 معايير في 3 مجالات", "15 معياراً في 4 مجالات", "12 معياراً في 5 مجالات", "20 معياراً في 4 مجالات"],
+    correct: 1
+  },
+  {
+    domain: "القيادة والإشراف",
+    domainIndex: 0,
+    standard: "المعيار 1.25.6: الإسهام في تمكين الرؤية الإستراتيجية الوزارية",
+    question: "ما المجالات الأربعة الرئيسية التي تركز عليها المعايير المهنية للمشرفين التربويين؟",
+    options: [
+      "التخطيط والتنفيذ والتقويم والمتابعة",
+      "القيادة والإشراف - التطوير المهني - دعم التعليم والتعلم - القيم وأخلاق المهنة ومهارات الاتصال",
+      "الإدارة والتوجيه والتدريب والتقييم",
+      "المناهج والتدريس والبحث والتطوير"
+    ],
+    correct: 1
+  },
+  {
+    domain: "القيادة والإشراف",
+    domainIndex: 0,
+    standard: "المعيار 1.25.6: الرؤية الإستراتيجية",
+    question: "ما الوزن النسبي لمجال القيادة والإشراف في اختبار الرخصة المهنية؟",
+    options: ["34.6%", "12.1%", "41.3%", "12%"],
+    correct: 2
+  },
+  {
+    domain: "القيادة والإشراف",
+    domainIndex: 0,
+    standard: "المعيار 2.25.6: توظيف المفاهيم والمهارات القيادية",
+    question: "يتعامل مشرف تربوي مع المعلمين المتميزين الذين لديهم دافعية عالية للعمل بشكل مختلف عن المعلمين ذوي المهارات والدافعية المنخفضة. هذا المشرف يتبنى نظرية القيادة:",
+    options: ["الظرفية", "التحويلية", "السلوكية", "التشاركية"],
+    correct: 0
+  },
+  {
+    domain: "القيادة والإشراف",
+    domainIndex: 0,
+    standard: "المعيار 2.25.6: توظيف المفاهيم والمهارات القيادية",
+    question: "ما الذي يميز المشرف التربوي كقائد تربوي عن دوره التقليدي؟",
+    options: [
+      "الاقتصار على الزيارات الصفية",
+      "تجاوز الزيارات الصفية إلى أدوار أخرى تفرضها التحديات التربوية والتقنية",
+      "التركيز على التقارير الإدارية فقط",
+      "الاهتمام بالجانب الإداري دون التربوي"
+    ],
+    correct: 1
+  },
+  {
+    domain: "القيادة والإشراف",
+    domainIndex: 0,
+    standard: "المعيار 3.25.6: التخطيط لعمليات التغيير والتطوير",
+    question: "مشرف تربوي يتبع نمط إشرافي يكافئ الأداء المتميز ويحاسب المعلمين على التقصير، النمط الذي يتبناه المشرف في هذه الحالة هو:",
+    options: ["الديمقراطي", "التفتيش", "الاستبدادي", "الحرية المطلقة"],
+    correct: 1
+  },
+  {
+    domain: "القيادة والإشراف",
+    domainIndex: 0,
+    standard: "المعيار 3.25.6: التخطيط لعمليات التغيير والتطوير",
+    question: "أي من التالي يُعدّ من مؤشرات المعيار الخاص بالتخطيط لعمليات التغيير والتطوير؟",
+    options: [
+      "يحضر الندوات والمؤتمرات التربوية",
+      "يتوقع احتياجات الأفراد والفرق ويسهل الحصول عليها كجزء من تنفيذ عمليات التطوير",
+      "يستخدم أدوات متنوعة في عملية التقويم",
+      "يشارك في تفعيل مبادرات الشراكات المجتمعية"
+    ],
+    correct: 1
+  },
+  {
+    domain: "القيادة والإشراف",
+    domainIndex: 0,
+    standard: "المعيار 4.25.6: ممارسة الأساليب الإشرافية بفاعلية",
+    question: "يتضمن المعيار الخاص بممارسة الأساليب الإشرافية بفاعلية أسلوب الإشراف الإكلينيكي، ما الذي يميز هذا الأسلوب؟",
+    options: [
+      "يعتمد على الزيارات المفاجئة",
+      "يركز على تحسين أداء المعلم من خلال الملاحظة والتحليل والتغذية الراجعة",
+      "يقتصر على الاجتماعات الدورية",
+      "يعتمد على التقارير الكتابية فقط"
+    ],
+    correct: 1
+  },
+  {
+    domain: "القيادة والإشراف",
+    domainIndex: 0,
+    standard: "المعيار 4.25.6: ممارسة الأساليب الإشرافية بفاعلية",
+    question: "من بين الأساليب الإشرافية المذكورة في المعايير، أيها يُعدّ من التقنيات الإشرافية الحديثة؟",
+    options: [
+      "الزيارة الصفية التقليدية",
+      "التعليم المصغر واستخدام نافذة جوهاري والتدريب على الحساسية",
+      "الاجتماعات الدورية فقط",
+      "التقارير الكتابية الرسمية"
+    ],
+    correct: 1
+  },
+  {
+    domain: "القيادة والإشراف",
+    domainIndex: 0,
+    standard: "المعيار 5.25.6: الإلمام بمتطلبات تقويم أداء المعلم",
+    question: "ما الوزن النسبي للمعيار 4.25.6 في اختبار الرخصة المهنية؟",
+    options: ["5.3%", "8%", "12%", "6.7%"],
+    correct: 2
+  },
+
+  // ===== المجال الثاني: التطوير المهني =====
+  {
+    domain: "التطوير المهني",
+    domainIndex: 1,
+    standard: "المعيار 6.25.6: مراجعة الممارسات الإشرافية",
+    question: "ما الوزن النسبي لمجال التطوير المهني في اختبار الرخصة المهنية؟",
+    options: ["41.3%", "12.1%", "34.6%", "12%"],
+    correct: 1
+  },
+  {
+    domain: "التطوير المهني",
+    domainIndex: 1,
+    standard: "المعيار 6.25.6: مراجعة الممارسات الإشرافية على نحو بناء",
+    question: "ما الذي يفعله المشرف التربوي وفق المعيار 6.25.6 المتعلق بمراجعة الممارسات الإشرافية؟",
+    options: [
+      "يعتمد على التقييم الخارجي فقط",
+      "يوظف التغذية الراجعة المقدمة له من المعلمين والزملاء والمسؤولين لتحديد التحسينات",
+      "يتجاهل ملاحظات الزملاء",
+      "يركز على تقييم الطلاب فقط"
+    ],
+    correct: 1
+  },
+  {
+    domain: "التطوير المهني",
+    domainIndex: 1,
+    standard: "المعيار 7.25.6: تطور الأداء المهني على نحو مستمر",
+    question: "من مؤشرات المعيار 7.25.6 المتعلق بتطور الأداء المهني أن المشرف:",
+    options: [
+      "يقتصر على حضور الدورات الإلزامية فقط",
+      "يمتلك مهارات استشراف المستقبل وإكساب هذه المهارات للمعلمين والمتعلمين",
+      "يتجنب التعلم الإلكتروني",
+      "يعتمد على الخبرة الشخصية فقط"
+    ],
+    correct: 1
+  },
+  {
+    domain: "التطوير المهني",
+    domainIndex: 1,
+    standard: "المعيار 7.25.6: تطور الأداء المهني",
+    question: "ما مهارات العصر الرقمي التي ينبغي على المشرف التربوي امتلاكها وفق المعيار 7.25.6؟",
+    options: [
+      "مهارات الكتابة التقليدية فقط",
+      "مهارات العصر الرقمي والتفكير الإبداعي والاتصال الفعال والمعلوماتية والمبادرة والتوجيه الذاتي",
+      "مهارات الحفظ والاسترجاع",
+      "مهارات الإدارة المالية"
+    ],
+    correct: 1
+  },
+  {
+    domain: "التطوير المهني",
+    domainIndex: 1,
+    standard: "المعيار 8.25.6: تصميم برامج التدريب",
+    question: "ما الوزن النسبي للمعيار 8.25.6 في اختبار الرخصة المهنية؟",
+    options: ["6.7%", "5.3%", "8%", "12%"],
+    correct: 1
+  },
+  {
+    domain: "التطوير المهني",
+    domainIndex: 1,
+    standard: "المعيار 6.25.6: مراجعة الممارسات الإشرافية",
+    question: "يبتكر المشرف التربوي حلولاً إبداعية ومبادرات إيجابية ومشاريع تربوية وفق منهجية علمية مقننة، هذا يندرج تحت:",
+    options: [
+      "المعيار الخاص بالشراكة المجتمعية",
+      "المعيار الخاص بمراجعة الممارسات الإشرافية على نحو بناء",
+      "المعيار الخاص بتقويم أداء المعلم",
+      "المعيار الخاص بالرؤية الإستراتيجية"
+    ],
+    correct: 1
+  },
+
+  // ===== المجال الثالث: دعم التعليم والتعلم =====
+  {
+    domain: "دعم التعليم والتعلم",
+    domainIndex: 2,
+    standard: "المعيار 9.25.6: دعم التعليم والتعلم",
+    question: "ما الوزن النسبي لمجال دعم التعليم والتعلم في اختبار الرخصة المهنية؟",
+    options: ["41.3%", "12.1%", "34.6%", "12%"],
+    correct: 2
+  },
+  {
+    domain: "دعم التعليم والتعلم",
+    domainIndex: 2,
+    standard: "المعيار 9.25.6: دعم التعليم والتعلم",
+    question: "من مواصفات أدوات التقويم التكويني للطالب أن تكون قادرة على توضيح أوجه القوة كما توضح أوجه القصور، وأن تراعي أنماط المتعلمين واهتماماتهم، وتقلل من المقارنات غير الضرورية. هذه المواصفات تعبر عن:",
+    options: ["التنوع", "الكفاية", "الشمول", "الإنصاف"],
+    correct: 3
+  },
+  {
+    domain: "دعم التعليم والتعلم",
+    domainIndex: 2,
+    standard: "المعيار 10.25.6: تحليل المحتوى",
+    question: "قام فريق من المشرفين والمعلمين بتحليل محتوى أحد المناهج مستخدمين استمارة تتضمن عناصر: المفاهيم، استراتيجيات التدريس، الأنشطة، أساليب التقويم. هذا يمثل طريقة تحليل المحتوى المعروفة بـ:",
+    options: ["تجميع", "تجزئة", "تبويب", "هرم"],
+    correct: 2
+  },
+  {
+    domain: "دعم التعليم والتعلم",
+    domainIndex: 2,
+    standard: "المعيار 13.25.6: التعليم الإلكتروني",
+    question: "صمم معلم أربع فيديوهات تعليمية، كل فيديو متبوع باختبار قصير ينقله للمرحلة التالية، حتى ينتهي الطالب بالحصول على أربعين درجة في حال أكمل المهمة بشكل صحيح. هذا النوع من التعليم الإلكتروني يسمى:",
+    options: ["الموجه من المعلم", "المتزامن", "غير المتزامن", "المدمج"],
+    correct: 3
+  },
+  {
+    domain: "دعم التعليم والتعلم",
+    domainIndex: 2,
+    standard: "المعيار 11.25.6: دعم التعليم والتعلم",
+    question: "ما الوزن النسبي للمعيار 11.25.6 في اختبار الرخصة المهنية؟",
+    options: ["5.3%", "6.7%", "8%", "12%"],
+    correct: 1
+  },
+  {
+    domain: "دعم التعليم والتعلم",
+    domainIndex: 2,
+    standard: "المعيار 5.25.6: الإلمام بمتطلبات تقويم أداء المعلم",
+    question: "وفق المعيار 5.25.6، ما الذي يشجع المشرف التربوي المعلمين على ممارسته؟",
+    options: [
+      "التقويم الخارجي فقط",
+      "التقويم الذاتي وتوظيفه في تحسين أداء المعلم",
+      "التقويم التنافسي بين المعلمين",
+      "الاعتماد على نتائج الطلاب فقط"
+    ],
+    correct: 1
+  },
+  {
+    domain: "دعم التعليم والتعلم",
+    domainIndex: 2,
+    standard: "المعيار 9.25.6: دعم التعليم والتعلم",
+    question: "ما الوزن النسبي للمعيار 9.25.6 في اختبار الرخصة المهنية؟",
+    options: ["5.3%", "6.7%", "8%", "12%"],
+    correct: 1
+  },
+  {
+    domain: "دعم التعليم والتعلم",
+    domainIndex: 2,
+    standard: "المعيار 12.25.6: دعم التعليم والتعلم",
+    question: "ما الوزن النسبي للمعيار 12.25.6 في اختبار الرخصة المهنية؟",
+    options: ["6.7%", "5.3%", "8%", "12%"],
+    correct: 1
+  },
+
+  // ===== المجال الرابع: القيم وأخلاقيات المهنة ومهارات الاتصال =====
+  {
+    domain: "القيم وأخلاقيات المهنة ومهارات الاتصال",
+    domainIndex: 3,
+    standard: "المعيار 14.25.6: القيم وأخلاقيات المهنة",
+    question: "ما الوزن النسبي لمجال القيم وأخلاقيات المهنة ومهارات الاتصال في اختبار الرخصة المهنية؟",
+    options: ["41.3%", "12.1%", "34.6%", "12%"],
+    correct: 3
+  },
+  {
+    domain: "القيم وأخلاقيات المهنة ومهارات الاتصال",
+    domainIndex: 3,
+    standard: "المعيار 14.25.6: القيم وأخلاقيات المهنة",
+    question: "تعامل المشرف بحياد مع أفكار المعلمين، وعدم تأثير رأيه السلبي عن فكرة على صاحبها، يمثل قيمة:",
+    options: ["الثقة", "المسؤولية", "التعاطف", "الإنصاف"],
+    correct: 3
+  },
+  {
+    domain: "القيم وأخلاقيات المهنة ومهارات الاتصال",
+    domainIndex: 3,
+    standard: "المعيار 15.25.6: الشراكة المجتمعية ومهارات الاتصال",
+    question: "مشاركة الكشافة من منسوبي وطلاب وزارة التعليم في تنظيم موسم الحج من أنواع الشراكة:",
+    options: ["الاجتماعية", "الاقتصادية", "التربوية", "التطوعية"],
+    correct: 0
+  },
+  {
+    domain: "القيم وأخلاقيات المهنة ومهارات الاتصال",
+    domainIndex: 3,
+    standard: "المعيار 15.25.6: الشراكة المجتمعية",
+    question: "وضع قواعد وقوانين ومعايير للشراكة مع أحد الجهات يسمى:",
+    options: ["محاسبية", "مساءلة", "جودة", "حوكمة"],
+    correct: 3
+  },
+  {
+    domain: "القيم وأخلاقيات المهنة ومهارات الاتصال",
+    domainIndex: 3,
+    standard: "المعيار 15.25.6: مهارات الاتصال",
+    question: "مشرف يأخذ في الاعتبار مكونات الاتصال وشروطها في العملية الإشرافية، فهو يعبر عما يريد بشكل واضح وموجز، مستخدماً كلمات ولغة جسد مناسبة، وهذا يمثل:",
+    options: ["التخطيط للرسالة", "ترميز الرسالة", "اختيار قناة الاتصال", "تفسير الرسالة"],
+    correct: 1
+  },
+  {
+    domain: "القيم وأخلاقيات المهنة ومهارات الاتصال",
+    domainIndex: 3,
+    standard: "المعيار 15.25.6: الشراكة المجتمعية",
+    question: "برنامج مقترح من أحد مكاتب الإشراف لرفع معدلات انضباط الطلاب بالشراكة مع الأسرة والمجتمع المحلي، يعد توظيفاً لأحد مبادئ الشراكة المجتمعية، وهو:",
+    options: [
+      "التوقعات الواضحة والمساءلة المشتركة",
+      "الاستفادة من الموارد المتبادلة",
+      "مراجعة فعالية الشراكة",
+      "الحفاظ على خصوصية الشراكة"
+    ],
+    correct: 0
+  },
+  {
+    domain: "القيم وأخلاقيات المهنة ومهارات الاتصال",
+    domainIndex: 3,
+    standard: "المعيار 15.25.6: الشراكة المجتمعية",
+    question: "يدعم المشرف التربوي مبدأ الشراكة المجتمعية بين جهة عمله ومؤسسات المجتمع ذات العلاقة. من مؤشرات ذلك:",
+    options: [
+      "الاقتصار على الشراكة الداخلية",
+      "المشاركة في تفعيل مبادرات الشراكات المجتمعية الداعمة لتطوير العملية الإشرافية",
+      "تجنب التعاون مع الجهات الخارجية",
+      "الاهتمام بالشراكة الاقتصادية فقط"
+    ],
+    correct: 1
+  },
+
+  // ===== أسئلة عامة من الدليل =====
+  {
+    domain: "القيادة والإشراف",
+    domainIndex: 0,
+    standard: "معلومات عامة عن الاختبار",
+    question: "ما الهدف الرئيسي من دليل المتقدم لاختبار الرخصة المهنية للمشرفين التربويين؟",
+    options: [
+      "تحديد مواعيد الاختبار فقط",
+      "مساعدة المتقدم على التهيؤ والاستعداد لأداء الاختبار بتقديم معلومات مفيدة عن محتواه",
+      "تقديم الشهادات التدريبية",
+      "تحديد أماكن الاختبار"
+    ],
+    correct: 1
+  },
+  {
+    domain: "القيادة والإشراف",
+    domainIndex: 0,
+    standard: "معلومات عامة عن الاختبار",
+    question: "ما نوع أسئلة اختبار الرخصة المهنية للمشرفين التربويين؟",
+    options: [
+      "أسئلة مقالية",
+      "أسئلة اختيار من متعدد (موضوعية)",
+      "أسئلة صح وخطأ",
+      "أسئلة مطابقة"
+    ],
+    correct: 1
+  },
+  {
+    domain: "التطوير المهني",
+    domainIndex: 1,
+    standard: "معلومات عامة عن الاختبار",
+    question: "ما الجهة المسؤولة عن اختبار الرخصة المهنية للمشرفين التربويين في المملكة العربية السعودية؟",
+    options: [
+      "وزارة التعليم",
+      "هيئة تقويم التعليم والتدريب",
+      "مركز القيادة التربوية",
+      "الجامعات السعودية"
+    ],
+    correct: 1
+  },
+  {
+    domain: "التطوير المهني",
+    domainIndex: 1,
+    standard: "خطوات العمل في المشروع",
+    question: "كم يوماً استغرقت ورشة العمل المكثفة لتدريب فرق العمل في مشروع إعداد المعايير؟",
+    options: ["يوم واحد", "يومان", "ثلاثة أيام", "أسبوع"],
+    correct: 2
+  },
+  {
+    domain: "التطوير المهني",
+    domainIndex: 1,
+    standard: "تشكيل فرق العمل",
+    question: "يتكون فريق العمل في كل تخصص من مشروع المعايير من:",
+    options: [
+      "مختص علمي في الإشراف التربوي + مختص تربوي في المناهج + مشرف تربوي ميداني",
+      "مدير تعليم + مشرف تربوي + معلم",
+      "أستاذ جامعي + مدير مدرسة + معلم",
+      "مختص تقني + مختص تربوي + إداري"
+    ],
+    correct: 0
+  },
+  {
+    domain: "القيادة والإشراف",
+    domainIndex: 0,
+    standard: "المعيار 1.25.6: الرؤية الإستراتيجية",
+    question: "ما الذي يراعيه المشرف التربوي وفق المعيار 1.25.6 عند بناء الخطة التشغيلية للإشراف التربوي؟",
+    options: [
+      "توجهات الوزارة فقط",
+      "توجهات الوزارة ورؤية المملكة 2030 والخبرات العالمية",
+      "الخبرات المحلية فقط",
+      "التجارب الدولية دون مراعاة التوجهات الوطنية"
+    ],
+    correct: 1
+  },
+  {
+    domain: "القيادة والإشراف",
+    domainIndex: 0,
+    standard: "المعيار 3.25.6: التخطيط لعمليات التغيير",
+    question: "ما الذي يفعله المشرف التربوي وفق المعيار 3.25.6 تجاه المخاطر في عمليات التطوير؟",
+    options: [
+      "يتجاهلها",
+      "يستشعر المخاطر ويقومها ويبادر باتخاذ الإجراءات المناسبة لمعالجتها",
+      "يحيلها إلى الإدارة العليا فقط",
+      "يتجنب عمليات التطوير لتفادي المخاطر"
+    ],
+    correct: 1
+  },
+  {
+    domain: "دعم التعليم والتعلم",
+    domainIndex: 2,
+    standard: "المعيار 5.25.6: الإلمام بمتطلبات تقويم أداء المعلم",
+    question: "وفق المعيار 5.25.6، ما الذي يلاحظه المشرف التربوي في أداء المعلم؟",
+    options: [
+      "السلوك الشخصي للمعلم فقط",
+      "أداء المعلم في مجال مهارات التدريس (تخطيطاً وتنفيذاً وتقويماً)",
+      "مستوى الطلاب فقط",
+      "الالتزام بالحضور والانصراف"
+    ],
+    correct: 1
+  },
+  {
+    domain: "القيم وأخلاقيات المهنة ومهارات الاتصال",
+    domainIndex: 3,
+    standard: "المعيار 14.25.6: القيم وأخلاقيات المهنة",
+    question: "ما الوزن النسبي للمعيار 14.25.6 في اختبار الرخصة المهنية؟",
+    options: ["6.7%", "5.3%", "8%", "12%"],
+    correct: 1
+  },
+  {
+    domain: "القيادة والإشراف",
+    domainIndex: 0,
+    standard: "المعيار 4.25.6: ممارسة الأساليب الإشرافية",
+    question: "من الأساليب الإشرافية المذكورة في معيار 4.25.6، أيها يُعدّ من الأساليب التقليدية؟",
+    options: [
+      "الإشراف الإكلينيكي",
+      "الزيارة الصفية والمداولات الإشرافية والنشرة التربوية والقراءة الموجهة",
+      "التعليم المصغر",
+      "نافذة جوهاري"
+    ],
+    correct: 1
+  },
+  {
+    domain: "التطوير المهني",
+    domainIndex: 1,
+    standard: "المعيار 7.25.6: تطور الأداء المهني",
+    question: "وفق المعيار 7.25.6، ما الذي يحدده المشرف التربوي وفق الخبرة والاهتمامات الشخصية؟",
+    options: [
+      "أهداف الخطة التشغيلية",
+      "مجتمعات وشبكات التعلم المهنية",
+      "أدوات تقويم المعلمين",
+      "مؤشرات الأداء"
+    ],
+    correct: 1
+  }
+];
+
+// ===== متغيرات الحالة =====
+let currentQuestion = 0;
+let score = 0;
+let answered = false;
+let timerInterval = null;
+let timeLeft = 30;
+let wrongAnswers = 0;
+let skipped = 0;
+let shuffledQuestions = [];
+
+// ===== تهيئة النجوم =====
+function initStars() {
+  const starsContainer = document.getElementById('stars');
+  for (let i = 0; i < 100; i++) {
+    const star = document.createElement('div');
+    star.className = 'star';
+    star.style.cssText = `
+      width: ${Math.random() * 3 + 1}px;
+      height: ${Math.random() * 3 + 1}px;
+      top: ${Math.random() * 100}%;
+      left: ${Math.random() * 100}%;
+      --duration: ${Math.random() * 3 + 2}s;
+      animation-delay: ${Math.random() * 3}s;
+    `;
+    starsContainer.appendChild(star);
+  }
+}
+
+// ===== تهيئة الجسيمات =====
+function initParticles() {
+  const container = document.getElementById('particles');
+  const colors = ['#ffd600', '#42a5f5', '#ef5350', '#66bb6a', '#ab47bc'];
+  for (let i = 0; i < 20; i++) {
+    const particle = document.createElement('div');
+    particle.className = 'particle';
+    const size = Math.random() * 6 + 2;
+    particle.style.cssText = `
+      width: ${size}px;
+      height: ${size}px;
+      top: ${Math.random() * 100}%;
+      left: ${Math.random() * 100}%;
+      background: ${colors[Math.floor(Math.random() * colors.length)]};
+      --duration: ${Math.random() * 10 + 5}s;
+      animation-delay: ${Math.random() * 5}s;
+    `;
+    container.appendChild(particle);
+  }
+}
+
+// ===== خلط الأسئلة =====
+function shuffleArray(arr) {
+  const shuffled = [...arr];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
+
+// ===== بدء الاختبار =====
+function startQuiz() {
+  shuffledQuestions = shuffleArray(quizData);
+  document.getElementById('startScreen').style.display = 'none';
+  document.getElementById('quizScreen').style.display = 'block';
+  currentQuestion = 0;
+  score = 0;
+  wrongAnswers = 0;
+  skipped = 0;
+  loadQuestion();
+}
+
+// ===== تحميل السؤال =====
+function loadQuestion() {
+  if (currentQuestion >= shuffledQuestions.length) {
+    showResults();
+    return;
+  }
+
+  answered = false;
+  const q = shuffledQuestions[currentQuestion];
+  const total = shuffledQuestions.length;
+
+  // تحديث العداد
+  document.getElementById('questionCounter').textContent = `${currentQuestion + 1}/${total}`;
+  document.getElementById('scoreDisplay').textContent = score;
+
+  // تحديث شريط التقدم
+  const progress = (currentQuestion / total) * 100;
+  document.getElementById('progressBar').style.width = `${progress}%`;
+
+  // تحديث المجال
+  document.getElementById('currentDomain').textContent = `📌 ${q.domain}`;
+  
+  // تحديث شريط المجالات
+  document.querySelectorAll('.domain-pill').forEach(pill => {
+    pill.classList.remove('active');
+    if (parseInt(pill.dataset.domain) === q.domainIndex) {
+      pill.classList.add('active');
+    }
+  });
+
+  // تحديث رقم السؤال
+  const arabicNumbers = ['الأول', 'الثاني', 'الثالث', 'الرابع', 'الخامس', 'السادس', 'السابع', 'الثامن', 'التاسع', 'العاشر',
+    'الحادي عشر', 'الثاني عشر', 'الثالث عشر', 'الرابع عشر', 'الخامس عشر', 'السادس عشر', 'السابع عشر', 'الثامن عشر', 'التاسع عشر', 'العشرون',
+    'الحادي والعشرون', 'الثاني والعشرون', 'الثالث والعشرون', 'الرابع والعشرون', 'الخامس والعشرون', 'السادس والعشرون', 'السابع والعشرون', 'الثامن والعشرون', 'التاسع والعشرون', 'الثلاثون',
+    'الحادي والثلاثون', 'الثاني والثلاثون', 'الثالث والثلاثون', 'الرابع والثلاثون', 'الخامس والثلاثون', 'السادس والثلاثون', 'السابع والثلاثون', 'الثامن والثلاثون', 'التاسع والثلاثون', 'الأربعون'];
+  document.getElementById('questionNumber').innerHTML = `<span>🔷</span><span>السؤال ${arabicNumbers[currentQuestion] || (currentQuestion + 1)}</span>`;
+
+  // تحديث نص السؤال
+  document.getElementById('questionText').textContent = q.question;
+
+  // إنشاء الخيارات
+  const optionsGrid = document.getElementById('optionsGrid');
+  optionsGrid.innerHTML = '';
+  const letters = ['أ', 'ب', 'ج', 'د'];
+  
+  // خلط الخيارات مع الحفاظ على الإجابة الصحيحة
+  const optionIndices = [0, 1, 2, 3];
+  const shuffledOptions = shuffleArray(optionIndices);
+  const newCorrectIndex = shuffledOptions.indexOf(q.correct);
+  
+  shuffledOptions.forEach((origIndex, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.dataset.index = i;
+    btn.dataset.isCorrect = (i === newCorrectIndex);
+    btn.innerHTML = `
+      <span class="option-letter">${letters[i]}</span>
+      <span>${q.options[origIndex]}</span>
+    `;
+    btn.onclick = () => selectAnswer(btn, i === newCorrectIndex, q.options[q.correct]);
+    optionsGrid.appendChild(btn);
+  });
+
+  // إخفاء التغذية الراجعة وزر التالي
+  document.getElementById('feedbackMessage').style.display = 'none';
+  document.getElementById('nextBtn').style.display = 'none';
+
+  // تشغيل المؤقت
+  startTimer();
+}
+
+// ===== المؤقت =====
+function startTimer() {
+  clearInterval(timerInterval);
+  timeLeft = 30;
+  updateTimerDisplay();
+  
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    updateTimerDisplay();
+    
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      if (!answered) {
+        skipped++;
+        timeUp();
+      }
+    }
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  const timerEl = document.getElementById('timerCircle');
+  timerEl.textContent = timeLeft;
+  timerEl.className = 'timer-circle';
+  if (timeLeft <= 10 && timeLeft > 5) timerEl.classList.add('warning');
+  if (timeLeft <= 5) timerEl.classList.add('danger');
+}
+
+function timeUp() {
+  answered = true;
+  disableOptions();
+  
+  // تمييز الإجابة الصحيحة
+  document.querySelectorAll('.option-btn').forEach(btn => {
+    if (btn.dataset.isCorrect === 'true') {
+      btn.classList.add('correct');
+    }
+  });
+  
+  showFeedback(false, null, true);
+  document.getElementById('nextBtn').style.display = 'block';
+}
+
+// ===== اختيار الإجابة =====
+function selectAnswer(btn, isCorrect, correctAnswerText) {
+  if (answered) return;
+  answered = true;
+  clearInterval(timerInterval);
+  
+  disableOptions();
+  
+  if (isCorrect) {
+    score++;
+    btn.classList.add('correct');
+    document.getElementById('scoreDisplay').textContent = score;
+    showFeedback(true, null, false);
+    launchConfetti();
+  } else {
+    btn.classList.add('wrong');
+    wrongAnswers++;
+    // تمييز الإجابة الصحيحة
+    document.querySelectorAll('.option-btn').forEach(b => {
+      if (b.dataset.isCorrect === 'true') b.classList.add('correct');
+    });
+    showFeedback(false, correctAnswerText, false);
+  }
+  
+  document.getElementById('nextBtn').style.display = 'block';
+}
+
+function disableOptions() {
+  document.querySelectorAll('.option-btn').forEach(btn => {
+    btn.disabled = true;
+  });
+}
+
+// ===== التغذية الراجعة =====
+const correctMessages = [
+  "يا سلام! 🌟 إجابة رائعة!",
+  "ممتاز! 🎯 أحسنت جداً!",
+  "بارك الله فيك! 💫 صحيح تماماً!",
+  "رائع! 🏆 إجابة صحيحة!",
+  "أحسنت! ✨ هذا هو الجواب الصحيح!",
+  "عظيم! 🌠 أداء متميز!",
+  "ماشاء الله! 🎉 إجابة صحيحة!",
+  "جميل! 💡 أنت على المسار الصحيح!",
+  "تبارك الله! 🌟 إجابة مثالية!",
+  "أحسنت النجاح! 🥇 إجابة صحيحة!"
+];
+
+const wrongMessages = [
+  "حظ أوفر في المرة القادمة! 💪",
+  "لا بأس! 🌱 التعلم من الأخطاء مهم",
+  "استمر! 🔄 ستتحسن مع الممارسة",
+  "لا تيأس! 💡 راجع المعايير وحاول مجدداً",
+  "حاول مرة أخرى! 📚 المراجعة مفيدة",
+  "لا بأس! 🎯 ركز في الأسئلة القادمة",
+  "استمر في المحاولة! 🌟 ستصل للهدف",
+  "لا تستسلم! 💪 كل خطأ فرصة للتعلم"
+];
+
+function showFeedback(isCorrect, correctAnswerText, isTimeUp) {
+  const feedbackEl = document.getElementById('feedbackMessage');
+  const iconEl = document.getElementById('feedbackIcon');
+  const textEl = document.getElementById('feedbackText');
+  const correctEl = document.getElementById('correctAnswerText');
+  
+  feedbackEl.style.display = 'block';
+  
+  if (isTimeUp) {
+    feedbackEl.className = 'feedback-message wrong-msg';
+    iconEl.textContent = '⏰';
+    textEl.textContent = 'انتهى الوقت! الإجابة الصحيحة هي:';
+    correctEl.textContent = correctAnswerText || '';
+  } else if (isCorrect) {
+    feedbackEl.className = 'feedback-message correct-msg';
+    iconEl.textContent = '🎉';
+    textEl.textContent = correctMessages[Math.floor(Math.random() * correctMessages.length)];
+    correctEl.textContent = '';
+  } else {
+    feedbackEl.className = 'feedback-message wrong-msg';
+    iconEl.textContent = '😔';
+    textEl.textContent = wrongMessages[Math.floor(Math.random() * wrongMessages.length)];
+    correctEl.textContent = correctAnswerText ? `الإجابة الصحيحة: ${correctAnswerText}` : '';
+  }
+}
+
+// ===== السؤال التالي =====
+function nextQuestion() {
+  currentQuestion++;
+  loadQuestion();
+}
+
+// ===== الاحتفال =====
+function launchConfetti() {
+  const container = document.getElementById('confetti');
+  container.innerHTML = '';
+  const colors = ['#ffd600', '#ff6f00', '#42a5f5', '#66bb6a', '#ef5350', '#ab47bc', '#ffffff'];
+  
+  for (let i = 0; i < 50; i++) {
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    const size = Math.random() * 10 + 5;
+    piece.style.cssText = `
+      width: ${size}px;
+      height: ${size}px;
+      left: ${Math.random() * 100}%;
+      background: ${colors[Math.floor(Math.random() * colors.length)]};
+      border-radius: ${Math.random() > 0.5 ? '50%' : '0'};
+      --fall-duration: ${Math.random() * 2 + 1}s;
+      animation-delay: ${Math.random() * 0.5}s;
+    `;
+    container.appendChild(piece);
+  }
+  
+  setTimeout(() => { container.innerHTML = ''; }, 3000);
+}
+
+// ===== عرض النتائج =====
+function showResults() {
+  clearInterval(timerInterval);
+  document.getElementById('quizScreen').style.display = 'none';
+  document.getElementById('resultScreen').style.display = 'block';
+  
+  const total = shuffledQuestions.length;
+  const percentage = Math.round((score / total) * 100);
+  
+  document.getElementById('resultScore').textContent = `${percentage}%`;
+  document.getElementById('correctCount').textContent = score;
+  document.getElementById('wrongCount').textContent = wrongAnswers;
+  document.getElementById('skippedCount').textContent = skipped;
+  
+  let icon, title, message;
+  
+  if (percentage >= 90) {
+    icon = '🏆';
+    title = 'ممتاز! أداء استثنائي!';
+    message = 'يا سلام عليك! أنت مؤهل تماماً للرخصة الإشرافية. أداؤك يعكس إتقاناً عالياً للمعايير المهنية.';
+    document.getElementById('resultTitle').style.color = '#ffd600';
+    launchConfetti();
+    setTimeout(launchConfetti, 1000);
+  } else if (percentage >= 75) {
+    icon = '🌟';
+    title = 'جيد جداً! أداء متميز!';
+    message = 'أحسنت! نتيجتك ممتازة وتدل على فهم جيد للمعايير الإشرافية. قليل من المراجعة ستصل للقمة!';
+    document.getElementById('resultTitle').style.color = '#42a5f5';
+    launchConfetti();
+  } else if (percentage >= 60) {
+    icon = '👍';
+    title = 'جيد! استمر في التطور!';
+    message = 'نتيجة جيدة! لكن هناك مجال للتحسين. راجع المعايير التي أخطأت فيها وحاول مجدداً.';
+    document.getElementById('resultTitle').style.color = '#66bb6a';
+  } else if (percentage >= 50) {
+    icon = '📚';
+    title = 'بحاجة إلى مراجعة!';
+    message = 'لا بأس! المراجعة الجيدة لوثيقة المعايير ودليل المشرفين ستساعدك على تحسين نتيجتك.';
+    document.getElementById('resultTitle').style.color = '#ff9800';
+  } else {
+    icon = '💪';
+    title = 'استمر في المحاولة!';
+    message = 'لا تيأس! راجع المعايير المهنية للمشرفين التربويين بشكل مستفيض وحاول مجدداً. أنت قادر على النجاح!';
+    document.getElementById('resultTitle').style.color = '#ef5350';
+  }
+  
+  document.getElementById('resultIcon').textContent = icon;
+  document.getElementById('resultTitle').textContent = title;
+  document.getElementById('resultMessage').textContent = message;
+}
+
+// ===== إعادة الاختبار =====
+function restartQuiz() {
+  document.getElementById('resultScreen').style.display = 'none';
+  document.getElementById('startScreen').style.display = 'block';
+  currentQuestion = 0;
+  score = 0;
+  wrongAnswers = 0;
+  skipped = 0;
+}
+
+// ===== العودة للقائمة الرئيسية =====
+function goHome() {
+  clearInterval(timerInterval);
+  document.getElementById('quizScreen').style.display = 'none';
+  document.getElementById('resultScreen').style.display = 'none';
+  document.getElementById('startScreen').style.display = 'block';
+  currentQuestion = 0;
+  score = 0;
+  wrongAnswers = 0;
+  skipped = 0;
+}
+
+// ===== التهيئة =====
+window.onload = function() {
+  initStars();
+  initParticles();
+};
+</script>
+
+</body>
+</html>
