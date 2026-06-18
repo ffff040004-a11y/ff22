@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>آلية التظلم في الأداء الوظيفي</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@400;500;700&display=swap');
+
+  :root{
+    --navy:#142850;
+    --navy-deep:#0c1c38;
+    --gold:#C8972C;
+    --gold-light:#E9C875;
+    --teal:#1F6F64;
+    --cream:#F7F4EC;
+    --card:#FFFFFF;
+    --ink:#1B2233;
+    --muted:#5B6478;
+    --line:#E2E0D5;
+  }
+
+  *{box-sizing:border-box;}
+
+  body{
+    margin:0;
+    background:var(--cream);
+    font-family:'Tajawal','Cairo',Tahoma,Arial,sans-serif;
+    color:var(--ink);
+    direction:rtl;
+  }
+
+  .page{
+    max-width:840px;
+    margin:0 auto;
+    padding:34px 30px 50px;
+  }
+
+  /* ===== Header ===== */
+  .hero{
+    text-align:center;
+    padding:6px 0 22px;
+    position:relative;
+  }
+  .hero .eyebrow{
+    font-family:'Cairo',sans-serif;
+    font-weight:700;
+    font-size:13px;
+    letter-spacing:1px;
+    color:var(--teal);
+    margin-bottom:10px;
+  }
+  .hero h1{
+    font-family:'Cairo',sans-serif;
+    font-weight:900;
+    font-size:42px;
+    line-height:1.25;
+    margin:0;
+    color:var(--navy-deep);
+  }
+  .hero h1 span{
+    display:block;
+    color:var(--gold);
+    font-size:38px;
+  }
+  .hero .rule{
+    width:120px;
+    height:4px;
+    background:var(--gold);
+    margin:18px auto 0;
+    border-radius:2px;
+  }
+
+  /* ===== Intro summary box ===== */
+  .summary{
+    margin-top:26px;
+    background:var(--navy-deep);
+    border-radius:14px;
+    padding:20px 22px;
+    color:#fff;
+  }
+  .summary h2{
+    font-family:'Cairo',sans-serif;
+    font-size:17px;
+    font-weight:700;
+    margin:0 0 14px;
+    color:var(--gold-light);
+    text-align:center;
+  }
+  .summary-grid{
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+  }
+  .summary-grid > div{
+    flex:1;
+    min-width:130px;
+    background:rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.14);
+    border-radius:10px;
+    padding:12px 14px;
+    font-size:14px;
+    line-height:1.6;
+  }
+  .summary-grid b{
+    display:block;
+    font-family:'Cairo',sans-serif;
+    font-size:14px;
+    color:var(--gold-light);
+    margin-bottom:2px;
+  }
+
+  /* ===== Section shell ===== */
+  .section{
+    margin-top:30px;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:16px;
+    overflow:hidden;
+    box-shadow:0 2px 10px rgba(20,40,80,0.05);
+  }
+  .section-head{
+    background:var(--navy);
+    color:#fff;
+    font-family:'Cairo',sans-serif;
+    font-weight:700;
+    font-size:17px;
+    padding:14px 22px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .section-head .tag{
+    background:var(--gold);
+    color:var(--navy-deep);
+    font-size:13px;
+    font-weight:800;
+    border-radius:7px;
+    padding:3px 10px;
+  }
+  .section-body{
+    padding:22px 24px 26px;
+  }
+  .lead{
+    font-size:15px;
+    line-height:2;
+    color:var(--muted);
+    margin:0 0 18px;
+  }
+
+  /* ===== Process flow (step 1) ===== */
+  .flow{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    margin:6px 0 24px;
+    flex-wrap:wrap;
+  }
+  .flow .step{
+    flex:1;
+    min-width:130px;
+    max-width:170px;
+    background:#EFF3F9;
+    border:1.5px solid var(--navy);
+    border-radius:12px;
+    text-align:center;
+    padding:14px 8px;
+    font-family:'Cairo',sans-serif;
+    font-weight:700;
+    font-size:14.5px;
+    color:var(--navy-deep);
+  }
+  .flow .step small{
+    display:block;
+    font-family:'Tajawal',sans-serif;
+    font-weight:400;
+    font-size:11.5px;
+    color:var(--teal);
+    margin-bottom:3px;
+  }
+  .flow .arrow{
+    font-size:20px;
+    color:var(--gold);
+    font-weight:700;
+  }
+
+  .detail-list{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+  }
+  .detail-item{
+    display:flex;
+    gap:14px;
+    align-items:flex-start;
+    background:var(--cream);
+    border-radius:10px;
+    padding:14px 16px;
+  }
+  .num{
+    flex:0 0 30px;
+    width:30px;
+    height:30px;
+    border-radius:50%;
+    background:var(--navy);
+    color:#fff;
+    font-family:'Cairo',sans-serif;
+    font-weight:800;
+    font-size:14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .detail-item p{
+    margin:0;
+    font-size:14.5px;
+    line-height:1.95;
+  }
+  .detail-item b{
+    color:var(--navy-deep);
+  }
+
+  /* ===== Rights list (step 2) ===== */
+  .right-list{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+  }
+  .right-item{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    background:var(--cream);
+    border-right:4px solid var(--teal);
+    border-radius:10px;
+    padding:14px 16px;
+  }
+  .right-item .num{background:var(--teal);}
+  .right-item p{margin:0;font-size:15px;}
+  .right-item .deadline{
+    margin-right:auto;
+    font-family:'Cairo',sans-serif;
+    font-weight:800;
+    font-size:13px;
+    background:var(--gold-light);
+    color:var(--navy-deep);
+    border-radius:7px;
+    padding:4px 11px;
+    white-space:nowrap;
+  }
+
+  /* ===== Escalation path (step 3) — signature element ===== */
+  .escalation{
+    position:relative;
+    padding-right:34px;
+  }
+  .escalation::before{
+    content:"";
+    position:absolute;
+    right:13px;
+    top:6px;
+    bottom:6px;
+    width:3px;
+    background:linear-gradient(to bottom, var(--navy), var(--teal), var(--gold));
+    border-radius:3px;
+  }
+  .tier{
+    position:relative;
+    margin-bottom:18px;
+  }
+  .tier::before{
+    content:"";
+    position:absolute;
+    right:-30px;
+    top:6px;
+    width:14px;
+    height:14px;
+    border-radius:50%;
+    background:#fff;
+    border:3px solid var(--navy);
+  }
+  .tier.teal::before{border-color:var(--teal);}
+  .tier.gold::before{border-color:var(--gold);}
+  .tier-card{
+    background:var(--cream);
+    border-radius:10px;
+    padding:14px 16px;
+  }
+  .tier-card h3{
+    margin:0 0 8px;
+    font-family:'Cairo',sans-serif;
+    font-size:14.5px;
+    font-weight:700;
+    color:var(--navy-deep);
+  }
+  .tier-card ul{
+    margin:0;
+    padding:0;
+    list-style:none;
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+  }
+  .tier-card li{
+    font-size:14px;
+    line-height:1.7;
+    display:flex;
+    gap:8px;
+  }
+  .tier-card li::before{
+    content:"—";
+    color:var(--gold);
+    font-weight:700;
+  }
+  .tier-result{
+    margin-top:22px;
+    background:var(--navy-deep);
+    color:#fff;
+    border-radius:10px;
+    padding:14px 16px;
+    font-size:14px;
+    line-height:1.8;
+    text-align:center;
+  }
+  .tier-result b{color:var(--gold-light);}
+
+  /* ===== Footer ===== */
+  .footer{
+    margin-top:36px;
+    text-align:center;
+  }
+  .footer .signature{
+    display:inline-block;
+    background:var(--navy);
+    color:#fff;
+    border-radius:30px;
+    padding:10px 26px;
+    font-family:'Cairo',sans-serif;
+    font-weight:700;
+    font-size:14px;
+  }
+  .footer .signature span{color:var(--gold-light);}
+  .footer .link{
+    margin-top:8px;
+    font-size:13px;
+    color:var(--muted);
+  }
+  .footer .link a{
+    color:var(--teal);
+    font-weight:700;
+    text-decoration:none;
+  }
+  .footer .link a:hover{
+    text-decoration:underline;
+  }
+
+  @media print{
+    body{background:#fff;}
+    .page{padding:14px 18px;max-width:100%;}
+    .section{box-shadow:none;}
+  }
+
+  @media (max-width:480px){
+    .hero h1{font-size:30px;}
+    .hero h1 span{font-size:27px;}
+    .flow{flex-direction:column;}
+    .flow .arrow{transform:rotate(90deg);}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="hero">
+    <div class="eyebrow">دليل توضيحي مبسّط</div>
+    <h1>إجراءات الاعتراض<span>على تقييم الأداء الوظيفي</span></h1>
+    <div class="rule"></div>
+  </div>
+
+  <div class="summary">
+    <h2>محتويات هذا الدليل</h2>
+    <div class="summary-grid">
+      <div><b>طريقة التظلم</b>آلية تقديم الطلب من خلال جهة عملك</div>
+      <div><b>المهلة النظامية</b>السقف الزمني المحدد لكل خطوة</div>
+      <div><b>في حال الرفض</b>الجهات الأخرى التي يجوز اللجوء إليها</div>
+    </div>
+  </div>
+
+  <!-- Section 1 -->
+  <div class="section">
+    <div class="section-head"><span class="tag">أولًا</span> مراحل التظلم لدى وزارة التعليم</div>
+    <div class="section-body">
+      <p class="lead">خصّصت وزارة التعليم فترة محددة لتقديم التظلم، وينطلق تقديمه من خلال جهة العمل عبر نظام (فارس) باتباع المراحل الآتية:</p>
+
+      <div class="flow">
+        <div class="step"><small>1</small>الخدمة الذاتية للموظف</div>
+        <div class="arrow">←</div>
+        <div class="step"><small>2</small>الأداء الوظيفي</div>
+        <div class="arrow">←</div>
+        <div class="step"><small>3</small>التظلم</div>
+      </div>
+
+      <div class="detail-list">
+        <div class="detail-item">
+          <div class="num">1</div>
+          <p>يستهل <b>الموظف</b> الإجراء بتقديم طلب تظلم حول البنود التي يعتقد أنها تستحق درجة أعلى، مرفقًا به الأدلة الداعمة التي تؤكد أحقيته بتقييم وظيفي عادل.</p>
+        </div>
+        <div class="detail-item">
+          <div class="num">2</div>
+          <p>يُحال الطلب بعد ذلك إلى <b>المدير المباشر</b>، حيث يسجّل ملاحظاته وله إضافة ما يعزز موقفه.</p>
+        </div>
+        <div class="detail-item">
+          <div class="num">3</div>
+          <p>يُرفع الطلب إلى <b>المدير المعتمد</b>، فاللجنة المختصة، ومنها إلى مدير الإدارة، فاللجنة الرئيسية في ديوان الوزارة، وينتهي المسار عند معالي وزير التعليم الذي يصادق على قرار اللجنة.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 2 -->
+  <div class="section">
+    <div class="section-head"><span class="tag">ثانيًا</span> الجهات المخوّلة بالنظر في التظلم</div>
+    <div class="section-body">
+      <div class="right-list">
+        <div class="right-item">
+          <div class="num">1</div>
+          <p>تقديم التظلم إلى جهة العمل</p>
+          <div class="deadline">خلال 10 أيام</div>
+        </div>
+        <div class="right-item">
+          <div class="num">2</div>
+          <p>التظلم لدى وزارة الموارد البشرية والتنمية الاجتماعية عبر منصة مسار</p>
+          <div class="deadline">خلال 60 يومًا</div>
+        </div>
+        <div class="right-item">
+          <div class="num">3</div>
+          <p>اللجوء إلى المحكمة الإدارية في ديوان المظالم</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 3 -->
+  <div class="section">
+    <div class="section-head"><span class="tag">ثالثًا</span> تصعيد التظلم عند الرفض أو غياب الرد</div>
+    <div class="section-body">
+      <div class="escalation">
+        <div class="tier">
+          <div class="tier-card">
+            <h3>عقب تقديم التظلم لوزارة التعليم، إذا:</h3>
+            <ul>
+              <li>صدر قرار برفضه</li>
+              <li>لم يصدر أي رد خلال شهر</li>
+            </ul>
+          </div>
+        </div>
+        <div class="tier teal">
+          <div class="tier-card">
+            <h3>يُعاد رفعه عبر منصة مسار، إذا:</h3>
+            <ul>
+              <li>صدر قرار برفضه</li>
+              <li>لم يرد عليه خلال 60 يومًا من تاريخ تقديمه</li>
+            </ul>
+          </div>
+        </div>
+        <div class="tier gold">
+          <div class="tier-card">
+            <h3>المرجع الختامي للتظلم</h3>
+            <ul>
+              <li>المحكمة الإدارية التابعة لديوان المظالم</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="tier-result">بهذا التسلسل يُتاح للموظف متابعة قضيته أمام <b>ثلاث جهات متعاقبة</b> حتى يحصل على قرار حاسم فيها.</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="signature">تصميم <span>f</span></div>
+  </div>
+
+</div>
+</body>
+</html>
