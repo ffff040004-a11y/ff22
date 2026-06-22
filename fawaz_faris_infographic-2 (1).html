@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>خطوات إخلاء الطرف من فارس</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Tajawal', sans-serif;
+    background: #e8edf2;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 20px;
+  }
+
+  .page {
+    width: 794px;
+    min-height: 1123px;
+    background: #ffffff;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.18);
+  }
+
+  /* ===== BACKGROUND DECORATION ===== */
+  .bg-accent-top {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 220px;
+    background: linear-gradient(135deg, #1a3a5c 0%, #2a5f8f 60%, #1e7bbf 100%);
+    clip-path: polygon(0 0, 100% 0, 100% 78%, 0 100%);
+  }
+
+  .bg-accent-bottom {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 90px;
+    background: linear-gradient(135deg, #1a3a5c 0%, #2a5f8f 100%);
+    clip-path: polygon(0 22%, 100% 0, 100% 100%, 0 100%);
+  }
+
+  .bg-circle-1 {
+    position: absolute;
+    width: 280px; height: 280px;
+    border-radius: 50%;
+    border: 2px solid rgba(200,170,80,0.15);
+    top: -60px; right: -60px;
+  }
+  .bg-circle-2 {
+    position: absolute;
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    border: 2px solid rgba(200,170,80,0.10);
+    top: 30px; right: 30px;
+  }
+
+  /* ===== HEADER ===== */
+  .header {
+    position: relative;
+    z-index: 10;
+    padding: 30px 36px 10px;
+    color: white;
+  }
+
+  .header-top {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 8px;
+  }
+
+  .logo-icon {
+    width: 52px; height: 52px;
+    background: rgba(200,170,80,0.25);
+    border: 2px solid rgba(200,170,80,0.7);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    flex-shrink: 0;
+  }
+
+  .header-titles h1 {
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: 0.5px;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    line-height: 1.2;
+  }
+
+  .header-titles .subtitle {
+    font-size: 12px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.75);
+    margin-top: 2px;
+  }
+
+  .gold-line {
+    height: 3px;
+    background: linear-gradient(90deg, rgba(200,170,80,0.9), rgba(200,170,80,0.2));
+    border-radius: 4px;
+    margin: 10px 0 0;
+    width: 260px;
+  }
+
+  /* ===== MAIN CONTENT ===== */
+  .content {
+    position: relative;
+    z-index: 5;
+    padding: 22px 36px 100px;
+  }
+
+  /* ===== SECTION BLOCK ===== */
+  .section-block {
+    margin-bottom: 22px;
+  }
+
+  .section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #1a3a5c, #2a5f8f);
+    color: white;
+    padding: 6px 18px 6px 12px;
+    border-radius: 0 24px 24px 0;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    margin-right: -36px;
+    padding-right: 28px;
+    letter-spacing: 0.3px;
+    box-shadow: 3px 3px 12px rgba(26,58,92,0.25);
+  }
+
+  .section-label .label-icon {
+    font-size: 16px;
+  }
+
+  /* ===== STEP CARDS ===== */
+  .steps-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+  }
+
+  .step-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background: #f8fafd;
+    border-radius: 12px;
+    padding: 12px 16px;
+    border-right: 4px solid #c8aa50;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.055);
+    transition: all 0.2s;
+    position: relative;
+  }
+
+  .step-card.blue-border { border-right-color: #2a5f8f; }
+  .step-card.teal-border { border-right-color: #1e8b7a; }
+  .step-card.warn-border { border-right-color: #d4763c; }
+
+  .step-num {
+    min-width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 900;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .num-gold { background: linear-gradient(135deg, #c8aa50, #e0c860); color: white; }
+  .num-blue { background: linear-gradient(135deg, #2a5f8f, #1e7bbf); color: white; }
+  .num-teal { background: linear-gradient(135deg, #1e8b7a, #22a090); color: white; }
+  .num-warn { background: linear-gradient(135deg, #d4763c, #e8874a); color: white; }
+
+  .step-text {
+    font-size: 13.5px;
+    font-weight: 500;
+    color: #2c3e50;
+    line-height: 1.7;
+  }
+
+  .step-text strong {
+    color: #1a3a5c;
+    font-weight: 700;
+  }
+
+  /* ===== WARNING BOX ===== */
+  .warn-box {
+    background: linear-gradient(135deg, #fff8ee, #fff3e0);
+    border: 1px solid rgba(212,118,60,0.35);
+    border-radius: 12px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-top: 10px;
+  }
+
+  .warn-icon {
+    font-size: 22px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .warn-text {
+    font-size: 13px;
+    font-weight: 500;
+    color: #7a4515;
+    line-height: 1.7;
+  }
+
+  /* ===== APPROVAL ROW ===== */
+  .approval-flow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .approval-step {
+    flex: 1;
+    background: linear-gradient(135deg, #f0f6ff, #e8f0fa);
+    border-radius: 12px;
+    padding: 12px 10px;
+    text-align: center;
+    border: 1px solid rgba(42,95,143,0.2);
+  }
+
+  .approval-step .a-icon { font-size: 24px; margin-bottom: 4px; }
+  .approval-step .a-title { font-size: 12.5px; font-weight: 700; color: #1a3a5c; }
+  .approval-step .a-sub { font-size: 11px; color: #5a7a9a; margin-top: 2px; }
+
+  .arrow-flow {
+    font-size: 20px;
+    color: #c8aa50;
+    flex-shrink: 0;
+  }
+
+  /* ===== DIVIDER ===== */
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #d0dae8, transparent);
+    margin: 18px 0;
+  }
+
+  /* ===== FOOTER ===== */
+  .footer {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 90px;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 36px;
+    gap: 20px;
+  }
+
+  .footer-info {
+    color: white;
+  }
+
+  .footer-info .designer {
+    font-size: 12px;
+    font-weight: 700;
+    color: #e0c860;
+    margin-bottom: 2px;
+  }
+
+  .footer-info .greet {
+    font-size: 11px;
+    color: rgba(255,255,255,0.8);
+    line-height: 1.5;
+  }
+
+  .footer-link {
+    text-align: center;
+  }
+
+  .footer-link .link-label {
+    font-size: 11px;
+    color: rgba(255,255,255,0.75);
+    margin-bottom: 4px;
+  }
+
+  .tg-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(200,170,80,0.2);
+    border: 1px solid rgba(200,170,80,0.6);
+    color: #e8d070;
+    text-decoration: none;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+  }
+
+  .tg-icon {
+    font-size: 13px;
+  }
+
+  /* ===== INTRO ACCESS BOX ===== */
+  .access-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+
+  .access-card {
+    flex: 1;
+    background: linear-gradient(135deg, #1a3a5c, #2a5f8f);
+    border-radius: 12px;
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: white;
+    box-shadow: 0 3px 12px rgba(26,58,92,0.2);
+  }
+
+  .access-card .ac-icon { font-size: 22px; flex-shrink: 0; }
+  .access-card .ac-text .ac-title { font-size: 12px; font-weight: 700; color: #e0c860; }
+  .access-card .ac-text .ac-body { font-size: 11.5px; font-weight: 400; opacity: 0.9; line-height: 1.5; }
+
+  @media print {
+    body { background: white; padding: 0; }
+    .page { box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- خلفية زخرفية -->
+  <div class="bg-accent-top"></div>
+  <div class="bg-accent-bottom"></div>
+  <div class="bg-circle-1"></div>
+  <div class="bg-circle-2"></div>
+
+  <!-- الرأس -->
+  <div class="header">
+    <div class="header-top">
+      <div class="logo-icon">📋</div>
+      <div class="header-titles">
+        <h1>خطوات إخلاء الطرف من فارس</h1>
+        <div class="subtitle">دليل إجرائي شامل • نظام فارس • وزارة التعليم</div>
+      </div>
+    </div>
+    <div class="gold-line"></div>
+  </div>
+
+  <!-- المحتوى الرئيسي -->
+  <div class="content">
+
+    <!-- الدخول إلى الخدمة -->
+    <div class="access-row">
+      <div class="access-card">
+        <div class="ac-icon">🌐</div>
+        <div class="ac-text">
+          <div class="ac-title">الدخول إلى الخدمة</div>
+          <div class="ac-body">صلاحية الخدمة الذاتية للموظف</div>
+        </div>
+      </div>
+      <div class="access-card">
+        <div class="ac-icon">📂</div>
+        <div class="ac-text">
+          <div class="ac-title">الاختيار من القائمة</div>
+          <div class="ac-body">تكليف المعلمين ← قرار التكليف</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- قسم 1: خطوات طلب إخلاء الطرف -->
+    <div class="section-block">
+      <div class="section-label">
+        <span class="label-icon">🔑</span>
+        خطوات طلب إخلاء الطرف
+      </div>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-num num-gold">١</div>
+          <div class="step-text">النقر على خيار <strong>«طلب إخلاء طرف بعد التكليف»</strong></div>
+        </div>
+
+        <div class="step-card warn-border">
+          <div class="step-num num-warn">٢</div>
+          <div class="step-text">التأكد من <strong>عدم وجود عُهد مسجّلة</strong> باسم الموظف قبل المتابعة</div>
+        </div>
+
+        <div class="step-card blue-border">
+          <div class="step-num num-blue">٣</div>
+          <div class="step-text">في حال وجود عُهد، يتم <strong>نقلها مؤقتاً</strong> لأي شخص موثوق في المدرسة</div>
+        </div>
+
+        <div class="step-card teal-border">
+          <div class="step-num num-teal">٤</div>
+          <div class="step-text">في صفحة تفاصيل القرار، النقر على أيقونة <strong>«إضافة»</strong></div>
+        </div>
+
+        <div class="step-card">
+          <div class="step-num num-gold">٥</div>
+          <div class="step-text">من القائمة المنسدلة: <strong>اختيار رقم القرار وتاريخه</strong>، ستظهر بيانات الموظف تلقائياً</div>
+        </div>
+      </div>
+
+      <!-- تنبيه -->
+      <div class="warn-box">
+        <div class="warn-icon">⚠️</div>
+        <div class="warn-text">
+          إذا لم تفتح القائمة المنسدلة، فهذا يعني أن <strong>القرار يحتاج إلى تفعيل</strong>
+          — يُرجى التواصل مع <strong>الموارد البشرية في إدارة التعليم</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- قسم 2: خطوات طلب المباشرة -->
+    <div class="section-block">
+      <div class="section-label">
+        <span class="label-icon">✅</span>
+        خطوات طلب المباشرة
+      </div>
+
+      <div class="steps-grid">
+        <div class="step-card teal-border">
+          <div class="step-num num-teal">١</div>
+          <div class="step-text">اختيار <strong>«طلب مباشرة بعد تكليف معلم»</strong></div>
+        </div>
+
+        <div class="step-card teal-border">
+          <div class="step-num num-teal">٢</div>
+          <div class="step-text">اتباع <strong>نفس الخطوات السابقة</strong> المطبّقة في طلب إخلاء الطرف دون أي تغيير</div>
+        </div>
+      </div>
+
+      <!-- ملاحظة العُهد -->
+      <div class="warn-box" style="background: linear-gradient(135deg, #eef8f5, #e4f4f0); border-color: rgba(30,139,122,0.3);">
+        <div class="warn-icon">💡</div>
+        <div class="warn-text" style="color: #1a5a4a;">
+          يمكن <strong>استعادة العُهد</strong> بعد الانتهاء من إجراءات الإخلاء والمباشرة
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- قسم 3: اعتماد الطلبات -->
+    <div class="section-block">
+      <div class="section-label">
+        <span class="label-icon">🏛️</span>
+        مسار اعتماد الطلبات
+      </div>
+
+      <div class="approval-flow">
+        <div class="approval-step">
+          <div class="a-icon">👤</div>
+          <div class="a-title">رفع الطلب</div>
+          <div class="a-sub">إخلاء طرف أو مباشرة</div>
+        </div>
+
+        <div class="arrow-flow">←</div>
+
+        <div class="approval-step">
+          <div class="a-icon">👔</div>
+          <div class="a-title">المدير المباشر</div>
+          <div class="a-sub">اعتماد الطلب</div>
+        </div>
+
+        <div class="arrow-flow">←</div>
+
+        <div class="approval-step">
+          <div class="a-icon">🏫</div>
+          <div class="a-title">إدارة التعليم</div>
+          <div class="a-sub">الاعتماد النهائي</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+
+  <!-- الذيل -->
+  <div class="footer">
+    <div class="footer-info">
+      <div class="designer">✦ تصميم د/ فواز ✦</div>
+      <div class="greet">مع تحيات أعضاء قروب<br>التميّز في التقويم والتعليم</div>
+    </div>
+    <div class="footer-link">
+      <div class="link-label">تفضّل للمزيد هنا</div>
+      <a href="https://t.me/TAqhjT3MFVE1Yzk0" class="tg-link" target="_blank">
+        <span class="tg-icon">✈</span>
+        t.me/TAqhjT3MFVE1Yzk0
+      </a>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
